@@ -1,0 +1,7 @@
+"id","order","enabled","title","href","type","description"
+"check-ins","1","true","Check-ins","https://check-ins-zeta.vercel.app/","live web app","A live web app for logging check-ins and tracking consistency through target gaps, maximum gaps, and simple progress feedback."
+"mpf-hardware-test-tools","2","true","MPF Hardware Test Tools","","pinball utilities","A set of pinball test utilities for checking switches, coils, LEDs, board mappings, and FAST hardware behavior before full game logic is installed."
+"midi-practice-tool","3","true","MIDI Practice Tool","","python / music","A small Python music-practice utility exploring on-screen controls, soundfonts, pedals, and keyboard-style interaction for more focused practice."
+"desmos-3d-solar-system","4","true","Desmos 3D Solar System","https://www.desmos.com/3d/qcjp33t4ij","math visualization","A mathematical visualization project using 3D surfaces, orbits, color mapping, and performance tradeoffs to build a stylized solar system scene."
+"tinygpt-experiments","5","true","TinyGPT Experiments","","machine learning","A learning project exploring how a small next-token prediction model is trained, tested, and separated from a true instruction-following assistant."
+"vex-v5-drivetrain-prototype","6","true","VEX V5 Drivetrain Prototype","","robotics prototype","A quick robotics build using gearing and packaging constraints to create a motorized wheel prototype while avoiding shaft and structure interference."

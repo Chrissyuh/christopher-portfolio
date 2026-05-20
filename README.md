@@ -1,16 +1,33 @@
-# React + Vite
+# Christopher Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React/Vite portfolio site for Christopher's engineering work, hardware projects, academics, and broader record.
 
-Currently, two official plugins are available:
+## Run Locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```sh
+npm install
+npm run dev
+```
 
-## React Compiler
+## Content Updates
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The app renders from `src/content/portfolioContent.generated.json` by default. It can also fetch live content from a published public Google Sheet at runtime.
 
-## Expanding the ESLint configuration
+1. Create the sheet tabs and headers listed in `docs/google-sheet-content.md`.
+2. Publish each tab as CSV.
+3. Paste the published URLs into `src/content/googleSheetConfig.js`.
+4. Run:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```sh
+npm run sync-content
+```
+
+The generated JSON stays as the deployment-safe fallback if live Google Sheet loading fails.
+
+## Checks
+
+```sh
+npm run lint
+npm run build
+npm run preview
+```

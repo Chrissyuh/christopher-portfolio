@@ -1,0 +1,4 @@
+"id","order","enabled","title","text"
+"show-the-mechanism","1","true","Show the mechanism","A good project page should make the working parts understandable: CAD, wiring, test setup, constraints, and the reason the design exists."
+"document-revisions","2","true","Document revisions","A failed wiring map, bad enclosure fit, or design mistake is valuable when it explains what changed and why the next version is better."
+"prefer-working-artifacts","3","true","Prefer working artifacts","Finished polish matters, but the portfolio should prioritize real hardware, test videos, CAD screenshots, measurements, code, and build logs."

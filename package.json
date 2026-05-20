@@ -7,13 +7,16 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync-content": "node scripts/sync-content.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
     "framer-motion": "^12.38.0",
+    "papaparse": "^5.5.3",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-router-dom": "^7.15.1",
     "tailwindcss": "^4.2.4"
   },
   "devDependencies": {

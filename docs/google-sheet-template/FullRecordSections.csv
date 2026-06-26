@@ -1,5 +1,5 @@
 "id","order","enabled","category","icon"
-"flagship-engineering","1","true","Flagship engineering","wrench"
+"main-builds","1","true","Main builds","wrench"
 "software-visualization-ai","2","true","Software, visualization, and AI","cpu"
 "fabrication-maker-skills","3","true","Fabrication and maker skills","printer"
 "academics","4","true","Academics","school"

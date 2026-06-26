@@ -12,40 +12,40 @@ I build mechanical and electronic projects, then document the tests, revisions, 
 
 - 01: Garden Party pinball
 - 02: Smart pot PCB / enclosure
-- 03: SolidWorks mechanism studies
+- 03: CAD practice models
 - 04: small web + desktop tools
 
 ## Main Projects
 
 ### A01 Garden Party Pinball
 Status: active build
-Label: flagship electromechanical build
-A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, real coils, switches, lamps, cabinet wiring, and a revised playfield.
+Label: pinball machine build
+A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield.
 Evidence: FAST Pinball boards, Mission Pinball Framework, coils / switches / lamps, CAD + wiring revisions
 Media: 2 slots, 0 live, 2 placeholders
 To document next: photos, playfield CAD, wiring maps, MPF configs, driver tests, rule notes
 
 ### A02 Smart Self-Watering Pot
-Status: reviving / redesigning
-Label: embedded product redesign
-A plant-care device with moisture sensing, pump control, electronics packaging, and an enclosure/PCB redesign.
+Status: reviving prototype
+Label: plant-watering prototype
+A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work.
 Evidence: ESP32 / Arduino-style control, pump driver, sensor input, KiCad + enclosure planning
 Media: 2 slots, 0 live, 2 placeholders
 To document next: schematic, board outline, enclosure constraints, connector plan, watering state machine
 
-### A03 TETC 3D Printing Showcase
-Status: showcase work
-Label: technical communication
-A technical showcase explaining 3D printing with SolidWorks models, printed demos, robotics examples, and presentation materials.
-Evidence: SolidWorks models, printed demos, robotics angle, public explanation
+### A03 3D Printing Presentation
+Status: finished presentation
+Label: presentation
+A presentation about 3D printing with SolidWorks models, printed demos, robotics examples, and slides.
+Evidence: SolidWorks models, printed demos, robotics angle, presentation slides
 Media: 2 slots, 0 live, 2 placeholders
 To document next: model screenshots, printed examples, final presentation notes
 
-### A04 CAD Mechanism Studies
-Status: ongoing library
-Label: mechanical skill building
-SolidWorks studies for mechanisms, assemblies, print-ready parts, clearances, and tolerances.
-Evidence: assemblies, print-ready parts, tolerance experiments, mechanism notes
+### A04 CAD Practice Models
+Status: ongoing practice
+Label: CAD practice
+SolidWorks practice models for assemblies, print-ready parts, clearances, and tolerances.
+Evidence: assemblies, print-ready parts, tolerance experiments, model notes
 Media: 2 slots, 0 live, 2 placeholders
 To document next: annotated notes on constraints, mistakes, and lessons from each model
 
@@ -72,29 +72,23 @@ To document next: annotated notes on constraints, mistakes, and lessons from eac
 
 ## Skills
 
-- Mechanical design: I use CAD to test clearances, assemblies, print orientation, mounting, and fabrication before building parts.
-- Hardware + electronics: I work with wiring, sensors, actuators, power routing, and controller behavior in the same system.
-- Software as a tool for hardware: I write code for MPF configs, hardware tests, embedded control, web tools, and debugging workflows.
-- AI-assisted engineering workflow: I use ChatGPT for planning, debugging, documentation, and code review, then check decisions against real tests.
+- CAD practice: I practice CAD with assemblies, clearances, print orientation, and mounting.
+- Hardware + electronics: I work on wiring, sensors, actuators, power routing, and controller behavior.
+- Software for hardware: I write MPF configs, hardware tests, embedded control code, web tools, and debugging scripts.
+- AI-assisted debugging: I use AI tools for debugging, planning, and code review, then check the results against real tests.
 
 ## Working Vocabulary
 
-SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basics, 3D printing, laser cutting, mechanism design, sensor wiring, pump / motor control, technical presentation, rapid iteration, ChatGPT-assisted debugging, Electron, React, TypeScript, Vite, desktop packaging
-
-## Documentation Standards
-
-- Show the mechanism: Show CAD, wiring, test setup, constraints, and why the design exists.
-- Document revisions: When a wiring map, enclosure, or design choice fails, explain what changed.
-- Prefer working artifacts: Prioritize hardware, test videos, CAD screenshots, measurements, code, and build logs.
+SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basics, 3D printing, laser cutting, CAD assemblies, sensor wiring, pump / motor control, presentations, rapid iteration, ChatGPT-assisted debugging, Electron, React, TypeScript, Vite, desktop packaging
 
 ## Full Record
 
-### Flagship engineering
+### Main builds
 
 - Garden Party Pinball - full-size homebrew pinball machine using FAST hardware, MPF, coils, switches, lamps, cabinet wiring, and playfield revisions.
 - Smart Self-Watering Pot - moisture sensing, pump control, enclosure planning, and a custom PCB direction.
-- TETC 3D Printing Engineering Showcase - presentation on additive manufacturing, mechanical design, and robotics examples.
-- CAD Mechanism Studies - SolidWorks assemblies, mechanisms, print-ready parts, tolerance tests, and design notes.
+- 3D Printing Presentation - slides and demos about additive manufacturing, SolidWorks models, printed parts, and robotics examples.
+- CAD Practice Models - SolidWorks assemblies, print-ready parts, tolerance tests, and model notes.
 - FAST / MPF Hardware Test Tools - scripts and configs for switch, driver, LED, board-map, and hardware tests.
 
 ### Software, visualization, and AI
@@ -110,8 +104,8 @@ SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basi
 
 ### Fabrication and maker skills
 
-- 3D printing workflow - Bambu Studio, material choices, iteration prints, print orientation, and fit testing.
-- Laser cutting workflow - design and fabrication planning for flat-cut parts and enclosures.
+- 3D printing - Bambu Studio, material choices, iteration prints, print orientation, and fit testing.
+- Laser cutting - design and fabrication planning for flat-cut parts and enclosures.
 - Home maker-lab practice - CAD, wiring, printing, scanning, electronics, and mechanical assembly.
 - VEX V5 Drivetrain Prototype - robotics drivetrain build using gearing and packaging constraints around structure interference.
 - SolidWorks modeling - part design, assemblies, complex forms, and fabrication-oriented CAD decisions.
@@ -130,7 +124,7 @@ SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basi
 - Informative Speaking - public-speaking competition and presentation practice.
 - Debate - JV finals experience.
 - Student Council - school leadership.
-- TETC presentations - technical communication for engineering projects and showcase work.
+- TETC presentations - slides and demos for engineering projects.
 
 ### Scouts, service, and long-term discipline
 

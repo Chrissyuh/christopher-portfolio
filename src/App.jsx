@@ -987,29 +987,6 @@ function PortfolioPage({ content }) {
         </div>
       </section>
 
-      <section id="principles" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-        <SectionHeader code={meta.principlesCode} title={meta.principlesTitle}>
-          {meta.principlesText}
-        </SectionHeader>
-
-        <div className="grid gap-4 md:grid-cols-3">
-          {list(content.principles).map((principle, index) => (
-            <motion.div
-              key={principle.id}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.28, delay: index * 0.04 }}
-              className="border border-[#d2c8b9] bg-white p-5 shadow-sm"
-            >
-              <p className="font-mono text-xs text-[#244fd6]">0{index + 1}</p>
-              <h3 className="mt-5 text-xl font-semibold tracking-[-0.025em] text-slate-950">{principle.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-slate-700">{principle.text}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
       <ContactSection content={content} />
     </>
   );

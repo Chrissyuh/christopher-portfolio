@@ -11,10 +11,10 @@
     "heroIntro": "I build mechanical and electronic projects, then document the tests, revisions, and open problems.",
     "currentStackTitle": "current stack",
     "focusEyebrow": "focus",
-    "focusTitle": "build evidence",
-    "focusText": "Project pages should show CAD, wiring, test logs, configs, photos, and the revisions that changed the build.",
-    "portfolioRuleEyebrow": "portfolio rule",
-    "portfolioRuleText": "Show evidence before claims.",
+    "focusTitle": "what I have so far",
+    "focusText": "Photos, CAD files, wiring notes, tests, configs, links, and missing media.",
+    "portfolioRuleEyebrow": "still missing",
+    "portfolioRuleText": "Some photos and videos still need to be added.",
     "projectIndexCode": "PROJECT INDEX",
     "projectIndexTitle": "Engineering projects.",
     "projectIndexText": "Physical systems with CAD, wiring, software, and test notes.",
@@ -36,17 +36,14 @@
     "smallerProjectsTitle": "Smaller projects and experiments.",
     "smallerProjectsText": "Small tools, robotics prototypes, visualizations, and learning projects.",
     "microProjectsCode": "C-LEVEL BUILDS",
-    "microProjectsTitle": "Bench notes.",
-    "microProjectsText": "Tiny finished builds that show tools, habits, and constraints.",
+    "microProjectsTitle": "Small builds.",
+    "microProjectsText": "Small projects I kept because they have a real artifact, link, or useful lesson.",
     "microProjectsOpenLabel": "Open",
     "microProjectsSourceLabel": "Source",
     "skillSystemCode": "SKILL SYSTEM",
-    "skillSystemTitle": "Skills in use.",
-    "skillSystemText": "CAD, electronics, code, and testing show up together in the project work.",
+    "skillSystemTitle": "Tools used here.",
+    "skillSystemText": "Tools represented in the projects above.",
     "workingVocabularyLabel": "working vocabulary",
-    "principlesCode": "DESIGN NOTES",
-    "principlesTitle": "Documentation standards.",
-    "principlesText": "Project pages should stay specific: what was built, what was tested, what changed, and what remains.",
     "recordEyebrow": "full record",
     "recordTitle": "Projects, school, competitions, Scouts, languages, and learning.",
     "recordIntro": "A broader record beyond the main engineering projects.",
@@ -104,7 +101,7 @@
     {
       "id": "solidworks",
       "number": "03",
-      "label": "SolidWorks mechanism studies"
+      "label": "CAD practice models"
     },
     {
       "id": "small-tools",
@@ -151,10 +148,10 @@
       "title": "Garden Party Pinball",
       "href": null,
       "sourceHref": null,
-      "label": "flagship electromechanical build",
+      "label": "pinball machine build",
       "status": "active build",
       "accent": "blue",
-      "summary": "A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, real coils, switches, lamps, cabinet wiring, and a revised playfield.",
+      "summary": "A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield.",
       "evidence": [
         "FAST Pinball boards",
         "Mission Pinball Framework",
@@ -180,7 +177,7 @@
       "next": "photos, playfield CAD, wiring maps, MPF configs, driver tests, rule notes",
       "preview": {
         "title": "Playfield + control stack",
-        "label": "system map",
+        "label": "parts map",
         "parts": [
           "cabinet I/O",
           "switch matrix",
@@ -195,10 +192,10 @@
       "title": "Smart Self-Watering Pot",
       "href": null,
       "sourceHref": null,
-      "label": "embedded product redesign",
-      "status": "reviving / redesigning",
+      "label": "plant-watering prototype",
+      "status": "reviving prototype",
       "accent": "teal",
-      "summary": "A plant-care device with moisture sensing, pump control, electronics packaging, and an enclosure/PCB redesign.",
+      "summary": "A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work.",
       "evidence": [
         "ESP32 / Arduino-style control",
         "pump driver",
@@ -234,41 +231,41 @@
       }
     },
     {
-      "id": "tetc-3d-printing-showcase",
+      "id": "3d-printing-presentation",
       "number": "A03",
-      "title": "TETC 3D Printing Showcase",
+      "title": "3D Printing Presentation",
       "href": null,
       "sourceHref": null,
-      "label": "technical communication",
-      "status": "showcase work",
+      "label": "presentation",
+      "status": "finished presentation",
       "accent": "amber",
-      "summary": "A technical showcase explaining 3D printing with SolidWorks models, printed demos, robotics examples, and presentation materials.",
+      "summary": "A presentation about 3D printing with SolidWorks models, printed demos, robotics examples, and slides.",
       "evidence": [
         "SolidWorks models",
         "printed demos",
         "robotics angle",
-        "public explanation"
+        "presentation slides"
       ],
       "media": [
         {
           "id": "media-1",
           "type": "photo",
           "src": null,
-          "alt": "TETC 3D printing printed demo photo needed",
+          "alt": "3D printing presentation demo photo needed",
           "caption": "Add printed demo photo"
         },
         {
           "id": "media-2",
           "type": "video",
           "src": null,
-          "alt": "TETC 3D printing presentation or print demo video needed",
-          "caption": "Add presentation or print demo video"
+          "alt": "3D printing presentation video needed",
+          "caption": "Add presentation video"
         }
       ],
       "next": "model screenshots, printed examples, final presentation notes",
       "preview": {
-        "title": "CAD model -> printed proof",
-        "label": "showcase flow",
+        "title": "CAD model -> printed part",
+        "label": "presentation parts",
         "parts": [
           "model",
           "slice",
@@ -278,41 +275,41 @@
       }
     },
     {
-      "id": "cad-mechanism-studies",
+      "id": "cad-practice-models",
       "number": "A04",
-      "title": "CAD Mechanism Studies",
+      "title": "CAD Practice Models",
       "href": null,
       "sourceHref": null,
-      "label": "mechanical skill building",
-      "status": "ongoing library",
+      "label": "CAD practice",
+      "status": "ongoing practice",
       "accent": "clay",
-      "summary": "SolidWorks studies for mechanisms, assemblies, print-ready parts, clearances, and tolerances.",
+      "summary": "SolidWorks practice models for assemblies, print-ready parts, clearances, and tolerances.",
       "evidence": [
         "assemblies",
         "print-ready parts",
         "tolerance experiments",
-        "mechanism notes"
+        "model notes"
       ],
       "media": [
         {
           "id": "media-1",
           "type": "photo",
           "src": null,
-          "alt": "CAD mechanism screenshot or printed mechanism photo needed",
-          "caption": "Add CAD screenshot or printed mechanism photo"
+          "alt": "CAD practice screenshot or printed model photo needed",
+          "caption": "Add CAD screenshot or printed model photo"
         },
         {
           "id": "media-2",
           "type": "video",
           "src": null,
-          "alt": "CAD mechanism motion video needed",
-          "caption": "Add mechanism motion video"
+          "alt": "CAD practice motion video needed",
+          "caption": "Add motion video"
         }
       ],
       "next": "annotated notes on constraints, mistakes, and lessons from each model",
       "preview": {
-        "title": "Assembly study library",
-        "label": "mechanism map",
+        "title": "Assembly practice set",
+        "label": "model parts",
         "parts": [
           "mates",
           "clearance",
@@ -383,8 +380,8 @@
           "id": "media-2",
           "type": "video",
           "src": null,
-          "alt": "Subpix editing workflow video needed",
-          "caption": "Add editing workflow capture"
+          "alt": "Subpix editing demo video needed",
+          "caption": "Add editing demo"
         }
       ]
     },
@@ -543,27 +540,27 @@
   "skillNarratives": [
     {
       "id": "mechanical-design",
-      "title": "Mechanical design",
+      "title": "CAD practice",
       "icon": "wrench",
-      "text": "I use CAD to test clearances, assemblies, print orientation, mounting, and fabrication before building parts."
+      "text": "I practice CAD with assemblies, clearances, print orientation, and mounting."
     },
     {
       "id": "hardware-electronics",
       "title": "Hardware + electronics",
       "icon": "cpu",
-      "text": "I work with wiring, sensors, actuators, power routing, and controller behavior in the same system."
+      "text": "I work on wiring, sensors, actuators, power routing, and controller behavior."
     },
     {
       "id": "software-for-hardware",
-      "title": "Software as a tool for hardware",
+      "title": "Software for hardware",
       "icon": "route",
-      "text": "I write code for MPF configs, hardware tests, embedded control, web tools, and debugging workflows."
+      "text": "I write MPF configs, hardware tests, embedded control code, web tools, and debugging scripts."
     },
     {
       "id": "ai-assisted-engineering",
-      "title": "AI-assisted engineering workflow",
+      "title": "AI-assisted debugging",
       "icon": "layers",
-      "text": "I use ChatGPT for planning, debugging, documentation, and code review, then check decisions against real tests."
+      "text": "I use AI tools for debugging, planning, and code review, then check the results against real tests."
     }
   ],
   "skills": [
@@ -596,8 +593,8 @@
       "name": "laser cutting"
     },
     {
-      "id": "mechanism-design",
-      "name": "mechanism design"
+      "id": "cad-assemblies",
+      "name": "CAD assemblies"
     },
     {
       "id": "sensor-wiring",
@@ -608,8 +605,8 @@
       "name": "pump / motor control"
     },
     {
-      "id": "technical-presentation",
-      "name": "technical presentation"
+      "id": "presentations",
+      "name": "presentations"
     },
     {
       "id": "rapid-iteration",
@@ -640,27 +637,10 @@
       "name": "desktop packaging"
     }
   ],
-  "principles": [
-    {
-      "id": "show-the-mechanism",
-      "title": "Show the mechanism",
-      "text": "Show CAD, wiring, test setup, constraints, and why the design exists."
-    },
-    {
-      "id": "document-revisions",
-      "title": "Document revisions",
-      "text": "When a wiring map, enclosure, or design choice fails, explain what changed."
-    },
-    {
-      "id": "prefer-working-artifacts",
-      "title": "Prefer working artifacts",
-      "text": "Prioritize hardware, test videos, CAD screenshots, measurements, code, and build logs."
-    }
-  ],
   "fullRecord": [
     {
-      "id": "flagship-engineering",
-      "category": "Flagship engineering",
+      "id": "main-builds",
+      "category": "Main builds",
       "icon": "wrench",
       "items": [
         {
@@ -672,12 +652,12 @@
           "text": "Smart Self-Watering Pot - moisture sensing, pump control, enclosure planning, and a custom PCB direction."
         },
         {
-          "id": "tetc-3d-printing-showcase",
-          "text": "TETC 3D Printing Engineering Showcase - presentation on additive manufacturing, mechanical design, and robotics examples."
+          "id": "3d-printing-presentation",
+          "text": "3D Printing Presentation - slides and demos about additive manufacturing, SolidWorks models, printed parts, and robotics examples."
         },
         {
-          "id": "cad-mechanism-studies",
-          "text": "CAD Mechanism Studies - SolidWorks assemblies, mechanisms, print-ready parts, tolerance tests, and design notes."
+          "id": "cad-practice-models",
+          "text": "CAD Practice Models - SolidWorks assemblies, print-ready parts, tolerance tests, and model notes."
         },
         {
           "id": "fast-mpf-hardware-test-tools",
@@ -730,12 +710,12 @@
       "icon": "printer",
       "items": [
         {
-          "id": "3d-printing-workflow",
-          "text": "3D printing workflow - Bambu Studio, material choices, iteration prints, print orientation, and fit testing."
+          "id": "3d-printing",
+          "text": "3D printing - Bambu Studio, material choices, iteration prints, print orientation, and fit testing."
         },
         {
-          "id": "laser-cutting-workflow",
-          "text": "Laser cutting workflow - design and fabrication planning for flat-cut parts and enclosures."
+          "id": "laser-cutting",
+          "text": "Laser cutting - design and fabrication planning for flat-cut parts and enclosures."
         },
         {
           "id": "home-maker-lab-practice",
@@ -801,7 +781,7 @@
         },
         {
           "id": "tetc-presentations",
-          "text": "TETC presentations - technical communication for engineering projects and showcase work."
+          "text": "TETC presentations - slides and demos for engineering projects."
         }
       ]
     },

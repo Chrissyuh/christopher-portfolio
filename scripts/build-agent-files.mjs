@@ -215,10 +215,6 @@ function buildLlmsFullTxt(content) {
     "",
     list(content.skills).map((skill) => skill.name).join(", "),
     "",
-    "## Documentation Standards",
-    "",
-    markdownList(list(content.principles).map((principle) => `${principle.title}: ${principle.text}`)),
-    "",
     "## Full Record",
     "",
     list(content.fullRecord)

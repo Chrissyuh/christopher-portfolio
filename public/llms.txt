@@ -11,10 +11,10 @@ I build mechanical and electronic projects, then document the tests, revisions, 
 
 ## Main Projects
 
-- Garden Party Pinball: A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, real coils, switches, lamps, cabinet wiring, and a revised playfield. Media: 2 slots, 0 live, 2 placeholders.
-- Smart Self-Watering Pot: A plant-care device with moisture sensing, pump control, electronics packaging, and an enclosure/PCB redesign. Media: 2 slots, 0 live, 2 placeholders.
-- TETC 3D Printing Showcase: A technical showcase explaining 3D printing with SolidWorks models, printed demos, robotics examples, and presentation materials. Media: 2 slots, 0 live, 2 placeholders.
-- CAD Mechanism Studies: SolidWorks studies for mechanisms, assemblies, print-ready parts, clearances, and tolerances. Media: 2 slots, 0 live, 2 placeholders.
+- Garden Party Pinball: A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield. Media: 2 slots, 0 live, 2 placeholders.
+- Smart Self-Watering Pot: A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work. Media: 2 slots, 0 live, 2 placeholders.
+- 3D Printing Presentation: A presentation about 3D printing with SolidWorks models, printed demos, robotics examples, and slides. Media: 2 slots, 0 live, 2 placeholders.
+- CAD Practice Models: SolidWorks practice models for assemblies, print-ready parts, clearances, and tolerances. Media: 2 slots, 0 live, 2 placeholders.
 
 ## B-Level Projects
 

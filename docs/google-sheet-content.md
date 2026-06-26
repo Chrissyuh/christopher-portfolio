@@ -64,10 +64,6 @@ Allowed `icon` values: `arrowRight`, `bolt`, `box`, `cpu`, `gauge`, `github`, `l
 
 `id,order,enabled,name`
 
-### Principles
-
-`id,order,enabled,title,text`
-
 ### FullRecordSections
 
 `id,order,enabled,category,icon`

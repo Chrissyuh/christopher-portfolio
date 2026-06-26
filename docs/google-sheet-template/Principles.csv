@@ -1,4 +1,0 @@
-"id","order","enabled","title","text"
-"show-the-mechanism","1","true","Show the mechanism","Show CAD, wiring, test setup, constraints, and why the design exists."
-"document-revisions","2","true","Document revisions","When a wiring map, enclosure, or design choice fails, explain what changed."
-"prefer-working-artifacts","3","true","Prefer working artifacts","Prioritize hardware, test videos, CAD screenshots, measurements, code, and build logs."

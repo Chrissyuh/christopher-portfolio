@@ -19,6 +19,8 @@ export const allowedAccents = ["blue", "teal", "amber", "clay"];
 
 export const allowedMediaTypes = ["photo", "video"];
 
+const mediaSlotCount = 8;
+
 export const allowedIcons = [
   "arrowRight",
   "bolt",
@@ -148,7 +150,7 @@ function compactNumberedFields(row, prefix, count) {
 }
 
 function compactMediaFields(row, errors, tabName, rowId) {
-  return Array.from({ length: 4 }, (_, index) => {
+  return Array.from({ length: mediaSlotCount }, (_, index) => {
     const slot = index + 1;
     const type = text(row[`media_${slot}_type`]);
     const src = text(row[`media_${slot}_src`]);
@@ -277,6 +279,8 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       title: text(row.title),
       href: hrefOrNull(row.href),
       sourceHref: hrefOrNull(row.source_href),
+      logoSrc: hrefOrNull(row.logo_src),
+      logoAlt: text(row.logo_alt),
       type: text(row.type),
       description: text(row.description),
       media,

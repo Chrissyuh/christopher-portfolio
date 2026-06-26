@@ -189,6 +189,22 @@
       ]
     },
     {
+      "id": "vividgrasp-ai-vision-robotics-arm",
+      "title": "VividGrasp AI-Vision Robotics Arm",
+      "href": null,
+      "sourceHref": "https://github.com/LenekyRadish/VividGrasp",
+      "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
+      "logoAlt": "Stanford AI4ALL logo",
+      "type": "AI robotics simulation",
+      "description": "Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.",
+      "media": [
+        { "id": "media-1", "type": "photo", "src": "/portfolio-media/vividgrasp/solidworks-arm-assembly.png", "alt": "SolidWorks robotic arm assembly for VividGrasp", "caption": "SolidWorks arm assembly" },
+        { "id": "media-2", "type": "photo", "src": "/portfolio-media/vividgrasp/pybullet-joint-controls.png", "alt": "PyBullet joint control demo for the VividGrasp arm", "caption": "PyBullet joint controls" },
+        { "id": "media-3", "type": "photo", "src": "/portfolio-media/vividgrasp/pybullet-target-demo.png", "alt": "PyBullet target scene for the VividGrasp robotic arm", "caption": "PyBullet target demo" },
+        { "id": "media-4", "type": "photo", "src": "/portfolio-media/vividgrasp/printed-gear-prototype.png", "alt": "Printed gear prototype from the VividGrasp arm work", "caption": "Printed gear prototype" }
+      ]
+    },
+    {
       "id": "check-ins",
       "title": "Check-ins",
       "href": "https://check-ins-zeta.vercel.app/",
@@ -339,6 +355,7 @@
       "icon": "cpu",
       "items": [
         { "id": "subpix", "text": "Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging." },
+        { "id": "vividgrasp-ai-vision-robotics-arm", "text": "VividGrasp AI-Vision Robotics Arm - Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion." },
         { "id": "check-ins", "text": "Check-ins - live Vercel app for logging consistency and tracking target/max gaps." },
         { "id": "desmos-3d-solar-system", "text": "Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design." },
         { "id": "tinygpt-experiments", "text": "TinyGPT Experiments - small language-model project focused on next-token prediction and instruction-following differences." },

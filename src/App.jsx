@@ -426,7 +426,20 @@ function SmallProjectCard({ project, index }) {
             {project.type}
           </p>
         </div>
-        {(project.href || project.sourceHref) && <Icon name="link" className="h-4 w-4 text-[#827466] transition group-hover:text-[#244fd6]" />}
+        {project.logoSrc ? (
+          <div className="max-w-[150px] border border-[#d6cec0] bg-white px-2 py-1">
+            <img
+              src={project.logoSrc}
+              alt={project.logoAlt || `${project.title} logo`}
+              loading="lazy"
+              className="h-7 w-full object-contain"
+            />
+          </div>
+        ) : (
+          (project.href || project.sourceHref) && (
+            <Icon name="link" className="h-4 w-4 text-[#827466] transition group-hover:text-[#244fd6]" />
+          )
+        )}
       </div>
       <div className="flex flex-1 flex-col justify-between p-5">
         <div>

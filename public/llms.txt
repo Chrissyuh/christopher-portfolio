@@ -1,0 +1,27 @@
+# Christopher Portfolio
+
+I build mechanical and electronic projects, then document the tests, revisions, and open problems.
+
+## Primary Pages
+
+- [Portfolio homepage](https://chrisaheskett.vercel.app/)
+- [Full record](https://chrisaheskett.vercel.app/record)
+- [Full portfolio JSON](https://chrisaheskett.vercel.app/portfolio.json)
+- [Full Markdown summary](https://chrisaheskett.vercel.app/llms-full.txt)
+
+## Main Projects
+
+- Garden Party Pinball: A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, real coils, switches, lamps, cabinet wiring, and a revised playfield.
+- Smart Self-Watering Pot: A plant-care device with moisture sensing, pump control, electronics packaging, and an enclosure/PCB redesign.
+- TETC 3D Printing Showcase: A technical showcase explaining 3D printing with SolidWorks models, printed demos, robotics examples, and presentation materials.
+- CAD Mechanism Studies: SolidWorks studies for mechanisms, assemblies, print-ready parts, clearances, and tolerances.
+
+## Contact
+
+- [View GitHub](https://github.com/Chrissyuh)
+- [See live project](https://check-ins-zeta.vercel.app/)
+- [Email](mailto:Chrisaheskett@gmail.com)
+
+## Notes For Agents
+
+Use `/portfolio.json` for structured data. Use `/llms-full.txt` when a single Markdown context file is easier to ingest.

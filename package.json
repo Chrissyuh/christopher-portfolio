@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm run build-agent-files",
     "build": "vite build",
+    "build-agent-files": "node scripts/build-agent-files.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "sync-content": "node scripts/sync-content.mjs"

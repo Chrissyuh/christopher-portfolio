@@ -73,8 +73,82 @@ const accentStyles = {
   clay: { text: "text-[#8b5e3c]", bg: "bg-[#8b5e3c]", soft: "bg-[#f7f0ea]", border: "border-[#d7b99f]" },
 };
 
+const SITE_URL = "https://chrisaheskett.vercel.app";
+
 function list(value) {
   return Array.isArray(value) ? value : [];
+}
+
+function siteUrl(path = "/") {
+  return new URL(path, SITE_URL).toString();
+}
+
+function stripMailto(href) {
+  return href?.startsWith("mailto:") ? href.slice("mailto:".length) : href;
+}
+
+function buildStructuredData(content) {
+  const meta = content.meta ?? {};
+  const personId = `${siteUrl("/")}#christopher-heskett`;
+  const websiteId = `${siteUrl("/")}#website`;
+  const projects = list(content.projects);
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": personId,
+        name: "Christopher Heskett",
+        givenName: "Christopher",
+        url: siteUrl("/"),
+        email: stripMailto(meta.contactEmailHref),
+        affiliation: [
+          { "@type": "EducationalOrganization", name: meta.footerLeft },
+          { "@type": "Organization", name: meta.footerMiddle },
+        ],
+        knowsAbout: list(content.skills).map((skill) => skill.name),
+        sameAs: [meta.contactGithubHref].filter(Boolean),
+      },
+      {
+        "@type": "WebSite",
+        "@id": websiteId,
+        name: meta.documentTitle,
+        url: siteUrl("/"),
+        inLanguage: "en-US",
+        author: { "@id": personId },
+        description: meta.heroIntro,
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${siteUrl("/")}#main-projects`,
+        name: "Christopher Heskett engineering projects",
+        url: siteUrl("/#projects"),
+        numberOfItems: projects.length,
+        itemListElement: projects.map((project, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: { "@id": `${siteUrl("/")}#project-${project.id}` },
+        })),
+      },
+      ...projects.map((project) => ({
+        "@type": "CreativeWork",
+        "@id": `${siteUrl("/")}#project-${project.id}`,
+        name: project.title,
+        url: siteUrl("/#projects"),
+        creator: { "@id": personId },
+        about: project.label,
+        description: project.summary,
+        keywords: list(project.evidence),
+      })),
+    ],
+  };
+}
+
+function StructuredData({ content }) {
+  const json = JSON.stringify(buildStructuredData(content)).replaceAll("</", "<\\/");
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json }} />;
 }
 
 function Tag({ children }) {
@@ -630,6 +704,7 @@ function ChristopherPortfolioShell() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,46,32,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,46,32,0.055)_1px,transparent_1px)] bg-[size:44px_44px]" />
       </div>
 
+      <StructuredData content={content} />
       <Navigation content={content} />
 
       <Routes>

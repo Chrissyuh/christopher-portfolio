@@ -1,0 +1,630 @@
+{
+  "schemaVersion": 1,
+  "source": "generated-snapshot",
+  "updatedAt": "2026-06-25T00:00:00.000Z",
+  "meta": {
+    "documentTitle": "Christopher Portfolio",
+    "navName": "Christopher",
+    "navSubtitle": "engineering portfolio",
+    "heroEyebrow": "active projects",
+    "heroTitle": "Hardware, CAD, wiring, and code that work together.",
+    "heroIntro": "I build mechanical and electronic projects, then document the tests, revisions, and open problems.",
+    "currentStackTitle": "current stack",
+    "focusEyebrow": "focus",
+    "focusTitle": "build evidence",
+    "focusText": "Project pages should show CAD, wiring, test logs, configs, photos, and the revisions that changed the build.",
+    "portfolioRuleEyebrow": "portfolio rule",
+    "portfolioRuleText": "Show evidence before claims.",
+    "projectIndexCode": "PROJECT INDEX",
+    "projectIndexTitle": "Engineering projects.",
+    "projectIndexText": "Physical systems with CAD, wiring, software, and test notes.",
+    "academicCode": "ACADEMIC SNAPSHOT",
+    "academicTitle": "Academic snapshot.",
+    "academicText": "Grades and coursework for context.",
+    "smallerProjectsCode": "SMALLER BUILDS",
+    "smallerProjectsTitle": "Smaller projects and experiments.",
+    "smallerProjectsText": "Small tools, robotics prototypes, visualizations, and learning projects.",
+    "skillSystemCode": "SKILL SYSTEM",
+    "skillSystemTitle": "Skills in use.",
+    "skillSystemText": "CAD, electronics, code, and testing show up together in the project work.",
+    "workingVocabularyLabel": "working vocabulary",
+    "principlesCode": "DESIGN NOTES",
+    "principlesTitle": "Documentation standards.",
+    "principlesText": "Project pages should stay specific: what was built, what was tested, what changed, and what remains.",
+    "recordEyebrow": "full record",
+    "recordTitle": "Projects, school, competitions, Scouts, languages, and learning.",
+    "recordIntro": "A broader record beyond the main engineering projects.",
+    "contactEyebrow": "contact",
+    "contactTitle": "Contact and links.",
+    "contactText": "Spring Early College Academy student focused on CAD, fabrication, electronics, robotics, embedded software, and technical documentation.",
+    "contactEmailHref": "mailto:Chrisaheskett@gmail.com",
+    "contactEmailLabel": "Email",
+    "contactGithubHref": "https://github.com/Chrissyuh",
+    "contactGithubLabel": "View GitHub",
+    "contactProjectHref": "https://check-ins-zeta.vercel.app/",
+    "contactProjectLabel": "See live project",
+    "footerLeft": "Spring Early College Academy",
+    "footerMiddle": "Exxon Teen Engineering + Tech Center",
+    "footerName": "Christopher",
+    "projectVisualMapText": "Main subsystems and supporting evidence.",
+    "projectNextLabel": "to document next",
+    "openProjectsLabel": "View projects",
+    "viewRecordLabel": "View full record",
+    "backPortfolioLabel": "Back to portfolio"
+  },
+  "heroTags": [
+    {
+      "id": "mechatronics",
+      "label": "mechatronics"
+    },
+    {
+      "id": "embedded-systems",
+      "label": "embedded systems"
+    },
+    {
+      "id": "cad-fabrication",
+      "label": "CAD / fabrication"
+    },
+    {
+      "id": "student-engineer",
+      "label": "student engineer"
+    }
+  ],
+  "currentStack": [
+    {
+      "id": "garden-party",
+      "number": "01",
+      "label": "Garden Party pinball"
+    },
+    {
+      "id": "smart-pot",
+      "number": "02",
+      "label": "Smart pot PCB / enclosure"
+    },
+    {
+      "id": "solidworks",
+      "number": "03",
+      "label": "SolidWorks mechanism studies"
+    },
+    {
+      "id": "small-tools",
+      "number": "04",
+      "label": "small web + robotics tools"
+    }
+  ],
+  "evidenceTiles": [
+    {
+      "id": "real-hardware",
+      "top": "hardware",
+      "bottom": "photos"
+    },
+    {
+      "id": "specific-toolchains",
+      "top": "CAD",
+      "bottom": "files"
+    },
+    {
+      "id": "visible-iterations",
+      "top": "wiring",
+      "bottom": "maps"
+    },
+    {
+      "id": "clear-next-steps",
+      "top": "test",
+      "bottom": "logs"
+    },
+    {
+      "id": "proof-test-logs",
+      "top": "configs",
+      "bottom": "code"
+    },
+    {
+      "id": "honest-revisions",
+      "top": "next",
+      "bottom": "fixes"
+    }
+  ],
+  "projects": [
+    {
+      "id": "garden-party-pinball",
+      "number": "A01",
+      "title": "Garden Party Pinball",
+      "label": "flagship electromechanical build",
+      "status": "active build",
+      "accent": "blue",
+      "summary": "A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, real coils, switches, lamps, cabinet wiring, and a revised playfield.",
+      "evidence": [
+        "FAST Pinball boards",
+        "Mission Pinball Framework",
+        "coils / switches / lamps",
+        "CAD + wiring revisions"
+      ],
+      "next": "photos, playfield CAD, wiring maps, MPF configs, driver tests, rule notes",
+      "preview": {
+        "title": "Playfield + control stack",
+        "label": "system map",
+        "parts": [
+          "cabinet I/O",
+          "switch matrix",
+          "coils",
+          "MPF"
+        ]
+      }
+    },
+    {
+      "id": "smart-self-watering-pot",
+      "number": "A02",
+      "title": "Smart Self-Watering Pot",
+      "label": "embedded product redesign",
+      "status": "reviving / redesigning",
+      "accent": "teal",
+      "summary": "A plant-care device with moisture sensing, pump control, electronics packaging, and an enclosure/PCB redesign.",
+      "evidence": [
+        "ESP32 / Arduino-style control",
+        "pump driver",
+        "sensor input",
+        "KiCad + enclosure planning"
+      ],
+      "next": "schematic, board outline, enclosure constraints, connector plan, watering state machine",
+      "preview": {
+        "title": "Sensor -> controller -> pump",
+        "label": "control loop",
+        "parts": [
+          "moisture",
+          "MOSFET",
+          "reservoir",
+          "OLED"
+        ]
+      }
+    },
+    {
+      "id": "tetc-3d-printing-showcase",
+      "number": "A03",
+      "title": "TETC 3D Printing Showcase",
+      "label": "technical communication",
+      "status": "showcase work",
+      "accent": "amber",
+      "summary": "A technical showcase explaining 3D printing with SolidWorks models, printed demos, robotics examples, and presentation materials.",
+      "evidence": [
+        "SolidWorks models",
+        "printed demos",
+        "robotics angle",
+        "public explanation"
+      ],
+      "next": "model screenshots, printed examples, final presentation notes",
+      "preview": {
+        "title": "CAD model -> printed proof",
+        "label": "showcase flow",
+        "parts": [
+          "model",
+          "slice",
+          "print",
+          "explain"
+        ]
+      }
+    },
+    {
+      "id": "cad-mechanism-studies",
+      "number": "A04",
+      "title": "CAD Mechanism Studies",
+      "label": "mechanical skill building",
+      "status": "ongoing library",
+      "accent": "clay",
+      "summary": "SolidWorks studies for mechanisms, assemblies, print-ready parts, clearances, and tolerances.",
+      "evidence": [
+        "assemblies",
+        "print-ready parts",
+        "tolerance experiments",
+        "mechanism notes"
+      ],
+      "next": "annotated notes on constraints, mistakes, and lessons from each model",
+      "preview": {
+        "title": "Assembly study library",
+        "label": "mechanism map",
+        "parts": [
+          "mates",
+          "clearance",
+          "motion",
+          "tolerance"
+        ]
+      }
+    }
+  ],
+  "academics": [
+    {
+      "id": "grades",
+      "label": "Grades",
+      "value": "All As"
+    },
+    {
+      "id": "rank",
+      "label": "Rank",
+      "value": "3rd of 113"
+    },
+    {
+      "id": "math",
+      "label": "Math",
+      "value": "College Algebra / advanced math track"
+    },
+    {
+      "id": "course-load",
+      "label": "Course load",
+      "value": "All advanced classes, including AP Human Geography and AP Spanish Language"
+    }
+  ],
+  "smallProjects": [
+    {
+      "id": "check-ins",
+      "title": "Check-ins",
+      "href": "https://check-ins-zeta.vercel.app/",
+      "type": "live web app",
+      "description": "Live web app for logging check-ins and tracking target gaps, max gaps, and progress."
+    },
+    {
+      "id": "mpf-hardware-test-tools",
+      "title": "MPF Hardware Test Tools",
+      "href": null,
+      "type": "pinball utilities",
+      "description": "Pinball test utilities for checking switches, coils, LEDs, board maps, and FAST hardware before full rules."
+    },
+    {
+      "id": "midi-practice-tool",
+      "title": "MIDI Practice Tool",
+      "href": null,
+      "type": "python / music",
+      "description": "Python practice tool for soundfonts, pedals, controls, and keyboard-style interaction."
+    },
+    {
+      "id": "desmos-3d-solar-system",
+      "title": "Desmos 3D Solar System",
+      "href": "https://www.desmos.com/3d/qcjp33t4ij",
+      "type": "math visualization",
+      "description": "3D math visualization using surfaces, orbits, color mapping, and performance tradeoffs."
+    },
+    {
+      "id": "tinygpt-experiments",
+      "title": "TinyGPT Experiments",
+      "href": null,
+      "type": "machine learning",
+      "description": "Learning project on small next-token models and how pretraining differs from instruction following."
+    },
+    {
+      "id": "vex-v5-drivetrain-prototype",
+      "title": "VEX V5 Drivetrain Prototype",
+      "href": null,
+      "type": "robotics prototype",
+      "description": "Robot drivetrain prototype built around gearing, packaging, shafts, and structure clearance."
+    }
+  ],
+  "skillNarratives": [
+    {
+      "id": "mechanical-design",
+      "title": "Mechanical design",
+      "icon": "wrench",
+      "text": "I use CAD to test clearances, assemblies, print orientation, mounting, and fabrication before building parts."
+    },
+    {
+      "id": "hardware-electronics",
+      "title": "Hardware + electronics",
+      "icon": "cpu",
+      "text": "I work with wiring, sensors, actuators, power routing, and controller behavior in the same system."
+    },
+    {
+      "id": "software-for-hardware",
+      "title": "Software as a tool for hardware",
+      "icon": "route",
+      "text": "I write code for MPF configs, hardware tests, embedded control, web tools, and debugging workflows."
+    },
+    {
+      "id": "ai-assisted-engineering",
+      "title": "AI-assisted engineering workflow",
+      "icon": "layers",
+      "text": "I use ChatGPT for planning, debugging, documentation, and code review, then check decisions against real tests."
+    }
+  ],
+  "skills": [
+    {
+      "id": "solidworks",
+      "name": "SolidWorks"
+    },
+    {
+      "id": "fast-pinball",
+      "name": "FAST Pinball"
+    },
+    {
+      "id": "mission-pinball-framework",
+      "name": "Mission Pinball Framework"
+    },
+    {
+      "id": "arduino-esp32",
+      "name": "Arduino / ESP32"
+    },
+    {
+      "id": "kicad-basics",
+      "name": "KiCad basics"
+    },
+    {
+      "id": "3d-printing",
+      "name": "3D printing"
+    },
+    {
+      "id": "laser-cutting",
+      "name": "laser cutting"
+    },
+    {
+      "id": "mechanism-design",
+      "name": "mechanism design"
+    },
+    {
+      "id": "sensor-wiring",
+      "name": "sensor wiring"
+    },
+    {
+      "id": "pump-motor-control",
+      "name": "pump / motor control"
+    },
+    {
+      "id": "technical-presentation",
+      "name": "technical presentation"
+    },
+    {
+      "id": "rapid-iteration",
+      "name": "rapid iteration"
+    },
+    {
+      "id": "chatgpt-assisted-debugging",
+      "name": "ChatGPT-assisted debugging"
+    }
+  ],
+  "principles": [
+    {
+      "id": "show-the-mechanism",
+      "title": "Show the mechanism",
+      "text": "Show CAD, wiring, test setup, constraints, and why the design exists."
+    },
+    {
+      "id": "document-revisions",
+      "title": "Document revisions",
+      "text": "When a wiring map, enclosure, or design choice fails, explain what changed."
+    },
+    {
+      "id": "prefer-working-artifacts",
+      "title": "Prefer working artifacts",
+      "text": "Prioritize hardware, test videos, CAD screenshots, measurements, code, and build logs."
+    }
+  ],
+  "fullRecord": [
+    {
+      "id": "flagship-engineering",
+      "category": "Flagship engineering",
+      "icon": "wrench",
+      "items": [
+        {
+          "id": "garden-party-pinball",
+          "text": "Garden Party Pinball - full-size homebrew pinball machine using FAST hardware, MPF, coils, switches, lamps, cabinet wiring, and playfield revisions."
+        },
+        {
+          "id": "smart-self-watering-pot",
+          "text": "Smart Self-Watering Pot - moisture sensing, pump control, enclosure planning, and a custom PCB direction."
+        },
+        {
+          "id": "tetc-3d-printing-showcase",
+          "text": "TETC 3D Printing Engineering Showcase - presentation on additive manufacturing, mechanical design, and robotics examples."
+        },
+        {
+          "id": "cad-mechanism-studies",
+          "text": "CAD Mechanism Studies - SolidWorks assemblies, mechanisms, print-ready parts, tolerance tests, and design notes."
+        },
+        {
+          "id": "fast-mpf-hardware-test-tools",
+          "text": "FAST / MPF Hardware Test Tools - scripts and configs for switch, driver, LED, board-map, and hardware tests."
+        }
+      ]
+    },
+    {
+      "id": "software-visualization-ai",
+      "category": "Software, visualization, and AI",
+      "icon": "cpu",
+      "items": [
+        {
+          "id": "check-ins",
+          "text": "Check-ins - live Vercel app for logging consistency and tracking target/max gaps."
+        },
+        {
+          "id": "desmos-3d-solar-system",
+          "text": "Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design."
+        },
+        {
+          "id": "tinygpt-experiments",
+          "text": "TinyGPT Experiments - small language-model project focused on next-token prediction and instruction-following differences."
+        },
+        {
+          "id": "midi-practice-tool",
+          "text": "MIDI Practice Tool - Python music-practice utility for soundfonts, pedals, controls, and keyboard-style interaction."
+        },
+        {
+          "id": "manim-presentation-animation",
+          "text": "Manim / presentation animation work - timed explanation visuals for presentations."
+        },
+        {
+          "id": "betterquizzer",
+          "text": "BetterQuizzer / quiz-app work - quiz-app development and debugging for hosted submission and persistence behavior."
+        }
+      ]
+    },
+    {
+      "id": "fabrication-maker-skills",
+      "category": "Fabrication and maker skills",
+      "icon": "printer",
+      "items": [
+        {
+          "id": "3d-printing-workflow",
+          "text": "3D printing workflow - Bambu Studio, material choices, iteration prints, print orientation, and fit testing."
+        },
+        {
+          "id": "laser-cutting-workflow",
+          "text": "Laser cutting workflow - design and fabrication planning for flat-cut parts and enclosures."
+        },
+        {
+          "id": "home-maker-lab-practice",
+          "text": "Home maker-lab practice - CAD, wiring, printing, scanning, electronics, and mechanical assembly."
+        },
+        {
+          "id": "vex-v5-drivetrain-prototype",
+          "text": "VEX V5 Drivetrain Prototype - robotics drivetrain build using gearing and packaging constraints around structure interference."
+        },
+        {
+          "id": "solidworks-modeling-depth",
+          "text": "SolidWorks modeling - part design, assemblies, complex forms, and fabrication-oriented CAD decisions."
+        }
+      ]
+    },
+    {
+      "id": "academics",
+      "category": "Academics",
+      "icon": "school",
+      "items": [
+        {
+          "id": "spring-early-college-academy",
+          "text": "Spring Early College Academy - 9th grade dual-credit student at SECA in Spring ISD."
+        },
+        {
+          "id": "current-standing",
+          "text": "Current standing - all As, ranked 3rd of 113."
+        },
+        {
+          "id": "advanced-math",
+          "text": "Advanced math - College Algebra and accelerated math."
+        },
+        {
+          "id": "advanced-course-load",
+          "text": "Advanced course load - all advanced classes, including AP Human Geography and AP Spanish Language."
+        },
+        {
+          "id": "dual-credit-direction",
+          "text": "Dual-credit direction - college-level coursework during high school."
+        }
+      ]
+    },
+    {
+      "id": "competitions-speaking-leadership",
+      "category": "Competitions, speaking, and leadership",
+      "icon": "trophy",
+      "items": [
+        {
+          "id": "uil-number-sense",
+          "text": "UIL Number Sense - math competition experience."
+        },
+        {
+          "id": "informative-speaking",
+          "text": "Informative Speaking - public-speaking competition and presentation practice."
+        },
+        {
+          "id": "debate",
+          "text": "Debate - JV finals experience."
+        },
+        {
+          "id": "student-council",
+          "text": "Student Council - school leadership."
+        },
+        {
+          "id": "tetc-presentations",
+          "text": "TETC presentations - technical communication for engineering projects and showcase work."
+        }
+      ]
+    },
+    {
+      "id": "scouts-service-discipline",
+      "category": "Scouts, service, and long-term discipline",
+      "icon": "target",
+      "items": [
+        {
+          "id": "scouts-bsa",
+          "text": "Scouts BSA - First Class Scout working toward Eagle."
+        },
+        {
+          "id": "eagle-planning",
+          "text": "Eagle planning - paperwork, service planning, and merit-badge tracking."
+        },
+        {
+          "id": "troop-leadership-interests",
+          "text": "Troop leadership interests - Librarian/Bugler planning, checkout systems, and bugle-call practice."
+        },
+        {
+          "id": "fitness-requirement-tracking",
+          "text": "Fitness requirement tracking - exercise logs and reflections for rank and merit-badge progress."
+        },
+        {
+          "id": "service-mindset",
+          "text": "Service projects - leadership roles and planning for Eagle and Palms."
+        }
+      ]
+    },
+    {
+      "id": "languages-learning",
+      "category": "Languages and long-term learning",
+      "icon": "list",
+      "items": [
+        {
+          "id": "duolingo-streak",
+          "text": "Duolingo streak - daily language-learning streak over 1,600 days."
+        },
+        {
+          "id": "spanish",
+          "text": "Spanish - AP Spanish Language coursework and continued practice."
+        },
+        {
+          "id": "french",
+          "text": "French - beginner-to-intermediate practice in pronunciation, listening, and sentence construction."
+        },
+        {
+          "id": "latin-background",
+          "text": "Latin background - foundational Latin study."
+        },
+        {
+          "id": "self-directed-learning",
+          "text": "Self-directed learning - projects, tools, and practice systems outside assigned schoolwork."
+        }
+      ]
+    }
+  ],
+  "navLinks": [
+    {
+      "id": "projects",
+      "label": "Projects",
+      "href": "#projects"
+    },
+    {
+      "id": "academics",
+      "label": "Academics",
+      "href": "#academics"
+    },
+    {
+      "id": "small-builds",
+      "label": "Small Builds",
+      "href": "#smaller-projects"
+    },
+    {
+      "id": "skills",
+      "label": "Skills",
+      "href": "#bench"
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "href": "#contact"
+    }
+  ],
+  "canonicalUrl": "https://chrisaheskett.vercel.app/",
+  "routes": {
+    "portfolio": "https://chrisaheskett.vercel.app/",
+    "fullRecord": "https://chrisaheskett.vercel.app/record"
+  },
+  "agentFiles": {
+    "llms": "https://chrisaheskett.vercel.app/llms.txt",
+    "llmsFull": "https://chrisaheskett.vercel.app/llms-full.txt",
+    "portfolioJson": "https://chrisaheskett.vercel.app/portfolio.json",
+    "sitemap": "https://chrisaheskett.vercel.app/sitemap.xml",
+    "robots": "https://chrisaheskett.vercel.app/robots.txt"
+  }
+}

@@ -1,0 +1,156 @@
+# Christopher Portfolio
+
+Canonical URL: https://chrisaheskett.vercel.app/
+Full record: https://chrisaheskett.vercel.app/record
+Structured JSON: https://chrisaheskett.vercel.app/portfolio.json
+
+## Summary
+
+I build mechanical and electronic projects, then document the tests, revisions, and open problems.
+
+## Current Stack
+
+- 01: Garden Party pinball
+- 02: Smart pot PCB / enclosure
+- 03: SolidWorks mechanism studies
+- 04: small web + robotics tools
+
+## Main Projects
+
+### A01 Garden Party Pinball
+
+Status: active build
+Label: flagship electromechanical build
+
+A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, real coils, switches, lamps, cabinet wiring, and a revised playfield.
+
+Evidence: FAST Pinball boards, Mission Pinball Framework, coils / switches / lamps, CAD + wiring revisions
+To document next: photos, playfield CAD, wiring maps, MPF configs, driver tests, rule notes
+
+### A02 Smart Self-Watering Pot
+
+Status: reviving / redesigning
+Label: embedded product redesign
+
+A plant-care device with moisture sensing, pump control, electronics packaging, and an enclosure/PCB redesign.
+
+Evidence: ESP32 / Arduino-style control, pump driver, sensor input, KiCad + enclosure planning
+To document next: schematic, board outline, enclosure constraints, connector plan, watering state machine
+
+### A03 TETC 3D Printing Showcase
+
+Status: showcase work
+Label: technical communication
+
+A technical showcase explaining 3D printing with SolidWorks models, printed demos, robotics examples, and presentation materials.
+
+Evidence: SolidWorks models, printed demos, robotics angle, public explanation
+To document next: model screenshots, printed examples, final presentation notes
+
+### A04 CAD Mechanism Studies
+
+Status: ongoing library
+Label: mechanical skill building
+
+SolidWorks studies for mechanisms, assemblies, print-ready parts, clearances, and tolerances.
+
+Evidence: assemblies, print-ready parts, tolerance experiments, mechanism notes
+To document next: annotated notes on constraints, mistakes, and lessons from each model
+
+## Academics
+
+- Grades: All As
+- Rank: 3rd of 113
+- Math: College Algebra / advanced math track
+- Course load: All advanced classes, including AP Human Geography and AP Spanish Language
+
+## Smaller Projects
+
+- Check-ins - live web app: Live web app for logging check-ins and tracking target gaps, max gaps, and progress. (https://check-ins-zeta.vercel.app/)
+- MPF Hardware Test Tools - pinball utilities: Pinball test utilities for checking switches, coils, LEDs, board maps, and FAST hardware before full rules.
+- MIDI Practice Tool - python / music: Python practice tool for soundfonts, pedals, controls, and keyboard-style interaction.
+- Desmos 3D Solar System - math visualization: 3D math visualization using surfaces, orbits, color mapping, and performance tradeoffs. (https://www.desmos.com/3d/qcjp33t4ij)
+- TinyGPT Experiments - machine learning: Learning project on small next-token models and how pretraining differs from instruction following.
+- VEX V5 Drivetrain Prototype - robotics prototype: Robot drivetrain prototype built around gearing, packaging, shafts, and structure clearance.
+
+## Skills
+
+- Mechanical design: I use CAD to test clearances, assemblies, print orientation, mounting, and fabrication before building parts.
+- Hardware + electronics: I work with wiring, sensors, actuators, power routing, and controller behavior in the same system.
+- Software as a tool for hardware: I write code for MPF configs, hardware tests, embedded control, web tools, and debugging workflows.
+- AI-assisted engineering workflow: I use ChatGPT for planning, debugging, documentation, and code review, then check decisions against real tests.
+
+## Working Vocabulary
+
+SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basics, 3D printing, laser cutting, mechanism design, sensor wiring, pump / motor control, technical presentation, rapid iteration, ChatGPT-assisted debugging
+
+## Documentation Standards
+
+- Show the mechanism: Show CAD, wiring, test setup, constraints, and why the design exists.
+- Document revisions: When a wiring map, enclosure, or design choice fails, explain what changed.
+- Prefer working artifacts: Prioritize hardware, test videos, CAD screenshots, measurements, code, and build logs.
+
+## Full Record
+
+### Flagship engineering
+
+- Garden Party Pinball - full-size homebrew pinball machine using FAST hardware, MPF, coils, switches, lamps, cabinet wiring, and playfield revisions.
+- Smart Self-Watering Pot - moisture sensing, pump control, enclosure planning, and a custom PCB direction.
+- TETC 3D Printing Engineering Showcase - presentation on additive manufacturing, mechanical design, and robotics examples.
+- CAD Mechanism Studies - SolidWorks assemblies, mechanisms, print-ready parts, tolerance tests, and design notes.
+- FAST / MPF Hardware Test Tools - scripts and configs for switch, driver, LED, board-map, and hardware tests.
+
+### Software, visualization, and AI
+
+- Check-ins - live Vercel app for logging consistency and tracking target/max gaps.
+- Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design.
+- TinyGPT Experiments - small language-model project focused on next-token prediction and instruction-following differences.
+- MIDI Practice Tool - Python music-practice utility for soundfonts, pedals, controls, and keyboard-style interaction.
+- Manim / presentation animation work - timed explanation visuals for presentations.
+- BetterQuizzer / quiz-app work - quiz-app development and debugging for hosted submission and persistence behavior.
+
+### Fabrication and maker skills
+
+- 3D printing workflow - Bambu Studio, material choices, iteration prints, print orientation, and fit testing.
+- Laser cutting workflow - design and fabrication planning for flat-cut parts and enclosures.
+- Home maker-lab practice - CAD, wiring, printing, scanning, electronics, and mechanical assembly.
+- VEX V5 Drivetrain Prototype - robotics drivetrain build using gearing and packaging constraints around structure interference.
+- SolidWorks modeling - part design, assemblies, complex forms, and fabrication-oriented CAD decisions.
+
+### Academics
+
+- Spring Early College Academy - 9th grade dual-credit student at SECA in Spring ISD.
+- Current standing - all As, ranked 3rd of 113.
+- Advanced math - College Algebra and accelerated math.
+- Advanced course load - all advanced classes, including AP Human Geography and AP Spanish Language.
+- Dual-credit direction - college-level coursework during high school.
+
+### Competitions, speaking, and leadership
+
+- UIL Number Sense - math competition experience.
+- Informative Speaking - public-speaking competition and presentation practice.
+- Debate - JV finals experience.
+- Student Council - school leadership.
+- TETC presentations - technical communication for engineering projects and showcase work.
+
+### Scouts, service, and long-term discipline
+
+- Scouts BSA - First Class Scout working toward Eagle.
+- Eagle planning - paperwork, service planning, and merit-badge tracking.
+- Troop leadership interests - Librarian/Bugler planning, checkout systems, and bugle-call practice.
+- Fitness requirement tracking - exercise logs and reflections for rank and merit-badge progress.
+- Service projects - leadership roles and planning for Eagle and Palms.
+
+### Languages and long-term learning
+
+- Duolingo streak - daily language-learning streak over 1,600 days.
+- Spanish - AP Spanish Language coursework and continued practice.
+- French - beginner-to-intermediate practice in pronunciation, listening, and sentence construction.
+- Latin background - foundational Latin study.
+- Self-directed learning - projects, tools, and practice systems outside assigned schoolwork.
+
+## Contact
+
+- Email: Chrisaheskett@gmail.com
+- GitHub: https://github.com/Chrissyuh
+- Live project: https://check-ins-zeta.vercel.app/

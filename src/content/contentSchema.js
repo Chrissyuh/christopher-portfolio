@@ -16,6 +16,8 @@ export const sheetTabNames = [
 
 export const allowedAccents = ["blue", "teal", "amber", "clay"];
 
+export const allowedMediaTypes = ["photo", "video"];
+
 export const allowedIcons = [
   "arrowRight",
   "bolt",
@@ -106,6 +108,8 @@ const defaultMeta = {
   projectNextLabel: "to document next",
   projectOpenLabel: "Open project",
   projectSourceLabel: "Source",
+  mediaPlaceholderLabel: "media needed",
+  mediaSlotLabel: "media slot",
   openProjectsLabel: "View projects",
   viewRecordLabel: "View full record",
   backPortfolioLabel: "Back to portfolio",
@@ -134,6 +138,32 @@ function orderedRows(rows = []) {
 
 function compactNumberedFields(row, prefix, count) {
   return Array.from({ length: count }, (_, index) => text(row[`${prefix}_${index + 1}`])).filter(Boolean);
+}
+
+function compactMediaFields(row, errors, tabName, rowId) {
+  return Array.from({ length: 4 }, (_, index) => {
+    const slot = index + 1;
+    const type = text(row[`media_${slot}_type`]);
+    const src = text(row[`media_${slot}_src`]);
+    const alt = text(row[`media_${slot}_alt`]);
+    const caption = text(row[`media_${slot}_caption`]);
+
+    if (!type && !src && !alt && !caption) {
+      return null;
+    }
+
+    if (type && !allowedMediaTypes.includes(type)) {
+      errors.push(`${tabName} row "${rowId}" has unsupported media_${slot}_type "${type}".`);
+    }
+
+    return {
+      id: `media-${slot}`,
+      type: type || "photo",
+      src: hrefOrNull(src),
+      alt,
+      caption,
+    };
+  }).filter(Boolean);
 }
 
 function rowsFor(tabRows, tabName) {
@@ -185,11 +215,17 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
   const simpleRows = (tabName, mapper) => orderedRows(rowsFor(tabRows, tabName)).map(mapper);
 
   const projects = simpleRows("MainProjects", (row) => {
+    const id = text(row.id);
     const accent = text(row.accent);
-    requireKnownValue(errors, "MainProjects", text(row.id), "accent", accent, allowedAccents);
+    requireKnownValue(errors, "MainProjects", id, "accent", accent, allowedAccents);
+    const media = compactMediaFields(row, errors, "MainProjects", id);
+
+    if (media.length === 0) {
+      errors.push(`MainProjects row "${id}" must include at least one media slot.`);
+    }
 
     return {
-      id: text(row.id),
+      id,
       number: text(row.number),
       title: text(row.title),
       href: hrefOrNull(row.href),
@@ -199,6 +235,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       accent,
       summary: text(row.summary),
       evidence: compactNumberedFields(row, "evidence", 6),
+      media,
       next: text(row.next),
       preview: {
         title: text(row.preview_title),
@@ -217,6 +254,25 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       title: text(row.title),
       icon,
       text: text(row.text),
+    };
+  });
+
+  const smallProjects = simpleRows("SmallProjects", (row) => {
+    const id = text(row.id);
+    const media = compactMediaFields(row, errors, "SmallProjects", id);
+
+    if (media.length === 0) {
+      errors.push(`SmallProjects row "${id}" must include at least one media slot.`);
+    }
+
+    return {
+      id,
+      title: text(row.title),
+      href: hrefOrNull(row.href),
+      sourceHref: hrefOrNull(row.source_href),
+      type: text(row.type),
+      description: text(row.description),
+      media,
     };
   });
 
@@ -278,13 +334,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       label: text(row.label),
       value: text(row.value),
     })),
-    smallProjects: simpleRows("SmallProjects", (row) => ({
-      id: text(row.id),
-      title: text(row.title),
-      href: hrefOrNull(row.href),
-      type: text(row.type),
-      description: text(row.description),
-    })),
+    smallProjects,
     skillNarratives,
     skills: simpleRows("Skills", (row) => ({
       id: text(row.id),

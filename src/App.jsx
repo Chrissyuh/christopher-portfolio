@@ -92,6 +92,27 @@ function buildStructuredData(content) {
   const personId = `${siteUrl("/")}#christopher-heskett`;
   const websiteId = `${siteUrl("/")}#website`;
   const projects = list(content.projects);
+  const smallProjects = list(content.smallProjects);
+  const creativeWorks = [
+    ...projects.map((project) => ({
+      id: project.id,
+      title: project.title,
+      href: project.href,
+      sourceHref: project.sourceHref,
+      label: project.label,
+      summary: project.summary,
+      evidence: project.evidence,
+    })),
+    ...smallProjects.map((project) => ({
+      id: `b-${project.id}`,
+      title: project.title,
+      href: project.href,
+      sourceHref: project.sourceHref,
+      label: project.type,
+      summary: project.description,
+      evidence: [],
+    })),
+  ];
 
   return {
     "@context": "https://schema.org",
@@ -131,7 +152,19 @@ function buildStructuredData(content) {
           item: { "@id": `${siteUrl("/")}#project-${project.id}` },
         })),
       },
-      ...projects.map((project) => ({
+      {
+        "@type": "ItemList",
+        "@id": `${siteUrl("/")}#b-level-projects`,
+        name: "Christopher Heskett B-level projects",
+        url: siteUrl("/#smaller-projects"),
+        numberOfItems: smallProjects.length,
+        itemListElement: smallProjects.map((project, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: { "@id": `${siteUrl("/")}#project-b-${project.id}` },
+        })),
+      },
+      ...creativeWorks.map((project) => ({
         "@type": "CreativeWork",
         "@id": `${siteUrl("/")}#project-${project.id}`,
         name: project.title,
@@ -157,6 +190,71 @@ function Tag({ children }) {
     <span className="border border-[#d6cec0] bg-[#fbfaf7] px-2.5 py-1 text-xs font-medium text-slate-700">
       {children}
     </span>
+  );
+}
+
+function MediaFrame({ item, label, compact = false }) {
+  const mediaType = item.type === "video" ? "video" : "photo";
+  const caption = item.caption || item.alt || label;
+  const frameClass = compact ? "min-w-full" : "min-w-[230px] md:min-w-[280px]";
+
+  return (
+    <figure className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}>
+      <div className={compact ? "aspect-[4/3]" : "aspect-video"}>
+        {item.src && mediaType === "video" && (
+          <video
+            src={item.src}
+            controls
+            preload="metadata"
+            aria-label={item.alt || caption}
+            className="h-full w-full bg-slate-950 object-cover"
+          />
+        )}
+        {item.src && mediaType === "photo" && (
+          <img
+            src={item.src}
+            alt={item.alt || caption}
+            loading="lazy"
+            className="h-full w-full object-cover"
+          />
+        )}
+        {!item.src && (
+          <div
+            aria-label={`${mediaType} placeholder: ${caption}`}
+            className="flex h-full flex-col justify-between bg-[linear-gradient(135deg,rgba(36,79,214,0.12)_25%,transparent_25%,transparent_50%,rgba(36,79,214,0.12)_50%,rgba(36,79,214,0.12)_75%,transparent_75%,transparent)] bg-[size:18px_18px] p-3"
+          >
+            <div className="flex items-center justify-between">
+              <span className="border border-[#cfc4b4] bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">
+                {mediaType === "video" ? "video" : "photo"}
+              </span>
+              <Icon name={mediaType === "video" ? "route" : "box"} className="h-4 w-4 text-[#244fd6]" />
+            </div>
+            <p className="max-w-[18rem] bg-white/85 p-2 text-sm font-semibold leading-5 text-slate-950">
+              {caption}
+            </p>
+          </div>
+        )}
+      </div>
+      <figcaption className="border-t border-[#e1d7c8] px-3 py-2 text-xs leading-5 text-slate-700">
+        {caption}
+      </figcaption>
+    </figure>
+  );
+}
+
+function MediaCarousel({ media, label, compact = false }) {
+  const items = list(media);
+
+  if (items.length === 0) return null;
+
+  return (
+    <div className={compact ? "mt-4" : "mt-5"} aria-label={`${label} media`}>
+      <div className="flex snap-x gap-3 overflow-x-auto pb-2">
+        {items.map((item, index) => (
+          <MediaFrame key={`${item.id}-${index}`} item={item} label={label} compact={compact} />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -250,6 +348,7 @@ function ProjectRow({ project, index, meta }) {
               <Tag key={item}>{item}</Tag>
             ))}
           </div>
+          <MediaCarousel media={project.media} label={project.title} />
         </div>
 
         <div className="border-t border-[#e1d7c8] bg-[#fbfaf7] p-5 lg:border-l lg:border-t-0">
@@ -288,7 +387,7 @@ function ProjectRow({ project, index, meta }) {
 }
 
 function SmallProjectCard({ project, index }) {
-  const content = (
+  return (
     <motion.article
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -303,24 +402,45 @@ function SmallProjectCard({ project, index }) {
             {project.type}
           </p>
         </div>
-        {project.href && <Icon name="link" className="h-4 w-4 text-[#827466] transition group-hover:text-[#244fd6]" />}
+        {(project.href || project.sourceHref) && <Icon name="link" className="h-4 w-4 text-[#827466] transition group-hover:text-[#244fd6]" />}
       </div>
       <div className="flex flex-1 flex-col justify-between p-5">
         <div>
           <h3 className="text-lg font-semibold tracking-[-0.02em] text-slate-950">{project.title}</h3>
           <p className="mt-3 text-sm leading-6 text-slate-700">{project.description}</p>
+          <MediaCarousel media={project.media} label={project.title} compact />
         </div>
-        <div className="mt-5 h-1.5 w-16 bg-[#244fd6] opacity-80" />
+        <div>
+          {(project.href || project.sourceHref) && (
+            <div className="mt-5 flex flex-wrap gap-2">
+              {project.href && (
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee]"
+                >
+                  Open
+                  <Icon name="arrowRight" className="ml-2 h-3.5 w-3.5" />
+                </a>
+              )}
+              {project.sourceHref && (
+                <a
+                  href={project.sourceHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee]"
+                >
+                  <Icon name="github" className="mr-2 h-3.5 w-3.5" />
+                  Source
+                </a>
+              )}
+            </div>
+          )}
+          <div className="mt-5 h-1.5 w-16 bg-[#244fd6] opacity-80" />
+        </div>
       </div>
     </motion.article>
-  );
-
-  if (!project.href) return content;
-
-  return (
-    <a href={project.href} target="_blank" rel="noreferrer" className="block h-full">
-      {content}
-    </a>
   );
 }
 

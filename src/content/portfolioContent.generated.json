@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-snapshot",
-  "updatedAt": "2026-06-25T00:00:00.000Z",
+  "updatedAt": "2026-06-26T00:00:00.000Z",
   "meta": {
     "documentTitle": "Christopher Portfolio",
     "navName": "Christopher",
@@ -64,8 +64,7 @@
     { "id": "garden-party", "number": "01", "label": "Garden Party pinball" },
     { "id": "smart-pot", "number": "02", "label": "Smart pot PCB / enclosure" },
     { "id": "solidworks", "number": "03", "label": "SolidWorks mechanism studies" },
-    { "id": "subpix", "number": "04", "label": "Subpix desktop editor" },
-    { "id": "small-tools", "number": "05", "label": "small web + robotics tools" }
+    { "id": "small-tools", "number": "04", "label": "small web + desktop tools" }
   ],
   "evidenceTiles": [
     { "id": "real-hardware", "top": "hardware", "bottom": "photos" },
@@ -87,6 +86,10 @@
       "accent": "blue",
       "summary": "A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, real coils, switches, lamps, cabinet wiring, and a revised playfield.",
       "evidence": ["FAST Pinball boards", "Mission Pinball Framework", "coils / switches / lamps", "CAD + wiring revisions"],
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "Garden Party playfield or cabinet photo needed", "caption": "Add playfield or cabinet photo" },
+        { "id": "media-2", "type": "video", "src": null, "alt": "Garden Party switch or coil test video needed", "caption": "Add switch or coil test video" }
+      ],
       "next": "photos, playfield CAD, wiring maps, MPF configs, driver tests, rule notes",
       "preview": {
         "title": "Playfield + control stack",
@@ -105,6 +108,10 @@
       "accent": "teal",
       "summary": "A plant-care device with moisture sensing, pump control, electronics packaging, and an enclosure/PCB redesign.",
       "evidence": ["ESP32 / Arduino-style control", "pump driver", "sensor input", "KiCad + enclosure planning"],
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "Smart self-watering pot prototype or enclosure photo needed", "caption": "Add prototype or enclosure photo" },
+        { "id": "media-2", "type": "video", "src": null, "alt": "Smart self-watering pot watering test video needed", "caption": "Add watering test video" }
+      ],
       "next": "schematic, board outline, enclosure constraints, connector plan, watering state machine",
       "preview": {
         "title": "Sensor -> controller -> pump",
@@ -123,6 +130,10 @@
       "accent": "amber",
       "summary": "A technical showcase explaining 3D printing with SolidWorks models, printed demos, robotics examples, and presentation materials.",
       "evidence": ["SolidWorks models", "printed demos", "robotics angle", "public explanation"],
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "TETC 3D printing printed demo photo needed", "caption": "Add printed demo photo" },
+        { "id": "media-2", "type": "video", "src": null, "alt": "TETC 3D printing presentation or print demo video needed", "caption": "Add presentation or print demo video" }
+      ],
       "next": "model screenshots, printed examples, final presentation notes",
       "preview": {
         "title": "CAD model -> printed proof",
@@ -141,29 +152,15 @@
       "accent": "clay",
       "summary": "SolidWorks studies for mechanisms, assemblies, print-ready parts, clearances, and tolerances.",
       "evidence": ["assemblies", "print-ready parts", "tolerance experiments", "mechanism notes"],
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "CAD mechanism screenshot or printed mechanism photo needed", "caption": "Add CAD screenshot or printed mechanism photo" },
+        { "id": "media-2", "type": "video", "src": null, "alt": "CAD mechanism motion video needed", "caption": "Add mechanism motion video" }
+      ],
       "next": "annotated notes on constraints, mistakes, and lessons from each model",
       "preview": {
         "title": "Assembly study library",
         "label": "mechanism map",
         "parts": ["mates", "clearance", "motion", "tolerance"]
-      }
-    },
-    {
-      "id": "subpix",
-      "number": "A05",
-      "title": "Subpix",
-      "href": "https://subpix-editor.vercel.app/",
-      "sourceHref": "https://github.com/Chrissyuh/Subpix",
-      "label": "desktop editor / file format",
-      "status": "finished v0.1",
-      "accent": "blue",
-      "summary": "Open-source Electron, Vite, React, and TypeScript desktop editor for creating, editing, saving, and exporting .subpix subpixel image files.",
-      "evidence": ["Electron desktop app", "RGB/BGR subpixel canvas", ".subpix JSON validation", "PNG export + NSIS installer"],
-      "next": "product site, GitHub repo, Windows installer, file-format notes, export behavior",
-      "preview": {
-        "title": "Subpixel editor pipeline",
-        "label": "desktop workflow",
-        "parts": ["draw slots", "validate file", "pack PNG", "install app"]
       }
     }
   ],
@@ -175,46 +172,82 @@
   ],
   "smallProjects": [
     {
+      "id": "subpix",
+      "title": "Subpix",
+      "href": "https://subpix-editor.vercel.app/",
+      "sourceHref": "https://github.com/Chrissyuh/Subpix",
+      "type": "desktop app",
+      "description": "Open-source Electron, Vite, React, and TypeScript editor for .subpix files, RGB/BGR subpixel canvases, JSON validation, PNG export, and Windows packaging.",
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "Subpix editor screenshot needed", "caption": "Add editor screenshot" },
+        { "id": "media-2", "type": "video", "src": null, "alt": "Subpix editing workflow video needed", "caption": "Add editing workflow capture" }
+      ]
+    },
+    {
       "id": "check-ins",
       "title": "Check-ins",
       "href": "https://check-ins-zeta.vercel.app/",
+      "sourceHref": null,
       "type": "live web app",
-      "description": "Live web app for logging check-ins and tracking target gaps, max gaps, and progress."
+      "description": "Live web app for logging check-ins and tracking target gaps, max gaps, and progress.",
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "Check-ins dashboard screenshot needed", "caption": "Add dashboard screenshot" }
+      ]
     },
     {
       "id": "mpf-hardware-test-tools",
       "title": "MPF Hardware Test Tools",
       "href": null,
+      "sourceHref": null,
       "type": "pinball utilities",
-      "description": "Pinball test utilities for checking switches, coils, LEDs, board maps, and FAST hardware before full rules."
+      "description": "Pinball test utilities for checking switches, coils, LEDs, board maps, and FAST hardware before full rules.",
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "MPF hardware test bench photo needed", "caption": "Add hardware test bench photo" }
+      ]
     },
     {
       "id": "midi-practice-tool",
       "title": "MIDI Practice Tool",
       "href": null,
+      "sourceHref": null,
       "type": "python / music",
-      "description": "Python practice tool for soundfonts, pedals, controls, and keyboard-style interaction."
+      "description": "Python practice tool for soundfonts, pedals, controls, and keyboard-style interaction.",
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "MIDI practice tool interface or keyboard setup photo needed", "caption": "Add tool interface or keyboard setup photo" }
+      ]
     },
     {
       "id": "desmos-3d-solar-system",
       "title": "Desmos 3D Solar System",
       "href": "https://www.desmos.com/3d/qcjp33t4ij",
+      "sourceHref": null,
       "type": "math visualization",
-      "description": "3D math visualization using surfaces, orbits, color mapping, and performance tradeoffs."
+      "description": "3D math visualization using surfaces, orbits, color mapping, and performance tradeoffs.",
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "Desmos 3D solar system scene screenshot needed", "caption": "Add 3D scene screenshot" }
+      ]
     },
     {
       "id": "tinygpt-experiments",
       "title": "TinyGPT Experiments",
       "href": null,
+      "sourceHref": null,
       "type": "machine learning",
-      "description": "Learning project on small next-token models and how pretraining differs from instruction following."
+      "description": "Learning project on small next-token models and how pretraining differs from instruction following.",
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "TinyGPT training or output screenshot needed", "caption": "Add training or output screenshot" }
+      ]
     },
     {
       "id": "vex-v5-drivetrain-prototype",
       "title": "VEX V5 Drivetrain Prototype",
       "href": null,
+      "sourceHref": null,
       "type": "robotics prototype",
-      "description": "Robot drivetrain prototype built around gearing, packaging, shafts, and structure clearance."
+      "description": "Robot drivetrain prototype built around gearing, packaging, shafts, and structure clearance.",
+      "media": [
+        { "id": "media-1", "type": "photo", "src": null, "alt": "VEX V5 drivetrain prototype photo needed", "caption": "Add drivetrain prototype photo" }
+      ]
     }
   ],
   "skillNarratives": [

@@ -27,6 +27,24 @@ function projectLinks(project) {
   ].filter(Boolean);
 }
 
+function mediaSummary(project) {
+  const media = list(project.media);
+  const filled = media.filter((item) => item.src).length;
+  const placeholders = media.length - filled;
+
+  if (media.length === 0) {
+    return "Media: none";
+  }
+
+  return `Media: ${media.length} slot${media.length === 1 ? "" : "s"}, ${filled} live, ${placeholders} placeholder${placeholders === 1 ? "" : "s"}`;
+}
+
+function appendSentence(text, suffix) {
+  const trimmed = String(text ?? "").trim();
+  const separator = /[.!?]$/.test(trimmed) ? " " : ". ";
+  return `${trimmed}${separator}${suffix}`;
+}
+
 function escapeXml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -88,7 +106,17 @@ function buildLlmsTxt(content) {
       list(content.projects).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        return `${project.title}: ${project.summary}${linkText}`;
+        return appendSentence(`${project.title}: ${project.summary}${linkText}`, `${mediaSummary(project)}.`);
+      }),
+    ),
+    "",
+    "## B-Level Projects",
+    "",
+    markdownList(
+      list(content.smallProjects).map((project) => {
+        const links = projectLinks(project);
+        const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
+        return appendSentence(`${project.title}: ${project.description}${linkText}`, `${mediaSummary(project)}.`);
       }),
     ),
     "",
@@ -135,6 +163,7 @@ function buildLlmsFullTxt(content) {
           project.summary,
           "",
           `Evidence: ${list(project.evidence).join(", ")}`,
+          mediaSummary(project),
           `To document next: ${project.next}`,
         ]
           .filter((line) => line !== "")
@@ -150,8 +179,9 @@ function buildLlmsFullTxt(content) {
     "",
     markdownList(
       list(content.smallProjects).map((project) => {
-        const href = project.href ? ` (${project.href})` : "";
-        return `${project.title} - ${project.type}: ${project.description}${href}`;
+        const links = projectLinks(project);
+        const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
+        return appendSentence(`${project.title} - ${project.type}: ${project.description}${linkText}`, `${mediaSummary(project)}.`);
       }),
     ),
     "",

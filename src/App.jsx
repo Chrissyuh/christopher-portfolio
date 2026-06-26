@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import { usePortfolioContent } from "./content/loadPortfolioContent";
@@ -268,12 +268,90 @@ function MediaFrame({ item, label, compact = false }) {
 
 function MediaCarousel({ media, label, compact = false }) {
   const items = list(media);
+  const trackRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [lastInteractionAt, setLastInteractionAt] = useState(0);
+  const maxIndex = Math.max(items.length - 1, 0);
+  const safeActiveIndex = items.length > 0 ? Math.min(activeIndex, maxIndex) : 0;
+
+  const markInteraction = useCallback(() => {
+    setLastInteractionAt(Date.now());
+  }, []);
+
+  const goTo = useCallback(
+    (index, userInitiated = false) => {
+      const normalizedIndex = ((index % items.length) + items.length) % items.length;
+
+      if (userInitiated) {
+        markInteraction();
+      }
+
+      setActiveIndex(normalizedIndex);
+    },
+    [items.length, markInteraction],
+  );
+
+  useEffect(() => {
+    const track = trackRef.current;
+    const slide = track?.children?.[safeActiveIndex];
+
+    if (!track || !slide) return;
+
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    track.scrollTo({
+      left: slide.offsetLeft,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+  }, [safeActiveIndex]);
+
+  useEffect(() => {
+    if (items.length <= 1) return undefined;
+
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) return undefined;
+
+    const timer = window.setTimeout(() => {
+      setActiveIndex((index) => (Math.min(index, maxIndex) + 1) % items.length);
+    }, 6000);
+
+    return () => window.clearTimeout(timer);
+  }, [items.length, lastInteractionAt, maxIndex, safeActiveIndex]);
 
   if (items.length === 0) return null;
 
   return (
-    <div className={compact ? "mt-4" : "mt-5"} aria-label={`${label} media`}>
-      <div className="flex snap-x gap-3 overflow-x-auto pb-2">
+    <div
+      className={compact ? "mt-4" : "mt-5"}
+      aria-label={`${label} media`}
+      aria-roledescription="carousel"
+      onFocusCapture={markInteraction}
+      onPointerDown={markInteraction}
+      onKeyDown={markInteraction}
+      onWheel={markInteraction}
+    >
+      {items.length > 1 && (
+        <div className="mb-2 flex justify-end gap-2">
+          <button
+            type="button"
+            aria-label={`Previous media for ${label}`}
+            onClick={() => goTo(safeActiveIndex - 1, true)}
+            className="grid h-9 w-9 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+          >
+            <Icon name="arrowRight" className="h-4 w-4 rotate-180" />
+          </button>
+          <button
+            type="button"
+            aria-label={`Next media for ${label}`}
+            onClick={() => goTo(safeActiveIndex + 1, true)}
+            className="grid h-9 w-9 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+          >
+            <Icon name="arrowRight" className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+      <div ref={trackRef} className="flex snap-x gap-3 overflow-hidden pb-2">
         {items.map((item, index) => (
           <MediaFrame key={`${item.id}-${index}`} item={item} label={label} compact={compact} />
         ))}

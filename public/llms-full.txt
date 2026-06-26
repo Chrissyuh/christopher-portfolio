@@ -13,49 +13,47 @@ I build mechanical and electronic projects, then document the tests, revisions, 
 - 01: Garden Party pinball
 - 02: Smart pot PCB / enclosure
 - 03: SolidWorks mechanism studies
-- 04: small web + robotics tools
+- 04: Subpix desktop editor
+- 05: small web + robotics tools
 
 ## Main Projects
 
 ### A01 Garden Party Pinball
-
 Status: active build
 Label: flagship electromechanical build
-
 A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, real coils, switches, lamps, cabinet wiring, and a revised playfield.
-
 Evidence: FAST Pinball boards, Mission Pinball Framework, coils / switches / lamps, CAD + wiring revisions
 To document next: photos, playfield CAD, wiring maps, MPF configs, driver tests, rule notes
 
 ### A02 Smart Self-Watering Pot
-
 Status: reviving / redesigning
 Label: embedded product redesign
-
 A plant-care device with moisture sensing, pump control, electronics packaging, and an enclosure/PCB redesign.
-
 Evidence: ESP32 / Arduino-style control, pump driver, sensor input, KiCad + enclosure planning
 To document next: schematic, board outline, enclosure constraints, connector plan, watering state machine
 
 ### A03 TETC 3D Printing Showcase
-
 Status: showcase work
 Label: technical communication
-
 A technical showcase explaining 3D printing with SolidWorks models, printed demos, robotics examples, and presentation materials.
-
 Evidence: SolidWorks models, printed demos, robotics angle, public explanation
 To document next: model screenshots, printed examples, final presentation notes
 
 ### A04 CAD Mechanism Studies
-
 Status: ongoing library
 Label: mechanical skill building
-
 SolidWorks studies for mechanisms, assemblies, print-ready parts, clearances, and tolerances.
-
 Evidence: assemblies, print-ready parts, tolerance experiments, mechanism notes
 To document next: annotated notes on constraints, mistakes, and lessons from each model
+
+### A05 Subpix
+Status: finished v0.1
+Label: desktop editor / file format
+Project: https://subpix-editor.vercel.app/
+Source: https://github.com/Chrissyuh/Subpix
+Open-source Electron, Vite, React, and TypeScript desktop editor for creating, editing, saving, and exporting .subpix subpixel image files.
+Evidence: Electron desktop app, RGB/BGR subpixel canvas, .subpix JSON validation, PNG export + NSIS installer
+To document next: product site, GitHub repo, Windows installer, file-format notes, export behavior
 
 ## Academics
 
@@ -82,7 +80,7 @@ To document next: annotated notes on constraints, mistakes, and lessons from eac
 
 ## Working Vocabulary
 
-SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basics, 3D printing, laser cutting, mechanism design, sensor wiring, pump / motor control, technical presentation, rapid iteration, ChatGPT-assisted debugging
+SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basics, 3D printing, laser cutting, mechanism design, sensor wiring, pump / motor control, technical presentation, rapid iteration, ChatGPT-assisted debugging, Electron, React, TypeScript, Vite, desktop packaging
 
 ## Documentation Standards
 
@@ -102,6 +100,7 @@ SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basi
 
 ### Software, visualization, and AI
 
+- Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging.
 - Check-ins - live Vercel app for logging consistency and tracking target/max gaps.
 - Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design.
 - TinyGPT Experiments - small language-model project focused on next-token prediction and instruction-following differences.

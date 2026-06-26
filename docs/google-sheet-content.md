@@ -28,9 +28,11 @@ Use one row per editable text value, such as `heroTitle`, `heroIntro`, `contactE
 
 ### MainProjects
 
-`id,order,enabled,number,title,label,status,accent,summary,evidence_1,evidence_2,evidence_3,evidence_4,evidence_5,evidence_6,next,preview_title,preview_label,preview_part_1,preview_part_2,preview_part_3,preview_part_4,preview_part_5,preview_part_6`
+`id,order,enabled,number,title,href,source_href,label,status,accent,summary,evidence_1,evidence_2,evidence_3,evidence_4,evidence_5,evidence_6,next,preview_title,preview_label,preview_part_1,preview_part_2,preview_part_3,preview_part_4,preview_part_5,preview_part_6`
 
 Allowed `accent` values: `blue`, `teal`, `amber`, `clay`.
+
+Leave `href` or `source_href` blank when a main project should not show those links.
 
 ### Academics
 

@@ -135,11 +135,12 @@ function buildStructuredData(content) {
         "@type": "CreativeWork",
         "@id": `${siteUrl("/")}#project-${project.id}`,
         name: project.title,
-        url: siteUrl("/#projects"),
+        url: project.href ?? siteUrl("/#projects"),
         creator: { "@id": personId },
         about: project.label,
         description: project.summary,
         keywords: list(project.evidence),
+        ...(project.sourceHref ? { codeRepository: project.sourceHref } : {}),
       })),
     ],
   };
@@ -254,6 +255,32 @@ function ProjectRow({ project, index, meta }) {
         <div className="border-t border-[#e1d7c8] bg-[#fbfaf7] p-5 lg:border-l lg:border-t-0">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#827466]">{meta.projectNextLabel}</p>
           <p className="mt-3 text-sm leading-6 text-slate-700">{project.next}</p>
+          {(project.href || project.sourceHref) && (
+            <div className="mt-5 flex flex-col gap-2">
+              {project.href && (
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee]"
+                >
+                  {meta.projectOpenLabel}
+                  <Icon name="arrowRight" className="ml-2 h-3.5 w-3.5" />
+                </a>
+              )}
+              {project.sourceHref && (
+                <a
+                  href={project.sourceHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee]"
+                >
+                  <Icon name="github" className="mr-2 h-3.5 w-3.5" />
+                  {meta.projectSourceLabel}
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </motion.article>

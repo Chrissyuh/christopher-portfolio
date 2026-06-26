@@ -48,6 +48,8 @@
     "footerName": "Christopher",
     "projectVisualMapText": "Main subsystems and supporting evidence.",
     "projectNextLabel": "to document next",
+    "projectOpenLabel": "Open project",
+    "projectSourceLabel": "Source",
     "openProjectsLabel": "View projects",
     "viewRecordLabel": "View full record",
     "backPortfolioLabel": "Back to portfolio"
@@ -87,8 +89,13 @@
       "label": "SolidWorks mechanism studies"
     },
     {
-      "id": "small-tools",
+      "id": "subpix",
       "number": "04",
+      "label": "Subpix desktop editor"
+    },
+    {
+      "id": "small-tools",
+      "number": "05",
       "label": "small web + robotics tools"
     }
   ],
@@ -129,6 +136,8 @@
       "id": "garden-party-pinball",
       "number": "A01",
       "title": "Garden Party Pinball",
+      "href": null,
+      "sourceHref": null,
       "label": "flagship electromechanical build",
       "status": "active build",
       "accent": "blue",
@@ -155,6 +164,8 @@
       "id": "smart-self-watering-pot",
       "number": "A02",
       "title": "Smart Self-Watering Pot",
+      "href": null,
+      "sourceHref": null,
       "label": "embedded product redesign",
       "status": "reviving / redesigning",
       "accent": "teal",
@@ -181,6 +192,8 @@
       "id": "tetc-3d-printing-showcase",
       "number": "A03",
       "title": "TETC 3D Printing Showcase",
+      "href": null,
+      "sourceHref": null,
       "label": "technical communication",
       "status": "showcase work",
       "accent": "amber",
@@ -207,6 +220,8 @@
       "id": "cad-mechanism-studies",
       "number": "A04",
       "title": "CAD Mechanism Studies",
+      "href": null,
+      "sourceHref": null,
       "label": "mechanical skill building",
       "status": "ongoing library",
       "accent": "clay",
@@ -226,6 +241,34 @@
           "clearance",
           "motion",
           "tolerance"
+        ]
+      }
+    },
+    {
+      "id": "subpix",
+      "number": "A05",
+      "title": "Subpix",
+      "href": "https://subpix-editor.vercel.app/",
+      "sourceHref": "https://github.com/Chrissyuh/Subpix",
+      "label": "desktop editor / file format",
+      "status": "finished v0.1",
+      "accent": "blue",
+      "summary": "Open-source Electron, Vite, React, and TypeScript desktop editor for creating, editing, saving, and exporting .subpix subpixel image files.",
+      "evidence": [
+        "Electron desktop app",
+        "RGB/BGR subpixel canvas",
+        ".subpix JSON validation",
+        "PNG export + NSIS installer"
+      ],
+      "next": "product site, GitHub repo, Windows installer, file-format notes, export behavior",
+      "preview": {
+        "title": "Subpixel editor pipeline",
+        "label": "desktop workflow",
+        "parts": [
+          "draw slots",
+          "validate file",
+          "pack PNG",
+          "install app"
         ]
       }
     }
@@ -374,6 +417,26 @@
     {
       "id": "chatgpt-assisted-debugging",
       "name": "ChatGPT-assisted debugging"
+    },
+    {
+      "id": "electron",
+      "name": "Electron"
+    },
+    {
+      "id": "react",
+      "name": "React"
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript"
+    },
+    {
+      "id": "vite",
+      "name": "Vite"
+    },
+    {
+      "id": "desktop-packaging",
+      "name": "desktop packaging"
     }
   ],
   "principles": [
@@ -426,6 +489,10 @@
       "category": "Software, visualization, and AI",
       "icon": "cpu",
       "items": [
+        {
+          "id": "subpix",
+          "text": "Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging."
+        },
         {
           "id": "check-ins",
           "text": "Check-ins - live Vercel app for logging consistency and tracking target/max gaps."

@@ -20,6 +20,13 @@ function markdownList(items) {
   return items.map((item) => `- ${item}`).join("\n");
 }
 
+function projectLinks(project) {
+  return [
+    project.href && markdownLink("project", project.href),
+    project.sourceHref && markdownLink("source", project.sourceHref),
+  ].filter(Boolean);
+}
+
 function escapeXml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -77,7 +84,13 @@ function buildLlmsTxt(content) {
     "",
     "## Main Projects",
     "",
-    markdownList(list(content.projects).map((project) => `${project.title}: ${project.summary}`)),
+    markdownList(
+      list(content.projects).map((project) => {
+        const links = projectLinks(project);
+        const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
+        return `${project.title}: ${project.summary}${linkText}`;
+      }),
+    ),
     "",
     "## Contact",
     "",
@@ -116,12 +129,16 @@ function buildLlmsFullTxt(content) {
           "",
           `Status: ${project.status}`,
           `Label: ${project.label}`,
+          project.href ? `Project: ${project.href}` : "",
+          project.sourceHref ? `Source: ${project.sourceHref}` : "",
           "",
           project.summary,
           "",
           `Evidence: ${list(project.evidence).join(", ")}`,
           `To document next: ${project.next}`,
-        ].join("\n"),
+        ]
+          .filter((line) => line !== "")
+          .join("\n"),
       )
       .join("\n\n"),
     "",

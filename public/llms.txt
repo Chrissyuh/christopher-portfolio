@@ -15,6 +15,7 @@ I build mechanical and electronic projects, then document the tests, revisions, 
 - Smart Self-Watering Pot: A plant-care device with moisture sensing, pump control, electronics packaging, and an enclosure/PCB redesign.
 - TETC 3D Printing Showcase: A technical showcase explaining 3D printing with SolidWorks models, printed demos, robotics examples, and presentation materials.
 - CAD Mechanism Studies: SolidWorks studies for mechanisms, assemblies, print-ready parts, clearances, and tolerances.
+- Subpix: Open-source Electron, Vite, React, and TypeScript desktop editor for creating, editing, saving, and exporting .subpix subpixel image files. ([project](https://subpix-editor.vercel.app/), [source](https://github.com/Chrissyuh/Subpix))
 
 ## Contact
 

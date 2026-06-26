@@ -51,10 +51,10 @@ To document next: annotated notes on constraints, mistakes, and lessons from eac
 
 ## Academics
 
-- Grades: All As
-- Rank: 3rd of 113
-- Math: College Algebra / advanced math track
-- Course load: All advanced classes, including AP Human Geography and AP Spanish Language
+- Weighted GPA: 5.0000 (on a 5.0 scale)
+- Class rank: #1 of 111 (sole #1 standing)
+- Course load: AP + advanced coursework (AP Human Geography, AP Spanish Language, and advanced classes)
+- Program: Early college pathway (high school plus college-level coursework)
 
 ## Smaller Projects
 
@@ -119,8 +119,8 @@ SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basi
 ### Academics
 
 - Spring Early College Academy - 9th grade dual-credit student at SECA in Spring ISD.
-- Current standing - all As, ranked 3rd of 113.
-- Advanced math - College Algebra and accelerated math.
+- Current standing - 5.0000 weighted GPA and sole #1 class rank out of 111.
+- School context - SECA is the top Spring ISD high school by SchoolDigger state rank, and Spring ISD cites U.S. News rankings of #9 in the Houston metro, #44 in Texas, and #326 nationally for 2025-2026.
 - Advanced course load - all advanced classes, including AP Human Geography and AP Spanish Language.
 - Dual-credit direction - college-level coursework during high school.
 

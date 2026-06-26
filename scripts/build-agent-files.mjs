@@ -183,7 +183,9 @@ function buildLlmsFullTxt(content) {
     "",
     "## Academics",
     "",
-    markdownList(list(content.academics).map((item) => `${item.label}: ${item.value}`)),
+    markdownList(
+      list(content.academics).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
+    ),
     "",
     "## Smaller Projects",
     "",

@@ -19,8 +19,19 @@
     "projectIndexTitle": "Engineering projects.",
     "projectIndexText": "Physical systems with CAD, wiring, software, and test notes.",
     "academicCode": "ACADEMIC SNAPSHOT",
-    "academicTitle": "Academic snapshot.",
-    "academicText": "Grades and coursework for context.",
+    "academicTitle": "Academic profile.",
+    "academicText": "Current standing, course load, and school context.",
+    "academicSchoolEyebrow": "school",
+    "academicSchoolName": "Spring Early College Academy",
+    "academicSchoolHref": "https://seca.springisd.org/",
+    "academicSchoolLogoSrc": "/portfolio-media/academics/seca-logo.png",
+    "academicSchoolLogoAlt": "Spring Early College Academy crest",
+    "academicSchoolDistrictRank": "Top Spring ISD high school by SchoolDigger state rank.",
+    "academicSchoolDistrictSourceHref": "https://www.schooldigger.com/go/TX/district/41220/search.aspx?level=3",
+    "academicSchoolDistrictSourceLabel": "SchoolDigger SISD rankings",
+    "academicSchoolRankSummary": "U.S. News 2025-2026: #9 Houston metro, #44 Texas, #326 national.",
+    "academicSchoolRankSourceHref": "https://seca.springisd.org/o/seca/article/2369574",
+    "academicSchoolRankSourceLabel": "Spring ISD / U.S. News",
     "smallerProjectsCode": "SMALLER BUILDS",
     "smallerProjectsTitle": "Smaller projects and experiments.",
     "smallerProjectsText": "Small tools, robotics prototypes, visualizations, and learning projects.",
@@ -55,6 +66,8 @@
     "projectNextLabel": "to document next",
     "projectOpenLabel": "Open project",
     "projectSourceLabel": "Source",
+    "mediaPlaceholderLabel": "media needed",
+    "mediaSlotLabel": "media slot",
     "openProjectsLabel": "View projects",
     "viewRecordLabel": "View full record",
     "backPortfolioLabel": "Back to portfolio"
@@ -311,24 +324,36 @@
   ],
   "academics": [
     {
-      "id": "grades",
-      "label": "Grades",
-      "value": "All As"
+      "id": "gpa",
+      "label": "Weighted GPA",
+      "value": "5.0000",
+      "note": "on a 5.0 scale",
+      "assetSrc": null,
+      "assetAlt": ""
     },
     {
       "id": "rank",
-      "label": "Rank",
-      "value": "3rd of 113"
-    },
-    {
-      "id": "math",
-      "label": "Math",
-      "value": "College Algebra / advanced math track"
+      "label": "Class rank",
+      "value": "#1 of 111",
+      "note": "sole #1 standing",
+      "assetSrc": "/portfolio-media/academics/crown.png",
+      "assetAlt": "hand-drawn gold crown"
     },
     {
       "id": "course-load",
       "label": "Course load",
-      "value": "All advanced classes, including AP Human Geography and AP Spanish Language"
+      "value": "AP + advanced coursework",
+      "note": "AP Human Geography, AP Spanish Language, and advanced classes",
+      "assetSrc": null,
+      "assetAlt": ""
+    },
+    {
+      "id": "early-college",
+      "label": "Program",
+      "value": "Early college pathway",
+      "note": "high school plus college-level coursework",
+      "assetSrc": null,
+      "assetAlt": ""
     }
   ],
   "smallProjects": [
@@ -337,6 +362,9 @@
       "title": "Subpix",
       "href": "https://subpix-editor.vercel.app/",
       "sourceHref": "https://github.com/Chrissyuh/Subpix",
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "type": "desktop app",
       "description": "Open-source Electron, Vite, React, and TypeScript editor for .subpix files, RGB/BGR subpixel canvases, JSON validation, PNG export, and Windows packaging.",
       "media": [
@@ -363,6 +391,7 @@
       "sourceHref": "https://github.com/LenekyRadish/VividGrasp",
       "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
       "logoAlt": "Stanford AI4ALL logo",
+      "logoHref": "https://ai4all.spcs.stanford.edu/",
       "type": "AI robotics simulation",
       "description": "Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.",
       "media": [
@@ -401,6 +430,9 @@
       "title": "Check-ins",
       "href": "https://check-ins-zeta.vercel.app/",
       "sourceHref": null,
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "type": "live web app",
       "description": "Live web app for logging check-ins and tracking target gaps, max gaps, and progress.",
       "media": [
@@ -418,6 +450,9 @@
       "title": "MPF Hardware Test Tools",
       "href": null,
       "sourceHref": null,
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "type": "pinball utilities",
       "description": "Pinball test utilities for checking switches, coils, LEDs, board maps, and FAST hardware before full rules.",
       "media": [
@@ -723,11 +758,11 @@
         },
         {
           "id": "current-standing",
-          "text": "Current standing - all As, ranked 3rd of 113."
+          "text": "Current standing - 5.0000 weighted GPA and sole #1 class rank out of 111."
         },
         {
-          "id": "advanced-math",
-          "text": "Advanced math - College Algebra and accelerated math."
+          "id": "school-ranking-context",
+          "text": "School context - SECA is the top Spring ISD high school by SchoolDigger state rank, and Spring ISD cites U.S. News rankings of #9 in the Houston metro, #44 in Texas, and #326 nationally for 2025-2026."
         },
         {
           "id": "advanced-course-load",

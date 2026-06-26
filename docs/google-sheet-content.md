@@ -38,13 +38,15 @@ Allowed `media_*_type` values: `photo`, `video`. Every enabled main project need
 
 ### Academics
 
-`id,order,enabled,label,value`
+`id,order,enabled,label,value,note,asset_src,asset_alt`
+
+Leave `note`, `asset_src`, or `asset_alt` blank when an academic card should only show the label and value.
 
 ### SmallProjects
 
-`id,order,enabled,title,href,source_href,type,description,logo_src,logo_alt,media_1_type,media_1_src,media_1_alt,media_1_caption,media_2_type,media_2_src,media_2_alt,media_2_caption,media_3_type,media_3_src,media_3_alt,media_3_caption,media_4_type,media_4_src,media_4_alt,media_4_caption,media_5_type,media_5_src,media_5_alt,media_5_caption,media_6_type,media_6_src,media_6_alt,media_6_caption,media_7_type,media_7_src,media_7_alt,media_7_caption,media_8_type,media_8_src,media_8_alt,media_8_caption`
+`id,order,enabled,title,href,source_href,type,description,logo_src,logo_alt,logo_href,media_1_type,media_1_src,media_1_alt,media_1_caption,media_2_type,media_2_src,media_2_alt,media_2_caption,media_3_type,media_3_src,media_3_alt,media_3_caption,media_4_type,media_4_src,media_4_alt,media_4_caption,media_5_type,media_5_src,media_5_alt,media_5_caption,media_6_type,media_6_src,media_6_alt,media_6_caption,media_7_type,media_7_src,media_7_alt,media_7_caption,media_8_type,media_8_src,media_8_alt,media_8_caption`
 
-Leave `href`, `source_href`, or `logo_src` blank when a project should not show those fields. Every enabled small project needs at least one media slot.
+Leave `href`, `source_href`, `logo_src`, or `logo_href` blank when a project should not show those fields. Every enabled small project needs at least one media slot.
 
 ### MicroProjects
 

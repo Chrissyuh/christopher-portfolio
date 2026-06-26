@@ -489,6 +489,16 @@ function ProjectRow({ project, index, meta }) {
 }
 
 function SmallProjectCard({ project, index }) {
+  const logoClassName = "block max-w-[150px] border border-[#d6cec0] bg-white px-2 py-1";
+  const logoImage = project.logoSrc ? (
+    <img
+      src={project.logoSrc}
+      alt={project.logoAlt || `${project.title} logo`}
+      loading="lazy"
+      className="h-7 w-full object-contain"
+    />
+  ) : null;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 10 }}
@@ -505,14 +515,19 @@ function SmallProjectCard({ project, index }) {
           </p>
         </div>
         {project.logoSrc ? (
-          <div className="max-w-[150px] border border-[#d6cec0] bg-white px-2 py-1">
-            <img
-              src={project.logoSrc}
-              alt={project.logoAlt || `${project.title} logo`}
-              loading="lazy"
-              className="h-7 w-full object-contain"
-            />
-          </div>
+          project.logoHref ? (
+            <a
+              href={project.logoHref}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open ${project.logoAlt || `${project.title} logo`} link`}
+              className={cn(logoClassName, "transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2")}
+            >
+              {logoImage}
+            </a>
+          ) : (
+            <div className={logoClassName}>{logoImage}</div>
+          )
         ) : (
           (project.href || project.sourceHref) && (
             <Icon name="link" className="h-4 w-4 text-[#827466] transition group-hover:text-[#244fd6]" />
@@ -556,6 +571,106 @@ function SmallProjectCard({ project, index }) {
         </div>
       </div>
     </motion.article>
+  );
+}
+
+function AcademicSchoolCard({ meta }) {
+  const schoolName = meta.academicSchoolName;
+
+  if (!schoolName) return null;
+
+  const sourceLinks = [
+    {
+      href: meta.academicSchoolDistrictSourceHref,
+      label: meta.academicSchoolDistrictSourceLabel,
+    },
+    {
+      href: meta.academicSchoolRankSourceHref,
+      label: meta.academicSchoolRankSourceLabel,
+    },
+  ].filter((link) => link.href && link.label);
+
+  return (
+    <aside className="border border-[#d2c8b9] bg-white p-4 shadow-sm">
+      <div className="flex items-start gap-4">
+        {meta.academicSchoolLogoSrc && (
+          <a
+            href={meta.academicSchoolHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Open ${schoolName} website`}
+            className="grid h-20 w-20 shrink-0 place-items-center border border-[#d6cec0] bg-white p-1 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+          >
+            <img
+              src={meta.academicSchoolLogoSrc}
+              alt={meta.academicSchoolLogoAlt || `${schoolName} logo`}
+              loading="lazy"
+              className="h-full w-full object-contain"
+            />
+          </a>
+        )}
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466]">
+            {meta.academicSchoolEyebrow}
+          </p>
+          <a
+            href={meta.academicSchoolHref}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-1 block text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 hover:text-[#244fd6]"
+          >
+            {schoolName}
+          </a>
+          <p className="mt-2 text-xs leading-5 text-slate-700">{meta.academicSchoolDistrictRank}</p>
+        </div>
+      </div>
+
+      <p className="mt-4 border-t border-[#e1d7c8] pt-3 text-xs font-semibold leading-5 text-slate-950">
+        {meta.academicSchoolRankSummary}
+      </p>
+
+      {sourceLinks.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {sourceLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center border border-[#cfc4b4] bg-[#fbfaf7] px-2.5 py-1.5 text-[11px] font-semibold text-slate-800 transition hover:bg-[#f5f3ee]"
+            >
+              {link.label}
+              <Icon name="arrowRight" className="ml-1.5 h-3 w-3" />
+            </a>
+          ))}
+        </div>
+      )}
+    </aside>
+  );
+}
+
+function AcademicCard({ item, index }) {
+  return (
+    <motion.div
+      key={item.id}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.25, delay: index * 0.035 }}
+      className={cn("relative border border-[#d2c8b9] bg-white p-5 shadow-sm", item.assetSrc && "pr-24 md:pr-28")}
+    >
+      {item.assetSrc && (
+        <img
+          src={item.assetSrc}
+          alt={item.assetAlt || ""}
+          loading="lazy"
+          className="pointer-events-none absolute -right-3 -top-7 h-16 w-24 rotate-[10deg] object-contain drop-shadow-[0_5px_6px_rgba(34,28,18,0.18)] md:h-20 md:w-28"
+        />
+      )}
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#827466]">{item.label}</p>
+      <p className="mt-3 text-2xl font-semibold leading-7 tracking-[-0.03em] text-slate-950">{item.value}</p>
+      {item.note && <p className="mt-3 text-sm leading-6 text-slate-700">{item.note}</p>}
+    </motion.div>
   );
 }
 
@@ -793,23 +908,20 @@ function PortfolioPage({ content }) {
       </section>
 
       <section id="academics" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-        <SectionHeader code={meta.academicCode} title={meta.academicTitle}>
-          {meta.academicText}
-        </SectionHeader>
+        <div className="mb-8 grid gap-4 border-t border-[#d2c8b9] pt-7 lg:grid-cols-[170px_minmax(0,1fr)_minmax(300px,380px)]">
+          <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#827466]">{meta.academicCode}</p>
+          <div>
+            <h2 className="text-2xl font-semibold tracking-[-0.035em] text-slate-950 md:text-4xl">
+              {meta.academicTitle}
+            </h2>
+            {meta.academicText && <p className="mt-3 max-w-2xl text-base leading-7 text-slate-700">{meta.academicText}</p>}
+          </div>
+          <AcademicSchoolCard meta={meta} />
+        </div>
 
-        <div className="grid gap-4 md:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {list(content.academics).map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.25, delay: index * 0.035 }}
-              className="border border-[#d2c8b9] bg-white p-5 shadow-sm"
-            >
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#827466]">{item.label}</p>
-              <p className="mt-3 text-lg font-semibold leading-6 tracking-[-0.02em] text-slate-950">{item.value}</p>
-            </motion.div>
+            <AcademicCard key={item.id} item={item} index={index} />
           ))}
         </div>
       </section>

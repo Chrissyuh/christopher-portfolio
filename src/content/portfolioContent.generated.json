@@ -19,8 +19,19 @@
     "projectIndexTitle": "Engineering projects.",
     "projectIndexText": "Physical systems with CAD, wiring, software, and test notes.",
     "academicCode": "ACADEMIC SNAPSHOT",
-    "academicTitle": "Academic snapshot.",
-    "academicText": "Grades and coursework for context.",
+    "academicTitle": "Academic profile.",
+    "academicText": "Current standing, course load, and school context.",
+    "academicSchoolEyebrow": "school",
+    "academicSchoolName": "Spring Early College Academy",
+    "academicSchoolHref": "https://seca.springisd.org/",
+    "academicSchoolLogoSrc": "/portfolio-media/academics/seca-logo.png",
+    "academicSchoolLogoAlt": "Spring Early College Academy crest",
+    "academicSchoolDistrictRank": "Top Spring ISD high school by SchoolDigger state rank.",
+    "academicSchoolDistrictSourceHref": "https://www.schooldigger.com/go/TX/district/41220/search.aspx?level=3",
+    "academicSchoolDistrictSourceLabel": "SchoolDigger SISD rankings",
+    "academicSchoolRankSummary": "U.S. News 2025-2026: #9 Houston metro, #44 Texas, #326 national.",
+    "academicSchoolRankSourceHref": "https://seca.springisd.org/o/seca/article/2369574",
+    "academicSchoolRankSourceLabel": "Spring ISD / U.S. News",
     "smallerProjectsCode": "SMALLER BUILDS",
     "smallerProjectsTitle": "Smaller projects and experiments.",
     "smallerProjectsText": "Small tools, robotics prototypes, visualizations, and learning projects.",
@@ -55,29 +66,83 @@
     "projectNextLabel": "to document next",
     "projectOpenLabel": "Open project",
     "projectSourceLabel": "Source",
+    "mediaPlaceholderLabel": "media needed",
+    "mediaSlotLabel": "media slot",
     "openProjectsLabel": "View projects",
     "viewRecordLabel": "View full record",
     "backPortfolioLabel": "Back to portfolio"
   },
   "heroTags": [
-    { "id": "mechatronics", "label": "mechatronics" },
-    { "id": "embedded-systems", "label": "embedded systems" },
-    { "id": "cad-fabrication", "label": "CAD / fabrication" },
-    { "id": "student-engineer", "label": "student engineer" }
+    {
+      "id": "mechatronics",
+      "label": "mechatronics"
+    },
+    {
+      "id": "embedded-systems",
+      "label": "embedded systems"
+    },
+    {
+      "id": "cad-fabrication",
+      "label": "CAD / fabrication"
+    },
+    {
+      "id": "student-engineer",
+      "label": "student engineer"
+    }
   ],
   "currentStack": [
-    { "id": "garden-party", "number": "01", "label": "Garden Party pinball" },
-    { "id": "smart-pot", "number": "02", "label": "Smart pot PCB / enclosure" },
-    { "id": "solidworks", "number": "03", "label": "SolidWorks mechanism studies" },
-    { "id": "small-tools", "number": "04", "label": "small web + desktop tools" }
+    {
+      "id": "garden-party",
+      "number": "01",
+      "label": "Garden Party pinball"
+    },
+    {
+      "id": "smart-pot",
+      "number": "02",
+      "label": "Smart pot PCB / enclosure"
+    },
+    {
+      "id": "solidworks",
+      "number": "03",
+      "label": "SolidWorks mechanism studies"
+    },
+    {
+      "id": "small-tools",
+      "number": "04",
+      "label": "small web + desktop tools"
+    }
   ],
   "evidenceTiles": [
-    { "id": "real-hardware", "top": "hardware", "bottom": "photos" },
-    { "id": "specific-toolchains", "top": "CAD", "bottom": "files" },
-    { "id": "visible-iterations", "top": "wiring", "bottom": "maps" },
-    { "id": "clear-next-steps", "top": "test", "bottom": "logs" },
-    { "id": "proof-test-logs", "top": "configs", "bottom": "code" },
-    { "id": "honest-revisions", "top": "next", "bottom": "fixes" }
+    {
+      "id": "real-hardware",
+      "top": "hardware",
+      "bottom": "photos"
+    },
+    {
+      "id": "specific-toolchains",
+      "top": "CAD",
+      "bottom": "files"
+    },
+    {
+      "id": "visible-iterations",
+      "top": "wiring",
+      "bottom": "maps"
+    },
+    {
+      "id": "clear-next-steps",
+      "top": "test",
+      "bottom": "logs"
+    },
+    {
+      "id": "proof-test-logs",
+      "top": "configs",
+      "bottom": "code"
+    },
+    {
+      "id": "honest-revisions",
+      "top": "next",
+      "bottom": "fixes"
+    }
   ],
   "projects": [
     {
@@ -90,16 +155,38 @@
       "status": "active build",
       "accent": "blue",
       "summary": "A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, real coils, switches, lamps, cabinet wiring, and a revised playfield.",
-      "evidence": ["FAST Pinball boards", "Mission Pinball Framework", "coils / switches / lamps", "CAD + wiring revisions"],
+      "evidence": [
+        "FAST Pinball boards",
+        "Mission Pinball Framework",
+        "coils / switches / lamps",
+        "CAD + wiring revisions"
+      ],
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "Garden Party playfield or cabinet photo needed", "caption": "Add playfield or cabinet photo" },
-        { "id": "media-2", "type": "video", "src": null, "alt": "Garden Party switch or coil test video needed", "caption": "Add switch or coil test video" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "Garden Party playfield or cabinet photo needed",
+          "caption": "Add playfield or cabinet photo"
+        },
+        {
+          "id": "media-2",
+          "type": "video",
+          "src": null,
+          "alt": "Garden Party switch or coil test video needed",
+          "caption": "Add switch or coil test video"
+        }
       ],
       "next": "photos, playfield CAD, wiring maps, MPF configs, driver tests, rule notes",
       "preview": {
         "title": "Playfield + control stack",
         "label": "system map",
-        "parts": ["cabinet I/O", "switch matrix", "coils", "MPF"]
+        "parts": [
+          "cabinet I/O",
+          "switch matrix",
+          "coils",
+          "MPF"
+        ]
       }
     },
     {
@@ -112,16 +199,38 @@
       "status": "reviving / redesigning",
       "accent": "teal",
       "summary": "A plant-care device with moisture sensing, pump control, electronics packaging, and an enclosure/PCB redesign.",
-      "evidence": ["ESP32 / Arduino-style control", "pump driver", "sensor input", "KiCad + enclosure planning"],
+      "evidence": [
+        "ESP32 / Arduino-style control",
+        "pump driver",
+        "sensor input",
+        "KiCad + enclosure planning"
+      ],
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "Smart self-watering pot prototype or enclosure photo needed", "caption": "Add prototype or enclosure photo" },
-        { "id": "media-2", "type": "video", "src": null, "alt": "Smart self-watering pot watering test video needed", "caption": "Add watering test video" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "Smart self-watering pot prototype or enclosure photo needed",
+          "caption": "Add prototype or enclosure photo"
+        },
+        {
+          "id": "media-2",
+          "type": "video",
+          "src": null,
+          "alt": "Smart self-watering pot watering test video needed",
+          "caption": "Add watering test video"
+        }
       ],
       "next": "schematic, board outline, enclosure constraints, connector plan, watering state machine",
       "preview": {
         "title": "Sensor -> controller -> pump",
         "label": "control loop",
-        "parts": ["moisture", "MOSFET", "reservoir", "OLED"]
+        "parts": [
+          "moisture",
+          "MOSFET",
+          "reservoir",
+          "OLED"
+        ]
       }
     },
     {
@@ -134,16 +243,38 @@
       "status": "showcase work",
       "accent": "amber",
       "summary": "A technical showcase explaining 3D printing with SolidWorks models, printed demos, robotics examples, and presentation materials.",
-      "evidence": ["SolidWorks models", "printed demos", "robotics angle", "public explanation"],
+      "evidence": [
+        "SolidWorks models",
+        "printed demos",
+        "robotics angle",
+        "public explanation"
+      ],
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "TETC 3D printing printed demo photo needed", "caption": "Add printed demo photo" },
-        { "id": "media-2", "type": "video", "src": null, "alt": "TETC 3D printing presentation or print demo video needed", "caption": "Add presentation or print demo video" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "TETC 3D printing printed demo photo needed",
+          "caption": "Add printed demo photo"
+        },
+        {
+          "id": "media-2",
+          "type": "video",
+          "src": null,
+          "alt": "TETC 3D printing presentation or print demo video needed",
+          "caption": "Add presentation or print demo video"
+        }
       ],
       "next": "model screenshots, printed examples, final presentation notes",
       "preview": {
         "title": "CAD model -> printed proof",
         "label": "showcase flow",
-        "parts": ["model", "slice", "print", "explain"]
+        "parts": [
+          "model",
+          "slice",
+          "print",
+          "explain"
+        ]
       }
     },
     {
@@ -156,24 +287,74 @@
       "status": "ongoing library",
       "accent": "clay",
       "summary": "SolidWorks studies for mechanisms, assemblies, print-ready parts, clearances, and tolerances.",
-      "evidence": ["assemblies", "print-ready parts", "tolerance experiments", "mechanism notes"],
+      "evidence": [
+        "assemblies",
+        "print-ready parts",
+        "tolerance experiments",
+        "mechanism notes"
+      ],
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "CAD mechanism screenshot or printed mechanism photo needed", "caption": "Add CAD screenshot or printed mechanism photo" },
-        { "id": "media-2", "type": "video", "src": null, "alt": "CAD mechanism motion video needed", "caption": "Add mechanism motion video" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "CAD mechanism screenshot or printed mechanism photo needed",
+          "caption": "Add CAD screenshot or printed mechanism photo"
+        },
+        {
+          "id": "media-2",
+          "type": "video",
+          "src": null,
+          "alt": "CAD mechanism motion video needed",
+          "caption": "Add mechanism motion video"
+        }
       ],
       "next": "annotated notes on constraints, mistakes, and lessons from each model",
       "preview": {
         "title": "Assembly study library",
         "label": "mechanism map",
-        "parts": ["mates", "clearance", "motion", "tolerance"]
+        "parts": [
+          "mates",
+          "clearance",
+          "motion",
+          "tolerance"
+        ]
       }
     }
   ],
   "academics": [
-    { "id": "grades", "label": "Grades", "value": "All As" },
-    { "id": "rank", "label": "Rank", "value": "3rd of 113" },
-    { "id": "math", "label": "Math", "value": "College Algebra / advanced math track" },
-    { "id": "course-load", "label": "Course load", "value": "All advanced classes, including AP Human Geography and AP Spanish Language" }
+    {
+      "id": "gpa",
+      "label": "Weighted GPA",
+      "value": "5.0000",
+      "note": "on a 5.0 scale",
+      "assetSrc": null,
+      "assetAlt": ""
+    },
+    {
+      "id": "rank",
+      "label": "Class rank",
+      "value": "#1 of 111",
+      "note": "sole #1 standing",
+      "assetSrc": "/portfolio-media/academics/crown.png",
+      "assetAlt": "hand-drawn gold crown"
+    },
+    {
+      "id": "course-load",
+      "label": "Course load",
+      "value": "AP + advanced coursework",
+      "note": "AP Human Geography, AP Spanish Language, and advanced classes",
+      "assetSrc": null,
+      "assetAlt": ""
+    },
+    {
+      "id": "early-college",
+      "label": "Program",
+      "value": "Early college pathway",
+      "note": "high school plus college-level coursework",
+      "assetSrc": null,
+      "assetAlt": ""
+    }
   ],
   "smallProjects": [
     {
@@ -181,11 +362,26 @@
       "title": "Subpix",
       "href": "https://subpix-editor.vercel.app/",
       "sourceHref": "https://github.com/Chrissyuh/Subpix",
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "type": "desktop app",
       "description": "Open-source Electron, Vite, React, and TypeScript editor for .subpix files, RGB/BGR subpixel canvases, JSON validation, PNG export, and Windows packaging.",
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "Subpix editor screenshot needed", "caption": "Add editor screenshot" },
-        { "id": "media-2", "type": "video", "src": null, "alt": "Subpix editing workflow video needed", "caption": "Add editing workflow capture" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "Subpix editor screenshot needed",
+          "caption": "Add editor screenshot"
+        },
+        {
+          "id": "media-2",
+          "type": "video",
+          "src": null,
+          "alt": "Subpix editing workflow video needed",
+          "caption": "Add editing workflow capture"
+        }
       ]
     },
     {
@@ -195,13 +391,38 @@
       "sourceHref": "https://github.com/LenekyRadish/VividGrasp",
       "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
       "logoAlt": "Stanford AI4ALL logo",
+      "logoHref": "https://ai4all.spcs.stanford.edu/",
       "type": "AI robotics simulation",
       "description": "Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.",
       "media": [
-        { "id": "media-1", "type": "photo", "src": "/portfolio-media/vividgrasp/solidworks-arm-assembly.png", "alt": "SolidWorks robotic arm assembly for VividGrasp", "caption": "SolidWorks arm assembly" },
-        { "id": "media-2", "type": "photo", "src": "/portfolio-media/vividgrasp/pybullet-joint-controls.png", "alt": "PyBullet joint control demo for the VividGrasp arm", "caption": "PyBullet joint controls" },
-        { "id": "media-3", "type": "photo", "src": "/portfolio-media/vividgrasp/pybullet-target-demo.png", "alt": "PyBullet target scene for the VividGrasp robotic arm", "caption": "PyBullet target demo" },
-        { "id": "media-4", "type": "photo", "src": "/portfolio-media/vividgrasp/printed-gear-prototype.png", "alt": "Printed gear prototype from the VividGrasp arm work", "caption": "Printed gear prototype" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": "/portfolio-media/vividgrasp/solidworks-arm-assembly.png",
+          "alt": "SolidWorks robotic arm assembly for VividGrasp",
+          "caption": "SolidWorks arm assembly"
+        },
+        {
+          "id": "media-2",
+          "type": "photo",
+          "src": "/portfolio-media/vividgrasp/pybullet-joint-controls.png",
+          "alt": "PyBullet joint control demo for the VividGrasp arm",
+          "caption": "PyBullet joint controls"
+        },
+        {
+          "id": "media-3",
+          "type": "photo",
+          "src": "/portfolio-media/vividgrasp/pybullet-target-demo.png",
+          "alt": "PyBullet target scene for the VividGrasp robotic arm",
+          "caption": "PyBullet target demo"
+        },
+        {
+          "id": "media-4",
+          "type": "photo",
+          "src": "/portfolio-media/vividgrasp/printed-gear-prototype.png",
+          "alt": "Printed gear prototype from the VividGrasp arm work",
+          "caption": "Printed gear prototype"
+        }
       ]
     },
     {
@@ -209,10 +430,19 @@
       "title": "Check-ins",
       "href": "https://check-ins-zeta.vercel.app/",
       "sourceHref": null,
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "type": "live web app",
       "description": "Live web app for logging check-ins and tracking target gaps, max gaps, and progress.",
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "Check-ins dashboard screenshot needed", "caption": "Add dashboard screenshot" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "Check-ins dashboard screenshot needed",
+          "caption": "Add dashboard screenshot"
+        }
       ]
     },
     {
@@ -220,10 +450,19 @@
       "title": "MPF Hardware Test Tools",
       "href": null,
       "sourceHref": null,
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "type": "pinball utilities",
       "description": "Pinball test utilities for checking switches, coils, LEDs, board maps, and FAST hardware before full rules.",
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "MPF hardware test bench photo needed", "caption": "Add hardware test bench photo" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "MPF hardware test bench photo needed",
+          "caption": "Add hardware test bench photo"
+        }
       ]
     }
   ],
@@ -236,7 +475,13 @@
       "type": "python / music",
       "description": "Python practice tool for soundfonts, pedals, controls, and keyboard-style interaction.",
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "MIDI practice tool interface or keyboard setup photo needed", "caption": "Add tool interface or keyboard setup photo" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "MIDI practice tool interface or keyboard setup photo needed",
+          "caption": "Add tool interface or keyboard setup photo"
+        }
       ]
     },
     {
@@ -247,7 +492,13 @@
       "type": "math visualization",
       "description": "3D math visualization using surfaces, orbits, color mapping, and performance tradeoffs.",
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "Desmos 3D solar system scene screenshot needed", "caption": "Add 3D scene screenshot" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "Desmos 3D solar system scene screenshot needed",
+          "caption": "Add 3D scene screenshot"
+        }
       ]
     },
     {
@@ -258,7 +509,13 @@
       "type": "machine learning",
       "description": "Learning project on small next-token models and how pretraining differs from instruction following.",
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "TinyGPT training or output screenshot needed", "caption": "Add training or output screenshot" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "TinyGPT training or output screenshot needed",
+          "caption": "Add training or output screenshot"
+        }
       ]
     },
     {
@@ -269,7 +526,13 @@
       "type": "robotics prototype",
       "description": "Robot drivetrain prototype built around gearing, packaging, shafts, and structure clearance.",
       "media": [
-        { "id": "media-1", "type": "photo", "src": null, "alt": "VEX V5 drivetrain prototype photo needed", "caption": "Add drivetrain prototype photo" }
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "alt": "VEX V5 drivetrain prototype photo needed",
+          "caption": "Add drivetrain prototype photo"
+        }
       ]
     }
   ],
@@ -300,24 +563,78 @@
     }
   ],
   "skills": [
-    { "id": "solidworks", "name": "SolidWorks" },
-    { "id": "fast-pinball", "name": "FAST Pinball" },
-    { "id": "mission-pinball-framework", "name": "Mission Pinball Framework" },
-    { "id": "arduino-esp32", "name": "Arduino / ESP32" },
-    { "id": "kicad-basics", "name": "KiCad basics" },
-    { "id": "3d-printing", "name": "3D printing" },
-    { "id": "laser-cutting", "name": "laser cutting" },
-    { "id": "mechanism-design", "name": "mechanism design" },
-    { "id": "sensor-wiring", "name": "sensor wiring" },
-    { "id": "pump-motor-control", "name": "pump / motor control" },
-    { "id": "technical-presentation", "name": "technical presentation" },
-    { "id": "rapid-iteration", "name": "rapid iteration" },
-    { "id": "chatgpt-assisted-debugging", "name": "ChatGPT-assisted debugging" },
-    { "id": "electron", "name": "Electron" },
-    { "id": "react", "name": "React" },
-    { "id": "typescript", "name": "TypeScript" },
-    { "id": "vite", "name": "Vite" },
-    { "id": "desktop-packaging", "name": "desktop packaging" }
+    {
+      "id": "solidworks",
+      "name": "SolidWorks"
+    },
+    {
+      "id": "fast-pinball",
+      "name": "FAST Pinball"
+    },
+    {
+      "id": "mission-pinball-framework",
+      "name": "Mission Pinball Framework"
+    },
+    {
+      "id": "arduino-esp32",
+      "name": "Arduino / ESP32"
+    },
+    {
+      "id": "kicad-basics",
+      "name": "KiCad basics"
+    },
+    {
+      "id": "3d-printing",
+      "name": "3D printing"
+    },
+    {
+      "id": "laser-cutting",
+      "name": "laser cutting"
+    },
+    {
+      "id": "mechanism-design",
+      "name": "mechanism design"
+    },
+    {
+      "id": "sensor-wiring",
+      "name": "sensor wiring"
+    },
+    {
+      "id": "pump-motor-control",
+      "name": "pump / motor control"
+    },
+    {
+      "id": "technical-presentation",
+      "name": "technical presentation"
+    },
+    {
+      "id": "rapid-iteration",
+      "name": "rapid iteration"
+    },
+    {
+      "id": "chatgpt-assisted-debugging",
+      "name": "ChatGPT-assisted debugging"
+    },
+    {
+      "id": "electron",
+      "name": "Electron"
+    },
+    {
+      "id": "react",
+      "name": "React"
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript"
+    },
+    {
+      "id": "vite",
+      "name": "Vite"
+    },
+    {
+      "id": "desktop-packaging",
+      "name": "desktop packaging"
+    }
   ],
   "principles": [
     {
@@ -342,11 +659,26 @@
       "category": "Flagship engineering",
       "icon": "wrench",
       "items": [
-        { "id": "garden-party-pinball", "text": "Garden Party Pinball - full-size homebrew pinball machine using FAST hardware, MPF, coils, switches, lamps, cabinet wiring, and playfield revisions." },
-        { "id": "smart-self-watering-pot", "text": "Smart Self-Watering Pot - moisture sensing, pump control, enclosure planning, and a custom PCB direction." },
-        { "id": "tetc-3d-printing-showcase", "text": "TETC 3D Printing Engineering Showcase - presentation on additive manufacturing, mechanical design, and robotics examples." },
-        { "id": "cad-mechanism-studies", "text": "CAD Mechanism Studies - SolidWorks assemblies, mechanisms, print-ready parts, tolerance tests, and design notes." },
-        { "id": "fast-mpf-hardware-test-tools", "text": "FAST / MPF Hardware Test Tools - scripts and configs for switch, driver, LED, board-map, and hardware tests." }
+        {
+          "id": "garden-party-pinball",
+          "text": "Garden Party Pinball - full-size homebrew pinball machine using FAST hardware, MPF, coils, switches, lamps, cabinet wiring, and playfield revisions."
+        },
+        {
+          "id": "smart-self-watering-pot",
+          "text": "Smart Self-Watering Pot - moisture sensing, pump control, enclosure planning, and a custom PCB direction."
+        },
+        {
+          "id": "tetc-3d-printing-showcase",
+          "text": "TETC 3D Printing Engineering Showcase - presentation on additive manufacturing, mechanical design, and robotics examples."
+        },
+        {
+          "id": "cad-mechanism-studies",
+          "text": "CAD Mechanism Studies - SolidWorks assemblies, mechanisms, print-ready parts, tolerance tests, and design notes."
+        },
+        {
+          "id": "fast-mpf-hardware-test-tools",
+          "text": "FAST / MPF Hardware Test Tools - scripts and configs for switch, driver, LED, board-map, and hardware tests."
+        }
       ]
     },
     {
@@ -354,14 +686,38 @@
       "category": "Software, visualization, and AI",
       "icon": "cpu",
       "items": [
-        { "id": "subpix", "text": "Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging." },
-        { "id": "vividgrasp-ai-vision-robotics-arm", "text": "VividGrasp AI-Vision Robotics Arm - Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion." },
-        { "id": "check-ins", "text": "Check-ins - live Vercel app for logging consistency and tracking target/max gaps." },
-        { "id": "desmos-3d-solar-system", "text": "Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design." },
-        { "id": "tinygpt-experiments", "text": "TinyGPT Experiments - small language-model project focused on next-token prediction and instruction-following differences." },
-        { "id": "midi-practice-tool", "text": "MIDI Practice Tool - Python music-practice utility for soundfonts, pedals, controls, and keyboard-style interaction." },
-        { "id": "manim-presentation-animation", "text": "Manim / presentation animation work - timed explanation visuals for presentations." },
-        { "id": "betterquizzer", "text": "BetterQuizzer / quiz-app work - quiz-app development and debugging for hosted submission and persistence behavior." }
+        {
+          "id": "subpix",
+          "text": "Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging."
+        },
+        {
+          "id": "vividgrasp-ai-vision-robotics-arm",
+          "text": "VividGrasp AI-Vision Robotics Arm - Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion."
+        },
+        {
+          "id": "check-ins",
+          "text": "Check-ins - live Vercel app for logging consistency and tracking target/max gaps."
+        },
+        {
+          "id": "desmos-3d-solar-system",
+          "text": "Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design."
+        },
+        {
+          "id": "tinygpt-experiments",
+          "text": "TinyGPT Experiments - small language-model project focused on next-token prediction and instruction-following differences."
+        },
+        {
+          "id": "midi-practice-tool",
+          "text": "MIDI Practice Tool - Python music-practice utility for soundfonts, pedals, controls, and keyboard-style interaction."
+        },
+        {
+          "id": "manim-presentation-animation",
+          "text": "Manim / presentation animation work - timed explanation visuals for presentations."
+        },
+        {
+          "id": "betterquizzer",
+          "text": "BetterQuizzer / quiz-app work - quiz-app development and debugging for hosted submission and persistence behavior."
+        }
       ]
     },
     {
@@ -369,11 +725,26 @@
       "category": "Fabrication and maker skills",
       "icon": "printer",
       "items": [
-        { "id": "3d-printing-workflow", "text": "3D printing workflow - Bambu Studio, material choices, iteration prints, print orientation, and fit testing." },
-        { "id": "laser-cutting-workflow", "text": "Laser cutting workflow - design and fabrication planning for flat-cut parts and enclosures." },
-        { "id": "home-maker-lab-practice", "text": "Home maker-lab practice - CAD, wiring, printing, scanning, electronics, and mechanical assembly." },
-        { "id": "vex-v5-drivetrain-prototype", "text": "VEX V5 Drivetrain Prototype - robotics drivetrain build using gearing and packaging constraints around structure interference." },
-        { "id": "solidworks-modeling-depth", "text": "SolidWorks modeling - part design, assemblies, complex forms, and fabrication-oriented CAD decisions." }
+        {
+          "id": "3d-printing-workflow",
+          "text": "3D printing workflow - Bambu Studio, material choices, iteration prints, print orientation, and fit testing."
+        },
+        {
+          "id": "laser-cutting-workflow",
+          "text": "Laser cutting workflow - design and fabrication planning for flat-cut parts and enclosures."
+        },
+        {
+          "id": "home-maker-lab-practice",
+          "text": "Home maker-lab practice - CAD, wiring, printing, scanning, electronics, and mechanical assembly."
+        },
+        {
+          "id": "vex-v5-drivetrain-prototype",
+          "text": "VEX V5 Drivetrain Prototype - robotics drivetrain build using gearing and packaging constraints around structure interference."
+        },
+        {
+          "id": "solidworks-modeling-depth",
+          "text": "SolidWorks modeling - part design, assemblies, complex forms, and fabrication-oriented CAD decisions."
+        }
       ]
     },
     {
@@ -381,11 +752,26 @@
       "category": "Academics",
       "icon": "school",
       "items": [
-        { "id": "spring-early-college-academy", "text": "Spring Early College Academy - 9th grade dual-credit student at SECA in Spring ISD." },
-        { "id": "current-standing", "text": "Current standing - all As, ranked 3rd of 113." },
-        { "id": "advanced-math", "text": "Advanced math - College Algebra and accelerated math." },
-        { "id": "advanced-course-load", "text": "Advanced course load - all advanced classes, including AP Human Geography and AP Spanish Language." },
-        { "id": "dual-credit-direction", "text": "Dual-credit direction - college-level coursework during high school." }
+        {
+          "id": "spring-early-college-academy",
+          "text": "Spring Early College Academy - 9th grade dual-credit student at SECA in Spring ISD."
+        },
+        {
+          "id": "current-standing",
+          "text": "Current standing - 5.0000 weighted GPA and sole #1 class rank out of 111."
+        },
+        {
+          "id": "school-ranking-context",
+          "text": "School context - SECA is the top Spring ISD high school by SchoolDigger state rank, and Spring ISD cites U.S. News rankings of #9 in the Houston metro, #44 in Texas, and #326 nationally for 2025-2026."
+        },
+        {
+          "id": "advanced-course-load",
+          "text": "Advanced course load - all advanced classes, including AP Human Geography and AP Spanish Language."
+        },
+        {
+          "id": "dual-credit-direction",
+          "text": "Dual-credit direction - college-level coursework during high school."
+        }
       ]
     },
     {
@@ -393,11 +779,26 @@
       "category": "Competitions, speaking, and leadership",
       "icon": "trophy",
       "items": [
-        { "id": "uil-number-sense", "text": "UIL Number Sense - math competition experience." },
-        { "id": "informative-speaking", "text": "Informative Speaking - public-speaking competition and presentation practice." },
-        { "id": "debate", "text": "Debate - JV finals experience." },
-        { "id": "student-council", "text": "Student Council - school leadership." },
-        { "id": "tetc-presentations", "text": "TETC presentations - technical communication for engineering projects and showcase work." }
+        {
+          "id": "uil-number-sense",
+          "text": "UIL Number Sense - math competition experience."
+        },
+        {
+          "id": "informative-speaking",
+          "text": "Informative Speaking - public-speaking competition and presentation practice."
+        },
+        {
+          "id": "debate",
+          "text": "Debate - JV finals experience."
+        },
+        {
+          "id": "student-council",
+          "text": "Student Council - school leadership."
+        },
+        {
+          "id": "tetc-presentations",
+          "text": "TETC presentations - technical communication for engineering projects and showcase work."
+        }
       ]
     },
     {
@@ -405,11 +806,26 @@
       "category": "Scouts, service, and long-term discipline",
       "icon": "target",
       "items": [
-        { "id": "scouts-bsa", "text": "Scouts BSA - First Class Scout working toward Eagle." },
-        { "id": "eagle-planning", "text": "Eagle planning - paperwork, service planning, and merit-badge tracking." },
-        { "id": "troop-leadership-interests", "text": "Troop leadership interests - Librarian/Bugler planning, checkout systems, and bugle-call practice." },
-        { "id": "fitness-requirement-tracking", "text": "Fitness requirement tracking - exercise logs and reflections for rank and merit-badge progress." },
-        { "id": "service-mindset", "text": "Service projects - leadership roles and planning for Eagle and Palms." }
+        {
+          "id": "scouts-bsa",
+          "text": "Scouts BSA - First Class Scout working toward Eagle."
+        },
+        {
+          "id": "eagle-planning",
+          "text": "Eagle planning - paperwork, service planning, and merit-badge tracking."
+        },
+        {
+          "id": "troop-leadership-interests",
+          "text": "Troop leadership interests - Librarian/Bugler planning, checkout systems, and bugle-call practice."
+        },
+        {
+          "id": "fitness-requirement-tracking",
+          "text": "Fitness requirement tracking - exercise logs and reflections for rank and merit-badge progress."
+        },
+        {
+          "id": "service-mindset",
+          "text": "Service projects - leadership roles and planning for Eagle and Palms."
+        }
       ]
     },
     {
@@ -417,20 +833,59 @@
       "category": "Languages and long-term learning",
       "icon": "list",
       "items": [
-        { "id": "duolingo-streak", "text": "Duolingo streak - daily language-learning streak over 1,600 days." },
-        { "id": "spanish", "text": "Spanish - AP Spanish Language coursework and continued practice." },
-        { "id": "french", "text": "French - beginner-to-intermediate practice in pronunciation, listening, and sentence construction." },
-        { "id": "latin-background", "text": "Latin background - foundational Latin study." },
-        { "id": "self-directed-learning", "text": "Self-directed learning - projects, tools, and practice systems outside assigned schoolwork." }
+        {
+          "id": "duolingo-streak",
+          "text": "Duolingo streak - daily language-learning streak over 1,600 days."
+        },
+        {
+          "id": "spanish",
+          "text": "Spanish - AP Spanish Language coursework and continued practice."
+        },
+        {
+          "id": "french",
+          "text": "French - beginner-to-intermediate practice in pronunciation, listening, and sentence construction."
+        },
+        {
+          "id": "latin-background",
+          "text": "Latin background - foundational Latin study."
+        },
+        {
+          "id": "self-directed-learning",
+          "text": "Self-directed learning - projects, tools, and practice systems outside assigned schoolwork."
+        }
       ]
     }
   ],
   "navLinks": [
-    { "id": "projects", "label": "Projects", "href": "#projects" },
-    { "id": "academics", "label": "Academics", "href": "#academics" },
-    { "id": "small-builds", "label": "Small Builds", "href": "#smaller-projects" },
-    { "id": "bench-notes", "label": "Bench Notes", "href": "#bench-notes" },
-    { "id": "skills", "label": "Skills", "href": "#bench" },
-    { "id": "contact", "label": "Contact", "href": "#contact" }
+    {
+      "id": "projects",
+      "label": "Projects",
+      "href": "#projects"
+    },
+    {
+      "id": "academics",
+      "label": "Academics",
+      "href": "#academics"
+    },
+    {
+      "id": "small-builds",
+      "label": "Small Builds",
+      "href": "#smaller-projects"
+    },
+    {
+      "id": "bench-notes",
+      "label": "Bench Notes",
+      "href": "#bench-notes"
+    },
+    {
+      "id": "skills",
+      "label": "Skills",
+      "href": "#bench"
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "href": "#contact"
+    }
   ]
 }

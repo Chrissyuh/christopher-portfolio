@@ -61,6 +61,9 @@ To document next: annotated notes on constraints, mistakes, and lessons from eac
 - Subpix - desktop app: Open-source Electron, Vite, React, and TypeScript editor for .subpix files, RGB/BGR subpixel canvases, JSON validation, PNG export, and Windows packaging. ([project](https://subpix-editor.vercel.app/), [source](https://github.com/Chrissyuh/Subpix)). Media: 2 slots, 0 live, 2 placeholders.
 - Check-ins - live web app: Live web app for logging check-ins and tracking target gaps, max gaps, and progress. ([project](https://check-ins-zeta.vercel.app/)). Media: 1 slot, 0 live, 1 placeholder.
 - MPF Hardware Test Tools - pinball utilities: Pinball test utilities for checking switches, coils, LEDs, board maps, and FAST hardware before full rules. Media: 1 slot, 0 live, 1 placeholder.
+
+## C-Level Projects
+
 - MIDI Practice Tool - python / music: Python practice tool for soundfonts, pedals, controls, and keyboard-style interaction. Media: 1 slot, 0 live, 1 placeholder.
 - Desmos 3D Solar System - math visualization: 3D math visualization using surfaces, orbits, color mapping, and performance tradeoffs. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Media: 1 slot, 0 live, 1 placeholder.
 - TinyGPT Experiments - machine learning: Learning project on small next-token models and how pretraining differs from instruction following. Media: 1 slot, 0 live, 1 placeholder.

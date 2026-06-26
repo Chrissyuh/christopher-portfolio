@@ -46,6 +46,12 @@ Allowed `media_*_type` values: `photo`, `video`. Every enabled main project need
 
 Leave `href` or `source_href` blank when a project should not show those links. Every enabled small project needs at least one media slot.
 
+### MicroProjects
+
+`id,order,enabled,title,href,source_href,type,description,media_1_type,media_1_src,media_1_alt,media_1_caption,media_2_type,media_2_src,media_2_alt,media_2_caption,media_3_type,media_3_src,media_3_alt,media_3_caption,media_4_type,media_4_src,media_4_alt,media_4_caption`
+
+C-level projects render as small photo-first tiles in the Bench Notes section. Every enabled micro project needs at least one media slot; leave `media_*_src` blank to show a placeholder until a real image is ready.
+
 ### SkillNarratives
 
 `id,order,enabled,title,icon,text`

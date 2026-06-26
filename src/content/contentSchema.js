@@ -6,6 +6,7 @@ export const sheetTabNames = [
   "MainProjects",
   "Academics",
   "SmallProjects",
+  "MicroProjects",
   "SkillNarratives",
   "Skills",
   "Principles",
@@ -46,6 +47,7 @@ const requiredFields = {
   MainProjects: ["id", "number", "title", "label", "status", "accent", "summary"],
   Academics: ["id", "label", "value"],
   SmallProjects: ["id", "title", "type", "description"],
+  MicroProjects: ["id", "title", "type", "description"],
   SkillNarratives: ["id", "title", "icon", "text"],
   Skills: ["id", "name"],
   Principles: ["id", "title", "text"],
@@ -79,6 +81,11 @@ const defaultMeta = {
   smallerProjectsCode: "SMALLER BUILDS",
   smallerProjectsTitle: "Smaller projects and experiments.",
   smallerProjectsText: "Small tools, robotics prototypes, visualizations, and learning projects.",
+  microProjectsCode: "C-LEVEL BUILDS",
+  microProjectsTitle: "Bench notes.",
+  microProjectsText: "Tiny finished builds that show tools, habits, and constraints.",
+  microProjectsOpenLabel: "Open",
+  microProjectsSourceLabel: "Source",
   skillSystemCode: "SKILL SYSTEM",
   skillSystemTitle: "Skills in use.",
   skillSystemText:
@@ -276,6 +283,25 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     };
   });
 
+  const microProjects = simpleRows("MicroProjects", (row) => {
+    const id = text(row.id);
+    const media = compactMediaFields(row, errors, "MicroProjects", id);
+
+    if (media.length === 0) {
+      errors.push(`MicroProjects row "${id}" must include at least one media slot.`);
+    }
+
+    return {
+      id,
+      title: text(row.title),
+      href: hrefOrNull(row.href),
+      sourceHref: hrefOrNull(row.source_href),
+      type: text(row.type),
+      description: text(row.description),
+      media,
+    };
+  });
+
   const fullRecordSections = simpleRows("FullRecordSections", (row) => {
     const icon = text(row.icon);
     requireKnownValue(errors, "FullRecordSections", text(row.id), "icon", icon, allowedIcons);
@@ -335,6 +361,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       value: text(row.value),
     })),
     smallProjects,
+    microProjects,
     skillNarratives,
     skills: simpleRows("Skills", (row) => ({
       id: text(row.id),

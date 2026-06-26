@@ -120,6 +120,16 @@ function buildLlmsTxt(content) {
       }),
     ),
     "",
+    "## C-Level Projects",
+    "",
+    markdownList(
+      list(content.microProjects).map((project) => {
+        const links = projectLinks(project);
+        const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
+        return appendSentence(`${project.title}: ${project.description}${linkText}`, `${mediaSummary(project)}.`);
+      }),
+    ),
+    "",
     "## Contact",
     "",
     markdownList(contactLinks),
@@ -179,6 +189,16 @@ function buildLlmsFullTxt(content) {
     "",
     markdownList(
       list(content.smallProjects).map((project) => {
+        const links = projectLinks(project);
+        const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
+        return appendSentence(`${project.title} - ${project.type}: ${project.description}${linkText}`, `${mediaSummary(project)}.`);
+      }),
+    ),
+    "",
+    "## C-Level Projects",
+    "",
+    markdownList(
+      list(content.microProjects).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
         return appendSentence(`${project.title} - ${project.type}: ${project.description}${linkText}`, `${mediaSummary(project)}.`);

@@ -24,6 +24,11 @@
     "smallerProjectsCode": "SMALLER BUILDS",
     "smallerProjectsTitle": "Smaller projects and experiments.",
     "smallerProjectsText": "Small tools, robotics prototypes, visualizations, and learning projects.",
+    "microProjectsCode": "C-LEVEL BUILDS",
+    "microProjectsTitle": "Bench notes.",
+    "microProjectsText": "Tiny finished builds that show tools, habits, and constraints.",
+    "microProjectsOpenLabel": "Open",
+    "microProjectsSourceLabel": "Source",
     "skillSystemCode": "SKILL SYSTEM",
     "skillSystemTitle": "Skills in use.",
     "skillSystemText": "CAD, electronics, code, and testing show up together in the project work.",
@@ -384,7 +389,9 @@
           "caption": "Add hardware test bench photo"
         }
       ]
-    },
+    }
+  ],
+  "microProjects": [
     {
       "id": "midi-practice-tool",
       "title": "MIDI Practice Tool",
@@ -785,6 +792,11 @@
       "id": "small-builds",
       "label": "Small Builds",
       "href": "#smaller-projects"
+    },
+    {
+      "id": "bench-notes",
+      "label": "Bench Notes",
+      "href": "#bench-notes"
     },
     {
       "id": "skills",

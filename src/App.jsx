@@ -665,10 +665,7 @@ function AcademicCard({ item, index }) {
       )}
     >
       {isGoldHighlight && (
-        <>
-          <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1.5 bg-[#d7a31f]" />
-          <div aria-hidden="true" className="absolute right-4 top-4 h-8 w-12 border-r-2 border-t-2 border-[#d7a31f]" />
-        </>
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1.5 bg-[#d7a31f]" />
       )}
       <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#827466]">{item.label}</p>
       <p className="mt-3 text-2xl font-semibold leading-7 tracking-[-0.03em] text-slate-950">{item.value}</p>

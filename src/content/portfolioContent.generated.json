@@ -26,12 +26,12 @@
     "academicSchoolHref": "https://seca.springisd.org/",
     "academicSchoolLogoSrc": "/portfolio-media/academics/seca-logo.png",
     "academicSchoolLogoAlt": "Spring Early College Academy crest",
-    "academicSchoolDistrictRank": "Top Spring ISD high school by SchoolDigger state rank.",
+    "academicSchoolDistrictRank": "Top-ranked Spring ISD high school.",
     "academicSchoolDistrictSourceHref": "https://www.schooldigger.com/go/TX/district/41220/search.aspx?level=3",
-    "academicSchoolDistrictSourceLabel": "SchoolDigger SISD rankings",
-    "academicSchoolRankSummary": "U.S. News 2025-2026: #9 Houston metro, #44 Texas, #326 national.",
+    "academicSchoolDistrictSourceLabel": "District rankings",
+    "academicSchoolRankSummary": "#9 Houston metro, #44 Texas, #326 national.",
     "academicSchoolRankSourceHref": "https://seca.springisd.org/o/seca/article/2369574",
-    "academicSchoolRankSourceLabel": "Spring ISD / U.S. News",
+    "academicSchoolRankSourceLabel": "Ranking details",
     "smallerProjectsCode": "SMALLER BUILDS",
     "smallerProjectsTitle": "Smaller projects and experiments.",
     "smallerProjectsText": "Small tools, robotics prototypes, visualizations, and learning projects.",
@@ -328,6 +328,7 @@
       "label": "Weighted GPA",
       "value": "5.0000",
       "note": "on a 5.0 scale",
+      "highlight": "",
       "assetSrc": null,
       "assetAlt": ""
     },
@@ -336,14 +337,16 @@
       "label": "Class rank",
       "value": "#1 of 111",
       "note": "sole #1 standing",
-      "assetSrc": "/portfolio-media/academics/crown.png",
-      "assetAlt": "hand-drawn gold crown"
+      "highlight": "gold",
+      "assetSrc": null,
+      "assetAlt": ""
     },
     {
       "id": "course-load",
       "label": "Course load",
       "value": "AP + advanced coursework",
       "note": "AP Human Geography, AP Spanish Language, and advanced classes",
+      "highlight": "",
       "assetSrc": null,
       "assetAlt": ""
     },
@@ -352,6 +355,7 @@
       "label": "Program",
       "value": "Early college pathway",
       "note": "high school plus college-level coursework",
+      "highlight": "",
       "assetSrc": null,
       "assetAlt": ""
     }
@@ -762,7 +766,7 @@
         },
         {
           "id": "school-ranking-context",
-          "text": "School context - SECA is the top Spring ISD high school by SchoolDigger state rank, and Spring ISD cites U.S. News rankings of #9 in the Houston metro, #44 in Texas, and #326 nationally for 2025-2026."
+          "text": "School context - SECA is the top-ranked Spring ISD high school, listed at #9 in the Houston metro, #44 in Texas, and #326 nationally for 2025-2026."
         },
         {
           "id": "advanced-course-load",

@@ -650,6 +650,8 @@ function AcademicSchoolCard({ meta }) {
 }
 
 function AcademicCard({ item, index }) {
+  const isGoldHighlight = item.highlight === "gold";
+
   return (
     <motion.div
       key={item.id}
@@ -657,15 +659,16 @@ function AcademicCard({ item, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.25, delay: index * 0.035 }}
-      className={cn("relative border border-[#d2c8b9] bg-white p-5 shadow-sm", item.assetSrc && "pr-24 md:pr-28")}
+      className={cn(
+        "relative overflow-hidden border border-[#d2c8b9] bg-white p-5 shadow-sm",
+        isGoldHighlight && "border-[#d8b451] bg-[linear-gradient(180deg,#fffdf7_0%,#ffffff_42%)]",
+      )}
     >
-      {item.assetSrc && (
-        <img
-          src={item.assetSrc}
-          alt={item.assetAlt || ""}
-          loading="lazy"
-          className="pointer-events-none absolute -right-3 -top-7 h-16 w-24 rotate-[10deg] object-contain drop-shadow-[0_5px_6px_rgba(34,28,18,0.18)] md:h-20 md:w-28"
-        />
+      {isGoldHighlight && (
+        <>
+          <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1.5 bg-[#d7a31f]" />
+          <div aria-hidden="true" className="absolute right-4 top-4 h-8 w-12 border-r-2 border-t-2 border-[#d7a31f]" />
+        </>
       )}
       <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#827466]">{item.label}</p>
       <p className="mt-3 text-2xl font-semibold leading-7 tracking-[-0.03em] text-slate-950">{item.value}</p>

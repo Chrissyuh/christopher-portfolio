@@ -38,9 +38,9 @@ Allowed `media_*_type` values: `photo`, `video`. Every enabled main project need
 
 ### Academics
 
-`id,order,enabled,label,value,note,asset_src,asset_alt`
+`id,order,enabled,label,value,note,highlight,asset_src,asset_alt`
 
-Leave `note`, `asset_src`, or `asset_alt` blank when an academic card should only show the label and value.
+Leave `note`, `highlight`, `asset_src`, or `asset_alt` blank when an academic card should only show the label and value. Set `highlight` to `gold` for the restrained gold rank-card accent.
 
 ### SmallProjects
 

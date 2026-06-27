@@ -230,7 +230,7 @@ function Tag({ children }) {
 function MediaFrame({ item, label, compact = false }) {
   const mediaType = item.type === "video" ? "video" : "photo";
   const caption = item.caption || item.alt || label;
-  const frameClass = compact ? "min-w-full" : "min-w-[230px] md:min-w-[280px]";
+  const frameClass = compact ? "w-full flex-none" : "w-full flex-none sm:w-[calc((100%_-_0.75rem)/2)]";
 
   return (
     <figure className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}>
@@ -308,9 +308,10 @@ function MediaCarousel({ media, label, compact = false }) {
     if (!track || !slide) return;
 
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const slideLeft = slide.offsetLeft - track.offsetLeft;
 
     track.scrollTo({
-      left: slide.offsetLeft,
+      left: slideLeft,
       behavior: prefersReducedMotion ? "auto" : "smooth",
     });
   }, [safeActiveIndex]);
@@ -333,7 +334,7 @@ function MediaCarousel({ media, label, compact = false }) {
 
   return (
     <div
-      className={compact ? "mt-4" : "mt-5"}
+      className={compact ? "mt-4 min-w-0" : "mt-5 min-w-0"}
       aria-label={`${label} media`}
       aria-roledescription="carousel"
       onFocusCapture={markInteraction}
@@ -361,7 +362,7 @@ function MediaCarousel({ media, label, compact = false }) {
           </button>
         </div>
       )}
-      <div ref={trackRef} className="flex snap-x gap-3 overflow-hidden pb-2">
+      <div ref={trackRef} className="flex w-full min-w-0 snap-x gap-3 overflow-hidden pb-2">
         {items.map((item, index) => (
           <MediaFrame key={`${item.id}-${index}`} item={item} label={label} compact={compact} />
         ))}
@@ -440,7 +441,7 @@ function ProjectRow({ project, index, meta }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3, delay: index * 0.045 }}
-      className="group grid border border-[#d2c8b9] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(34,28,18,0.08)] xl:grid-cols-[190px_270px_1fr]"
+      className="group grid min-w-0 border border-[#d2c8b9] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(34,28,18,0.08)] xl:grid-cols-[190px_270px_minmax(0,1fr)]"
     >
       <div className={`border-b border-[#e1d7c8] p-5 xl:border-b-0 xl:border-r ${style.soft}`}>
         <div className="flex items-start justify-between gap-3">
@@ -459,8 +460,8 @@ function ProjectRow({ project, index, meta }) {
         <PreviewPanel project={project} visualMapText={meta.projectVisualMapText} />
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_250px]">
-        <div className="p-5 md:p-6">
+      <div className="grid min-w-0 lg:grid-cols-[minmax(0,1fr)_250px]">
+        <div className="min-w-0 p-5 md:p-6">
           <h3 className="text-2xl font-semibold tracking-[-0.03em] text-slate-950">{project.title}</h3>
           <p className="mt-3 max-w-3xl text-base leading-7 text-slate-700 md:text-lg">{project.summary}</p>
           {project.myRole && (

@@ -667,59 +667,63 @@ function AcademicSchoolCard({ meta }) {
 
   return (
     <aside className="border border-[#d2c8b9] bg-white p-4 shadow-sm">
-      <div className="flex items-start gap-4">
-        {meta.academicSchoolLogoSrc && (
-          <a
-            href={meta.academicSchoolHref}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Open ${schoolName} website`}
-            className="grid h-20 w-20 shrink-0 place-items-center border border-[#d6cec0] bg-white p-1 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
-          >
-            <img
-              src={meta.academicSchoolLogoSrc}
-              alt={meta.academicSchoolLogoAlt || `${schoolName} logo`}
-              loading="lazy"
-              className="h-full w-full object-contain"
-            />
-          </a>
-        )}
-        <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466]">
-            {meta.academicSchoolEyebrow}
-          </p>
-          <a
-            href={meta.academicSchoolHref}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-1 block text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 hover:text-[#244fd6]"
-          >
-            {schoolName}
-          </a>
-          <p className="mt-2 text-xs leading-5 text-slate-700">{meta.academicSchoolDistrictRank}</p>
-        </div>
-      </div>
-
-      <p className="mt-4 border-t border-[#e1d7c8] pt-3 text-xs font-semibold leading-5 text-slate-950">
-        {meta.academicSchoolRankSummary}
-      </p>
-
-      {sourceLinks.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-2">
-          {sourceLinks.map((link) => (
+      <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+        <div className="flex items-center gap-4">
+          {meta.academicSchoolLogoSrc && (
             <a
-              key={link.href}
-              href={link.href}
+              href={meta.academicSchoolHref}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center border border-[#cfc4b4] bg-[#fbfaf7] px-2.5 py-1.5 text-[11px] font-semibold text-slate-800 transition hover:bg-[#f5f3ee]"
+              aria-label={`Open ${schoolName} website`}
+              className="grid h-20 w-20 shrink-0 place-items-center border border-[#d6cec0] bg-white p-1 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
             >
-              {link.label}
-              <Icon name="arrowRight" className="ml-1.5 h-3 w-3" />
+              <img
+                src={meta.academicSchoolLogoSrc}
+                alt={meta.academicSchoolLogoAlt || `${schoolName} logo`}
+                loading="lazy"
+                className="h-full w-full object-contain"
+              />
             </a>
-          ))}
+          )}
+          <div className="min-w-0">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466]">
+              {meta.academicSchoolEyebrow}
+            </p>
+            <a
+              href={meta.academicSchoolHref}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-1 block text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 hover:text-[#244fd6]"
+            >
+              {schoolName}
+            </a>
+            <p className="mt-2 text-xs leading-5 text-slate-700">{meta.academicSchoolDistrictRank}</p>
+          </div>
         </div>
-      )}
+
+        <div className="border-t border-[#e1d7c8] pt-3 md:min-w-[260px] md:border-l md:border-t-0 md:pl-4 md:pt-0">
+          <p className="text-xs font-semibold leading-5 text-slate-950">
+            {meta.academicSchoolRankSummary}
+          </p>
+
+          {sourceLinks.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {sourceLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center border border-[#cfc4b4] bg-[#fbfaf7] px-2.5 py-1.5 text-[11px] font-semibold text-slate-800 transition hover:bg-[#f5f3ee]"
+                >
+                  {link.label}
+                  <Icon name="arrowRight" className="ml-1.5 h-3 w-3" />
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </aside>
   );
 }
@@ -984,7 +988,7 @@ function PortfolioPage({ content }) {
       </section>
 
       <section id="academics" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-        <div className="mb-8 grid gap-4 border-t border-[#d2c8b9] pt-7 lg:grid-cols-[170px_minmax(0,1fr)_minmax(300px,380px)]">
+        <div className="mb-8 grid gap-4 border-t border-[#d2c8b9] pt-7 lg:grid-cols-[170px_minmax(260px,0.7fr)_minmax(420px,1.3fr)]">
           <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#827466]">{meta.academicCode}</p>
           <div>
             <h2 className="text-2xl font-semibold tracking-[-0.035em] text-slate-950 md:text-4xl">

@@ -371,6 +371,39 @@ function MediaCarousel({ media, label, compact = false }) {
   );
 }
 
+function projectAnchorId(project) {
+  return `project-${project.id}`;
+}
+
+function FeaturedProjectIndex({ projects }) {
+  const items = list(projects);
+
+  if (items.length === 0) return null;
+
+  return (
+    <nav aria-label="Featured project index" className="mb-4 grid gap-2 md:grid-cols-2 xl:grid-cols-4">
+      {items.map((project) => (
+        <a
+          key={project.id}
+          href={`#${projectAnchorId(project)}`}
+          className="group flex min-h-[118px] flex-col justify-between border border-[#d2c8b9] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-400 hover:shadow-[0_12px_28px_rgba(34,28,18,0.07)] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+        >
+          <span className="flex items-start justify-between gap-3">
+            <span className="font-mono text-xs font-semibold text-[#244fd6]">{project.number}</span>
+            <Icon name="arrowRight" className="h-4 w-4 text-[#827466] transition group-hover:text-slate-950" />
+          </span>
+          <span>
+            <span className="block text-sm font-semibold leading-5 tracking-[-0.015em] text-slate-950">
+              {project.title}
+            </span>
+            <span className="mt-2 block text-xs leading-5 text-slate-600">{project.status}</span>
+          </span>
+        </a>
+      ))}
+    </nav>
+  );
+}
+
 function SectionHeader({ code, title, children }) {
   return (
     <div className="mb-8 grid gap-4 border-t border-[#d2c8b9] pt-7 md:grid-cols-[170px_1fr]">
@@ -437,11 +470,12 @@ function ProjectRow({ project, index, meta }) {
 
   return (
     <motion.article
+      id={projectAnchorId(project)}
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3, delay: index * 0.045 }}
-      className="group grid min-w-0 border border-[#d2c8b9] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(34,28,18,0.08)] xl:grid-cols-[190px_270px_minmax(0,1fr)]"
+      className="group grid min-w-0 scroll-mt-24 border border-[#d2c8b9] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(34,28,18,0.08)] xl:grid-cols-[190px_270px_minmax(0,1fr)]"
     >
       <div className={`border-b border-[#e1d7c8] p-5 xl:border-b-0 xl:border-r ${style.soft}`}>
         <div className="flex items-start justify-between gap-3">
@@ -941,6 +975,7 @@ function PortfolioPage({ content }) {
         <SectionHeader code={meta.projectIndexCode} title={meta.projectIndexTitle}>
           {meta.projectIndexText}
         </SectionHeader>
+        <FeaturedProjectIndex projects={content.projects} />
         <div className="grid gap-4">
           {list(content.projects).map((project, index) => (
             <ProjectRow key={project.id} project={project} index={index} meta={meta} />

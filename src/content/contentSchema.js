@@ -71,10 +71,10 @@ const defaultMeta = {
     "Photos, CAD files, wiring notes, tests, configs, links, and missing media.",
   portfolioRuleEyebrow: "still missing",
   portfolioRuleText: "Some photos and videos still need to be added.",
-  projectIndexCode: "PROJECT INDEX",
-  projectIndexTitle: "Engineering projects.",
+  projectIndexCode: "FEATURED PROJECTS",
+  projectIndexTitle: "Featured projects.",
   projectIndexText:
-    "Physical systems with CAD, wiring, software, and test notes.",
+    "Four current projects with links, media, and open documentation gaps.",
   academicCode: "ACADEMIC SNAPSHOT",
   academicTitle: "Academic profile.",
   academicText: "Current standing, course load, and school context.",

@@ -29,7 +29,7 @@ To document next: photos, playfield CAD, wiring maps, MPF configs, driver tests,
 Status: Stanford AI4ALL team project
 Label: team robotics simulation
 Source: https://github.com/LenekyRadish/VividGrasp
-My role: Team member on the robotics simulation; detailed personal contribution notes still need to be added.
+My role: Head CAD designer, prepared URDF files, worked with a teammate to create a physical prototype.
 Related program/logo link: https://ai4all.spcs.stanford.edu/
 Stanford AI4ALL project built by a team of 10 students. It connects SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.
 Evidence: Stanford AI4ALL, team of 10, SolidWorks CAD, URDF / PyBullet simulation, target-based control, simulated arm motion

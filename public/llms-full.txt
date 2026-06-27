@@ -52,7 +52,7 @@ Source: https://github.com/Chrissyuh/Subpix
 My role: Built the editor, file format flow, export path, product site, and Windows packaging.
 Open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON load/save data, exporting PNGs, and packaging for Windows.
 Evidence: Electron, Vite / React / TypeScript, .subpix editing, JSON validation, PNG export, Windows packaging
-Media: 2 slots, 0 live, 2 placeholders
+Media: 2 slots, 1 live, 1 placeholder
 To document next: editor screenshots, export demo, Windows installer notes, example .subpix files
 
 ## Academics

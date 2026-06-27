@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "google-sheet-template",
-  "updatedAt": "2026-06-27T23:20:24.791Z",
+  "updatedAt": "2026-06-27T23:25:10.695Z",
   "meta": {
     "documentTitle": "Christopher Portfolio",
     "navName": "Christopher",
@@ -329,9 +329,9 @@
         {
           "id": "media-1",
           "type": "photo",
-          "src": null,
-          "alt": "Subpix editor screenshot needed",
-          "caption": "Add editor screenshot"
+          "src": "/portfolio-media/subpix/subpix-editor-canvas.png",
+          "alt": "Subpix editor showing an RGB horizontal stripe subpixel drawing canvas",
+          "caption": "Subpix editor canvas"
         },
         {
           "id": "media-2",

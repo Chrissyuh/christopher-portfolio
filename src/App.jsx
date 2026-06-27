@@ -404,16 +404,26 @@ function FeaturedProjectIndex({ projects }) {
   );
 }
 
+function TitleBlock({ code, title, children, as: Heading = "h2", className = "" }) {
+  return (
+    <div className={cn("max-w-3xl", className)}>
+      <p className="inline-flex border-l-2 border-[#244fd6] bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466] shadow-sm">
+        {code}
+      </p>
+      <Heading className="mt-3 text-2xl font-semibold leading-tight tracking-normal text-slate-950 md:text-[2.35rem]">
+        {title}
+      </Heading>
+      {children && <p className="mt-3 max-w-2xl text-base leading-7 text-slate-700">{children}</p>}
+    </div>
+  );
+}
+
 function SectionHeader({ code, title, children }) {
   return (
-    <div className="mb-8 grid gap-4 border-t border-[#d2c8b9] pt-7 md:grid-cols-[170px_1fr]">
-      <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#827466]">{code}</p>
-      <div>
-        <h2 className="text-2xl font-semibold tracking-[-0.035em] text-slate-950 md:text-4xl">
-          {title}
-        </h2>
-        {children && <p className="mt-3 max-w-2xl text-base leading-7 text-slate-700">{children}</p>}
-      </div>
+    <div className="mb-8 border-t border-[#d2c8b9] pt-7">
+      <TitleBlock code={code} title={title}>
+        {children}
+      </TitleBlock>
     </div>
   );
 }
@@ -988,14 +998,10 @@ function PortfolioPage({ content }) {
       </section>
 
       <section id="academics" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-        <div className="mb-8 grid gap-4 border-t border-[#d2c8b9] pt-7 lg:grid-cols-[170px_minmax(260px,0.7fr)_minmax(420px,1.3fr)]">
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#827466]">{meta.academicCode}</p>
-          <div>
-            <h2 className="text-2xl font-semibold tracking-[-0.035em] text-slate-950 md:text-4xl">
-              {meta.academicTitle}
-            </h2>
-            {meta.academicText && <p className="mt-3 max-w-2xl text-base leading-7 text-slate-700">{meta.academicText}</p>}
-          </div>
+        <div className="mb-8 grid gap-4 border-t border-[#d2c8b9] pt-7 lg:grid-cols-[minmax(280px,0.85fr)_minmax(420px,1.15fr)]">
+          <TitleBlock code={meta.academicCode} title={meta.academicTitle}>
+            {meta.academicText}
+          </TitleBlock>
           <AcademicSchoolCard meta={meta} />
         </div>
 
@@ -1080,15 +1086,9 @@ function RecordPage({ content }) {
       <section id="top" className="relative z-10 mx-auto max-w-7xl px-5 pb-10 pt-10 md:px-8 md:pb-14 md:pt-14">
         <div className="border border-[#d2c8b9] bg-white p-6 shadow-sm md:p-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-            <div>
-              <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#827466]">{meta.recordEyebrow}</p>
-              <h1 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight tracking-[-0.045em] text-slate-950 md:text-5xl">
-                {meta.recordTitle}
-              </h1>
-              <p className="mt-5 max-w-3xl text-base leading-7 text-slate-700 md:text-lg">
-                {meta.recordIntro}
-              </p>
-            </div>
+            <TitleBlock code={meta.recordEyebrow} title={meta.recordTitle} as="h1" className="max-w-4xl">
+              {meta.recordIntro}
+            </TitleBlock>
             <Button asChild className="rounded-none bg-slate-950 px-5 py-5 text-sm font-semibold text-white hover:bg-[#244fd6]">
               <Link to="/">{meta.backPortfolioLabel}</Link>
             </Button>
@@ -1147,13 +1147,9 @@ function ContactSection({ content }) {
     <section id="contact" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-20">
       <div className="border border-[#d2c8b9] bg-white shadow-[0_16px_45px_rgba(34,28,18,0.08)]">
         <div className="grid gap-6 p-6 md:grid-cols-[1fr_300px] md:p-8">
-          <div>
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#827466]">{meta.contactEyebrow}</p>
-            <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-slate-950 md:text-4xl">
-              {meta.contactTitle}
-            </h2>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-700">{meta.contactText}</p>
-          </div>
+          <TitleBlock code={meta.contactEyebrow} title={meta.contactTitle}>
+            {meta.contactText}
+          </TitleBlock>
           <div className="flex flex-col justify-end gap-3">
             {contactButtons.map((button) => (
               <ContactButton key={button.icon} href={button.href} icon={button.icon} primary={button.primary}>

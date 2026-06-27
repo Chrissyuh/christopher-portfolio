@@ -27,6 +27,8 @@ function Button({ asChild = false, className = "", children, ...props }) {
 
 const iconPaths = {
   arrowRight: "M5 12h14M13 5l7 7-7 7",
+  chevronLeft: "M15 18l-6-6 6-6",
+  chevronRight: "M9 6l6 6-6 6",
   cpu: "M9 9h6v6H9z M9 1v3 M15 1v3 M9 20v3 M15 20v3 M1 9h3 M1 15h3 M20 9h3 M20 15h3 M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z",
   github:
     "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.8c0-1-.4-1.7-.9-2.2 3-.3 6.1-1.5 6.1-6.6 0-1.5-.5-2.7-1.4-3.7.1-.3.6-1.8-.1-3.7 0 0-1.2-.4-3.8 1.4a13.2 13.2 0 0 0-7 0C6.3.6 5.1 1 5.1 1c-.7 1.9-.2 3.4-.1 3.7a5.2 5.2 0 0 0-1.4 3.7c0 5.1 3.1 6.3 6.1 6.6-.4.4-.8 1-.9 1.8v4.2",
@@ -72,6 +74,9 @@ const accentStyles = {
   amber: { text: "text-[#b45309]", bg: "bg-[#b45309]", soft: "bg-[#fff7ed]", border: "border-[#f0c28c]" },
   clay: { text: "text-[#8b5e3c]", bg: "bg-[#8b5e3c]", soft: "bg-[#f7f0ea]", border: "border-[#d7b99f]" },
 };
+
+const carouselAutoAdvanceMs = 6000;
+const carouselInteractionPauseMs = 10000;
 
 const SITE_URL = "https://chrisaheskett.vercel.app";
 
@@ -281,25 +286,90 @@ function MediaCarousel({ media, label, compact = false }) {
   const trackRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lastInteractionAt, setLastInteractionAt] = useState(0);
-  const maxIndex = Math.max(items.length - 1, 0);
-  const safeActiveIndex = items.length > 0 ? Math.min(activeIndex, maxIndex) : 0;
+  const [visibleCount, setVisibleCount] = useState(1);
+  const maxStartIndex = Math.max(items.length - visibleCount, 0);
+  const safeActiveIndex = items.length > 0 ? Math.min(activeIndex, maxStartIndex) : 0;
+  const canScroll = maxStartIndex > 0;
+  const canMoveBackward = safeActiveIndex > 0;
+  const canMoveForward = safeActiveIndex < maxStartIndex;
 
   const markInteraction = useCallback(() => {
     setLastInteractionAt(Date.now());
   }, []);
 
+  const measureVisibleCount = useCallback(() => {
+    const track = trackRef.current;
+    const firstSlide = track?.children?.[0];
+
+    if (!track || !firstSlide) {
+      setVisibleCount(1);
+      return;
+    }
+
+    const trackWidth = track.getBoundingClientRect().width;
+    const slideWidth = firstSlide.getBoundingClientRect().width;
+    const nextVisibleCount = slideWidth > 0 ? Math.max(1, Math.min(items.length, Math.floor((trackWidth + 1) / slideWidth))) : 1;
+
+    setVisibleCount((current) => (current === nextVisibleCount ? current : nextVisibleCount));
+  }, [items.length]);
+
   const goTo = useCallback(
     (index, userInitiated = false) => {
-      const normalizedIndex = ((index % items.length) + items.length) % items.length;
+      if (items.length === 0) return;
+
+      const nextIndex = Math.max(0, Math.min(index, maxStartIndex));
 
       if (userInitiated) {
         markInteraction();
       }
 
-      setActiveIndex(normalizedIndex);
+      setActiveIndex(nextIndex);
     },
-    [items.length, markInteraction],
+    [items.length, markInteraction, maxStartIndex],
   );
+
+  const moveByPage = useCallback(
+    (direction) => {
+      goTo(safeActiveIndex + direction * visibleCount, true);
+    },
+    [goTo, safeActiveIndex, visibleCount],
+  );
+
+  const handleKeyDown = useCallback(
+    (event) => {
+      markInteraction();
+
+      if (!canScroll) return;
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        moveByPage(-1);
+      }
+
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        moveByPage(1);
+      }
+    },
+    [canScroll, markInteraction, moveByPage],
+  );
+
+  useEffect(() => {
+    measureVisibleCount();
+
+    const track = trackRef.current;
+
+    if (!track) return undefined;
+
+    if (window.ResizeObserver) {
+      const observer = new window.ResizeObserver(measureVisibleCount);
+      observer.observe(track);
+      return () => observer.disconnect();
+    }
+
+    window.addEventListener("resize", measureVisibleCount);
+    return () => window.removeEventListener("resize", measureVisibleCount);
+  }, [measureVisibleCount]);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -317,18 +387,27 @@ function MediaCarousel({ media, label, compact = false }) {
   }, [safeActiveIndex]);
 
   useEffect(() => {
-    if (items.length <= 1) return undefined;
+    if (!canScroll) return undefined;
 
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion) return undefined;
 
+    const msSinceInteraction = lastInteractionAt ? Date.now() - lastInteractionAt : carouselInteractionPauseMs;
+    const delay =
+      lastInteractionAt && msSinceInteraction < carouselInteractionPauseMs
+        ? carouselInteractionPauseMs - msSinceInteraction
+        : carouselAutoAdvanceMs;
+
     const timer = window.setTimeout(() => {
-      setActiveIndex((index) => (Math.min(index, maxIndex) + 1) % items.length);
-    }, 6000);
+      setActiveIndex((index) => {
+        const currentIndex = Math.min(index, maxStartIndex);
+        return currentIndex >= maxStartIndex ? 0 : Math.min(currentIndex + visibleCount, maxStartIndex);
+      });
+    }, delay);
 
     return () => window.clearTimeout(timer);
-  }, [items.length, lastInteractionAt, maxIndex, safeActiveIndex]);
+  }, [canScroll, lastInteractionAt, maxStartIndex, safeActiveIndex, visibleCount]);
 
   if (items.length === 0) return null;
 
@@ -339,26 +418,28 @@ function MediaCarousel({ media, label, compact = false }) {
       aria-roledescription="carousel"
       onFocusCapture={markInteraction}
       onPointerDown={markInteraction}
-      onKeyDown={markInteraction}
+      onKeyDown={handleKeyDown}
       onWheel={markInteraction}
     >
-      {items.length > 1 && (
-        <div className="mb-2 flex justify-end gap-2">
+      {canScroll && (
+        <div className="mb-2 flex justify-end gap-1.5">
           <button
             type="button"
             aria-label={`Previous media for ${label}`}
-            onClick={() => goTo(safeActiveIndex - 1, true)}
-            className="grid h-9 w-9 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+            disabled={!canMoveBackward}
+            onClick={() => moveByPage(-1)}
+            className="grid h-9 w-9 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#f8f6f1] disabled:text-slate-400"
           >
-            <Icon name="arrowRight" className="h-4 w-4 rotate-180" />
+            <Icon name="chevronLeft" className="h-4 w-4" />
           </button>
           <button
             type="button"
             aria-label={`Next media for ${label}`}
-            onClick={() => goTo(safeActiveIndex + 1, true)}
-            className="grid h-9 w-9 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+            disabled={!canMoveForward}
+            onClick={() => moveByPage(1)}
+            className="grid h-9 w-9 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#f8f6f1] disabled:text-slate-400"
           >
-            <Icon name="arrowRight" className="h-4 w-4" />
+            <Icon name="chevronRight" className="h-4 w-4" />
           </button>
         </div>
       )}

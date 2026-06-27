@@ -39,6 +39,10 @@ function mediaSummary(project) {
   return `Media: ${media.length} slot${media.length === 1 ? "" : "s"}, ${filled} live, ${placeholders} placeholder${placeholders === 1 ? "" : "s"}`;
 }
 
+function roleSummary(project) {
+  return project.myRole ? ` Role: ${project.myRole}` : "";
+}
+
 function appendSentence(text, suffix) {
   const trimmed = String(text ?? "").trim();
   const separator = /[.!?]$/.test(trimmed) ? " " : ". ";
@@ -106,7 +110,7 @@ function buildLlmsTxt(content) {
       list(content.projects).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        return appendSentence(`${project.title}: ${project.summary}${linkText}`, `${mediaSummary(project)}.`);
+        return appendSentence(`${project.title}: ${project.summary}${roleSummary(project)}${linkText}`, `${mediaSummary(project)}.`);
       }),
     ),
     "",
@@ -169,6 +173,8 @@ function buildLlmsFullTxt(content) {
           `Label: ${project.label}`,
           project.href ? `Project: ${project.href}` : "",
           project.sourceHref ? `Source: ${project.sourceHref}` : "",
+          project.myRole ? `My role: ${project.myRole}` : "",
+          project.logoHref ? `Related program/logo link: ${project.logoHref}` : "",
           "",
           project.summary,
           "",

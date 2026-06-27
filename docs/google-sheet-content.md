@@ -28,11 +28,11 @@ Use one row per editable text value, such as `heroTitle`, `heroIntro`, `contactE
 
 ### MainProjects
 
-`id,order,enabled,number,title,href,source_href,label,status,accent,summary,evidence_1,evidence_2,evidence_3,evidence_4,evidence_5,evidence_6,media_1_type,media_1_src,media_1_alt,media_1_caption,media_2_type,media_2_src,media_2_alt,media_2_caption,media_3_type,media_3_src,media_3_alt,media_3_caption,media_4_type,media_4_src,media_4_alt,media_4_caption,next,preview_title,preview_label,preview_part_1,preview_part_2,preview_part_3,preview_part_4,preview_part_5,preview_part_6`
+`id,order,enabled,number,title,href,source_href,label,status,accent,summary,my_role,logo_src,logo_alt,logo_href,evidence_1,evidence_2,evidence_3,evidence_4,evidence_5,evidence_6,media_1_type,media_1_src,media_1_alt,media_1_caption,media_2_type,media_2_src,media_2_alt,media_2_caption,media_3_type,media_3_src,media_3_alt,media_3_caption,media_4_type,media_4_src,media_4_alt,media_4_caption,next,preview_title,preview_label,preview_part_1,preview_part_2,preview_part_3,preview_part_4,preview_part_5,preview_part_6`
 
 Allowed `accent` values: `blue`, `teal`, `amber`, `clay`.
 
-Leave `href` or `source_href` blank when a main project should not show those links.
+Leave `href`, `source_href`, `my_role`, `logo_src`, or `logo_href` blank when a main project should not show those fields.
 
 Allowed `media_*_type` values: `photo`, `video`. Every enabled main project needs at least one media slot. Leave `media_*_src` blank to show a placeholder until a real image or video URL is ready.
 

@@ -1,5 +1,5 @@
 "id","order","enabled","number","label"
 "garden-party","1","true","01","Garden Party pinball"
-"smart-pot","2","true","02","Smart pot PCB / enclosure"
-"solidworks","3","true","03","CAD practice models"
-"small-tools","4","true","04","small web + desktop tools"
+"vividgrasp","2","true","02","VividGrasp robotics arm"
+"smart-pot","3","true","03","Smart planter PCB"
+"subpix","4","true","04","Subpix desktop app"

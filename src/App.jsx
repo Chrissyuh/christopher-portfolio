@@ -102,6 +102,7 @@ function buildStructuredData(content) {
       sourceHref: project.sourceHref,
       label: project.label,
       summary: project.summary,
+      myRole: project.myRole,
       evidence: project.evidence,
     })),
     ...smallProjects.map((project) => ({
@@ -197,6 +198,15 @@ function buildStructuredData(content) {
         about: project.label,
         description: project.summary,
         keywords: list(project.evidence),
+        ...(project.myRole
+          ? {
+              contributor: {
+                "@type": "Role",
+                roleName: project.myRole,
+                contributor: { "@id": personId },
+              },
+            }
+          : {}),
         ...(project.sourceHref ? { codeRepository: project.sourceHref } : {}),
       })),
     ],
@@ -415,6 +425,14 @@ function PreviewPanel({ project, visualMapText }) {
 
 function ProjectRow({ project, index, meta }) {
   const style = accentStyles[project.accent] ?? accentStyles.blue;
+  const logoImage = project.logoSrc ? (
+    <img
+      src={project.logoSrc}
+      alt={project.logoAlt || `${project.title} logo`}
+      loading="lazy"
+      className="h-8 w-full object-contain"
+    />
+  ) : null;
 
   return (
     <motion.article
@@ -445,6 +463,11 @@ function ProjectRow({ project, index, meta }) {
         <div className="p-5 md:p-6">
           <h3 className="text-2xl font-semibold tracking-[-0.03em] text-slate-950">{project.title}</h3>
           <p className="mt-3 max-w-3xl text-base leading-7 text-slate-700 md:text-lg">{project.summary}</p>
+          {project.myRole && (
+            <p className="mt-4 border-l-2 border-[#d6cec0] pl-3 text-sm leading-6 text-slate-700">
+              <span className="font-semibold text-slate-950">My role:</span> {project.myRole}
+            </p>
+          )}
           <div className="mt-5 flex flex-wrap gap-2">
             {list(project.evidence).map((item) => (
               <Tag key={item}>{item}</Tag>
@@ -456,6 +479,23 @@ function ProjectRow({ project, index, meta }) {
         <div className="border-t border-[#e1d7c8] bg-[#fbfaf7] p-5 lg:border-l lg:border-t-0">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#827466]">{meta.projectNextLabel}</p>
           <p className="mt-3 text-sm leading-6 text-slate-700">{project.next}</p>
+          {project.logoSrc && (
+            <div className="mt-5">
+              {project.logoHref ? (
+                <a
+                  href={project.logoHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Open ${project.logoAlt || `${project.title} logo`} link`}
+                  className="block border border-[#d6cec0] bg-white px-3 py-2 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                >
+                  {logoImage}
+                </a>
+              ) : (
+                <div className="border border-[#d6cec0] bg-white px-3 py-2">{logoImage}</div>
+              )}
+            </div>
+          )}
           {(project.href || project.sourceHref) && (
             <div className="mt-5 flex flex-col gap-2">
               {project.href && (

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "source": "generated-snapshot",
-  "updatedAt": "2026-06-26T00:00:00.000Z",
+  "source": "google-sheet-template",
+  "updatedAt": "2026-06-27T00:03:36.792Z",
   "meta": {
     "documentTitle": "Christopher Portfolio",
     "navName": "Christopher",
@@ -94,19 +94,19 @@
       "label": "Garden Party pinball"
     },
     {
-      "id": "smart-pot",
+      "id": "vividgrasp",
       "number": "02",
-      "label": "Smart pot PCB / enclosure"
+      "label": "VividGrasp robotics arm"
     },
     {
-      "id": "solidworks",
+      "id": "smart-pot",
       "number": "03",
-      "label": "CAD practice models"
+      "label": "Smart planter PCB"
     },
     {
-      "id": "small-tools",
+      "id": "subpix",
       "number": "04",
-      "label": "small web + desktop tools"
+      "label": "Subpix desktop app"
     }
   ],
   "evidenceTiles": [
@@ -151,7 +151,11 @@
       "label": "pinball machine build",
       "status": "active build",
       "accent": "blue",
-      "summary": "A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield.",
+      "summary": "A full-size homebrew pinball machine in progress using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and playfield revisions.",
+      "myRole": "",
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "evidence": [
         "FAST Pinball boards",
         "Mission Pinball Framework",
@@ -187,15 +191,84 @@
       }
     },
     {
-      "id": "smart-self-watering-pot",
+      "id": "vividgrasp-ai-vision-robotics-arm",
       "number": "A02",
-      "title": "Smart Self-Watering Pot",
+      "title": "VividGrasp AI-Vision Robotics Arm",
+      "href": null,
+      "sourceHref": "https://github.com/LenekyRadish/VividGrasp",
+      "label": "team robotics simulation",
+      "status": "Stanford AI4ALL team project",
+      "accent": "amber",
+      "summary": "Stanford AI4ALL project built by a team of 10 students. It connects SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.",
+      "myRole": "Team member; personal contribution details to be filled in.",
+      "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
+      "logoAlt": "Stanford AI4ALL logo",
+      "logoHref": "https://ai4all.spcs.stanford.edu/",
+      "evidence": [
+        "Stanford AI4ALL",
+        "team of 10",
+        "SolidWorks CAD",
+        "URDF / PyBullet simulation",
+        "target-based control",
+        "simulated arm motion"
+      ],
+      "media": [
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": "/portfolio-media/vividgrasp/solidworks-arm-assembly.png",
+          "alt": "SolidWorks robotic arm assembly for VividGrasp",
+          "caption": "SolidWorks arm assembly"
+        },
+        {
+          "id": "media-2",
+          "type": "photo",
+          "src": "/portfolio-media/vividgrasp/pybullet-joint-controls.png",
+          "alt": "PyBullet joint control demo for the VividGrasp arm",
+          "caption": "PyBullet joint controls"
+        },
+        {
+          "id": "media-3",
+          "type": "photo",
+          "src": "/portfolio-media/vividgrasp/pybullet-target-demo.png",
+          "alt": "PyBullet target scene for the VividGrasp robotic arm",
+          "caption": "PyBullet target demo"
+        },
+        {
+          "id": "media-4",
+          "type": "photo",
+          "src": "/portfolio-media/vividgrasp/printed-gear-prototype.png",
+          "alt": "Printed gear prototype from the VividGrasp arm work",
+          "caption": "Printed gear prototype"
+        }
+      ],
+      "next": "personal role notes, vision/control details, CAD export notes, simulation setup notes",
+      "preview": {
+        "title": "CAD model -> PyBullet arm",
+        "label": "robotics pipeline",
+        "parts": [
+          "CAD",
+          "URDF",
+          "PyBullet",
+          "target",
+          "motion"
+        ]
+      }
+    },
+    {
+      "id": "smart-self-watering-pot",
+      "number": "A03",
+      "title": "Smart Self-Watering Pot / Smart Planter PCB",
       "href": null,
       "sourceHref": null,
       "label": "plant-watering prototype",
-      "status": "reviving prototype",
+      "status": "prototype needs documentation",
       "accent": "teal",
-      "summary": "A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work.",
+      "summary": "A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work. It still needs updated photos, schematics, and test notes.",
+      "myRole": "",
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "evidence": [
         "ESP32 / Arduino-style control",
         "pump driver",
@@ -218,7 +291,7 @@
           "caption": "Add watering test video"
         }
       ],
-      "next": "schematic, board outline, enclosure constraints, connector plan, watering state machine",
+      "next": "updated photos, schematic, board outline, enclosure constraints, connector plan, watering state machine",
       "preview": {
         "title": "Sensor -> controller -> pump",
         "label": "control loop",
@@ -231,90 +304,53 @@
       }
     },
     {
-      "id": "3d-printing-presentation",
-      "number": "A03",
-      "title": "3D Printing Presentation",
-      "href": null,
-      "sourceHref": null,
-      "label": "presentation",
-      "status": "finished presentation",
-      "accent": "amber",
-      "summary": "A presentation about 3D printing with SolidWorks models, printed demos, robotics examples, and slides.",
-      "evidence": [
-        "SolidWorks models",
-        "printed demos",
-        "robotics angle",
-        "presentation slides"
-      ],
-      "media": [
-        {
-          "id": "media-1",
-          "type": "photo",
-          "src": null,
-          "alt": "3D printing presentation demo photo needed",
-          "caption": "Add printed demo photo"
-        },
-        {
-          "id": "media-2",
-          "type": "video",
-          "src": null,
-          "alt": "3D printing presentation video needed",
-          "caption": "Add presentation video"
-        }
-      ],
-      "next": "model screenshots, printed examples, final presentation notes",
-      "preview": {
-        "title": "CAD model -> printed part",
-        "label": "presentation parts",
-        "parts": [
-          "model",
-          "slice",
-          "print",
-          "explain"
-        ]
-      }
-    },
-    {
-      "id": "cad-practice-models",
+      "id": "subpix",
       "number": "A04",
-      "title": "CAD Practice Models",
-      "href": null,
-      "sourceHref": null,
-      "label": "CAD practice",
-      "status": "ongoing practice",
+      "title": "Subpix",
+      "href": "https://subpix-editor.vercel.app/",
+      "sourceHref": "https://github.com/Chrissyuh/Subpix",
+      "label": "functional desktop app",
+      "status": "V1 software project",
       "accent": "clay",
-      "summary": "SolidWorks practice models for assemblies, print-ready parts, clearances, and tolerances.",
+      "summary": "Open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON load/save data, exporting PNGs, and packaging for Windows.",
+      "myRole": "Built the editor, file format flow, export path, product site, and Windows packaging.",
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "evidence": [
-        "assemblies",
-        "print-ready parts",
-        "tolerance experiments",
-        "model notes"
+        "Electron",
+        "Vite / React / TypeScript",
+        ".subpix editing",
+        "JSON validation",
+        "PNG export",
+        "Windows packaging"
       ],
       "media": [
         {
           "id": "media-1",
           "type": "photo",
           "src": null,
-          "alt": "CAD practice screenshot or printed model photo needed",
-          "caption": "Add CAD screenshot or printed model photo"
+          "alt": "Subpix editor screenshot needed",
+          "caption": "Add editor screenshot"
         },
         {
           "id": "media-2",
           "type": "video",
           "src": null,
-          "alt": "CAD practice motion video needed",
-          "caption": "Add motion video"
+          "alt": "Subpix editing demo video needed",
+          "caption": "Add editing demo"
         }
       ],
-      "next": "annotated notes on constraints, mistakes, and lessons from each model",
+      "next": "editor screenshots, export demo, Windows installer notes, example .subpix files",
       "preview": {
-        "title": "Assembly practice set",
-        "label": "model parts",
+        "title": "Subpixel editor stack",
+        "label": "app parts",
         "parts": [
-          "mates",
-          "clearance",
-          "motion",
-          "tolerance"
+          "Electron",
+          "React",
+          "file format",
+          "PNG export",
+          "installer"
         ]
       }
     }
@@ -359,74 +395,6 @@
   ],
   "smallProjects": [
     {
-      "id": "subpix",
-      "title": "Subpix",
-      "href": "https://subpix-editor.vercel.app/",
-      "sourceHref": "https://github.com/Chrissyuh/Subpix",
-      "logoSrc": null,
-      "logoAlt": "",
-      "logoHref": null,
-      "type": "desktop app",
-      "description": "Open-source Electron, Vite, React, and TypeScript editor for .subpix files, RGB/BGR subpixel canvases, JSON validation, PNG export, and Windows packaging.",
-      "media": [
-        {
-          "id": "media-1",
-          "type": "photo",
-          "src": null,
-          "alt": "Subpix editor screenshot needed",
-          "caption": "Add editor screenshot"
-        },
-        {
-          "id": "media-2",
-          "type": "video",
-          "src": null,
-          "alt": "Subpix editing demo video needed",
-          "caption": "Add editing demo"
-        }
-      ]
-    },
-    {
-      "id": "vividgrasp-ai-vision-robotics-arm",
-      "title": "VividGrasp AI-Vision Robotics Arm",
-      "href": null,
-      "sourceHref": "https://github.com/LenekyRadish/VividGrasp",
-      "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
-      "logoAlt": "Stanford AI4ALL logo",
-      "logoHref": "https://ai4all.spcs.stanford.edu/",
-      "type": "AI robotics simulation",
-      "description": "Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.",
-      "media": [
-        {
-          "id": "media-1",
-          "type": "photo",
-          "src": "/portfolio-media/vividgrasp/solidworks-arm-assembly.png",
-          "alt": "SolidWorks robotic arm assembly for VividGrasp",
-          "caption": "SolidWorks arm assembly"
-        },
-        {
-          "id": "media-2",
-          "type": "photo",
-          "src": "/portfolio-media/vividgrasp/pybullet-joint-controls.png",
-          "alt": "PyBullet joint control demo for the VividGrasp arm",
-          "caption": "PyBullet joint controls"
-        },
-        {
-          "id": "media-3",
-          "type": "photo",
-          "src": "/portfolio-media/vividgrasp/pybullet-target-demo.png",
-          "alt": "PyBullet target scene for the VividGrasp robotic arm",
-          "caption": "PyBullet target demo"
-        },
-        {
-          "id": "media-4",
-          "type": "photo",
-          "src": "/portfolio-media/vividgrasp/printed-gear-prototype.png",
-          "alt": "Printed gear prototype from the VividGrasp arm work",
-          "caption": "Printed gear prototype"
-        }
-      ]
-    },
-    {
       "id": "check-ins",
       "title": "Check-ins",
       "href": "https://check-ins-zeta.vercel.app/",
@@ -443,26 +411,6 @@
           "src": null,
           "alt": "Check-ins dashboard screenshot needed",
           "caption": "Add dashboard screenshot"
-        }
-      ]
-    },
-    {
-      "id": "mpf-hardware-test-tools",
-      "title": "MPF Hardware Test Tools",
-      "href": null,
-      "sourceHref": null,
-      "logoSrc": null,
-      "logoAlt": "",
-      "logoHref": null,
-      "type": "pinball utilities",
-      "description": "Pinball test utilities for checking switches, coils, LEDs, board maps, and FAST hardware before full rules.",
-      "media": [
-        {
-          "id": "media-1",
-          "type": "photo",
-          "src": null,
-          "alt": "MPF hardware test bench photo needed",
-          "caption": "Add hardware test bench photo"
         }
       ]
     }
@@ -648,20 +596,16 @@
           "text": "Garden Party Pinball - full-size homebrew pinball machine using FAST hardware, MPF, coils, switches, lamps, cabinet wiring, and playfield revisions."
         },
         {
+          "id": "vividgrasp-ai-vision-robotics-arm",
+          "text": "VividGrasp AI-Vision Robotics Arm - Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion."
+        },
+        {
           "id": "smart-self-watering-pot",
-          "text": "Smart Self-Watering Pot - moisture sensing, pump control, enclosure planning, and a custom PCB direction."
+          "text": "Smart Self-Watering Pot / Smart Planter PCB - moisture sensing, pump control, enclosure planning, and a custom PCB direction."
         },
         {
-          "id": "3d-printing-presentation",
-          "text": "3D Printing Presentation - slides and demos about additive manufacturing, SolidWorks models, printed parts, and robotics examples."
-        },
-        {
-          "id": "cad-practice-models",
-          "text": "CAD Practice Models - SolidWorks assemblies, print-ready parts, tolerance tests, and model notes."
-        },
-        {
-          "id": "fast-mpf-hardware-test-tools",
-          "text": "FAST / MPF Hardware Test Tools - scripts and configs for switch, driver, LED, board-map, and hardware tests."
+          "id": "subpix",
+          "text": "Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging."
         }
       ]
     },
@@ -670,14 +614,6 @@
       "category": "Software, visualization, and AI",
       "icon": "cpu",
       "items": [
-        {
-          "id": "subpix",
-          "text": "Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging."
-        },
-        {
-          "id": "vividgrasp-ai-vision-robotics-arm",
-          "text": "VividGrasp AI-Vision Robotics Arm - Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion."
-        },
         {
           "id": "check-ins",
           "text": "Check-ins - live Vercel app for logging consistency and tracking target/max gaps."
@@ -782,6 +718,10 @@
         {
           "id": "tetc-presentations",
           "text": "TETC presentations - slides and demos for engineering projects."
+        },
+        {
+          "id": "3d-printing-presentation",
+          "text": "3D Printing Presentation - minor presentation record with slides, printed examples, and robotics examples."
         }
       ]
     },

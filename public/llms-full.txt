@@ -11,43 +11,49 @@ I build mechanical and electronic projects, then document the tests, revisions, 
 ## Current Stack
 
 - 01: Garden Party pinball
-- 02: Smart pot PCB / enclosure
-- 03: CAD practice models
-- 04: small web + desktop tools
+- 02: VividGrasp robotics arm
+- 03: Smart planter PCB
+- 04: Subpix desktop app
 
 ## Main Projects
 
 ### A01 Garden Party Pinball
 Status: active build
 Label: pinball machine build
-A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield.
+A full-size homebrew pinball machine in progress using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and playfield revisions.
 Evidence: FAST Pinball boards, Mission Pinball Framework, coils / switches / lamps, CAD + wiring revisions
 Media: 2 slots, 0 live, 2 placeholders
 To document next: photos, playfield CAD, wiring maps, MPF configs, driver tests, rule notes
 
-### A02 Smart Self-Watering Pot
-Status: reviving prototype
+### A02 VividGrasp AI-Vision Robotics Arm
+Status: Stanford AI4ALL team project
+Label: team robotics simulation
+Source: https://github.com/LenekyRadish/VividGrasp
+My role: Team member; personal contribution details to be filled in.
+Related program/logo link: https://ai4all.spcs.stanford.edu/
+Stanford AI4ALL project built by a team of 10 students. It connects SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.
+Evidence: Stanford AI4ALL, team of 10, SolidWorks CAD, URDF / PyBullet simulation, target-based control, simulated arm motion
+Media: 4 slots, 4 live, 0 placeholders
+To document next: personal role notes, vision/control details, CAD export notes, simulation setup notes
+
+### A03 Smart Self-Watering Pot / Smart Planter PCB
+Status: prototype needs documentation
 Label: plant-watering prototype
-A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work.
+A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work. It still needs updated photos, schematics, and test notes.
 Evidence: ESP32 / Arduino-style control, pump driver, sensor input, KiCad + enclosure planning
 Media: 2 slots, 0 live, 2 placeholders
-To document next: schematic, board outline, enclosure constraints, connector plan, watering state machine
+To document next: updated photos, schematic, board outline, enclosure constraints, connector plan, watering state machine
 
-### A03 3D Printing Presentation
-Status: finished presentation
-Label: presentation
-A presentation about 3D printing with SolidWorks models, printed demos, robotics examples, and slides.
-Evidence: SolidWorks models, printed demos, robotics angle, presentation slides
+### A04 Subpix
+Status: V1 software project
+Label: functional desktop app
+Project: https://subpix-editor.vercel.app/
+Source: https://github.com/Chrissyuh/Subpix
+My role: Built the editor, file format flow, export path, product site, and Windows packaging.
+Open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON load/save data, exporting PNGs, and packaging for Windows.
+Evidence: Electron, Vite / React / TypeScript, .subpix editing, JSON validation, PNG export, Windows packaging
 Media: 2 slots, 0 live, 2 placeholders
-To document next: model screenshots, printed examples, final presentation notes
-
-### A04 CAD Practice Models
-Status: ongoing practice
-Label: CAD practice
-SolidWorks practice models for assemblies, print-ready parts, clearances, and tolerances.
-Evidence: assemblies, print-ready parts, tolerance experiments, model notes
-Media: 2 slots, 0 live, 2 placeholders
-To document next: annotated notes on constraints, mistakes, and lessons from each model
+To document next: editor screenshots, export demo, Windows installer notes, example .subpix files
 
 ## Academics
 
@@ -58,10 +64,7 @@ To document next: annotated notes on constraints, mistakes, and lessons from eac
 
 ## Smaller Projects
 
-- Subpix - desktop app: Open-source Electron, Vite, React, and TypeScript editor for .subpix files, RGB/BGR subpixel canvases, JSON validation, PNG export, and Windows packaging. ([project](https://subpix-editor.vercel.app/), [source](https://github.com/Chrissyuh/Subpix)). Media: 2 slots, 0 live, 2 placeholders.
-- VividGrasp AI-Vision Robotics Arm - AI robotics simulation: Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion. ([source](https://github.com/LenekyRadish/VividGrasp)). Media: 4 slots, 4 live, 0 placeholders.
 - Check-ins - live web app: Live web app for logging check-ins and tracking target gaps, max gaps, and progress. ([project](https://check-ins-zeta.vercel.app/)). Media: 1 slot, 0 live, 1 placeholder.
-- MPF Hardware Test Tools - pinball utilities: Pinball test utilities for checking switches, coils, LEDs, board maps, and FAST hardware before full rules. Media: 1 slot, 0 live, 1 placeholder.
 
 ## C-Level Projects
 
@@ -86,15 +89,12 @@ SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basi
 ### Main builds
 
 - Garden Party Pinball - full-size homebrew pinball machine using FAST hardware, MPF, coils, switches, lamps, cabinet wiring, and playfield revisions.
-- Smart Self-Watering Pot - moisture sensing, pump control, enclosure planning, and a custom PCB direction.
-- 3D Printing Presentation - slides and demos about additive manufacturing, SolidWorks models, printed parts, and robotics examples.
-- CAD Practice Models - SolidWorks assemblies, print-ready parts, tolerance tests, and model notes.
-- FAST / MPF Hardware Test Tools - scripts and configs for switch, driver, LED, board-map, and hardware tests.
+- VividGrasp AI-Vision Robotics Arm - Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.
+- Smart Self-Watering Pot / Smart Planter PCB - moisture sensing, pump control, enclosure planning, and a custom PCB direction.
+- Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging.
 
 ### Software, visualization, and AI
 
-- Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging.
-- VividGrasp AI-Vision Robotics Arm - Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.
 - Check-ins - live Vercel app for logging consistency and tracking target/max gaps.
 - Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design.
 - TinyGPT Experiments - small language-model project focused on next-token prediction and instruction-following differences.
@@ -125,6 +125,7 @@ SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basi
 - Debate - JV finals experience.
 - Student Council - school leadership.
 - TETC presentations - slides and demos for engineering projects.
+- 3D Printing Presentation - minor presentation record with slides, printed examples, and robotics examples.
 
 ### Scouts, service, and long-term discipline
 

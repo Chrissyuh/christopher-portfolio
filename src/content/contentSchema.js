@@ -2,7 +2,6 @@ export const sheetTabNames = [
   "Meta",
   "HeroTags",
   "CurrentStack",
-  "EvidenceTiles",
   "MainProjects",
   "Academics",
   "SmallProjects",
@@ -44,7 +43,6 @@ export const allowedIcons = [
 const requiredFields = {
   HeroTags: ["id", "label"],
   CurrentStack: ["id", "number", "label"],
-  EvidenceTiles: ["id", "top", "bottom"],
   MainProjects: ["id", "number", "title", "label", "status", "accent", "summary"],
   Academics: ["id", "label", "value"],
   SmallProjects: ["id", "title", "type", "description"],
@@ -65,12 +63,6 @@ const defaultMeta = {
   heroIntro:
     "I am Christopher, a Spring Early College Academy student building pinball, robotics, planter electronics, and software tools.",
   currentStackTitle: "start here",
-  focusEyebrow: "evidence",
-  focusTitle: "What is visible now",
-  focusText:
-    "Live apps, source links, CAD screenshots, simulation images, and placeholders for missing documentation.",
-  portfolioRuleEyebrow: "still needed",
-  portfolioRuleText: "Some active builds still need photos, videos, or test notes.",
   projectIndexCode: "featured work",
   projectIndexTitle: "Featured projects",
   projectIndexText:
@@ -372,11 +364,6 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       id: text(row.id),
       number: text(row.number),
       label: text(row.label),
-    })),
-    evidenceTiles: simpleRows("EvidenceTiles", (row) => ({
-      id: text(row.id),
-      top: text(row.top),
-      bottom: text(row.bottom),
     })),
     projects,
     academics: simpleRows("Academics", (row) => ({

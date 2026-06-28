@@ -1018,7 +1018,7 @@ function PortfolioPage({ content }) {
   return (
     <>
       <section id="top" className="relative z-10 mx-auto max-w-7xl px-5 pb-14 pt-10 md:px-8 md:pb-20 md:pt-14">
-        <div className="grid gap-6 lg:grid-cols-[1fr_380px] lg:items-stretch">
+        <div className="max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1066,42 +1066,6 @@ function PortfolioPage({ content }) {
               </Button>
             </div>
           </motion.div>
-
-          <motion.aside
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.42, delay: 0.08 }}
-            className="flex flex-col border border-[#d2c8b9] bg-[#fbfaf7] shadow-sm"
-          >
-            <div className="border-b border-[#d2c8b9] bg-white p-5">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#827466]">{meta.focusEyebrow}</p>
-                  <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-950">{meta.focusTitle}</h2>
-                </div>
-                <div className="grid h-11 w-11 place-items-center border border-[#d2c8b9] bg-[#f5f3ee] text-[#244fd6]">
-                  <Icon name="target" />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-1 flex-col justify-between p-5">
-              <div>
-                <p className="text-sm leading-6 text-slate-700">{meta.focusText}</p>
-                <div className="mt-5 grid grid-cols-2 gap-3">
-                  {list(content.evidenceTiles).map((tile) => (
-                    <div key={tile.id} className="border border-[#d2c8b9] bg-white p-3">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466]">{tile.top}</p>
-                      <p className="mt-1 text-sm font-semibold text-slate-950">{tile.bottom}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-5 border-t border-[#d2c8b9] pt-4">
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466]">{meta.portfolioRuleEyebrow}</p>
-                <p className="mt-2 text-sm font-semibold leading-5 text-slate-950">{meta.portfolioRuleText}</p>
-              </div>
-            </div>
-          </motion.aside>
         </div>
       </section>
 

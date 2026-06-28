@@ -1,7 +1,0 @@
-"id","order","enabled","top","bottom"
-"real-hardware","1","true","hardware","photos"
-"specific-toolchains","2","true","CAD","files"
-"visible-iterations","3","true","wiring","maps"
-"clear-next-steps","4","true","test","logs"
-"proof-test-logs","5","true","configs","code"
-"honest-revisions","6","true","next","fixes"

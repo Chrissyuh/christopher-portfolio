@@ -107,8 +107,12 @@ function buildStructuredData(content) {
       sourceHref: project.sourceHref,
       label: project.label,
       summary: project.summary,
+      role: project.role,
       myRole: project.myRole,
+      state: project.state,
       evidence: project.evidence,
+      proofAvailable: project.proofAvailable,
+      proofNeeded: project.proofNeeded,
     })),
     ...smallProjects.map((project) => ({
       id: `b-${project.id}`,
@@ -202,12 +206,14 @@ function buildStructuredData(content) {
         creator: { "@id": personId },
         about: project.label,
         description: project.summary,
-        keywords: list(project.evidence),
-        ...(project.myRole
+        keywords: [...list(project.evidence), ...list(project.proofAvailable)],
+        ...(list(project.proofAvailable).length > 0 ? { material: list(project.proofAvailable).join(", ") } : {}),
+        ...(project.proofNeeded ? { abstract: project.proofNeeded } : {}),
+        ...(project.role || project.myRole
           ? {
               contributor: {
                 "@type": "Role",
-                roleName: project.myRole,
+                roleName: project.role || project.myRole,
                 contributor: { "@id": personId },
               },
             }
@@ -260,17 +266,14 @@ function MediaFrame({ item, label, compact = false }) {
         {!item.src && (
           <div
             aria-label={`${mediaType} placeholder: ${caption}`}
-            className="flex h-full flex-col justify-between bg-[linear-gradient(135deg,rgba(36,79,214,0.12)_25%,transparent_25%,transparent_50%,rgba(36,79,214,0.12)_50%,rgba(36,79,214,0.12)_75%,transparent_75%,transparent)] bg-[size:18px_18px] p-3"
+            className="flex h-full items-center justify-center border border-dashed border-[#d6cec0] bg-[#fbfaf7] p-4"
           >
-            <div className="flex items-center justify-between">
-              <span className="border border-[#cfc4b4] bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">
-                {mediaType === "video" ? "video" : "photo"}
+            <div className="max-w-[16rem] text-center">
+              <span className="inline-flex items-center border border-[#cfc4b4] bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">
+                {mediaType === "video" ? "video needed" : "photo needed"}
               </span>
-              <Icon name={mediaType === "video" ? "route" : "box"} className="h-4 w-4 text-[#244fd6]" />
+              <p className="mt-3 text-xs font-medium leading-5 text-slate-600">{caption}</p>
             </div>
-            <p className="max-w-[18rem] bg-white/85 p-2 text-sm font-semibold leading-5 text-slate-950">
-              {caption}
-            </p>
           </div>
         )}
       </div>
@@ -488,13 +491,13 @@ function FeaturedProjectIndex({ projects }) {
 function TitleBlock({ code, title, children, as: Heading = "h2", className = "" }) {
   return (
     <div className={cn("max-w-3xl", className)}>
-      <p className="inline-flex border-l-2 border-[#244fd6] bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466] shadow-sm">
+      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#244fd6]">
         {code}
       </p>
-      <Heading className="mt-3 text-2xl font-semibold leading-tight tracking-normal text-slate-950 md:text-[2.35rem]">
+      <Heading className="mt-2 text-2xl font-semibold leading-tight tracking-normal text-slate-950 md:text-[2.35rem]">
         {title}
       </Heading>
-      {children && <p className="mt-3 max-w-2xl text-base leading-7 text-slate-700">{children}</p>}
+      {children && <p className="mt-2 max-w-2xl text-base leading-7 text-slate-700">{children}</p>}
     </div>
   );
 }
@@ -548,8 +551,60 @@ function PreviewPanel({ project, visualMapText }) {
   );
 }
 
+function ProjectFact({ label, children }) {
+  if (!children) return null;
+
+  return (
+    <div className="border border-[#e1d7c8] bg-[#fbfaf7] p-3">
+      <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466]">{label}</p>
+      <p className="mt-2 text-sm leading-6 text-slate-800">{children}</p>
+    </div>
+  );
+}
+
+function ProjectProofList({ label, items }) {
+  const proofItems = list(items);
+
+  if (proofItems.length === 0) return null;
+
+  return (
+    <div className="border border-[#e1d7c8] bg-[#fbfaf7] p-3 md:col-span-2">
+      <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466]">{label}</p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {proofItems.map((item) => (
+          <span key={item} className="border border-[#d6cec0] bg-white px-2.5 py-1 text-xs font-medium text-slate-700">
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ProjectLinkButton({ href, label, icon = "arrowRight" }) {
+  if (!href || !label) return null;
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+    >
+      {icon !== "arrowRight" && <Icon name={icon} className="mr-2 h-3.5 w-3.5" />}
+      {label}
+      {icon === "arrowRight" && <Icon name="arrowRight" className="ml-2 h-3.5 w-3.5" />}
+    </a>
+  );
+}
+
 function ProjectRow({ project, index, meta }) {
   const style = accentStyles[project.accent] ?? accentStyles.blue;
+  const role = project.role || project.myRole;
+  const state = project.state || project.status;
+  const proofNeeded = project.proofNeeded || project.next;
+  const projectLinkLabel = project.bestLinkLabel || meta.projectOpenLabel;
+  const hasSidebar = Boolean(project.logoSrc || project.href || project.sourceHref);
   const logoImage = project.logoSrc ? (
     <img
       src={project.logoSrc}
@@ -585,15 +640,16 @@ function ProjectRow({ project, index, meta }) {
         <PreviewPanel project={project} visualMapText={meta.projectVisualMapText} />
       </div>
 
-      <div className="grid min-w-0 lg:grid-cols-[minmax(0,1fr)_250px]">
+      <div className={cn("grid min-w-0", hasSidebar && "lg:grid-cols-[minmax(0,1fr)_250px]")}>
         <div className="min-w-0 p-5 md:p-6">
           <h3 className="text-2xl font-semibold tracking-[-0.03em] text-slate-950">{project.title}</h3>
           <p className="mt-3 max-w-3xl text-base leading-7 text-slate-700 md:text-lg">{project.summary}</p>
-          {project.myRole && (
-            <p className="mt-4 border-l-2 border-[#d6cec0] pl-3 text-sm leading-6 text-slate-700">
-              <span className="font-semibold text-slate-950">My role:</span> {project.myRole}
-            </p>
-          )}
+          <div className="mt-5 grid gap-3 md:grid-cols-2">
+            <ProjectFact label={meta.projectStateLabel}>{state}</ProjectFact>
+            <ProjectFact label={meta.projectRoleLabel}>{role}</ProjectFact>
+            <ProjectProofList label={meta.projectProofAvailableLabel} items={project.proofAvailable} />
+            <ProjectFact label={meta.projectProofNeededLabel}>{proofNeeded}</ProjectFact>
+          </div>
           <div className="mt-5 flex flex-wrap gap-2">
             {list(project.evidence).map((item) => (
               <Tag key={item}>{item}</Tag>
@@ -602,53 +658,34 @@ function ProjectRow({ project, index, meta }) {
           <MediaCarousel media={project.media} label={project.title} />
         </div>
 
-        <div className="border-t border-[#e1d7c8] bg-[#fbfaf7] p-5 lg:border-l lg:border-t-0">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#827466]">{meta.projectNextLabel}</p>
-          <p className="mt-3 text-sm leading-6 text-slate-700">{project.next}</p>
-          {project.logoSrc && (
-            <div className="mt-5">
-              {project.logoHref ? (
-                <a
-                  href={project.logoHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Open ${project.logoAlt || `${project.title} logo`} link`}
-                  className="block border border-[#d6cec0] bg-white px-3 py-2 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
-                >
-                  {logoImage}
-                </a>
-              ) : (
-                <div className="border border-[#d6cec0] bg-white px-3 py-2">{logoImage}</div>
-              )}
-            </div>
-          )}
-          {(project.href || project.sourceHref) && (
-            <div className="mt-5 flex flex-col gap-2">
-              {project.href && (
-                <a
-                  href={project.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee]"
-                >
-                  {meta.projectOpenLabel}
-                  <Icon name="arrowRight" className="ml-2 h-3.5 w-3.5" />
-                </a>
-              )}
-              {project.sourceHref && (
-                <a
-                  href={project.sourceHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee]"
-                >
-                  <Icon name="github" className="mr-2 h-3.5 w-3.5" />
-                  {meta.projectSourceLabel}
-                </a>
-              )}
-            </div>
-          )}
-        </div>
+        {hasSidebar && (
+          <div className="border-t border-[#e1d7c8] bg-[#fbfaf7] p-5 lg:border-l lg:border-t-0">
+            {project.logoSrc && (
+              <div>
+                {project.logoHref ? (
+                  <a
+                    href={project.logoHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Open ${project.logoAlt || `${project.title} logo`} link`}
+                    className="block border border-[#d6cec0] bg-white px-3 py-2 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                  >
+                    {logoImage}
+                  </a>
+                ) : (
+                  <div className="border border-[#d6cec0] bg-white px-3 py-2">{logoImage}</div>
+                )}
+              </div>
+            )}
+            {(project.href || project.sourceHref) && (
+              <div className={cn("flex flex-col gap-2", project.logoSrc && "mt-5")}>
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">links</p>
+                <ProjectLinkButton href={project.href} label={projectLinkLabel} />
+                <ProjectLinkButton href={project.sourceHref} label={meta.projectSourceLabel} icon="github" />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </motion.article>
   );
@@ -883,12 +920,14 @@ function MicroProjectTile({ project, index, meta }) {
           {!media.src && (
             <div
               aria-label={`${mediaType} placeholder: ${caption}`}
-              className="flex h-full flex-col justify-between bg-[linear-gradient(135deg,rgba(15,118,110,0.12)_25%,transparent_25%,transparent_50%,rgba(15,118,110,0.12)_50%,rgba(15,118,110,0.12)_75%,transparent_75%,transparent)] bg-[size:16px_16px] p-3"
+              className="flex h-full items-center justify-center border border-dashed border-[#d6cec0] bg-[#fbfaf7] p-3"
             >
-              <span className="w-fit border border-[#cfc4b4] bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">
-                {mediaType}
-              </span>
-              <p className="bg-white/85 p-2 text-xs font-semibold leading-5 text-slate-950">{caption}</p>
+              <div className="text-center">
+                <span className="inline-flex border border-[#cfc4b4] bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">
+                  {mediaType} needed
+                </span>
+                <p className="mt-3 text-xs font-medium leading-5 text-slate-600">{caption}</p>
+              </div>
             </div>
           )}
         </div>
@@ -1078,8 +1117,45 @@ function PortfolioPage({ content }) {
         </div>
       </section>
 
-      <section id="academics" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-        <div className="mb-8 grid gap-4 border-t border-[#d2c8b9] pt-7 lg:grid-cols-[minmax(280px,0.85fr)_minmax(420px,1.15fr)]">
+      <section id="bench" className="relative z-10 mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-14">
+        <SectionHeader code={meta.skillSystemCode} title={meta.skillSystemTitle}>
+          {meta.skillSystemText}
+        </SectionHeader>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {list(content.skillNarratives).map((skill, index) => (
+            <motion.article
+              key={skill.id}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.28, delay: index * 0.04 }}
+              className="border border-[#d2c8b9] bg-white p-5 shadow-sm"
+            >
+              <div className="mb-4 flex items-center justify-between border-b border-[#e1d7c8] pb-4">
+                <div className="grid h-10 w-10 place-items-center border border-[#d2c8b9] bg-[#f5f3ee] text-[#244fd6]">
+                  <Icon name={skill.icon} className="h-4 w-4" />
+                </div>
+                <span className="font-mono text-xs text-[#827466]">S{String(index + 1).padStart(2, "0")}</span>
+              </div>
+              <h3 className="text-lg font-semibold tracking-[-0.02em] text-slate-950">{skill.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-700">{skill.text}</p>
+            </motion.article>
+          ))}
+        </div>
+
+        <div className="mt-4 border border-[#d2c8b9] bg-white p-5 shadow-sm">
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-[#827466]">{meta.workingVocabularyLabel}</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {list(content.skills).map((skill) => (
+              <Tag key={skill.id}>{skill.name}</Tag>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="academics" className="relative z-10 mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-14">
+        <div className="mb-6 grid gap-4 border-t border-[#d2c8b9] pt-7 lg:grid-cols-[minmax(360px,1fr)_minmax(460px,0.95fr)]">
           <TitleBlock code={meta.academicCode} title={meta.academicTitle}>
             {meta.academicText}
           </TitleBlock>
@@ -1116,43 +1192,6 @@ function PortfolioPage({ content }) {
           </div>
         </section>
       )}
-
-      <section id="bench" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-        <SectionHeader code={meta.skillSystemCode} title={meta.skillSystemTitle}>
-          {meta.skillSystemText}
-        </SectionHeader>
-
-        <div className="grid gap-4 md:grid-cols-2">
-          {list(content.skillNarratives).map((skill, index) => (
-            <motion.article
-              key={skill.id}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.28, delay: index * 0.04 }}
-              className="border border-[#d2c8b9] bg-white p-6 shadow-sm"
-            >
-              <div className="mb-5 flex items-center justify-between border-b border-[#e1d7c8] pb-5">
-                <div className="grid h-11 w-11 place-items-center border border-[#d2c8b9] bg-[#f5f3ee] text-[#244fd6]">
-                  <Icon name={skill.icon} />
-                </div>
-                <span className="font-mono text-xs text-[#827466]">S{String(index + 1).padStart(2, "0")}</span>
-              </div>
-              <h3 className="text-xl font-semibold tracking-[-0.025em] text-slate-950">{skill.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-slate-700">{skill.text}</p>
-            </motion.article>
-          ))}
-        </div>
-
-        <div className="mt-4 border border-[#d2c8b9] bg-white p-6 shadow-sm">
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#827466]">{meta.workingVocabularyLabel}</p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {list(content.skills).map((skill) => (
-              <Tag key={skill.id}>{skill.name}</Tag>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <ContactSection content={content} />
     </>

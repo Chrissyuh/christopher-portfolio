@@ -5,7 +5,7 @@
 "subpix","main-builds","4","true","Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging."
 "check-ins","software-visualization-ai","1","true","Check-ins - live Vercel app for logging consistency and tracking target/max gaps."
 "desmos-3d-solar-system","software-visualization-ai","2","true","Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design."
-"tinygpt-experiments","software-visualization-ai","3","true","TinyGPT Experiments - small language-model project focused on next-token prediction and instruction-following differences."
+"tinygpt-experiments","software-visualization-ai","3","true","TinyGPT Experiments - small next-token project for learning training vs. instruction behavior."
 "midi-practice-tool","software-visualization-ai","4","true","MIDI Practice Tool - Python music-practice utility for soundfonts, pedals, controls, and keyboard-style interaction."
 "manim-presentation-animation","software-visualization-ai","5","true","Manim / presentation animation work - timed explanation visuals for presentations."
 "betterquizzer","software-visualization-ai","6","true","BetterQuizzer / quiz-app work - quiz-app development and debugging for hosted submission and persistence behavior."

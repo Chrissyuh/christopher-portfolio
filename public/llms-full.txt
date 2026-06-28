@@ -6,7 +6,7 @@ Structured JSON: https://chrisaheskett.vercel.app/portfolio.json
 
 ## Summary
 
-I build mechanical and electronic projects, then document the tests, revisions, and open problems.
+I am Christopher, a Spring Early College Academy student building pinball, robotics, planter electronics, and software tools.
 
 ## Current Stack
 
@@ -19,41 +19,49 @@ I build mechanical and electronic projects, then document the tests, revisions, 
 
 ### A01 Garden Party Pinball
 Status: active build
+State: Active build with playable subsystems still being documented.
 Label: pinball machine build
+My role: I am building the cabinet, playfield systems, wiring, MPF configuration, and test workflow.
 A full-size homebrew pinball machine in progress using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and playfield revisions.
 Evidence: FAST Pinball boards, Mission Pinball Framework, coils / switches / lamps, CAD + wiring revisions
+Proof available: FAST boards, MPF configs, coils / switches / lamps, playfield revisions. Proof needed: Playfield/cabinet photos, wiring maps, driver tests, and rule notes.
 Media: 2 slots, 0 live, 2 placeholders
-To document next: photos, playfield CAD, wiring maps, MPF configs, driver tests, rule notes
 
 ### A02 VividGrasp AI-Vision Robotics Arm
 Status: Stanford AI4ALL team project
+State: Completed Stanford AI4ALL team project with CAD, simulation, and prototype artifacts.
 Label: team robotics simulation
 Source: https://github.com/LenekyRadish/VividGrasp
+Best link label: Open source
 My role: Head CAD designer, prepared URDF files, worked with a teammate to create a physical prototype.
 Related program/logo link: https://ai4all.spcs.stanford.edu/
 Stanford AI4ALL project built by a team of 10 students. It connects SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.
 Evidence: Stanford AI4ALL, team of 10, SolidWorks CAD, URDF / PyBullet simulation, target-based control, simulated arm motion
+Proof available: SolidWorks CAD screenshots, URDF / PyBullet demo images, printed gear prototype, GitHub source, Stanford AI4ALL context. Proof needed: Personal notes on CAD export, URDF setup, and the vision/control split.
 Media: 4 slots, 4 live, 0 placeholders
-To document next: personal role notes, vision/control details, CAD export notes, simulation setup notes
 
 ### A03 Smart Self-Watering Pot / Smart Planter PCB
-Status: prototype needs documentation
+Status: prototype needs photos
+State: Prototype exists, but photos and schematic documentation need a refresh.
 Label: plant-watering prototype
-A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work. It still needs updated photos, schematics, and test notes.
+My role: I worked on the sensing/control idea, electronics packaging, PCB direction, and enclosure constraints.
+A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work. Photos, schematics, and test notes still need to be added.
 Evidence: ESP32 / Arduino-style control, pump driver, sensor input, KiCad + enclosure planning
+Proof available: moisture sensing, pump driver, KiCad / enclosure planning, control loop outline. Proof needed: Updated prototype photos, schematic, board outline, enclosure constraints, and watering test video.
 Media: 2 slots, 0 live, 2 placeholders
-To document next: updated photos, schematic, board outline, enclosure constraints, connector plan, watering state machine
 
 ### A04 Subpix
 Status: V1 software project
+State: Working V1 app with live demo, source, editor screenshot, and Windows packaging work.
 Label: functional desktop app
 Project: https://subpix-editor.vercel.app/
 Source: https://github.com/Chrissyuh/Subpix
+Best link label: Open app
 My role: Built the editor, file format flow, export path, product site, and Windows packaging.
 Open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON load/save data, exporting PNGs, and packaging for Windows.
 Evidence: Electron, Vite / React / TypeScript, .subpix editing, JSON validation, PNG export, Windows packaging
+Proof available: live editor, GitHub source, editor screenshot, JSON validation, PNG export, Windows packaging. Proof needed: Editing demo video, installer notes, and example .subpix files.
 Media: 2 slots, 1 live, 1 placeholder
-To document next: editor screenshots, export demo, Windows installer notes, example .subpix files
 
 ## Academics
 
@@ -64,14 +72,14 @@ To document next: editor screenshots, export demo, Windows installer notes, exam
 
 ## Smaller Projects
 
-- Check-ins - live web app: Live web app for logging check-ins and tracking target gaps, max gaps, and progress. ([project](https://check-ins-zeta.vercel.app/)). Media: 1 slot, 0 live, 1 placeholder.
+- Check-ins - live web app: Logs check-ins and shows gaps, streaks, and progress. ([project](https://check-ins-zeta.vercel.app/)). Media: 1 slot, 0 live, 1 placeholder.
 
 ## C-Level Projects
 
-- MIDI Practice Tool - python / music: Python practice tool for soundfonts, pedals, controls, and keyboard-style interaction. Media: 1 slot, 0 live, 1 placeholder.
-- Desmos 3D Solar System - math visualization: 3D math visualization using surfaces, orbits, color mapping, and performance tradeoffs. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Media: 1 slot, 0 live, 1 placeholder.
-- TinyGPT Experiments - machine learning: Learning project on small next-token models and how pretraining differs from instruction following. Media: 1 slot, 0 live, 1 placeholder.
-- VEX V5 Drivetrain Prototype - robotics prototype: Robot drivetrain prototype built around gearing, packaging, shafts, and structure clearance. Media: 1 slot, 0 live, 1 placeholder.
+- MIDI Practice Tool - python / music: Small Python tool for soundfonts, pedals, controls, and keyboard practice. Media: 1 slot, 0 live, 1 placeholder.
+- Desmos 3D Solar System - math visualization: 3D orbit scene built in Desmos to practice surfaces and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Media: 1 slot, 0 live, 1 placeholder.
+- TinyGPT Experiments - machine learning: Small next-token model experiments for learning training vs. instruction behavior. Media: 1 slot, 0 live, 1 placeholder.
+- VEX V5 Drivetrain Prototype - robotics prototype: Quick drivetrain prototype for gearing, shaft spacing, and packaging. Media: 1 slot, 0 live, 1 placeholder.
 
 ## Skills
 
@@ -97,7 +105,7 @@ SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basi
 
 - Check-ins - live Vercel app for logging consistency and tracking target/max gaps.
 - Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design.
-- TinyGPT Experiments - small language-model project focused on next-token prediction and instruction-following differences.
+- TinyGPT Experiments - small next-token project for learning training vs. instruction behavior.
 - MIDI Practice Tool - Python music-practice utility for soundfonts, pedals, controls, and keyboard-style interaction.
 - Manim / presentation animation work - timed explanation visuals for presentations.
 - BetterQuizzer / quiz-app work - quiz-app development and debugging for hosted submission and persistence behavior.

@@ -22,7 +22,7 @@ function markdownList(items) {
 
 function projectLinks(project) {
   return [
-    project.href && markdownLink("project", project.href),
+    project.href && markdownLink(project.bestLinkLabel || "project", project.href),
     project.sourceHref && markdownLink("source", project.sourceHref),
   ].filter(Boolean);
 }
@@ -40,7 +40,23 @@ function mediaSummary(project) {
 }
 
 function roleSummary(project) {
-  return project.myRole ? ` Role: ${project.myRole}` : "";
+  const role = project.role || project.myRole;
+  return role ? ` Role: ${role}` : "";
+}
+
+function stateSummary(project) {
+  return project.state ? ` State: ${project.state}` : "";
+}
+
+function proofSummary(project) {
+  const available = list(project.proofAvailable);
+  const needed = project.proofNeeded || project.next;
+  const parts = [
+    available.length > 0 ? `Proof available: ${available.join(", ")}` : "",
+    needed ? `Proof needed: ${needed}` : "",
+  ].filter(Boolean);
+
+  return parts.join(". ");
 }
 
 function appendSentence(text, suffix) {
@@ -110,7 +126,7 @@ function buildLlmsTxt(content) {
       list(content.projects).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        return appendSentence(`${project.title}: ${project.summary}${roleSummary(project)}${linkText}`, `${mediaSummary(project)}.`);
+        return appendSentence(`${project.title}: ${project.summary}${stateSummary(project)}${roleSummary(project)}${linkText}`, `${mediaSummary(project)}.`);
       }),
     ),
     "",
@@ -170,17 +186,19 @@ function buildLlmsFullTxt(content) {
           `### ${project.number} ${project.title}`,
           "",
           `Status: ${project.status}`,
+          project.state ? `State: ${project.state}` : "",
           `Label: ${project.label}`,
           project.href ? `Project: ${project.href}` : "",
           project.sourceHref ? `Source: ${project.sourceHref}` : "",
-          project.myRole ? `My role: ${project.myRole}` : "",
+          project.bestLinkLabel ? `Best link label: ${project.bestLinkLabel}` : "",
+          project.role || project.myRole ? `My role: ${project.role || project.myRole}` : "",
           project.logoHref ? `Related program/logo link: ${project.logoHref}` : "",
           "",
           project.summary,
           "",
           `Evidence: ${list(project.evidence).join(", ")}`,
+          proofSummary(project),
           mediaSummary(project),
-          `To document next: ${project.next}`,
         ]
           .filter((line) => line !== "")
           .join("\n"),

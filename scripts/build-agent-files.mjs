@@ -21,10 +21,20 @@ function markdownList(items) {
 }
 
 function projectLinks(project) {
-  return [
-    project.href && markdownLink(project.bestLinkLabel || "project", project.href),
-    project.sourceHref && markdownLink("source", project.sourceHref),
-  ].filter(Boolean);
+  const links = [
+    project.href && { label: project.bestLinkLabel || "project", href: project.href },
+    project.sourceHref && { label: "source", href: project.sourceHref },
+    ...list(project.artifactLinks).map((link) => ({ label: link.label, href: link.href })),
+  ].filter((link) => link?.href && link.label);
+  const seen = new Set();
+
+  return links
+    .filter((link) => {
+      if (seen.has(link.href)) return false;
+      seen.add(link.href);
+      return true;
+    })
+    .map((link) => markdownLink(link.label, link.href));
 }
 
 function mediaSummary(project) {
@@ -52,8 +62,8 @@ function proofSummary(project) {
   const available = list(project.proofAvailable);
   const needed = project.proofNeeded || project.next;
   const parts = [
-    available.length > 0 ? `Proof available: ${available.join(", ")}` : "",
-    needed ? `Proof needed: ${needed}` : "",
+    available.length > 0 ? `Best evidence: ${available.join(", ")}` : "",
+    needed ? `Still missing: ${needed}` : "",
   ].filter(Boolean);
 
   return parts.join(". ");
@@ -107,7 +117,8 @@ function buildLlmsTxt(content) {
 
   const contactLinks = [
     meta.contactGithubHref && markdownLink(meta.contactGithubLabel ?? "GitHub", meta.contactGithubHref),
-    meta.contactProjectHref && markdownLink(meta.contactProjectLabel ?? "Live project", meta.contactProjectHref),
+    meta.contactProjectHref && markdownLink(meta.contactProjectLabel ?? "Project", meta.contactProjectHref),
+    meta.resumeHref && markdownLink(meta.resumeLabel ?? "Resume", meta.resumeHref),
     meta.contactEmailHref && markdownLink(meta.contactEmailLabel ?? "Email", meta.contactEmailHref),
   ].filter(Boolean);
 
@@ -186,17 +197,24 @@ function buildLlmsFullTxt(content) {
           `### ${project.number} ${project.title}`,
           "",
           `Status: ${project.status}`,
+          project.teamContext ? `Context: ${project.teamContext}` : "",
           project.state ? `State: ${project.state}` : "",
           `Label: ${project.label}`,
           project.href ? `Project: ${project.href}` : "",
           project.sourceHref ? `Source: ${project.sourceHref}` : "",
           project.bestLinkLabel ? `Best link label: ${project.bestLinkLabel}` : "",
+          list(project.artifactLinks).length > 0
+            ? `Artifact links: ${list(project.artifactLinks)
+                .map((link) => `${link.label} (${link.type}): ${link.href}`)
+                .join("; ")}`
+            : "",
           project.role || project.myRole ? `My role: ${project.role || project.myRole}` : "",
+          project.whatChanged ? `What changed: ${project.whatChanged}` : "",
+          project.whatLearned ? `What I learned: ${project.whatLearned}` : "",
           project.logoHref ? `Related program/logo link: ${project.logoHref}` : "",
           "",
           project.summary,
           "",
-          `Evidence: ${list(project.evidence).join(", ")}`,
           proofSummary(project),
           mediaSummary(project),
         ]
@@ -257,7 +275,8 @@ function buildLlmsFullTxt(content) {
       [
         meta.contactEmailHref && `Email: ${stripMailto(meta.contactEmailHref)}`,
         meta.contactGithubHref && `GitHub: ${meta.contactGithubHref}`,
-        meta.contactProjectHref && `Live project: ${meta.contactProjectHref}`,
+        meta.contactProjectHref && `${meta.contactProjectLabel ?? "Project"}: ${meta.contactProjectHref}`,
+        meta.resumeHref && `${meta.resumeLabel ?? "Resume"}: ${meta.resumeHref}`,
       ].filter(Boolean),
     ),
     "",

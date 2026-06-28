@@ -3,6 +3,7 @@ export const sheetTabNames = [
   "HeroTags",
   "CurrentStack",
   "MainProjects",
+  "ProjectArtifactLinks",
   "Academics",
   "SmallProjects",
   "MicroProjects",
@@ -16,6 +17,8 @@ export const sheetTabNames = [
 export const allowedAccents = ["blue", "teal", "amber", "clay"];
 
 export const allowedMediaTypes = ["photo", "video"];
+
+export const allowedArtifactLinkTypes = ["live", "source", "cad", "wiring", "schematic", "demo", "notes", "release", "test", "other"];
 
 const mediaSlotCount = 8;
 
@@ -44,6 +47,7 @@ const requiredFields = {
   HeroTags: ["id", "label"],
   CurrentStack: ["id", "number", "label"],
   MainProjects: ["id", "number", "title", "label", "status", "accent", "summary"],
+  ProjectArtifactLinks: ["id", "project_id", "label", "href", "type"],
   Academics: ["id", "label", "value"],
   SmallProjects: ["id", "title", "type", "description"],
   MicroProjects: ["id", "title", "type", "description"],
@@ -58,10 +62,10 @@ const defaultMeta = {
   documentTitle: "Christopher Portfolio",
   navName: "Christopher",
   navSubtitle: "engineering portfolio",
-  heroEyebrow: "build evidence",
-  heroTitle: "Projects with hardware, CAD, wiring, and code in view",
+  heroEyebrow: "current work",
+  heroTitle: "I build hardware projects, robotics simulations, and software tools.",
   heroIntro:
-    "I am Christopher, a Spring Early College Academy student building pinball, robotics, planter electronics, and software tools.",
+    "Current work spans pinball, CAD-to-simulation robotics, planter electronics, and Subpix.",
   currentStackTitle: "start here",
   projectIndexCode: "featured work",
   projectIndexTitle: "Featured projects",
@@ -83,7 +87,7 @@ const defaultMeta = {
   academicSchoolRankSourceLabel: "Ranking details",
   smallerProjectsCode: "smaller builds",
   smallerProjectsTitle: "Smaller projects",
-  smallerProjectsText: "Tools and experiments that are useful, but not the main portfolio story.",
+  smallerProjectsText: "Real projects that are lighter than the featured builds. More will be added here as the evidence improves.",
   microProjectsCode: "small artifacts",
   microProjectsTitle: "Small builds",
   microProjectsText: "Small projects I kept because they have a real artifact, link, or useful lesson.",
@@ -105,17 +109,22 @@ const defaultMeta = {
   contactEmailLabel: "Email",
   contactGithubHref: "https://github.com/Chrissyuh",
   contactGithubLabel: "View GitHub",
-  contactProjectHref: "https://check-ins-zeta.vercel.app/",
-  contactProjectLabel: "See live project",
+  contactProjectHref: "https://subpix-editor.vercel.app/",
+  contactProjectLabel: "Open Subpix",
+  resumeHref: "",
+  resumeLabel: "Resume",
   footerLeft: "Spring Early College Academy",
   footerMiddle: "Exxon Teen Engineering + Tech Center",
   footerName: "Christopher",
-  projectVisualMapText: "Subsystems and artifacts tied to the build.",
+  projectTeamContextLabel: "context",
   projectRoleLabel: "role",
   projectStateLabel: "state",
-  projectProofAvailableLabel: "proof available",
-  projectProofNeededLabel: "proof needed",
-  projectNextLabel: "proof needed",
+  projectProofAvailableLabel: "best evidence",
+  projectProofNeededLabel: "still missing",
+  projectNextLabel: "still missing",
+  projectArtifactLinksLabel: "artifact links",
+  projectWhatChangedLabel: "what changed",
+  projectWhatLearnedLabel: "what I learned",
   projectOpenLabel: "Open project",
   projectSourceLabel: "Source",
   mediaPlaceholderLabel: "needed",
@@ -245,25 +254,46 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       status: text(row.status),
       accent,
       summary: text(row.summary),
+      teamContext: text(row.team_context),
       role: text(row.role) || text(row.my_role),
       myRole: text(row.role) || text(row.my_role),
       state: text(row.state) || text(row.status),
       proofAvailable: proofAvailable.length ? proofAvailable : compactNumberedFields(row, "evidence", 6),
       proofNeeded: text(row.proof_needed) || text(row.next),
       bestLinkLabel: text(row.best_link_label),
+      whatChanged: text(row.what_changed),
+      whatLearned: text(row.what_learned),
       logoSrc: hrefOrNull(row.logo_src),
       logoAlt: text(row.logo_alt),
       logoHref: hrefOrNull(row.logo_href),
-      evidence: compactNumberedFields(row, "evidence", 6),
+      artifactLinks: [],
       media,
       next: text(row.proof_needed) || text(row.next),
-      preview: {
-        title: text(row.preview_title),
-        label: text(row.preview_label),
-        parts: compactNumberedFields(row, "preview_part", 6),
-      },
     };
   });
+
+  const projectsById = new Map(projects.map((project) => [project.id, project]));
+
+  for (const row of orderedRows(rowsFor(tabRows, "ProjectArtifactLinks"))) {
+    const id = text(row.id);
+    const projectId = text(row.project_id);
+    const type = text(row.type);
+    const project = projectsById.get(projectId);
+
+    requireKnownValue(errors, "ProjectArtifactLinks", id, "type", type, allowedArtifactLinkTypes);
+
+    if (!project) {
+      errors.push(`ProjectArtifactLinks row "${id}" references missing project_id "${projectId}".`);
+      continue;
+    }
+
+    project.artifactLinks.push({
+      id,
+      label: text(row.label),
+      href: hrefOrNull(row.href),
+      type,
+    });
+  }
 
   const skillNarratives = simpleRows("SkillNarratives", (row) => {
     const icon = text(row.icon);

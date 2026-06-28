@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-06-28T00:54:15.080Z",
+  "updatedAt": "2026-06-28T01:57:53.686Z",
   "meta": {
     "documentTitle": "Christopher Portfolio",
     "navName": "Christopher",
     "navSubtitle": "engineering portfolio",
-    "heroEyebrow": "build evidence",
-    "heroTitle": "Projects with hardware, CAD, wiring, and code in view",
-    "heroIntro": "I am Christopher, a Spring Early College Academy student building pinball, robotics, planter electronics, and software tools.",
+    "heroEyebrow": "current work",
+    "heroTitle": "I build hardware projects, robotics simulations, and software tools.",
+    "heroIntro": "Current work spans pinball, CAD-to-simulation robotics, planter electronics, and Subpix.",
     "currentStackTitle": "start here",
     "projectIndexCode": "featured work",
     "projectIndexTitle": "Featured projects",
@@ -29,7 +29,7 @@
     "academicSchoolRankSourceLabel": "Ranking details",
     "smallerProjectsCode": "smaller builds",
     "smallerProjectsTitle": "Smaller projects",
-    "smallerProjectsText": "Tools and experiments that are useful, but not the main portfolio story.",
+    "smallerProjectsText": "Real projects that are lighter than the featured builds. More will be added here as the evidence improves.",
     "microProjectsCode": "small artifacts",
     "microProjectsTitle": "Small builds",
     "microProjectsText": "Small projects I kept because they have a real artifact, link, or useful lesson.",
@@ -49,17 +49,22 @@
     "contactEmailLabel": "Email",
     "contactGithubHref": "https://github.com/Chrissyuh",
     "contactGithubLabel": "View GitHub",
-    "contactProjectHref": "https://check-ins-zeta.vercel.app/",
-    "contactProjectLabel": "See live project",
+    "contactProjectHref": "https://subpix-editor.vercel.app/",
+    "contactProjectLabel": "Open Subpix",
+    "resumeHref": "",
+    "resumeLabel": "Resume",
     "footerLeft": "Spring Early College Academy",
     "footerMiddle": "Exxon Teen Engineering + Tech Center",
     "footerName": "Christopher",
-    "projectVisualMapText": "Subsystems and artifacts tied to the build.",
+    "projectTeamContextLabel": "context",
     "projectRoleLabel": "role",
     "projectStateLabel": "state",
-    "projectProofAvailableLabel": "proof available",
-    "projectProofNeededLabel": "proof needed",
-    "projectNextLabel": "proof needed",
+    "projectProofAvailableLabel": "best evidence",
+    "projectProofNeededLabel": "still missing",
+    "projectNextLabel": "still missing",
+    "projectArtifactLinksLabel": "artifact links",
+    "projectWhatChangedLabel": "what changed",
+    "projectWhatLearnedLabel": "what I learned",
     "projectOpenLabel": "Open project",
     "projectSourceLabel": "Source",
     "mediaPlaceholderLabel": "needed",
@@ -119,6 +124,7 @@
       "status": "active build",
       "accent": "blue",
       "summary": "A full-size homebrew pinball machine in progress using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and playfield revisions.",
+      "teamContext": "Solo active build",
       "role": "I am building the cabinet, playfield systems, wiring, MPF configuration, and test workflow.",
       "myRole": "I am building the cabinet, playfield systems, wiring, MPF configuration, and test workflow.",
       "state": "Active build with playable subsystems still being documented.",
@@ -130,15 +136,12 @@
       ],
       "proofNeeded": "Playfield/cabinet photos, wiring maps, driver tests, and rule notes.",
       "bestLinkLabel": "",
+      "whatChanged": "",
+      "whatLearned": "",
       "logoSrc": null,
       "logoAlt": "",
       "logoHref": null,
-      "evidence": [
-        "FAST Pinball boards",
-        "Mission Pinball Framework",
-        "coils / switches / lamps",
-        "CAD + wiring revisions"
-      ],
+      "artifactLinks": [],
       "media": [
         {
           "id": "media-1",
@@ -155,17 +158,7 @@
           "caption": "Add switch or coil test video"
         }
       ],
-      "next": "Playfield/cabinet photos, wiring maps, driver tests, and rule notes.",
-      "preview": {
-        "title": "Playfield + control stack",
-        "label": "parts map",
-        "parts": [
-          "cabinet I/O",
-          "switch matrix",
-          "coils",
-          "MPF"
-        ]
-      }
+      "next": "Playfield/cabinet photos, wiring maps, driver tests, and rule notes."
     },
     {
       "id": "vividgrasp-ai-vision-robotics-arm",
@@ -177,6 +170,7 @@
       "status": "Stanford AI4ALL team project",
       "accent": "amber",
       "summary": "Stanford AI4ALL project built by a team of 10 students. It connects SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.",
+      "teamContext": "Stanford AI4ALL team project, team of 10",
       "role": "Head CAD designer, prepared URDF files, worked with a teammate to create a physical prototype.",
       "myRole": "Head CAD designer, prepared URDF files, worked with a teammate to create a physical prototype.",
       "state": "Completed Stanford AI4ALL team project with CAD, simulation, and prototype artifacts.",
@@ -189,17 +183,12 @@
       ],
       "proofNeeded": "Personal notes on CAD export, URDF setup, and the vision/control split.",
       "bestLinkLabel": "Open source",
+      "whatChanged": "",
+      "whatLearned": "",
       "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
       "logoAlt": "Stanford AI4ALL logo",
       "logoHref": "https://ai4all.spcs.stanford.edu/",
-      "evidence": [
-        "Stanford AI4ALL",
-        "team of 10",
-        "SolidWorks CAD",
-        "URDF / PyBullet simulation",
-        "target-based control",
-        "simulated arm motion"
-      ],
+      "artifactLinks": [],
       "media": [
         {
           "id": "media-1",
@@ -230,18 +219,7 @@
           "caption": "Printed gear prototype"
         }
       ],
-      "next": "Personal notes on CAD export, URDF setup, and the vision/control split.",
-      "preview": {
-        "title": "CAD model -> PyBullet arm",
-        "label": "robotics pipeline",
-        "parts": [
-          "CAD",
-          "URDF",
-          "PyBullet",
-          "target",
-          "motion"
-        ]
-      }
+      "next": "Personal notes on CAD export, URDF setup, and the vision/control split."
     },
     {
       "id": "smart-self-watering-pot",
@@ -253,6 +231,7 @@
       "status": "prototype needs photos",
       "accent": "teal",
       "summary": "A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work. Photos, schematics, and test notes still need to be added.",
+      "teamContext": "Solo prototype work",
       "role": "I worked on the sensing/control idea, electronics packaging, PCB direction, and enclosure constraints.",
       "myRole": "I worked on the sensing/control idea, electronics packaging, PCB direction, and enclosure constraints.",
       "state": "Prototype exists, but photos and schematic documentation need a refresh.",
@@ -264,15 +243,12 @@
       ],
       "proofNeeded": "Updated prototype photos, schematic, board outline, enclosure constraints, and watering test video.",
       "bestLinkLabel": "",
+      "whatChanged": "",
+      "whatLearned": "",
       "logoSrc": null,
       "logoAlt": "",
       "logoHref": null,
-      "evidence": [
-        "ESP32 / Arduino-style control",
-        "pump driver",
-        "sensor input",
-        "KiCad + enclosure planning"
-      ],
+      "artifactLinks": [],
       "media": [
         {
           "id": "media-1",
@@ -289,17 +265,7 @@
           "caption": "Add watering test video"
         }
       ],
-      "next": "Updated prototype photos, schematic, board outline, enclosure constraints, and watering test video.",
-      "preview": {
-        "title": "Sensor -> controller -> pump",
-        "label": "control loop",
-        "parts": [
-          "moisture",
-          "MOSFET",
-          "reservoir",
-          "OLED"
-        ]
-      }
+      "next": "Updated prototype photos, schematic, board outline, enclosure constraints, and watering test video."
     },
     {
       "id": "subpix",
@@ -311,6 +277,7 @@
       "status": "V1 software project",
       "accent": "clay",
       "summary": "Open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON load/save data, exporting PNGs, and packaging for Windows.",
+      "teamContext": "Solo software project",
       "role": "Built the editor, file format flow, export path, product site, and Windows packaging.",
       "myRole": "Built the editor, file format flow, export path, product site, and Windows packaging.",
       "state": "Working V1 app with live demo, source, editor screenshot, and Windows packaging work.",
@@ -324,17 +291,12 @@
       ],
       "proofNeeded": "Editing demo video, installer notes, and example .subpix files.",
       "bestLinkLabel": "Open app",
+      "whatChanged": "",
+      "whatLearned": "",
       "logoSrc": null,
       "logoAlt": "",
       "logoHref": null,
-      "evidence": [
-        "Electron",
-        "Vite / React / TypeScript",
-        ".subpix editing",
-        "JSON validation",
-        "PNG export",
-        "Windows packaging"
-      ],
+      "artifactLinks": [],
       "media": [
         {
           "id": "media-1",
@@ -351,18 +313,7 @@
           "caption": "Add editing demo"
         }
       ],
-      "next": "Editing demo video, installer notes, and example .subpix files.",
-      "preview": {
-        "title": "Subpixel editor stack",
-        "label": "app parts",
-        "parts": [
-          "Electron",
-          "React",
-          "file format",
-          "PNG export",
-          "installer"
-        ]
-      }
+      "next": "Editing demo video, installer notes, and example .subpix files."
     }
   ],
   "academics": [
@@ -639,14 +590,6 @@
         {
           "id": "midi-practice-tool",
           "text": "MIDI Practice Tool - Python music-practice utility for soundfonts, pedals, controls, and keyboard-style interaction."
-        },
-        {
-          "id": "manim-presentation-animation",
-          "text": "Manim / presentation animation work - timed explanation visuals for presentations."
-        },
-        {
-          "id": "betterquizzer",
-          "text": "BetterQuizzer / quiz-app work - quiz-app development and debugging for hosted submission and persistence behavior."
         }
       ]
     },
@@ -662,10 +605,6 @@
         {
           "id": "laser-cutting",
           "text": "Laser cutting - design and fabrication planning for flat-cut parts and enclosures."
-        },
-        {
-          "id": "home-maker-lab-practice",
-          "text": "Home maker-lab practice - CAD, wiring, printing, scanning, electronics, and mechanical assembly."
         },
         {
           "id": "vex-v5-drivetrain-prototype",
@@ -755,10 +694,6 @@
         {
           "id": "fitness-requirement-tracking",
           "text": "Fitness requirement tracking - exercise logs and reflections for rank and merit-badge progress."
-        },
-        {
-          "id": "service-mindset",
-          "text": "Service projects - leadership roles and planning for Eagle and Palms."
         }
       ]
     },
@@ -782,10 +717,6 @@
         {
           "id": "latin-background",
           "text": "Latin background - foundational Latin study."
-        },
-        {
-          "id": "self-directed-learning",
-          "text": "Self-directed learning - projects, tools, and practice systems outside assigned schoolwork."
         }
       ]
     }
@@ -805,16 +736,6 @@
       "id": "academics",
       "label": "Academics",
       "href": "#academics"
-    },
-    {
-      "id": "small-builds",
-      "label": "Small Builds",
-      "href": "#smaller-projects"
-    },
-    {
-      "id": "bench-notes",
-      "label": "Bench Notes",
-      "href": "#bench-notes"
     },
     {
       "id": "contact",

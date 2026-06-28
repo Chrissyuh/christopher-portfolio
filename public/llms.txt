@@ -1,6 +1,6 @@
 # Christopher Portfolio
 
-I am Christopher, a Spring Early College Academy student building pinball, robotics, planter electronics, and software tools.
+Current work spans pinball, CAD-to-simulation robotics, planter electronics, and Subpix.
 
 ## Primary Pages
 
@@ -30,7 +30,7 @@ I am Christopher, a Spring Early College Academy student building pinball, robot
 ## Contact
 
 - [View GitHub](https://github.com/Chrissyuh)
-- [See live project](https://check-ins-zeta.vercel.app/)
+- [Open Subpix](https://subpix-editor.vercel.app/)
 - [Email](mailto:Chrisaheskett@gmail.com)
 
 ## Notes For Agents

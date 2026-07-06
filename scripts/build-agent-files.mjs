@@ -229,6 +229,12 @@ function buildLlmsFullTxt(content) {
       list(content.academics).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
     ),
     "",
+    "## Learning Highlights",
+    "",
+    markdownList(
+      list(content.learningHighlights).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
+    ),
+    "",
     "## Smaller Projects",
     "",
     markdownList(

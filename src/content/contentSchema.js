@@ -5,6 +5,7 @@ export const sheetTabNames = [
   "MainProjects",
   "ProjectArtifactLinks",
   "Academics",
+  "LearningHighlights",
   "SmallProjects",
   "MicroProjects",
   "SkillNarratives",
@@ -29,6 +30,7 @@ export const allowedIcons = [
   "cpu",
   "gauge",
   "github",
+  "flame",
   "layers",
   "link",
   "linkedin",
@@ -49,6 +51,7 @@ const requiredFields = {
   MainProjects: ["id", "number", "title", "label", "status", "accent", "summary"],
   ProjectArtifactLinks: ["id", "project_id", "label", "href", "type"],
   Academics: ["id", "label", "value"],
+  LearningHighlights: ["id", "label", "value"],
   SmallProjects: ["id", "title", "type", "description"],
   MicroProjects: ["id", "title", "type", "description"],
   SkillNarratives: ["id", "title", "icon", "text"],
@@ -348,6 +351,31 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     };
   });
 
+  const statRows = (tabName) => simpleRows(tabName, (row) => {
+    const icon = text(row.icon);
+    if (icon) {
+      requireKnownValue(errors, tabName, text(row.id), "icon", icon, allowedIcons);
+    }
+
+    return {
+      id: text(row.id),
+      label: text(row.label),
+      value: text(row.value),
+      note: text(row.note),
+      highlight: text(row.highlight),
+      assetSrc: hrefOrNull(row.asset_src),
+      assetAlt: text(row.asset_alt),
+      href: hrefOrNull(row.href),
+      hrefLabel: text(row.href_label),
+      icon,
+      dynamicSource: text(row.dynamic_source),
+      username: text(row.username),
+    };
+  });
+
+  const academics = statRows("Academics");
+  const learningHighlights = statRows("LearningHighlights");
+
   const fullRecordSections = simpleRows("FullRecordSections", (row) => {
     const icon = text(row.icon);
     requireKnownValue(errors, "FullRecordSections", text(row.id), "icon", icon, allowedIcons);
@@ -396,15 +424,8 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       label: text(row.label),
     })),
     projects,
-    academics: simpleRows("Academics", (row) => ({
-      id: text(row.id),
-      label: text(row.label),
-      value: text(row.value),
-      note: text(row.note),
-      highlight: text(row.highlight),
-      assetSrc: hrefOrNull(row.asset_src),
-      assetAlt: text(row.asset_alt),
-    })),
+    academics,
+    learningHighlights,
     smallProjects,
     microProjects,
     skillNarratives,

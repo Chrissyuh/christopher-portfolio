@@ -70,6 +70,10 @@ Media: 2 slots, 1 live, 1 placeholder
 - Course load: AP + advanced coursework (AP Human Geography, AP Spanish Language, and advanced classes)
 - Program: Early college pathway (high school plus college-level coursework)
 
+## Learning Highlights
+
+- Duolingo streak: 1,744 (~4.77 years)
+
 ## Smaller Projects
 
 - Check-ins - live web app: Logs check-ins and shows gaps, streaks, and progress. ([project](https://check-ins-zeta.vercel.app/)). Media: 1 slot, 0 live, 1 placeholder.
@@ -141,7 +145,7 @@ SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basi
 
 ### Languages and long-term learning
 
-- Duolingo streak - daily language-learning streak over 1,600 days.
+- Duolingo streak - public profile currently reports a 1,744-day daily language-learning streak.
 - Spanish - AP Spanish Language coursework and continued practice.
 - French - beginner-to-intermediate practice in pronunciation, listening, and sentence construction.
 - Latin background - foundational Latin study.

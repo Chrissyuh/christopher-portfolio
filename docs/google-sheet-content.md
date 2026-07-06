@@ -40,9 +40,15 @@ Use this for concrete project evidence links beyond the primary live/source link
 
 ### Academics
 
-`id,order,enabled,label,value,note,highlight,asset_src,asset_alt`
+`id,order,enabled,label,value,note,highlight,asset_src,asset_alt,href,href_label,icon,dynamic_source,username`
 
-Leave `note`, `highlight`, `asset_src`, or `asset_alt` blank when an academic card should only show the label and value. Set `highlight` to `gold` for the restrained gold rank-card accent.
+Leave optional fields blank when an academic card should only show the label and value. Set `highlight` to `gold` for the restrained gold-card accent. Use `href` / `href_label` for a corner link and `icon` for a small card icon.
+
+### LearningHighlights
+
+`id,order,enabled,label,value,note,highlight,asset_src,asset_alt,href,href_label,icon,dynamic_source,username`
+
+Use this for non-academic personal practice stats, such as the Duolingo streak. Set `highlight` to `gold` for the restrained gold-card accent. Use `href` / `href_label` for a corner link, `icon` for a small card icon, and `dynamic_source=duolingo` with `username` when the site should fetch the public Duolingo streak at runtime.
 
 ### SmallProjects
 
@@ -60,7 +66,7 @@ C-level projects render as small photo-first tiles in the Bench Notes section. E
 
 `id,order,enabled,title,icon,text`
 
-Allowed `icon` values: `arrowRight`, `bolt`, `box`, `cpu`, `gauge`, `github`, `layers`, `link`, `linkedin`, `list`, `mail`, `printer`, `route`, `school`, `target`, `trophy`, `wrench`, `zap`.
+Allowed `icon` values: `arrowRight`, `bolt`, `box`, `cpu`, `flame`, `gauge`, `github`, `layers`, `link`, `linkedin`, `list`, `mail`, `printer`, `route`, `school`, `target`, `trophy`, `wrench`, `zap`.
 
 ### Skills
 

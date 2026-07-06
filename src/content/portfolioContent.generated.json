@@ -354,6 +354,22 @@
       "assetAlt": ""
     }
   ],
+  "learningHighlights": [
+    {
+      "id": "duolingo-streak",
+      "label": "Duolingo streak",
+      "value": "1,744",
+      "note": "~4.77 years",
+      "highlight": "gold",
+      "assetSrc": null,
+      "assetAlt": "",
+      "href": "https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr",
+      "hrefLabel": "Add friend",
+      "icon": "flame",
+      "dynamicSource": "duolingo",
+      "username": "ChristopherHmm"
+    }
+  ],
   "smallProjects": [
     {
       "id": "check-ins",
@@ -704,7 +720,7 @@
       "items": [
         {
           "id": "duolingo-streak",
-          "text": "Duolingo streak - daily language-learning streak over 1,600 days."
+          "text": "Duolingo streak - public profile currently reports a 1,744-day daily language-learning streak."
         },
         {
           "id": "spanish",

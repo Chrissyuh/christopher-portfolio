@@ -30,6 +30,7 @@ const iconPaths = {
   chevronLeft: "M15 18l-6-6 6-6",
   chevronRight: "M9 6l6 6-6 6",
   cpu: "M9 9h6v6H9z M9 1v3 M15 1v3 M9 20v3 M15 20v3 M1 9h3 M1 15h3 M20 9h3 M20 15h3 M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z",
+  flame: "M12 22c4.4 0 8-3.2 8-7.6 0-2.7-1.3-5-3.7-6.9.2 1.7-.5 3.1-1.8 3.9.2-2.9-1.4-5.8-4.7-8.4.5 3.5-1 5.3-2.4 7-1.2 1.4-2.4 2.8-2.4 5 0 4 3.1 7 7 7z M12 19c1.8 0 3.2-1.3 3.2-3.1 0-1.4-.8-2.7-2.3-3.8.1 1.3-.5 2.1-1.3 2.8-.7.6-1.3 1.2-1.3 2.1 0 1.2.8 2 1.7 2z",
   github:
     "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.8c0-1-.4-1.7-.9-2.2 3-.3 6.1-1.5 6.1-6.6 0-1.5-.5-2.7-1.4-3.7.1-.3.6-1.8-.1-3.7 0 0-1.2-.4-3.8 1.4a13.2 13.2 0 0 0-7 0C6.3.6 5.1 1 5.1 1c-.7 1.9-.2 3.4-.1 3.7a5.2 5.2 0 0 0-1.4 3.7c0 5.1 3.1 6.3 6.1 6.6-.4.4-.8 1-.9 1.8v4.2",
   linkedin: "M6.5 10v9M6.5 6.5v.1M10.5 19v-9M10.5 13.5c0-2 1.2-3.5 3.5-3.5s3.5 1.5 3.5 4v5M3 3h18v18H3z",
@@ -79,9 +80,28 @@ const carouselAutoAdvanceMs = 6000;
 const carouselInteractionPauseMs = 10000;
 
 const SITE_URL = "https://chrisaheskett.vercel.app";
+const DUOLINGO_PROFILE_URL = "https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr";
+const DUOLINGO_STREAK_ENDPOINT = "/api/duolingo-streak";
+const STREAK_YEAR_DAYS = 365.25;
+const numberFormatter = new Intl.NumberFormat("en-US");
 
 function list(value) {
   return Array.isArray(value) ? value : [];
+}
+
+function parseDayCount(value) {
+  const match = String(value ?? "").match(/\d[\d,]*/);
+  if (!match) return null;
+  const days = Number(match[0].replaceAll(",", ""));
+  return Number.isFinite(days) && days > 0 ? days : null;
+}
+
+function formatDayCount(days) {
+  return Number.isFinite(days) ? numberFormatter.format(days) : "";
+}
+
+function formatStreakYears(days) {
+  return Number.isFinite(days) ? `~${(days / STREAK_YEAR_DAYS).toFixed(2)} years` : "";
 }
 
 function siteUrl(path = "/") {
@@ -860,6 +880,98 @@ function AcademicSchoolCard({ meta }) {
   );
 }
 
+function useDuolingoStreak(item) {
+  const fallbackDays = parseDayCount(item.value);
+  const [days, setDays] = useState(fallbackDays);
+
+  useEffect(() => {
+    if (item.dynamicSource !== "duolingo") return undefined;
+
+    const controller = new AbortController();
+    const params = new URLSearchParams({ username: item.username || "ChristopherHmm" });
+
+    fetch(`${DUOLINGO_STREAK_ENDPOINT}?${params.toString()}`, {
+      cache: "no-store",
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Duolingo streak fetch failed with HTTP ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((payload) => {
+        if (Number.isFinite(payload?.streak) && payload.streak > 0) {
+          setDays(payload.streak);
+        }
+      })
+      .catch((error) => {
+        if (error.name !== "AbortError" && import.meta.env.DEV) {
+          console.warn("Duolingo streak live fetch failed; using generated snapshot.", error);
+        }
+      });
+
+    return () => controller.abort();
+  }, [item.dynamicSource, item.username]);
+
+  return {
+    days,
+    displayDays: formatDayCount(days),
+    displayYears: formatStreakYears(days) || item.note,
+  };
+}
+
+function DuolingoStreakCard({ item, index }) {
+  const { displayDays, displayYears } = useDuolingoStreak(item);
+  const profileHref = item.href || DUOLINGO_PROFILE_URL;
+  const profileLabel = item.hrefLabel || "Duolingo profile";
+
+  return (
+    <motion.article
+      key={item.id}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.25, delay: index * 0.035 }}
+      className="relative overflow-hidden border border-[#d8b451] bg-[linear-gradient(180deg,#fffdf7_0%,#ffffff_42%)] p-4 shadow-sm sm:p-5"
+    >
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1.5 bg-[#d7a31f]" />
+      <Icon name="flame" className="absolute -bottom-3 -right-2 h-16 w-16 text-[#d7a31f]/10" />
+      <a
+        href={profileHref}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Open Duolingo profile"
+        className="absolute right-3 top-3 inline-flex items-center gap-1.5 border border-[#d8b451] bg-white/90 px-2 py-1 text-[10px] font-semibold text-slate-900 transition hover:bg-[#fff8db] focus:outline-none focus:ring-2 focus:ring-[#d7a31f] focus:ring-offset-2 sm:px-2.5 sm:py-1.5 sm:text-[11px]"
+      >
+        {profileLabel}
+        <Icon name="arrowRight" className="h-3 w-3" />
+      </a>
+      <div className="relative pr-20">
+        <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466] sm:text-xs sm:tracking-[0.2em]">
+          <span className="grid h-6 w-6 place-items-center border border-[#d8b451] bg-[#fff4bf] text-[#b45309]">
+            <Icon name={item.icon || "flame"} className="h-4 w-4" />
+          </span>
+          {item.label}
+        </p>
+        <p className="mt-3 flex items-end gap-1.5 text-2xl font-semibold leading-none tracking-[-0.03em] text-slate-950 sm:text-3xl" aria-live="polite">
+          {displayDays || item.value}
+          <span className="pb-0.5 text-xs font-semibold tracking-normal text-slate-700 sm:text-sm">days</span>
+        </p>
+        <p className="mt-2 text-xs font-medium leading-5 text-slate-700 sm:text-sm">{displayYears}</p>
+      </div>
+    </motion.article>
+  );
+}
+
+function LearningHighlightCard({ item, index }) {
+  if (item.dynamicSource === "duolingo" || item.id === "duolingo-streak") {
+    return <DuolingoStreakCard item={item} index={index} />;
+  }
+
+  return <AcademicCard item={item} index={index} />;
+}
+
 function AcademicCard({ item, index }) {
   const isGoldHighlight = item.highlight === "gold";
 
@@ -1136,6 +1248,16 @@ function PortfolioPage({ content }) {
           ))}
         </div>
       </section>
+
+      {list(content.learningHighlights).length > 0 && (
+        <section id="learning" className="relative z-10 mx-auto max-w-7xl scroll-mt-20 px-3 py-6 sm:px-5 sm:py-8 md:px-8">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {list(content.learningHighlights).map((item, index) => (
+              <LearningHighlightCard key={item.id} item={item} index={index} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section id="smaller-projects" className="relative z-10 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-12 md:px-8 md:py-16">
         <SectionHeader code={meta.smallerProjectsCode} title={meta.smallerProjectsTitle}>

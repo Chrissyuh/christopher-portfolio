@@ -6,6 +6,11 @@ function cleanUsername(value) {
   return /^[A-Za-z0-9_-]{2,32}$/.test(username) ? username : defaultUsername;
 }
 
+function usernameFromRequest(request) {
+  const requestUrl = new URL(request.url || "/", "https://chrisaheskett.vercel.app");
+  return cleanUsername(requestUrl.searchParams.get("username"));
+}
+
 export default async function handler(request, response) {
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -22,7 +27,7 @@ export default async function handler(request, response) {
     return;
   }
 
-  const username = cleanUsername(request.query?.username);
+  const username = usernameFromRequest(request);
   const url = `https://www.duolingo.com/2017-06-30/users?username=${encodeURIComponent(username)}`;
 
   try {

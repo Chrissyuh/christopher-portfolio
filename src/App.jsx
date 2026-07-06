@@ -237,7 +237,7 @@ function StructuredData({ content }) {
 
 function Tag({ children }) {
   return (
-    <span className="border border-[#d6cec0] bg-[#fbfaf7] px-2.5 py-1 text-xs font-medium text-slate-700">
+    <span className="border border-[#d6cec0] bg-[#fbfaf7] px-2 py-1 text-[11px] font-medium leading-4 text-slate-700 sm:px-2.5 sm:text-xs">
       {children}
     </span>
   );
@@ -250,7 +250,7 @@ function MediaFrame({ item, label, compact = false }) {
 
   return (
     <figure className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}>
-      <div className={compact ? "aspect-[4/3]" : "aspect-video"}>
+      <div className="aspect-video">
         {item.src && mediaType === "video" && (
           <video
             src={item.src}
@@ -282,9 +282,11 @@ function MediaFrame({ item, label, compact = false }) {
           </div>
         )}
       </div>
-      <figcaption className="border-t border-[#e1d7c8] px-3 py-2 text-xs leading-5 text-slate-700">
-        {caption}
-      </figcaption>
+      {item.src && (
+        <figcaption className="border-t border-[#e1d7c8] px-2.5 py-1.5 text-[11px] leading-4 text-slate-700 sm:px-3 sm:py-2 sm:text-xs sm:leading-5">
+          {caption}
+        </figcaption>
+      )}
     </figure>
   );
 }
@@ -421,7 +423,7 @@ function MediaCarousel({ media, label, compact = false }) {
 
   return (
     <div
-      className={compact ? "mt-4 min-w-0" : "mt-5 min-w-0"}
+      className={compact ? "mt-3 min-w-0 sm:mt-4" : "mt-4 min-w-0 sm:mt-5"}
       aria-label={`${label} media`}
       aria-roledescription="carousel"
       onFocusCapture={markInteraction}
@@ -430,13 +432,13 @@ function MediaCarousel({ media, label, compact = false }) {
       onWheel={markInteraction}
     >
       {canScroll && (
-        <div className="mb-2 flex justify-end gap-1.5">
+        <div className="mb-1.5 flex justify-end gap-1.5 sm:mb-2">
           <button
             type="button"
             aria-label={`Previous media for ${label}`}
             disabled={!canMoveBackward}
             onClick={() => moveByPage(-1)}
-            className="grid h-9 w-9 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#f8f6f1] disabled:text-slate-400"
+            className="grid h-8 w-8 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#f8f6f1] disabled:text-slate-400 sm:h-9 sm:w-9"
           >
             <Icon name="chevronLeft" className="h-4 w-4" />
           </button>
@@ -445,13 +447,13 @@ function MediaCarousel({ media, label, compact = false }) {
             aria-label={`Next media for ${label}`}
             disabled={!canMoveForward}
             onClick={() => moveByPage(1)}
-            className="grid h-9 w-9 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#f8f6f1] disabled:text-slate-400"
+            className="grid h-8 w-8 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#f8f6f1] disabled:text-slate-400 sm:h-9 sm:w-9"
           >
             <Icon name="chevronRight" className="h-4 w-4" />
           </button>
         </div>
       )}
-      <div ref={trackRef} className="flex w-full min-w-0 snap-x gap-3 overflow-hidden pb-2">
+      <div ref={trackRef} className="flex w-full min-w-0 snap-x gap-2 overflow-hidden pb-1 sm:gap-3 sm:pb-2">
         {items.map((item, index) => (
           <MediaFrame key={`${item.id}-${index}`} item={item} label={label} compact={compact} />
         ))}
@@ -470,22 +472,22 @@ function FeaturedProjectIndex({ projects }) {
   if (items.length === 0) return null;
 
   return (
-    <nav aria-label="Featured project index" className="mb-4 grid gap-2 md:grid-cols-2 xl:grid-cols-4">
+    <nav aria-label="Featured project index" className="mb-3 grid grid-cols-2 gap-2 md:mb-4 md:grid-cols-2 xl:grid-cols-4">
       {items.map((project) => (
         <a
           key={project.id}
           href={`#${projectAnchorId(project)}`}
-          className="group flex min-h-[118px] flex-col justify-between border border-[#d2c8b9] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-400 hover:shadow-[0_12px_28px_rgba(34,28,18,0.07)] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+          className="group flex min-h-[92px] flex-col justify-between border border-[#d2c8b9] bg-white p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-400 hover:shadow-[0_12px_28px_rgba(34,28,18,0.07)] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:min-h-[118px] sm:p-4"
         >
           <span className="flex items-start justify-between gap-3">
             <span className="font-mono text-xs font-semibold text-[#244fd6]">{project.number}</span>
             <Icon name="arrowRight" className="h-4 w-4 text-[#827466] transition group-hover:text-slate-950" />
           </span>
           <span>
-            <span className="block text-sm font-semibold leading-5 tracking-[-0.015em] text-slate-950">
+            <span className="block text-[13px] font-semibold leading-4 tracking-[-0.015em] text-slate-950 sm:text-sm sm:leading-5">
               {project.title}
             </span>
-            <span className="mt-2 block text-xs leading-5 text-slate-600">{project.status}</span>
+            <span className="mt-1.5 block text-[11px] leading-4 text-slate-600 sm:mt-2 sm:text-xs sm:leading-5">{project.status}</span>
           </span>
         </a>
       ))}
@@ -496,20 +498,20 @@ function FeaturedProjectIndex({ projects }) {
 function TitleBlock({ code, title, children, as: Heading = "h2", className = "" }) {
   return (
     <div className={cn("max-w-3xl", className)}>
-      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#244fd6]">
+      <p className="font-mono text-[10px] uppercase tracking-[0.13em] text-[#244fd6] sm:text-[11px]">
         {code}
       </p>
-      <Heading className="mt-2 text-2xl font-semibold leading-tight tracking-normal text-slate-950 md:text-[2.35rem]">
+      <Heading className="mt-1.5 text-xl font-semibold leading-tight tracking-normal text-slate-950 sm:mt-2 md:text-[2.35rem]">
         {title}
       </Heading>
-      {children && <p className="mt-2 max-w-2xl text-base leading-7 text-slate-700">{children}</p>}
+      {children && <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-700 sm:text-base sm:leading-7">{children}</p>}
     </div>
   );
 }
 
 function SectionHeader({ code, title, children }) {
   return (
-    <div className="mb-8 border-t border-[#d2c8b9] pt-7">
+    <div className="mb-5 border-t border-[#d2c8b9] pt-5 sm:mb-8 sm:pt-7">
       <TitleBlock code={code} title={title}>
         {children}
       </TitleBlock>
@@ -521,9 +523,9 @@ function ProjectFact({ label, children }) {
   if (!children) return null;
 
   return (
-    <div className="border border-[#e1d7c8] bg-[#fbfaf7] p-3">
+    <div className="border border-[#e1d7c8] bg-[#fbfaf7] p-2.5 sm:p-3">
       <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466]">{label}</p>
-      <p className="mt-2 text-sm leading-6 text-slate-800">{children}</p>
+      <p className="mt-1.5 text-xs leading-5 text-slate-800 sm:mt-2 sm:text-sm sm:leading-6">{children}</p>
     </div>
   );
 }
@@ -534,11 +536,11 @@ function ProjectEvidenceList({ label, items }) {
   if (evidenceItems.length === 0) return null;
 
   return (
-    <div className="border border-[#e1d7c8] bg-[#fbfaf7] p-3">
+    <div className="border border-[#e1d7c8] bg-[#fbfaf7] p-2.5 sm:p-3">
       <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466]">{label}</p>
-      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+      <div className="mt-2 grid grid-cols-2 gap-1.5 sm:mt-3 sm:gap-2">
         {evidenceItems.map((item) => (
-          <span key={item} className="border border-[#d6cec0] bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700">
+          <span key={item} className="border border-[#d6cec0] bg-white px-2 py-1 text-[11px] font-medium leading-4 text-slate-700 sm:px-2.5 sm:py-1.5 sm:text-xs">
             {item}
           </span>
         ))}
@@ -555,7 +557,7 @@ function ProjectLinkButton({ href, label, icon = "arrowRight", type }) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+      className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:px-3 sm:py-2 sm:text-xs"
     >
       {icon !== "arrowRight" && <Icon name={icon} className="mr-2 h-3.5 w-3.5" />}
       {type && <span className="mr-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[#827466]">{type}</span>}
@@ -619,36 +621,38 @@ function ProjectRow({ project, index, meta }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3, delay: index * 0.045 }}
-      className="group grid min-w-0 scroll-mt-24 border border-[#d2c8b9] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(34,28,18,0.08)] xl:grid-cols-[210px_minmax(0,1fr)]"
+      className="group grid min-w-0 scroll-mt-20 border border-[#d2c8b9] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(34,28,18,0.08)] sm:scroll-mt-24 xl:grid-cols-[210px_minmax(0,1fr)]"
     >
-      <div className={`border-b border-[#e1d7c8] p-5 xl:border-b-0 xl:border-r ${style.soft}`}>
+      <div className={`border-b border-[#e1d7c8] p-3 sm:p-5 xl:border-b-0 xl:border-r ${style.soft}`}>
         <div className="flex items-start justify-between gap-3">
           <p className={`font-mono text-sm font-semibold ${style.text}`}>{project.number}</p>
           <span className={`h-2.5 w-2.5 rounded-full ${style.bg}`} />
         </div>
-        <p className="mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-[#827466]">
-          {project.label}
-        </p>
-        <p className="mt-3 w-fit border border-[#d6cec0] bg-white px-2 py-1 text-xs font-medium text-slate-700">
-          {project.status}
-        </p>
+        <div className="mt-3 flex flex-wrap items-center gap-2 sm:mt-8 sm:block">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#827466] sm:text-xs sm:tracking-[0.2em]">
+            {project.label}
+          </p>
+          <p className="w-fit border border-[#d6cec0] bg-white px-2 py-1 text-[11px] font-medium leading-4 text-slate-700 sm:mt-3 sm:text-xs">
+            {project.status}
+          </p>
+        </div>
         {project.teamContext && (
-          <div className="mt-5 border-t border-[#d6cec0] pt-4">
+          <div className="mt-2 border-t border-[#d6cec0] pt-2 sm:mt-5 sm:pt-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466]">{meta.projectTeamContextLabel}</p>
-            <p className="mt-2 text-sm font-semibold leading-5 text-slate-900">{project.teamContext}</p>
+            <p className="mt-1 text-xs font-semibold leading-5 text-slate-900 sm:mt-2 sm:text-sm">{project.teamContext}</p>
           </div>
         )}
       </div>
 
       <div className={cn("grid min-w-0", hasSidebar && "lg:grid-cols-[minmax(0,1fr)_250px]")}>
-        <div className="min-w-0 p-5 md:p-6">
-          <h3 className="text-2xl font-semibold tracking-[-0.03em] text-slate-950">{project.title}</h3>
-          <p className="mt-3 max-w-3xl text-base leading-7 text-slate-700 md:text-lg">{project.summary}</p>
-          <div className="mt-5 grid gap-3 md:grid-cols-2">
+        <div className="min-w-0 p-4 md:p-6">
+          <h3 className="text-xl font-semibold leading-tight tracking-[-0.02em] text-slate-950 sm:text-2xl sm:tracking-[-0.03em]">{project.title}</h3>
+          <p className="mt-2.5 max-w-3xl text-sm leading-6 text-slate-700 sm:mt-3 sm:text-base sm:leading-7 md:text-lg">{project.summary}</p>
+          <div className="mt-4 grid gap-2 sm:gap-3 md:grid-cols-2">
             <ProjectFact label={meta.projectStateLabel}>{state}</ProjectFact>
             <ProjectFact label={meta.projectRoleLabel}>{role}</ProjectFact>
           </div>
-          <div className="mt-3 grid gap-3">
+          <div className="mt-2 grid gap-2 sm:mt-3 sm:gap-3">
             <ProjectEvidenceList label={meta.projectProofAvailableLabel} items={project.proofAvailable} />
             <ProjectFact label={meta.projectProofNeededLabel}>{proofNeeded}</ProjectFact>
             <ProjectFact label={meta.projectWhatChangedLabel}>{project.whatChanged}</ProjectFact>
@@ -658,7 +662,7 @@ function ProjectRow({ project, index, meta }) {
         </div>
 
         {hasSidebar && (
-          <div className="border-t border-[#e1d7c8] bg-[#fbfaf7] p-5 lg:border-l lg:border-t-0">
+          <div className="border-t border-[#e1d7c8] bg-[#fbfaf7] p-4 sm:p-5 lg:border-l lg:border-t-0">
             {project.logoSrc && (
               <div>
                 {project.logoHref ? (
@@ -677,7 +681,7 @@ function ProjectRow({ project, index, meta }) {
               </div>
             )}
             {artifactButtons.length > 0 && (
-              <div className={cn("flex flex-col gap-2", project.logoSrc && "mt-5")}>
+              <div className={cn("flex flex-col gap-2", project.logoSrc && "mt-4 sm:mt-5")}>
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">{meta.projectArtifactLinksLabel}</p>
                 {artifactButtons.map((link) => (
                   <ProjectLinkButton key={link.id ?? link.href} href={link.href} label={link.label} icon={link.icon} type={link.type} />
@@ -737,21 +741,21 @@ function SmallProjectCard({ project, index }) {
           )
         )}
       </div>
-      <div className="flex flex-1 flex-col justify-between p-5">
+      <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
         <div>
-          <h3 className="text-lg font-semibold tracking-[-0.02em] text-slate-950">{project.title}</h3>
-          <p className="mt-3 text-sm leading-6 text-slate-700">{project.description}</p>
+          <h3 className="text-base font-semibold tracking-[-0.02em] text-slate-950 sm:text-lg">{project.title}</h3>
+          <p className="mt-2 text-xs leading-5 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{project.description}</p>
           <MediaCarousel media={project.media} label={project.title} compact />
         </div>
         <div>
           {(project.href || project.sourceHref) && (
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
               {project.href && (
                 <a
                   href={project.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee]"
+                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-950 transition hover:bg-[#f5f3ee] sm:px-3 sm:py-2 sm:text-xs"
                 >
                   Open
                   <Icon name="arrowRight" className="ml-2 h-3.5 w-3.5" />
@@ -762,7 +766,7 @@ function SmallProjectCard({ project, index }) {
                   href={project.sourceHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee]"
+                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-950 transition hover:bg-[#f5f3ee] sm:px-3 sm:py-2 sm:text-xs"
                 >
                   <Icon name="github" className="mr-2 h-3.5 w-3.5" />
                   Source
@@ -770,7 +774,7 @@ function SmallProjectCard({ project, index }) {
               )}
             </div>
           )}
-          <div className="mt-5 h-1.5 w-16 bg-[#244fd6] opacity-80" />
+          <div className="mt-4 h-1 w-14 bg-[#244fd6] opacity-80 sm:mt-5 sm:h-1.5 sm:w-16" />
         </div>
       </div>
     </motion.article>
@@ -794,16 +798,16 @@ function AcademicSchoolCard({ meta }) {
   ].filter((link) => link.href && link.label);
 
   return (
-    <aside className="border border-[#d2c8b9] bg-white p-4 shadow-sm">
-      <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
-        <div className="flex items-center gap-4">
+    <aside className="border border-[#d2c8b9] bg-white p-3 shadow-sm sm:p-4">
+      <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           {meta.academicSchoolLogoSrc && (
             <a
               href={meta.academicSchoolHref}
               target="_blank"
               rel="noreferrer"
               aria-label={`Open ${schoolName} website`}
-              className="grid h-20 w-20 shrink-0 place-items-center border border-[#d6cec0] bg-white p-1 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+              className="grid h-16 w-16 shrink-0 place-items-center border border-[#d6cec0] bg-white p-1 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:h-20 sm:w-20"
             >
               <img
                 src={meta.academicSchoolLogoSrc}
@@ -835,7 +839,7 @@ function AcademicSchoolCard({ meta }) {
           </p>
 
           {sourceLinks.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-2 flex flex-wrap gap-2 sm:mt-3">
               {sourceLinks.map((link) => (
                 <a
                   key={link.href}
@@ -867,16 +871,16 @@ function AcademicCard({ item, index }) {
       viewport={{ once: true }}
       transition={{ duration: 0.25, delay: index * 0.035 }}
       className={cn(
-        "relative overflow-hidden border border-[#d2c8b9] bg-white p-5 shadow-sm",
+        "relative overflow-hidden border border-[#d2c8b9] bg-white p-4 shadow-sm sm:p-5",
         isGoldHighlight && "border-[#d8b451] bg-[linear-gradient(180deg,#fffdf7_0%,#ffffff_42%)]",
       )}
     >
       {isGoldHighlight && (
         <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1.5 bg-[#d7a31f]" />
       )}
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#827466]">{item.label}</p>
-      <p className="mt-3 text-2xl font-semibold leading-7 tracking-[-0.03em] text-slate-950">{item.value}</p>
-      {item.note && <p className="mt-3 text-sm leading-6 text-slate-700">{item.note}</p>}
+      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466] sm:text-xs sm:tracking-[0.2em]">{item.label}</p>
+      <p className="mt-2 text-xl font-semibold leading-6 tracking-[-0.02em] text-slate-950 sm:mt-3 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em]">{item.value}</p>
+      {item.note && <p className="mt-2 text-xs leading-5 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{item.note}</p>}
     </motion.div>
   );
 }
@@ -898,7 +902,7 @@ function MicroProjectTile({ project, index, meta }) {
       className="group relative border border-[#d2c8b9] bg-white shadow-sm outline-none transition hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(34,28,18,0.08)] focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
     >
       <div className="relative overflow-hidden border-b border-[#e1d7c8]">
-        <div className="aspect-[4/3] bg-[#fbfaf7]">
+        <div className="aspect-video bg-[#fbfaf7]">
           {media.src && mediaType === "video" && (
             <video
               src={media.src}
@@ -932,12 +936,12 @@ function MicroProjectTile({ project, index, meta }) {
           )}
         </div>
 
-        <div className="pointer-events-none absolute inset-2 flex flex-col justify-between border border-[#d2c8b9] bg-white/95 p-3 opacity-0 shadow-sm backdrop-blur-sm transition duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus:pointer-events-auto group-focus:opacity-100">
+        <div className="pointer-events-none absolute inset-2 flex flex-col justify-between border border-[#d2c8b9] bg-white/95 p-2.5 opacity-0 shadow-sm backdrop-blur-sm transition duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus:pointer-events-auto group-focus:opacity-100 sm:p-3">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0f766e]">
               C{String(index + 1).padStart(2, "0")} / {project.type}
             </p>
-            <p className="mt-2 text-sm leading-6 text-slate-700">{project.description}</p>
+            <p className="mt-2 text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{project.description}</p>
           </div>
 
           {(project.href || project.sourceHref) && (
@@ -969,7 +973,7 @@ function MicroProjectTile({ project, index, meta }) {
         </div>
       </div>
 
-      <h3 id={labelId} className="px-3 py-3 text-sm font-semibold leading-5 tracking-[-0.02em] text-slate-950">
+      <h3 id={labelId} className="px-2.5 py-2 text-[13px] font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:px-3 sm:py-3 sm:text-sm">
         {project.title}
       </h3>
     </motion.article>
@@ -984,8 +988,8 @@ function ContactButton({ href, icon, children, primary = false }) {
       asChild
       className={
         primary
-          ? "rounded-none bg-slate-950 px-5 py-5 text-sm font-semibold text-white hover:bg-[#244fd6]"
-          : "rounded-none border-[#cfc4b4] bg-white px-5 py-5 text-sm font-semibold text-slate-950 hover:bg-[#fbfaf7]"
+          ? "rounded-none bg-slate-950 px-4 py-3 text-sm font-semibold text-white hover:bg-[#244fd6] sm:px-5 sm:py-5"
+          : "rounded-none border-[#cfc4b4] bg-white px-4 py-3 text-sm font-semibold text-slate-950 hover:bg-[#fbfaf7] sm:px-5 sm:py-5"
       }
     >
       <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
@@ -1002,8 +1006,8 @@ function PageButton({ to, icon, children, end = false }) {
       end={end}
       className={({ isActive }) =>
         isActive
-          ? "flex items-center gap-2 border border-slate-950 bg-slate-950 px-3 py-2 font-mono text-xs uppercase tracking-[0.14em] text-white"
-          : "flex items-center gap-2 border border-[#cfc4b4] bg-white px-3 py-2 font-mono text-xs uppercase tracking-[0.14em] text-slate-700 hover:text-slate-950"
+          ? "flex items-center gap-1.5 border border-slate-950 bg-slate-950 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-white sm:gap-2 sm:px-3 sm:py-2 sm:text-xs sm:tracking-[0.14em]"
+          : "flex items-center gap-1.5 border border-[#cfc4b4] bg-white px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-700 hover:text-slate-950 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs sm:tracking-[0.14em]"
       }
     >
       <Icon name={icon} className="h-3.5 w-3.5" />
@@ -1017,51 +1021,51 @@ function PortfolioPage({ content }) {
 
   return (
     <>
-      <section id="top" className="relative z-10 mx-auto max-w-7xl px-5 pb-14 pt-10 md:px-8 md:pb-20 md:pt-14">
+      <section id="top" className="relative z-10 mx-auto max-w-7xl px-3 pb-8 pt-5 sm:px-5 sm:pb-14 sm:pt-10 md:px-8 md:pb-20 md:pt-14">
         <div className="max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.42 }}
-            className="border border-[#d2c8b9] bg-white p-6 shadow-sm md:p-8"
+            className="border border-[#d2c8b9] bg-white p-4 shadow-sm sm:p-6 md:p-8"
           >
-            <div className="flex flex-wrap items-center gap-2 border-b border-[#e1d7c8] pb-5">
+            <div className="flex flex-wrap items-center gap-1.5 border-b border-[#e1d7c8] pb-3 sm:gap-2 sm:pb-5">
               {list(content.heroTags).map((tag) => (
                 <Tag key={tag.id}>{tag.label}</Tag>
               ))}
             </div>
 
-            <div className="mt-7 grid gap-8 xl:grid-cols-[1fr_260px]">
+            <div className="mt-5 grid gap-4 sm:mt-7 sm:gap-8 xl:grid-cols-[1fr_260px]">
               <div>
                 <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#827466]">{meta.heroEyebrow}</p>
-                <h1 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.045em] text-slate-950 md:text-5xl">
+                <h1 className="mt-3 max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.025em] text-slate-950 sm:mt-4 sm:text-3xl sm:tracking-[-0.045em] md:text-5xl">
                   {meta.heroTitle}
                 </h1>
-                <p className="mt-5 max-w-2xl text-base leading-7 text-slate-700 md:text-lg">
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-700 sm:mt-5 sm:text-base sm:leading-7 md:text-lg">
                   {meta.heroIntro}
                 </p>
               </div>
 
-              <div className="border border-[#d2c8b9] bg-[#fbfaf7] p-4">
-                <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#827466]">{meta.currentStackTitle}</p>
-                <div className="mt-4 space-y-3">
+              <div className="border border-[#d2c8b9] bg-[#fbfaf7] p-3 sm:p-4">
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466] sm:text-xs sm:tracking-[0.22em]">{meta.currentStackTitle}</p>
+                <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:block sm:space-y-3">
                   {list(content.currentStack).map((item) => (
-                    <div key={item.id} className="flex gap-3 border-t border-[#e1d7c8] pt-3 first:border-t-0 first:pt-0">
+                    <div key={item.id} className="flex gap-2 border-t border-[#e1d7c8] pt-2 first:border-t-0 first:pt-0 sm:gap-3 sm:pt-3">
                       <span className="font-mono text-xs text-[#244fd6]">{item.number}</span>
-                      <span className="text-sm font-medium text-slate-800">{item.label}</span>
+                      <span className="text-xs font-medium leading-4 text-slate-800 sm:text-sm sm:leading-5">{item.label}</span>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild className="rounded-none bg-slate-950 px-5 py-5 text-sm font-semibold text-white hover:bg-[#244fd6]">
+            <div className="mt-5 flex flex-row flex-wrap gap-2 sm:mt-8 sm:gap-3">
+              <Button asChild className="rounded-none bg-slate-950 px-4 py-3 text-sm font-semibold text-white hover:bg-[#244fd6] sm:px-5 sm:py-5">
                 <a href="#projects">
                   {meta.openProjectsLabel} <Icon name="arrowRight" className="ml-2 h-4 w-4" />
                 </a>
               </Button>
-              <Button asChild className="rounded-none bg-white px-5 py-5 text-sm font-semibold text-slate-950 ring-1 ring-[#cfc4b4] hover:bg-[#fbfaf7]">
+              <Button asChild className="rounded-none bg-white px-4 py-3 text-sm font-semibold text-slate-950 ring-1 ring-[#cfc4b4] hover:bg-[#fbfaf7] sm:px-5 sm:py-5">
                 <Link to="/record">{meta.viewRecordLabel}</Link>
               </Button>
             </div>
@@ -1069,24 +1073,24 @@ function PortfolioPage({ content }) {
         </div>
       </section>
 
-      <section id="projects" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
+      <section id="projects" className="relative z-10 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-12 md:px-8 md:py-16">
         <SectionHeader code={meta.projectIndexCode} title={meta.projectIndexTitle}>
           {meta.projectIndexText}
         </SectionHeader>
         <FeaturedProjectIndex projects={content.projects} />
-        <div className="grid gap-4">
+        <div className="grid gap-3 sm:gap-4">
           {list(content.projects).map((project, index) => (
             <ProjectRow key={project.id} project={project} index={index} meta={meta} />
           ))}
         </div>
       </section>
 
-      <section id="bench" className="relative z-10 mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-14">
+      <section id="bench" className="relative z-10 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-10 md:px-8 md:py-14">
         <SectionHeader code={meta.skillSystemCode} title={meta.skillSystemTitle}>
           {meta.skillSystemText}
         </SectionHeader>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-2">
           {list(content.skillNarratives).map((skill, index) => (
             <motion.article
               key={skill.id}
@@ -1094,23 +1098,23 @@ function PortfolioPage({ content }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.28, delay: index * 0.04 }}
-              className="border border-[#d2c8b9] bg-white p-5 shadow-sm"
+              className="border border-[#d2c8b9] bg-white p-3 shadow-sm sm:p-5"
             >
-              <div className="mb-4 flex items-center justify-between border-b border-[#e1d7c8] pb-4">
-                <div className="grid h-10 w-10 place-items-center border border-[#d2c8b9] bg-[#f5f3ee] text-[#244fd6]">
+              <div className="mb-3 flex items-center justify-between border-b border-[#e1d7c8] pb-3 sm:mb-4 sm:pb-4">
+                <div className="grid h-8 w-8 place-items-center border border-[#d2c8b9] bg-[#f5f3ee] text-[#244fd6] sm:h-10 sm:w-10">
                   <Icon name={skill.icon} className="h-4 w-4" />
                 </div>
                 <span className="font-mono text-xs text-[#827466]">S{String(index + 1).padStart(2, "0")}</span>
               </div>
-              <h3 className="text-lg font-semibold tracking-[-0.02em] text-slate-950">{skill.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-700">{skill.text}</p>
+              <h3 className="text-sm font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:text-lg">{skill.title}</h3>
+              <p className="mt-1.5 text-xs leading-5 text-slate-700 sm:mt-2 sm:text-sm sm:leading-6">{skill.text}</p>
             </motion.article>
           ))}
         </div>
 
-        <div className="mt-4 border border-[#d2c8b9] bg-white p-5 shadow-sm">
-          <p className="font-mono text-xs uppercase tracking-[0.16em] text-[#827466]">{meta.workingVocabularyLabel}</p>
-          <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-3 border border-[#d2c8b9] bg-white p-4 shadow-sm sm:mt-4 sm:p-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] sm:text-xs sm:tracking-[0.16em]">{meta.workingVocabularyLabel}</p>
+          <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-4 sm:gap-2">
             {list(content.skills).map((skill) => (
               <Tag key={skill.id}>{skill.name}</Tag>
             ))}
@@ -1118,26 +1122,26 @@ function PortfolioPage({ content }) {
         </div>
       </section>
 
-      <section id="academics" className="relative z-10 mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-14">
-        <div className="mb-6 grid gap-4 border-t border-[#d2c8b9] pt-7 lg:grid-cols-[minmax(360px,1fr)_minmax(460px,0.95fr)]">
+      <section id="academics" className="relative z-10 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-10 md:px-8 md:py-14">
+        <div className="mb-4 grid gap-3 border-t border-[#d2c8b9] pt-5 sm:mb-6 sm:gap-4 sm:pt-7 lg:grid-cols-[minmax(360px,1fr)_minmax(460px,0.95fr)]">
           <TitleBlock code={meta.academicCode} title={meta.academicTitle}>
             {meta.academicText}
           </TitleBlock>
           <AcademicSchoolCard meta={meta} />
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {list(content.academics).map((item, index) => (
             <AcademicCard key={item.id} item={item} index={index} />
           ))}
         </div>
       </section>
 
-      <section id="smaller-projects" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
+      <section id="smaller-projects" className="relative z-10 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-12 md:px-8 md:py-16">
         <SectionHeader code={meta.smallerProjectsCode} title={meta.smallerProjectsTitle}>
           {meta.smallerProjectsText}
         </SectionHeader>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
           {list(content.smallProjects).map((project, index) => (
             <SmallProjectCard key={project.id} project={project} index={index} />
           ))}
@@ -1145,11 +1149,11 @@ function PortfolioPage({ content }) {
       </section>
 
       {list(content.microProjects).length > 0 && (
-        <section id="bench-notes" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
+        <section id="bench-notes" className="relative z-10 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-12 md:px-8 md:py-16">
           <SectionHeader code={meta.microProjectsCode} title={meta.microProjectsTitle}>
             {meta.microProjectsText}
           </SectionHeader>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
             {list(content.microProjects).map((project, index) => (
               <MicroProjectTile key={project.id} project={project} index={index} meta={meta} />
             ))}
@@ -1167,21 +1171,21 @@ function RecordPage({ content }) {
 
   return (
     <>
-      <section id="top" className="relative z-10 mx-auto max-w-7xl px-5 pb-10 pt-10 md:px-8 md:pb-14 md:pt-14">
-        <div className="border border-[#d2c8b9] bg-white p-6 shadow-sm md:p-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+      <section id="top" className="relative z-10 mx-auto max-w-7xl px-3 pb-6 pt-5 sm:px-5 sm:pb-10 sm:pt-10 md:px-8 md:pb-14 md:pt-14">
+        <div className="border border-[#d2c8b9] bg-white p-4 shadow-sm sm:p-6 md:p-8">
+          <div className="flex flex-col gap-4 sm:gap-6 md:flex-row md:items-start md:justify-between">
             <TitleBlock code={meta.recordEyebrow} title={meta.recordTitle} as="h1" className="max-w-4xl">
               {meta.recordIntro}
             </TitleBlock>
-            <Button asChild className="rounded-none bg-slate-950 px-5 py-5 text-sm font-semibold text-white hover:bg-[#244fd6]">
+            <Button asChild className="rounded-none bg-slate-950 px-4 py-3 text-sm font-semibold text-white hover:bg-[#244fd6] sm:px-5 sm:py-5">
               <Link to="/">{meta.backPortfolioLabel}</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto max-w-7xl px-5 py-8 md:px-8 md:py-12">
-        <div className="grid gap-5">
+      <section className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-8 md:px-8 md:py-12">
+        <div className="grid gap-3 sm:gap-5">
           {list(content.fullRecord).map((section, sectionIndex) => (
             <motion.article
               key={section.id}
@@ -1191,21 +1195,21 @@ function RecordPage({ content }) {
               className="border border-[#d2c8b9] bg-white shadow-sm"
             >
               <div className="grid border-b border-[#d2c8b9] bg-[#fbfaf7] md:grid-cols-[220px_1fr]">
-                <div className="flex items-center gap-3 border-b border-[#d2c8b9] p-5 md:border-b-0 md:border-r">
-                  <div className="grid h-10 w-10 place-items-center border border-[#d2c8b9] bg-white text-[#244fd6]">
+                <div className="flex items-center gap-2 border-b border-[#d2c8b9] p-3 sm:gap-3 sm:p-5 md:border-b-0 md:border-r">
+                  <div className="grid h-8 w-8 place-items-center border border-[#d2c8b9] bg-white text-[#244fd6] sm:h-10 sm:w-10">
                     <Icon name={section.icon} className="h-4 w-4" />
                   </div>
                   <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#827466]">R{String(sectionIndex + 1).padStart(2, "0")}</p>
                 </div>
-                <div className="p-5">
-                  <h2 className="text-2xl font-semibold tracking-[-0.03em] text-slate-950">{section.category}</h2>
+                <div className="p-3 sm:p-5">
+                  <h2 className="text-xl font-semibold tracking-[-0.02em] text-slate-950 sm:text-2xl sm:tracking-[-0.03em]">{section.category}</h2>
                 </div>
               </div>
               <div className="divide-y divide-[#e1d7c8]">
                 {list(section.items).map((item, itemIndex) => (
-                  <div key={item.id} className="grid gap-3 p-5 md:grid-cols-[70px_1fr]">
+                  <div key={item.id} className="grid gap-2 p-3 sm:gap-3 sm:p-5 md:grid-cols-[70px_1fr]">
                     <p className="font-mono text-xs text-[#244fd6]">{String(itemIndex + 1).padStart(2, "0")}</p>
-                    <p className="text-sm leading-6 text-slate-700">{item.text}</p>
+                    <p className="text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{item.text}</p>
                   </div>
                 ))}
               </div>
@@ -1229,13 +1233,13 @@ function ContactSection({ content }) {
   ].filter((button) => button.href && button.label);
 
   return (
-    <section id="contact" className="relative z-10 mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-20">
+    <section id="contact" className="relative z-10 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-12 md:px-8 md:py-20">
       <div className="border border-[#d2c8b9] bg-white shadow-[0_16px_45px_rgba(34,28,18,0.08)]">
-        <div className="grid gap-6 p-6 md:grid-cols-[1fr_300px] md:p-8">
+        <div className="grid gap-4 p-4 sm:gap-6 sm:p-6 md:grid-cols-[1fr_300px] md:p-8">
           <TitleBlock code={meta.contactEyebrow} title={meta.contactTitle}>
             {meta.contactText}
           </TitleBlock>
-          <div className="flex flex-col justify-end gap-3">
+          <div className="flex flex-row flex-wrap justify-start gap-2 md:flex-col md:justify-end md:gap-3">
             {contactButtons.map((button) => (
               <ContactButton key={button.icon} href={button.href} icon={button.icon} primary={button.primary}>
                 {button.label}
@@ -1243,10 +1247,10 @@ function ContactSection({ content }) {
             ))}
           </div>
         </div>
-        <div className="grid border-t border-[#d2c8b9] bg-[#fbfaf7] font-mono text-[11px] uppercase tracking-[0.16em] text-[#827466] md:grid-cols-3">
-          <p className="border-b border-[#d2c8b9] p-4 md:border-b-0 md:border-r">{meta.footerLeft}</p>
-          <p className="border-b border-[#d2c8b9] p-4 md:border-b-0 md:border-r">{meta.footerMiddle}</p>
-          <p className="p-4">&copy; {new Date().getFullYear()} {meta.footerName}</p>
+        <div className="grid border-t border-[#d2c8b9] bg-[#fbfaf7] font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] md:grid-cols-3 md:text-[11px] md:tracking-[0.16em]">
+          <p className="border-b border-[#d2c8b9] p-3 md:border-b-0 md:border-r md:p-4">{meta.footerLeft}</p>
+          <p className="border-b border-[#d2c8b9] p-3 md:border-b-0 md:border-r md:p-4">{meta.footerMiddle}</p>
+          <p className="p-3 md:p-4">&copy; {new Date().getFullYear()} {meta.footerName}</p>
         </div>
       </div>
     </section>
@@ -1260,18 +1264,18 @@ function Navigation({ content }) {
 
   return (
     <nav className="sticky top-0 z-30 border-b border-[#d2c8b9] bg-[#f5f3ee]/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-4 md:flex-row md:items-center md:justify-between md:px-8">
-        <Link to="/#top" className="flex items-center gap-3">
-          <span className="grid h-8 w-8 place-items-center border border-[#cfc4b4] bg-white font-mono text-xs font-semibold text-[#244fd6] shadow-sm">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-3 py-2 md:px-8 md:py-4">
+        <Link to="/#top" className="flex min-w-0 items-center gap-2 sm:gap-3">
+          <span className="grid h-8 w-8 shrink-0 place-items-center border border-[#cfc4b4] bg-white font-mono text-xs font-semibold text-[#244fd6] shadow-sm">
             CH
           </span>
-          <span>
+          <span className="min-w-0">
             <span className="block text-sm font-semibold tracking-[-0.01em] text-slate-950">{meta.navName}</span>
-            <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466]">{meta.navSubtitle}</span>
+            <span className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466] sm:block">{meta.navSubtitle}</span>
           </span>
         </Link>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex shrink-0 flex-wrap items-center justify-end gap-1.5 sm:gap-2">
           <PageButton to="/" end icon="box">Portfolio</PageButton>
           <PageButton to="/record" icon="list">Full record</PageButton>
         </div>

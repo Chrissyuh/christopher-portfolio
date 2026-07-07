@@ -1249,16 +1249,6 @@ function PortfolioPage({ content }) {
         </div>
       </section>
 
-      {list(content.learningHighlights).length > 0 && (
-        <section id="learning" className="relative z-10 mx-auto max-w-7xl scroll-mt-20 px-3 py-6 sm:px-5 sm:py-8 md:px-8">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {list(content.learningHighlights).map((item, index) => (
-              <LearningHighlightCard key={item.id} item={item} index={index} />
-            ))}
-          </div>
-        </section>
-      )}
-
       <section id="smaller-projects" className="relative z-10 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-12 md:px-8 md:py-16">
         <SectionHeader code={meta.smallerProjectsCode} title={meta.smallerProjectsTitle}>
           {meta.smallerProjectsText}
@@ -1283,7 +1273,7 @@ function PortfolioPage({ content }) {
         </section>
       )}
 
-      <ContactSection content={content} />
+      <ContactSection content={content} showLearningHighlights />
     </>
   );
 }
@@ -1345,8 +1335,9 @@ function RecordPage({ content }) {
   );
 }
 
-function ContactSection({ content }) {
+function ContactSection({ content, showLearningHighlights = false }) {
   const meta = content.meta ?? {};
+  const learningHighlights = showLearningHighlights ? list(content.learningHighlights) : [];
   const contactButtons = [
     { href: meta.contactEmailHref, icon: "mail", label: meta.contactEmailLabel, primary: true },
     { href: meta.contactGithubHref, icon: "github", label: meta.contactGithubLabel },
@@ -1367,6 +1358,13 @@ function ContactSection({ content }) {
                 {button.label}
               </ContactButton>
             ))}
+            {learningHighlights.length > 0 && (
+              <div id="learning" className="grid w-full scroll-mt-20 gap-2 pt-2 md:pt-3">
+                {learningHighlights.map((item, index) => (
+                  <LearningHighlightCard key={item.id} item={item} index={index} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <div className="grid border-t border-[#d2c8b9] bg-[#fbfaf7] font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] md:grid-cols-3 md:text-[11px] md:tracking-[0.16em]">

@@ -1093,7 +1093,7 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
   return (
     <div
       ref={containerRef}
-      className="relative basis-full md:static md:basis-auto"
+      className="relative basis-full md:basis-auto"
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
       onBlur={handleBlur}
@@ -1118,8 +1118,8 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
           role="dialog"
           aria-label={`${credential.credential} preview`}
           className={cn(
-            "relative z-40 mt-3 w-full border border-[#cfc4b4] bg-white p-2.5 shadow-[0_18px_50px_rgba(34,28,18,0.18)] sm:p-3 md:absolute md:top-1/2 md:mt-0 md:w-[min(47vw,38rem)] md:-translate-y-1/2",
-            align === "right" ? "md:right-[calc(100%+0.75rem)]" : "md:left-[calc(100%+0.75rem)]",
+            "relative z-40 mt-3 w-full border border-[#cfc4b4] bg-white p-2.5 shadow-[0_18px_50px_rgba(34,28,18,0.18)] sm:p-3 md:absolute md:bottom-[calc(100%+0.75rem)] md:top-auto md:mt-0 md:w-[min(30vw,22rem)] md:translate-y-0",
+            align === "right" ? "md:right-0" : "md:left-0",
           )}
         >
           {credential.scanSrc ? (
@@ -1127,7 +1127,7 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
               <img
                 src={credential.scanSrc}
                 alt={credential.scanAlt || credential.credential}
-                className="max-h-[62vh] w-full bg-[#fbfaf7] object-contain"
+                className="max-h-[62vh] w-full bg-[#fbfaf7] object-contain md:max-h-[26vh]"
               />
               {credential.scanCaption && (
                 <figcaption className="border-t border-[#e1d7c8] px-1 pt-2 text-xs leading-5 text-slate-700">
@@ -1150,8 +1150,8 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
           <span
             aria-hidden="true"
             className={cn(
-              "absolute top-1/2 hidden h-4 w-4 -translate-y-1/2 rotate-45 border-[#cfc4b4] bg-white md:block",
-              align === "right" ? "-right-2 border-r border-t" : "-left-2 border-b border-l",
+              "absolute -bottom-2 hidden h-4 w-4 rotate-45 border-b border-r border-[#cfc4b4] bg-white md:block",
+              align === "right" ? "right-8" : "left-8",
             )}
           />
         </div>
@@ -1163,7 +1163,10 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
 function ProgramCredentialCard({ credential, index, meta }) {
   const accent = accentStyles[credential.accent] ?? accentStyles.amber;
   const isCredential = credential.entryType !== "program";
-  const heading = credential.credential || credential.program;
+  const eyebrow = isCredential ? "certificate of completion" : credential.issuer;
+  const detail = isCredential
+    ? [credential.issuer, credential.date].filter(Boolean).join(" · ")
+    : credential.date;
   const initials = credential.program
     .split(/\s+/)
     .filter(Boolean)
@@ -1179,7 +1182,15 @@ function ProgramCredentialCard({ credential, index, meta }) {
       transition={{ duration: 0.25, delay: index * 0.04 }}
       className={cn("relative border bg-white p-4 shadow-sm sm:p-5", accent.border)}
     >
-      <div aria-hidden="true" className={cn("absolute inset-x-0 top-0 h-1", accent.bg)} />
+      {credential.id === "tetc" ? (
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 grid h-1 grid-cols-3">
+          <span className="bg-[#00afab]" />
+          <span className="bg-[#b0217a]" />
+          <span className="bg-[#f79320]" />
+        </div>
+      ) : (
+        <div aria-hidden="true" className={cn("absolute inset-x-0 top-0 h-1", credential.id === "stanford-ai4all" ? "bg-[#8c1515]" : accent.bg)} />
+      )}
       <div className="flex items-start gap-3 sm:gap-4">
         {credential.logoSrc ? (
           <a
@@ -1200,11 +1211,9 @@ function ProgramCredentialCard({ credential, index, meta }) {
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">{isCredential ? credential.program : "program"}</p>
-          <h3 className="mt-1 text-base font-semibold leading-5 text-slate-950 sm:text-lg sm:leading-6">{heading}</h3>
-          <p className="mt-1 text-[11px] leading-4 text-slate-600 sm:text-xs">
-            {credential.issuer}{credential.date ? ` · ${credential.date}` : ""}
-          </p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">{eyebrow}</p>
+          <h3 className="mt-1 text-base font-semibold leading-5 text-slate-950 sm:text-lg sm:leading-6">{credential.program}</h3>
+          {detail && <p className="mt-1 text-[11px] leading-4 text-slate-600 sm:text-xs">{detail}</p>}
         </div>
       </div>
 

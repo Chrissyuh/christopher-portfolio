@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-11T13:22:12.925Z",
+  "updatedAt": "2026-07-11T14:00:00.000Z",
   "meta": {
     "documentTitle": "Christopher Portfolio",
     "navName": "Christopher",
@@ -361,26 +361,6 @@
   ],
   "programCredentials": [
     {
-      "id": "stanford-ai4all",
-      "entryType": "credential",
-      "program": "Stanford AI4ALL",
-      "credential": "Stanford AI4ALL Certificate of Completion",
-      "issuer": "Stanford AI4ALL and Stanford Pre-Collegiate Studies",
-      "date": "June 26, 2026",
-      "summary": "Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project.",
-      "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
-      "logoAlt": "Stanford AI4ALL logo",
-      "logoHref": "https://ai4all.spcs.stanford.edu/",
-      "scanSrc": "/portfolio-media/credentials/stanford-ai4all-certificate.jpg",
-      "scanAlt": "Stanford AI4ALL Certificate of Completion in Robotics awarded to Christopher Heskett",
-      "scanCaption": "Stanford AI4ALL Certificate of Completion in Robotics, June 26, 2026",
-      "href": "https://ai4all.spcs.stanford.edu/",
-      "hrefLabel": "Program site",
-      "accent": "amber",
-      "relatedProjectId": "vividgrasp-ai-vision-robotics-arm",
-      "scanAvailable": true
-    },
-    {
       "id": "tetc",
       "entryType": "program",
       "program": "Teen Engineering + Tech Center",
@@ -399,6 +379,26 @@
       "accent": "blue",
       "relatedProjectId": null,
       "scanAvailable": false
+    },
+    {
+      "id": "stanford-ai4all",
+      "entryType": "credential",
+      "program": "Stanford AI4ALL",
+      "credential": "Stanford AI4ALL Certificate of Completion",
+      "issuer": "Stanford AI4ALL and Stanford Pre-Collegiate Studies",
+      "date": "June 26, 2026",
+      "summary": "Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project.",
+      "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
+      "logoAlt": "Stanford AI4ALL logo",
+      "logoHref": "https://ai4all.spcs.stanford.edu/",
+      "scanSrc": "/portfolio-media/credentials/stanford-ai4all-certificate.jpg",
+      "scanAlt": "Stanford AI4ALL Certificate of Completion in Robotics awarded to Christopher Heskett",
+      "scanCaption": "Stanford AI4ALL Certificate of Completion in Robotics, June 26, 2026",
+      "href": "https://ai4all.spcs.stanford.edu/",
+      "hrefLabel": "Program site",
+      "accent": "amber",
+      "relatedProjectId": "vividgrasp-ai-vision-robotics-arm",
+      "scanAvailable": true
     }
   ],
   "learningHighlights": [

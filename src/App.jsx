@@ -1163,10 +1163,10 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
 function ProgramCredentialCard({ credential, index, meta }) {
   const accent = accentStyles[credential.accent] ?? accentStyles.amber;
   const isCredential = credential.entryType !== "program";
-  const eyebrow = isCredential ? "certificate of completion" : credential.issuer;
-  const detail = isCredential
-    ? [credential.issuer, credential.date].filter(Boolean).join(" · ")
-    : credential.date;
+  const eyebrow = credential.id === "stanford-ai4all"
+    ? "Stanford Pre-Collegiate Studies"
+    : isCredential ? "certificate of completion" : credential.issuer;
+  const detail = credential.date;
   const initials = credential.program
     .split(/\s+/)
     .filter(Boolean)

@@ -22,6 +22,8 @@ export const allowedMediaTypes = ["photo", "video"];
 
 export const allowedArtifactLinkTypes = ["live", "source", "cad", "wiring", "schematic", "demo", "notes", "release", "test", "other"];
 
+export const allowedProgramCredentialTypes = ["program", "credential"];
+
 const mediaSlotCount = 8;
 
 export const allowedIcons = [
@@ -52,7 +54,7 @@ const requiredFields = {
   MainProjects: ["id", "number", "title", "label", "status", "accent", "summary"],
   ProjectArtifactLinks: ["id", "project_id", "label", "href", "type"],
   Academics: ["id", "label", "value"],
-  ProgramCredentials: ["id", "program", "credential", "issuer", "summary", "accent"],
+  ProgramCredentials: ["id", "entry_type", "program", "summary", "accent"],
   LearningHighlights: ["id", "label", "value"],
   SmallProjects: ["id", "title", "type", "description"],
   MicroProjects: ["id", "title", "type", "description"],
@@ -383,10 +385,20 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
   const academics = statRows("Academics");
   const programCredentials = simpleRows("ProgramCredentials", (row) => {
     const id = text(row.id);
+    const entryType = text(row.entry_type) || "credential";
     const accent = text(row.accent);
     const relatedProjectId = text(row.related_project_id);
 
+    requireKnownValue(errors, "ProgramCredentials", id, "entry_type", entryType, allowedProgramCredentialTypes);
     requireKnownValue(errors, "ProgramCredentials", id, "accent", accent, allowedAccents);
+
+    if (entryType === "credential" && !text(row.credential)) {
+      errors.push(`ProgramCredentials row "${id}" is a credential but is missing required field "credential".`);
+    }
+
+    if (entryType === "credential" && !text(row.issuer)) {
+      errors.push(`ProgramCredentials row "${id}" is a credential but is missing required field "issuer".`);
+    }
 
     if (relatedProjectId && !projectsById.has(relatedProjectId)) {
       errors.push(`ProgramCredentials row "${id}" references missing related_project_id "${relatedProjectId}".`);
@@ -394,6 +406,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
 
     return {
       id,
+      entryType,
       program: text(row.program),
       credential: text(row.credential),
       issuer: text(row.issuer),

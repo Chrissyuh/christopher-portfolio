@@ -120,6 +120,8 @@ function buildStructuredData(content) {
   const smallProjects = list(content.smallProjects);
   const microProjects = list(content.microProjects);
   const programCredentials = list(content.programCredentials);
+  const issuedCredentials = programCredentials.filter((entry) => entry.entryType !== "program");
+  const programEntries = programCredentials.filter((entry) => entry.entryType === "program");
   const creativeWorks = [
     ...projects.map((project) => ({
       id: project.id,
@@ -173,8 +175,11 @@ function buildStructuredData(content) {
           { "@type": "Organization", name: meta.footerMiddle },
         ],
         knowsAbout: list(content.skills).map((skill) => skill.name),
-        hasCredential: programCredentials.map((credential) => ({
+        hasCredential: issuedCredentials.map((credential) => ({
           "@id": `${siteUrl("/")}#credential-${credential.id}`,
+        })),
+        memberOf: programEntries.map((program) => ({
+          "@id": `${siteUrl("/")}#program-${program.id}`,
         })),
         sameAs: [meta.contactGithubHref].filter(Boolean),
       },
@@ -249,7 +254,7 @@ function buildStructuredData(content) {
           ? { isBasedOn: list(project.artifactLinks).map((link) => link.href).filter(Boolean) }
           : {}),
       })),
-      ...programCredentials.map((credential) => ({
+      ...issuedCredentials.map((credential) => ({
         "@type": "EducationalOccupationalCredential",
         "@id": `${siteUrl("/")}#credential-${credential.id}`,
         name: credential.credential,
@@ -262,6 +267,22 @@ function buildStructuredData(content) {
         },
         ...(credential.date ? { dateCreated: credential.date } : {}),
         ...(credential.scanSrc ? { image: siteUrl(credential.scanSrc) } : {}),
+      })),
+      ...programEntries.map((program) => ({
+        "@type": "EducationalOrganization",
+        "@id": `${siteUrl("/")}#program-${program.id}`,
+        name: program.program,
+        description: program.summary,
+        ...(program.href ? { url: program.href } : {}),
+        ...(program.logoSrc ? { logo: siteUrl(program.logoSrc) } : {}),
+        ...(program.issuer
+          ? {
+              parentOrganization: {
+                "@type": "Organization",
+                name: program.issuer,
+              },
+            }
+          : {}),
       })),
     ],
   };
@@ -1141,6 +1162,8 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
 
 function ProgramCredentialCard({ credential, index, meta }) {
   const accent = accentStyles[credential.accent] ?? accentStyles.amber;
+  const isCredential = credential.entryType !== "program";
+  const heading = credential.credential || credential.program;
   const initials = credential.program
     .split(/\s+/)
     .filter(Boolean)
@@ -1164,7 +1187,10 @@ function ProgramCredentialCard({ credential, index, meta }) {
             target="_blank"
             rel="noreferrer"
             aria-label={`Open ${credential.program} website`}
-            className="grid h-12 w-16 shrink-0 place-items-center border border-[#d6cec0] bg-white p-1.5 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:h-14 sm:w-20"
+            className={cn(
+              "grid h-12 shrink-0 place-items-center border border-[#d6cec0] bg-white p-1.5 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:h-14",
+              isCredential ? "w-16 sm:w-20" : "w-24 sm:w-28",
+            )}
           >
             <img src={credential.logoSrc} alt={credential.logoAlt || `${credential.program} logo`} loading="lazy" className="h-full w-full object-contain" />
           </a>
@@ -1174,8 +1200,8 @@ function ProgramCredentialCard({ credential, index, meta }) {
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">{credential.program}</p>
-          <h3 className="mt-1 text-base font-semibold leading-5 text-slate-950 sm:text-lg sm:leading-6">{credential.credential}</h3>
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">{isCredential ? credential.program : "program"}</p>
+          <h3 className="mt-1 text-base font-semibold leading-5 text-slate-950 sm:text-lg sm:leading-6">{heading}</h3>
           <p className="mt-1 text-[11px] leading-4 text-slate-600 sm:text-xs">
             {credential.issuer}{credential.date ? ` · ${credential.date}` : ""}
           </p>
@@ -1185,12 +1211,14 @@ function ProgramCredentialCard({ credential, index, meta }) {
       <p className="mt-3 text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{credential.summary}</p>
 
       <div className="mt-3 flex flex-wrap items-center gap-2 sm:mt-4">
-        <CredentialPreviewPopover
-          credential={credential}
-          label={meta.credentialPreviewLabel || "View certificate"}
-          missingLabel={meta.credentialMissingScanLabel || "Certificate scan needed"}
-          align={index % 2 === 1 ? "right" : "left"}
-        />
+        {isCredential && (
+          <CredentialPreviewPopover
+            credential={credential}
+            label={meta.credentialPreviewLabel || "View certificate"}
+            missingLabel={meta.credentialMissingScanLabel || "Certificate scan needed"}
+            align={index % 2 === 1 ? "right" : "left"}
+          />
+        )}
         {credential.href && (
           <a
             href={credential.href}

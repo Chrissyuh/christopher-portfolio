@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-11T01:41:19.550Z",
+  "updatedAt": "2026-07-11T13:22:12.925Z",
   "meta": {
     "documentTitle": "Christopher Portfolio",
     "navName": "Christopher",
@@ -362,6 +362,7 @@
   "programCredentials": [
     {
       "id": "stanford-ai4all",
+      "entryType": "credential",
       "program": "Stanford AI4ALL",
       "credential": "Stanford AI4ALL Certificate of Completion",
       "issuer": "Stanford AI4ALL and Stanford Pre-Collegiate Studies",
@@ -378,6 +379,26 @@
       "accent": "amber",
       "relatedProjectId": "vividgrasp-ai-vision-robotics-arm",
       "scanAvailable": true
+    },
+    {
+      "id": "tetc",
+      "entryType": "program",
+      "program": "Teen Engineering + Tech Center",
+      "credential": "",
+      "issuer": "ExxonMobil Foundation",
+      "date": "",
+      "summary": "Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation.",
+      "logoSrc": "/portfolio-media/programs/tetc-logo.png",
+      "logoAlt": "ExxonMobil Foundation Teen Engineering and Tech Center logo",
+      "logoHref": "https://tetc.org/",
+      "scanSrc": null,
+      "scanAlt": "",
+      "scanCaption": "",
+      "href": "https://tetc.org/",
+      "hrefLabel": "Program site",
+      "accent": "blue",
+      "relatedProjectId": null,
+      "scanAvailable": false
     }
   ],
   "learningHighlights": [

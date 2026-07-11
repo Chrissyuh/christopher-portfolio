@@ -73,6 +73,7 @@ Media: 2 slots, 1 live, 1 placeholder
 ## Programs And Credentials
 
 ### Stanford AI4ALL Certificate of Completion
+Type: Credential
 Program: Stanford AI4ALL
 Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies
 Date: June 26, 2026
@@ -80,6 +81,13 @@ Related project ID: vividgrasp-ai-vision-robotics-arm
 Program link: https://ai4all.spcs.stanford.edu/
 Certificate scan: https://chrisaheskett.vercel.app/portfolio-media/credentials/stanford-ai4all-certificate.jpg
 Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project.
+
+### Teen Engineering + Tech Center
+Type: Program
+Program: Teen Engineering + Tech Center
+Organization: ExxonMobil Foundation
+Program link: https://tetc.org/
+Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation.
 
 ## Learning Highlights
 

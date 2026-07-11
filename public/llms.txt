@@ -23,6 +23,7 @@ Current work spans pinball, CAD-to-simulation robotics, planter electronics, and
 ## Programs And Credentials
 
 - Stanford AI4ALL Certificate of Completion: Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project. (Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies; Date: June 26, 2026; Certificate scan: available; [Program site](https://ai4all.spcs.stanford.edu/))
+- Teen Engineering + Tech Center: Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation. (Organization: ExxonMobil Foundation; [Program site](https://tetc.org/))
 
 ## C-Level Projects
 

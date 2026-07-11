@@ -46,9 +46,9 @@ Leave optional fields blank when an academic card should only show the label and
 
 ### ProgramCredentials
 
-`id,order,enabled,program,credential,issuer,date,summary,logo_src,logo_alt,logo_href,scan_src,scan_alt,scan_caption,href,href_label,accent,related_project_id`
+`id,order,enabled,entry_type,program,credential,issuer,date,summary,logo_src,logo_alt,logo_href,scan_src,scan_alt,scan_caption,href,href_label,accent,related_project_id`
 
-Use this for issued credentials tied to real programs. Allowed `accent` values are `blue`, `teal`, `amber`, and `clay`. `related_project_id` may be blank or must match a `MainProjects.id`. Leave `scan_src` blank until a real certificate scan is ready; the site will show an honest missing-scan state instead of a broken image. Certificate scans are public portfolio assets, so remove private IDs, addresses, or sensitive verification codes before publishing.
+Use `entry_type=program` for active programs that do not have an issued credential, and `entry_type=credential` for completed credentials. Program entries do not render a certificate button. Credential entries require `credential` and `issuer`; leave `scan_src` blank until a real scan is ready. Allowed `accent` values are `blue`, `teal`, `amber`, and `clay`. `related_project_id` may be blank or must match a `MainProjects.id`. Certificate scans are public portfolio assets, so remove private IDs, addresses, or sensitive verification codes before publishing.
 
 ### LearningHighlights
 

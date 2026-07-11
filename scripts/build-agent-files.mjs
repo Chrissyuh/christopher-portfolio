@@ -50,6 +50,15 @@ function mediaSummary(project) {
 }
 
 function credentialSummary(credential) {
+  if (credential.entryType === "program") {
+    const details = [
+      credential.issuer ? `Organization: ${credential.issuer}` : "",
+      credential.href ? markdownLink(credential.hrefLabel || "program", credential.href) : "",
+    ].filter(Boolean);
+
+    return `${credential.program}: ${credential.summary}${details.length ? ` (${details.join("; ")})` : ""}`;
+  }
+
   const details = [
     credential.issuer ? `Issuer: ${credential.issuer}` : "",
     credential.date ? `Date: ${credential.date}` : "",
@@ -249,16 +258,19 @@ function buildLlmsFullTxt(content) {
     list(content.programCredentials)
       .map((credential) =>
         [
-          `### ${credential.credential}`,
+          `### ${credential.credential || credential.program}`,
           "",
+          `Type: ${credential.entryType === "program" ? "Program" : "Credential"}`,
           `Program: ${credential.program}`,
-          `Issuer: ${credential.issuer}`,
+          credential.issuer ? `${credential.entryType === "program" ? "Organization" : "Issuer"}: ${credential.issuer}` : "",
           credential.date ? `Date: ${credential.date}` : "",
           credential.relatedProjectId ? `Related project ID: ${credential.relatedProjectId}` : "",
           credential.href ? `Program link: ${credential.href}` : "",
-          credential.scanAvailable && credential.scanSrc
-            ? `Certificate scan: ${absoluteUrl(credential.scanSrc)}`
-            : "Certificate scan: not yet published",
+          credential.entryType !== "program"
+            ? credential.scanAvailable && credential.scanSrc
+              ? `Certificate scan: ${absoluteUrl(credential.scanSrc)}`
+              : "Certificate scan: not yet published"
+            : "",
           "",
           credential.summary,
         ]

@@ -1,36 +1,36 @@
-# Christopher Portfolio
+# Christopher Heskett
 
-Current work spans pinball, CAD-to-simulation robotics, planter electronics, and Subpix.
+Selected work includes Garden Party Pinball, VividGrasp, Smart Planter, and Subpix.
 
 ## Primary Pages
 
 - [Portfolio homepage](https://chrisaheskett.vercel.app/)
-- [Full record](https://chrisaheskett.vercel.app/record)
+- [Experience](https://chrisaheskett.vercel.app/record)
 - [Full portfolio JSON](https://chrisaheskett.vercel.app/portfolio.json)
 - [Full Markdown summary](https://chrisaheskett.vercel.app/llms-full.txt)
 
 ## Main Projects
 
-- Garden Party Pinball: A full-size homebrew pinball machine in progress using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and playfield revisions. State: Active build with playable subsystems still being documented. Role: I am building the cabinet, playfield systems, wiring, MPF configuration, and test workflow. Media: 2 slots, 2 live, 0 placeholders.
-- VividGrasp AI-Vision Robotics Arm: Stanford AI4ALL project built by a team of 10 students. It connects SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion. State: Completed Stanford AI4ALL team project with CAD, simulation, and prototype artifacts. Role: Head CAD designer, prepared URDF files, worked with a teammate to create a physical prototype. ([source](https://github.com/LenekyRadish/VividGrasp)). Media: 4 slots, 4 live, 0 placeholders.
-- Smart Self-Watering Pot / Smart Planter PCB: A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work. Photos, schematics, and test notes still need to be added. State: Prototype exists, but photos and schematic documentation need a refresh. Role: I worked on the sensing/control idea, electronics packaging, PCB direction, and enclosure constraints. Media: 2 slots, 0 live, 2 placeholders.
-- Subpix: Open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON load/save data, exporting PNGs, and packaging for Windows. State: Working V1 app with live demo, source, editor screenshot, and Windows packaging work. Role: Built the editor, file format flow, export path, product site, and Windows packaging. ([Open app](https://subpix-editor.vercel.app/), [source](https://github.com/Chrissyuh/Subpix)). Media: 2 slots, 1 live, 1 placeholder.
+- Garden Party Pinball (In progress): A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield. Role: I am building the cabinet, playfield systems, wiring, MPF configuration, and test setup. Published media: 2.
+- VividGrasp AI-Vision Robotics Arm (Completed team project): A Stanford AI4ALL team project connecting SolidWorks CAD, STL export, URDF/PyBullet simulation, target input, and robotic-arm motion. Role: Head CAD designer; prepared URDF files and worked with a teammate on a physical prototype. ([source](https://github.com/LenekyRadish/VividGrasp)). Published media: 4.
+- Smart Self-Watering Pot / Smart Planter PCB (Prototype in progress): A plant-watering prototype involving moisture sensing, pump control, electronics packaging, enclosure planning, and PCB work. Role: I worked on the sensing and control concept, electronics packaging, PCB direction, and enclosure constraints. Published media: 0.
+- Subpix (Functional v1): An open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON data, exporting PNGs, and packaging for Windows. Role: Built the editor, file-format flow, export path, product site, and Windows packaging. ([Open app](https://subpix-editor.vercel.app/), [source](https://github.com/Chrissyuh/Subpix)). Published media: 1.
 
-## B-Level Projects
+## More Projects
 
-- Check-ins: Logs check-ins and shows gaps, streaks, and progress. ([project](https://check-ins-zeta.vercel.app/)). Media: 1 slot, 0 live, 1 placeholder.
+- Check-ins: Logs check-ins and shows gaps, streaks, and progress. ([project](https://check-ins-zeta.vercel.app/)). Published media: 0.
 
 ## Programs And Credentials
 
 - Teen Engineering + Tech Center: Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation. (Organization: ExxonMobil Foundation; [Program site](https://tetc.org/))
 - Stanford AI4ALL Certificate of Completion: Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project. (Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies; Date: June 26, 2026; Certificate scan: available; [Program site](https://ai4all.spcs.stanford.edu/))
 
-## C-Level Projects
+## Small Builds
 
-- MIDI Practice Tool: Small Python tool for soundfonts, pedals, controls, and keyboard practice. Media: 1 slot, 0 live, 1 placeholder.
-- Desmos 3D Solar System: 3D orbit scene built in Desmos to practice surfaces and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Media: 1 slot, 0 live, 1 placeholder.
-- TinyGPT Experiments: Small next-token model experiments for learning training vs. instruction behavior. Media: 1 slot, 0 live, 1 placeholder.
-- VEX V5 Drivetrain Prototype: Quick drivetrain prototype for gearing, shaft spacing, and packaging. Media: 1 slot, 0 live, 1 placeholder.
+- MIDI Practice Tool: Small Python tool for soundfonts, pedals, controls, and keyboard practice. Published media: 0.
+- Desmos 3D Solar System: 3D orbit scene built in Desmos to practice surfaces and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Published media: 0.
+- TinyGPT Experiments: Small next-token model experiments for learning training vs. instruction behavior. Published media: 0.
+- VEX V5 Drivetrain Prototype: Quick drivetrain prototype for gearing, shaft spacing, and packaging. Published media: 0.
 
 ## Contact
 

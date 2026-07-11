@@ -1,5 +1,0 @@
-"id","order","enabled","title","icon","text"
-"mechanical-design","1","true","CAD practice","wrench","I practice CAD with assemblies, clearances, print orientation, and mounting."
-"hardware-electronics","2","true","Hardware + electronics","cpu","I work on wiring, sensors, actuators, power routing, and controller behavior."
-"software-for-hardware","3","true","Software for hardware","route","I write MPF configs, hardware tests, embedded control code, web tools, and debugging scripts."
-"ai-assisted-engineering","4","true","AI-assisted debugging","layers","I use AI tools for debugging, planning, and code review, then check the results against real tests."

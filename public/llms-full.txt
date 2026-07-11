@@ -1,74 +1,58 @@
-# Christopher Portfolio
+# Christopher Heskett
 
 Canonical URL: https://chrisaheskett.vercel.app/
-Full record: https://chrisaheskett.vercel.app/record
+Experience: https://chrisaheskett.vercel.app/record
 Structured JSON: https://chrisaheskett.vercel.app/portfolio.json
 
 ## Summary
 
-Current work spans pinball, CAD-to-simulation robotics, planter electronics, and Subpix.
-
-## Current Stack
-
-- 01: Garden Party pinball
-- 02: VividGrasp robotics arm
-- 03: Smart planter PCB
-- 04: Subpix desktop app
+Selected work includes Garden Party Pinball, VividGrasp, Smart Planter, and Subpix.
 
 ## Main Projects
 
-### A01 Garden Party Pinball
-Status: active build
-Context: Solo active build
-State: Active build with playable subsystems still being documented.
-Label: pinball machine build
-My role: I am building the cabinet, playfield systems, wiring, MPF configuration, and test workflow.
-A full-size homebrew pinball machine in progress using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and playfield revisions.
-Best evidence: FAST boards, MPF configs, coils / switches / lamps, playfield revisions. Still missing: Wiring maps, driver tests, rule notes, and test videos.
-Media: 2 slots, 2 live, 0 placeholders
+### Garden Party Pinball
+Status: In progress
+Context: Solo
+Label: pinball machine
+My role: I am building the cabinet, playfield systems, wiring, MPF configuration, and test setup.
+A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield.
+Published media: 2
 
-### A02 VividGrasp AI-Vision Robotics Arm
-Status: Stanford AI4ALL team project
-Context: Stanford AI4ALL team project, team of 10
-State: Completed Stanford AI4ALL team project with CAD, simulation, and prototype artifacts.
-Label: team robotics simulation
+### VividGrasp AI-Vision Robotics Arm
+Status: Completed team project
+Context: Team of 10, Stanford AI4ALL
+Label: robotics simulation
 Source: https://github.com/LenekyRadish/VividGrasp
 Best link label: Open source
-My role: Head CAD designer, prepared URDF files, worked with a teammate to create a physical prototype.
+My role: Head CAD designer; prepared URDF files and worked with a teammate on a physical prototype.
 Related program/logo link: https://ai4all.spcs.stanford.edu/
-Stanford AI4ALL project built by a team of 10 students. It connects SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.
-Best evidence: SolidWorks CAD screenshots, URDF / PyBullet demo images, printed gear prototype, GitHub source, Stanford AI4ALL context. Still missing: Personal notes on CAD export, URDF setup, and the vision/control split.
-Media: 4 slots, 4 live, 0 placeholders
+A Stanford AI4ALL team project connecting SolidWorks CAD, STL export, URDF/PyBullet simulation, target input, and robotic-arm motion.
+Published media: 4
 
-### A03 Smart Self-Watering Pot / Smart Planter PCB
-Status: prototype needs photos
-Context: Solo prototype work
-State: Prototype exists, but photos and schematic documentation need a refresh.
+### Smart Self-Watering Pot / Smart Planter PCB
+Status: Prototype in progress
+Context: Solo
 Label: plant-watering prototype
-My role: I worked on the sensing/control idea, electronics packaging, PCB direction, and enclosure constraints.
-A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work. Photos, schematics, and test notes still need to be added.
-Best evidence: moisture sensing, pump driver, KiCad / enclosure planning, control loop outline. Still missing: Updated prototype photos, schematic, board outline, enclosure constraints, and watering test video.
-Media: 2 slots, 0 live, 2 placeholders
+My role: I worked on the sensing and control concept, electronics packaging, PCB direction, and enclosure constraints.
+A plant-watering prototype involving moisture sensing, pump control, electronics packaging, enclosure planning, and PCB work.
+Published media: 0
 
-### A04 Subpix
-Status: V1 software project
-Context: Solo software project
-State: Working V1 app with live demo, source, editor screenshot, and Windows packaging work.
-Label: functional desktop app
+### Subpix
+Status: Functional v1
+Context: Solo
+Label: desktop app
 Project: https://subpix-editor.vercel.app/
 Source: https://github.com/Chrissyuh/Subpix
 Best link label: Open app
-My role: Built the editor, file format flow, export path, product site, and Windows packaging.
-Open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON load/save data, exporting PNGs, and packaging for Windows.
-Best evidence: live editor, GitHub source, editor screenshot, JSON validation, PNG export, Windows packaging. Still missing: Editing demo video, installer notes, and example .subpix files.
-Media: 2 slots, 1 live, 1 placeholder
+My role: Built the editor, file-format flow, export path, product site, and Windows packaging.
+An open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON data, exporting PNGs, and packaging for Windows.
+Published media: 1
 
 ## Academics
 
-- Weighted GPA: 5.0000 (on a 5.0 scale)
-- Class rank: #1 of 111 (sole #1 standing)
-- Course load: AP + advanced coursework (AP Human Geography, AP Spanish Language, and advanced classes)
-- Program: Early college pathway (high school plus college-level coursework)
+- Weighted GPA: 5.0 / 5.0
+- Class rank: 1 of 111
+- Coursework: AP + advanced (AP Human Geography, AP Spanish Language, and advanced classes)
 
 ## Programs And Credentials
 
@@ -95,79 +79,43 @@ Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp 
 
 ## Smaller Projects
 
-- Check-ins - live web app: Logs check-ins and shows gaps, streaks, and progress. ([project](https://check-ins-zeta.vercel.app/)). Media: 1 slot, 0 live, 1 placeholder.
+- Check-ins - live web app: Logs check-ins and shows gaps, streaks, and progress. ([project](https://check-ins-zeta.vercel.app/)). Published media: 0.
 
-## C-Level Projects
+## Small Builds
 
-- MIDI Practice Tool - python / music: Small Python tool for soundfonts, pedals, controls, and keyboard practice. Media: 1 slot, 0 live, 1 placeholder.
-- Desmos 3D Solar System - math visualization: 3D orbit scene built in Desmos to practice surfaces and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Media: 1 slot, 0 live, 1 placeholder.
-- TinyGPT Experiments - machine learning: Small next-token model experiments for learning training vs. instruction behavior. Media: 1 slot, 0 live, 1 placeholder.
-- VEX V5 Drivetrain Prototype - robotics prototype: Quick drivetrain prototype for gearing, shaft spacing, and packaging. Media: 1 slot, 0 live, 1 placeholder.
+- MIDI Practice Tool - python / music: Small Python tool for soundfonts, pedals, controls, and keyboard practice. Published media: 0.
+- Desmos 3D Solar System - math visualization: 3D orbit scene built in Desmos to practice surfaces and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Published media: 0.
+- TinyGPT Experiments - machine learning: Small next-token model experiments for learning training vs. instruction behavior. Published media: 0.
+- VEX V5 Drivetrain Prototype - robotics prototype: Quick drivetrain prototype for gearing, shaft spacing, and packaging. Published media: 0.
 
 ## Skills
 
-- CAD practice: I practice CAD with assemblies, clearances, print orientation, and mounting.
-- Hardware + electronics: I work on wiring, sensors, actuators, power routing, and controller behavior.
-- Software for hardware: I write MPF configs, hardware tests, embedded control code, web tools, and debugging scripts.
-- AI-assisted debugging: I use AI tools for debugging, planning, and code review, then check the results against real tests.
-
-## Working Vocabulary
-
-SolidWorks, FAST Pinball, Mission Pinball Framework, Arduino / ESP32, KiCad basics, 3D printing, laser cutting, CAD assemblies, sensor wiring, pump / motor control, presentations, rapid iteration, ChatGPT-assisted debugging, Electron, React, TypeScript, Vite, desktop packaging
+- Mechanical: SolidWorks, 3D printing, Laser cutting
+- Electronics: FAST Pinball, Arduino / ESP32, KiCad, Sensor wiring, Pump / motor control
+- Software: Mission Pinball Framework, Python, PyBullet, Electron, React, TypeScript, Vite
 
 ## Full Record
 
-### Main builds
+### Programs and credentials
 
-- Garden Party Pinball - full-size homebrew pinball machine using FAST hardware, MPF, coils, switches, lamps, cabinet wiring, and playfield revisions.
-- VividGrasp AI-Vision Robotics Arm - Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.
-- Smart Self-Watering Pot / Smart Planter PCB - moisture sensing, pump control, enclosure planning, and a custom PCB direction.
-- Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging.
+- Teen Engineering + Tech Center: Four-year after-school STEM program supported by the ExxonMobil Foundation. [Program site](https://tetc.org/)
+- Stanford AI4ALL (June 26, 2026): Completed the Robotics program while working on the VividGrasp team project. [Program site](https://ai4all.spcs.stanford.edu/)
 
-### Software, visualization, and AI
+### Competitions and leadership
 
-- Check-ins - live Vercel app for logging consistency and tracking target/max gaps.
-- Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design.
-- TinyGPT Experiments - small next-token project for learning training vs. instruction behavior.
-- MIDI Practice Tool - Python music-practice utility for soundfonts, pedals, controls, and keyboard-style interaction.
+- Debate: Reached JV finals.
+- 3D Printing Presentation: Presented slides, printed examples, and robotics applications through TETC.
 
-### Fabrication and maker skills
+### Scouts and service
 
-- 3D printing - Bambu Studio, material choices, iteration prints, print orientation, and fit testing.
-- Laser cutting - design and fabrication planning for flat-cut parts and enclosures.
-- VEX V5 Drivetrain Prototype - robotics drivetrain build using gearing and packaging constraints around structure interference.
-- SolidWorks modeling - part design, assemblies, complex forms, and fabrication-oriented CAD decisions.
+- Scouts BSA: First Class Scout.
 
-### Academics
+### Languages and ongoing learning
 
-- Spring Early College Academy - 9th grade dual-credit student at SECA in Spring ISD.
-- Current standing - 5.0000 weighted GPA and sole #1 class rank out of 111.
-- School context - SECA is the top-ranked Spring ISD high school, listed at #9 in the Houston metro, #44 in Texas, and #326 nationally for 2025-2026.
-- Advanced course load - all advanced classes, including AP Human Geography and AP Spanish Language.
-- Dual-credit direction - college-level coursework during high school.
-
-### Competitions, speaking, and leadership
-
-- UIL Number Sense - math competition experience.
-- Informative Speaking - public-speaking competition and presentation practice.
-- Debate - JV finals experience.
-- Student Council - school leadership.
-- TETC presentations - slides and demos for engineering projects.
-- 3D Printing Presentation - minor presentation record with slides, printed examples, and robotics examples.
-
-### Scouts, service, and long-term discipline
-
-- Scouts BSA - First Class Scout working toward Eagle.
-- Eagle planning - paperwork, service planning, and merit-badge tracking.
-- Troop leadership interests - Librarian/Bugler planning, checkout systems, and bugle-call practice.
-- Fitness requirement tracking - exercise logs and reflections for rank and merit-badge progress.
-
-### Languages and long-term learning
-
-- Duolingo streak - public profile currently reports a 1,744-day daily language-learning streak.
-- Spanish - AP Spanish Language coursework and continued practice.
-- French - beginner-to-intermediate practice in pronunciation, listening, and sentence construction.
-- Latin background - foundational Latin study.
+- Duolingo language practice: Maintains a public daily language-learning streak. [Profile](https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr)
+- Spanish: AP Spanish Language coursework and continued practice.
+- French: Practice in pronunciation, listening, and sentence construction.
+- Latin: Foundational Latin study.
 
 ## Contact
 

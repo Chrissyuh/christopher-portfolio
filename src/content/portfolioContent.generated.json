@@ -1,30 +1,25 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-11T14:00:00.000Z",
+  "updatedAt": "2026-07-11T16:43:09.397Z",
   "meta": {
-    "documentTitle": "Christopher Portfolio",
-    "navName": "Christopher",
+    "documentTitle": "Christopher Heskett | Engineering Portfolio",
+    "recordDocumentTitle": "Experience | Christopher Heskett",
+    "navName": "Christopher Heskett",
     "navSubtitle": "engineering portfolio",
-    "heroEyebrow": "current work",
-    "heroTitle": "I build hardware projects, robotics simulations, and software tools.",
-    "heroIntro": "Current work spans pinball, CAD-to-simulation robotics, planter electronics, and Subpix.",
-    "currentStackTitle": "start here",
-    "projectIndexCode": "featured work",
+    "heroEyebrow": "student engineer",
+    "heroTitle": "Christopher Heskett",
+    "heroLead": "I build hardware projects, robotics simulations, and software tools.",
+    "heroIntro": "Selected work includes Garden Party Pinball, VividGrasp, Smart Planter, and Subpix.",
     "projectIndexTitle": "Featured projects",
-    "projectIndexText": "Four projects with the clearest mix of build work, links, media, and honest gaps.",
-    "academicCode": "academics",
     "academicTitle": "Academic profile",
-    "academicText": "Current standing, course load, and school context.",
-    "credentialsCode": "programs & credentials",
     "credentialsTitle": "Programs and credentials",
-    "credentialsText": "Programs tied to completed work and issued credentials.",
     "credentialPreviewLabel": "View certificate",
     "credentialMissingScanLabel": "Certificate scan needed",
-    "academicSchoolEyebrow": "school context",
+    "academicSchoolEyebrow": "early-college student",
     "academicSchoolName": "Spring Early College Academy",
     "academicSchoolHref": "https://seca.springisd.org/",
-    "academicSchoolLogoSrc": "/portfolio-media/academics/seca-logo.png",
+    "academicSchoolLogoSrc": "/portfolio-media/academics/seca-logo.webp",
     "academicSchoolLogoAlt": "Spring Early College Academy crest",
     "academicSchoolDistrictRank": "Top-ranked Spring ISD high school.",
     "academicSchoolDistrictSourceHref": "https://www.schooldigger.com/go/TX/district/41220/search.aspx?level=3",
@@ -32,24 +27,15 @@
     "academicSchoolRankSummary": "#9 Houston metro, #44 Texas, #326 national.",
     "academicSchoolRankSourceHref": "https://seca.springisd.org/o/seca/article/2369574",
     "academicSchoolRankSourceLabel": "Ranking details",
-    "smallerProjectsCode": "smaller builds",
-    "smallerProjectsTitle": "Smaller projects",
-    "smallerProjectsText": "Real projects that are lighter than the featured builds. More will be added here as the evidence improves.",
-    "microProjectsCode": "small artifacts",
+    "smallerProjectsTitle": "More projects",
     "microProjectsTitle": "Small builds",
-    "microProjectsText": "Small projects I kept because they have a real artifact, link, or useful lesson.",
     "microProjectsOpenLabel": "Open",
     "microProjectsSourceLabel": "Source",
-    "skillSystemCode": "tools",
-    "skillSystemTitle": "Tools behind the projects",
-    "skillSystemText": "These skills are tied to the projects above.",
-    "workingVocabularyLabel": "working vocabulary",
-    "recordEyebrow": "full record",
-    "recordTitle": "Projects, school, competitions, Scouts, languages, and learning",
-    "recordIntro": "A broader record beyond the main engineering projects.",
-    "contactEyebrow": "contact",
-    "contactTitle": "Contact and links",
-    "contactText": "Spring Early College Academy student focused on CAD, fabrication, electronics, robotics, embedded software, and technical documentation.",
+    "skillSystemTitle": "Tools",
+    "learningTitle": "Ongoing learning",
+    "recordTitle": "Experience and activities",
+    "contactTitle": "Contact Christopher",
+    "contactText": "Email me or view my work on GitHub.",
     "contactEmailHref": "mailto:Chrisaheskett@gmail.com",
     "contactEmailLabel": "Email",
     "contactGithubHref": "https://github.com/Chrissyuh",
@@ -58,91 +44,31 @@
     "contactProjectLabel": "Open Subpix",
     "resumeHref": "",
     "resumeLabel": "Resume",
-    "footerLeft": "Spring Early College Academy",
-    "footerMiddle": "Exxon Teen Engineering + Tech Center",
-    "footerName": "Christopher",
-    "projectTeamContextLabel": "context",
-    "projectRoleLabel": "role",
-    "projectStateLabel": "state",
-    "projectProofAvailableLabel": "best evidence",
-    "projectProofNeededLabel": "still missing",
-    "projectNextLabel": "still missing",
-    "projectArtifactLinksLabel": "artifact links",
-    "projectWhatChangedLabel": "what changed",
-    "projectWhatLearnedLabel": "what I learned",
+    "footerName": "Christopher Heskett",
+    "projectRoleLabel": "My role",
+    "projectArtifactLinksLabel": "Links",
     "projectOpenLabel": "Open project",
     "projectSourceLabel": "Source",
     "mediaPlaceholderLabel": "needed",
     "mediaSlotLabel": "media slot",
     "openProjectsLabel": "View projects",
-    "viewRecordLabel": "View full record",
-    "backPortfolioLabel": "Back to portfolio"
+    "viewRecordLabel": "Experience",
+    "backPortfolioLabel": "Back to portfolio",
+    "academicSchoolContext": "High-school and college-level coursework through Spring ISD."
   },
-  "heroTags": [
-    {
-      "id": "mechatronics",
-      "label": "mechatronics"
-    },
-    {
-      "id": "embedded-systems",
-      "label": "embedded systems"
-    },
-    {
-      "id": "cad-fabrication",
-      "label": "CAD / fabrication"
-    },
-    {
-      "id": "student-engineer",
-      "label": "student engineer"
-    }
-  ],
-  "currentStack": [
-    {
-      "id": "garden-party",
-      "number": "01",
-      "label": "Garden Party pinball"
-    },
-    {
-      "id": "vividgrasp",
-      "number": "02",
-      "label": "VividGrasp robotics arm"
-    },
-    {
-      "id": "smart-pot",
-      "number": "03",
-      "label": "Smart planter PCB"
-    },
-    {
-      "id": "subpix",
-      "number": "04",
-      "label": "Subpix desktop app"
-    }
-  ],
   "projects": [
     {
       "id": "garden-party-pinball",
-      "number": "A01",
       "title": "Garden Party Pinball",
       "href": null,
       "sourceHref": null,
-      "label": "pinball machine build",
-      "status": "active build",
+      "label": "pinball machine",
+      "status": "In progress",
       "accent": "blue",
-      "summary": "A full-size homebrew pinball machine in progress using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and playfield revisions.",
-      "teamContext": "Solo active build",
-      "role": "I am building the cabinet, playfield systems, wiring, MPF configuration, and test workflow.",
-      "myRole": "I am building the cabinet, playfield systems, wiring, MPF configuration, and test workflow.",
-      "state": "Active build with playable subsystems still being documented.",
-      "proofAvailable": [
-        "FAST boards",
-        "MPF configs",
-        "coils / switches / lamps",
-        "playfield revisions"
-      ],
-      "proofNeeded": "Wiring maps, driver tests, rule notes, and test videos.",
+      "summary": "A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield.",
+      "teamContext": "Solo",
+      "role": "I am building the cabinet, playfield systems, wiring, MPF configuration, and test setup.",
       "bestLinkLabel": "",
-      "whatChanged": "",
-      "whatLearned": "",
       "logoSrc": null,
       "logoAlt": "",
       "logoHref": null,
@@ -162,34 +88,20 @@
           "alt": "Garden Party control board and power supplies mounted on plywood",
           "caption": "Control board"
         }
-      ],
-      "next": "Wiring maps, driver tests, rule notes, and test videos."
+      ]
     },
     {
       "id": "vividgrasp-ai-vision-robotics-arm",
-      "number": "A02",
       "title": "VividGrasp AI-Vision Robotics Arm",
       "href": null,
       "sourceHref": "https://github.com/LenekyRadish/VividGrasp",
-      "label": "team robotics simulation",
-      "status": "Stanford AI4ALL team project",
+      "label": "robotics simulation",
+      "status": "Completed team project",
       "accent": "amber",
-      "summary": "Stanford AI4ALL project built by a team of 10 students. It connects SolidWorks CAD, STL mesh export, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion.",
-      "teamContext": "Stanford AI4ALL team project, team of 10",
-      "role": "Head CAD designer, prepared URDF files, worked with a teammate to create a physical prototype.",
-      "myRole": "Head CAD designer, prepared URDF files, worked with a teammate to create a physical prototype.",
-      "state": "Completed Stanford AI4ALL team project with CAD, simulation, and prototype artifacts.",
-      "proofAvailable": [
-        "SolidWorks CAD screenshots",
-        "URDF / PyBullet demo images",
-        "printed gear prototype",
-        "GitHub source",
-        "Stanford AI4ALL context"
-      ],
-      "proofNeeded": "Personal notes on CAD export, URDF setup, and the vision/control split.",
+      "summary": "A Stanford AI4ALL team project connecting SolidWorks CAD, STL export, URDF/PyBullet simulation, target input, and robotic-arm motion.",
+      "teamContext": "Team of 10, Stanford AI4ALL",
+      "role": "Head CAD designer; prepared URDF files and worked with a teammate on a physical prototype.",
       "bestLinkLabel": "Open source",
-      "whatChanged": "",
-      "whatLearned": "",
       "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
       "logoAlt": "Stanford AI4ALL logo",
       "logoHref": "https://ai4all.spcs.stanford.edu/",
@@ -198,58 +110,45 @@
         {
           "id": "media-1",
           "type": "photo",
-          "src": "/portfolio-media/vividgrasp/solidworks-arm-assembly.png",
+          "src": "/portfolio-media/vividgrasp/solidworks-arm-assembly.webp",
           "alt": "SolidWorks robotic arm assembly for VividGrasp",
           "caption": "SolidWorks arm assembly"
         },
         {
           "id": "media-2",
           "type": "photo",
-          "src": "/portfolio-media/vividgrasp/pybullet-joint-controls.png",
+          "src": "/portfolio-media/vividgrasp/pybullet-joint-controls.webp",
           "alt": "PyBullet joint control demo for the VividGrasp arm",
           "caption": "PyBullet joint controls"
         },
         {
           "id": "media-3",
           "type": "photo",
-          "src": "/portfolio-media/vividgrasp/pybullet-target-demo.png",
+          "src": "/portfolio-media/vividgrasp/pybullet-target-demo.webp",
           "alt": "PyBullet target scene for the VividGrasp robotic arm",
           "caption": "PyBullet target demo"
         },
         {
           "id": "media-4",
           "type": "photo",
-          "src": "/portfolio-media/vividgrasp/printed-gear-prototype.png",
+          "src": "/portfolio-media/vividgrasp/printed-gear-prototype.webp",
           "alt": "Printed gear prototype from the VividGrasp arm work",
           "caption": "Printed gear prototype"
         }
-      ],
-      "next": "Personal notes on CAD export, URDF setup, and the vision/control split."
+      ]
     },
     {
       "id": "smart-self-watering-pot",
-      "number": "A03",
       "title": "Smart Self-Watering Pot / Smart Planter PCB",
       "href": null,
       "sourceHref": null,
       "label": "plant-watering prototype",
-      "status": "prototype needs photos",
+      "status": "Prototype in progress",
       "accent": "teal",
-      "summary": "A plant-watering prototype with moisture sensing, pump control, electronics packaging, and enclosure/PCB work. Photos, schematics, and test notes still need to be added.",
-      "teamContext": "Solo prototype work",
-      "role": "I worked on the sensing/control idea, electronics packaging, PCB direction, and enclosure constraints.",
-      "myRole": "I worked on the sensing/control idea, electronics packaging, PCB direction, and enclosure constraints.",
-      "state": "Prototype exists, but photos and schematic documentation need a refresh.",
-      "proofAvailable": [
-        "moisture sensing",
-        "pump driver",
-        "KiCad / enclosure planning",
-        "control loop outline"
-      ],
-      "proofNeeded": "Updated prototype photos, schematic, board outline, enclosure constraints, and watering test video.",
+      "summary": "A plant-watering prototype involving moisture sensing, pump control, electronics packaging, enclosure planning, and PCB work.",
+      "teamContext": "Solo",
+      "role": "I worked on the sensing and control concept, electronics packaging, PCB direction, and enclosure constraints.",
       "bestLinkLabel": "",
-      "whatChanged": "",
-      "whatLearned": "",
       "logoSrc": null,
       "logoAlt": "",
       "logoHref": null,
@@ -269,35 +168,20 @@
           "alt": "Smart self-watering pot watering test video needed",
           "caption": "Add watering test video"
         }
-      ],
-      "next": "Updated prototype photos, schematic, board outline, enclosure constraints, and watering test video."
+      ]
     },
     {
       "id": "subpix",
-      "number": "A04",
       "title": "Subpix",
       "href": "https://subpix-editor.vercel.app/",
       "sourceHref": "https://github.com/Chrissyuh/Subpix",
-      "label": "functional desktop app",
-      "status": "V1 software project",
+      "label": "desktop app",
+      "status": "Functional v1",
       "accent": "clay",
-      "summary": "Open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON load/save data, exporting PNGs, and packaging for Windows.",
-      "teamContext": "Solo software project",
-      "role": "Built the editor, file format flow, export path, product site, and Windows packaging.",
-      "myRole": "Built the editor, file format flow, export path, product site, and Windows packaging.",
-      "state": "Working V1 app with live demo, source, editor screenshot, and Windows packaging work.",
-      "proofAvailable": [
-        "live editor",
-        "GitHub source",
-        "editor screenshot",
-        "JSON validation",
-        "PNG export",
-        "Windows packaging"
-      ],
-      "proofNeeded": "Editing demo video, installer notes, and example .subpix files.",
+      "summary": "An open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON data, exporting PNGs, and packaging for Windows.",
+      "teamContext": "Solo",
+      "role": "Built the editor, file-format flow, export path, product site, and Windows packaging.",
       "bestLinkLabel": "Open app",
-      "whatChanged": "",
-      "whatLearned": "",
       "logoSrc": null,
       "logoAlt": "",
       "logoHref": null,
@@ -317,46 +201,51 @@
           "alt": "Subpix editing demo video needed",
           "caption": "Add editing demo"
         }
-      ],
-      "next": "Editing demo video, installer notes, and example .subpix files."
+      ]
     }
   ],
   "academics": [
     {
       "id": "gpa",
       "label": "Weighted GPA",
-      "value": "5.0000",
-      "note": "on a 5.0 scale",
+      "value": "5.0 / 5.0",
+      "note": "",
       "highlight": "gold",
       "assetSrc": null,
-      "assetAlt": ""
+      "assetAlt": "",
+      "href": null,
+      "hrefLabel": "",
+      "icon": "",
+      "dynamicSource": "",
+      "username": ""
     },
     {
       "id": "rank",
       "label": "Class rank",
-      "value": "#1 of 111",
-      "note": "sole #1 standing",
+      "value": "1 of 111",
+      "note": "",
       "highlight": "gold",
       "assetSrc": null,
-      "assetAlt": ""
+      "assetAlt": "",
+      "href": null,
+      "hrefLabel": "",
+      "icon": "",
+      "dynamicSource": "",
+      "username": ""
     },
     {
       "id": "course-load",
-      "label": "Course load",
-      "value": "AP + advanced coursework",
+      "label": "Coursework",
+      "value": "AP + advanced",
       "note": "AP Human Geography, AP Spanish Language, and advanced classes",
       "highlight": "",
       "assetSrc": null,
-      "assetAlt": ""
-    },
-    {
-      "id": "early-college",
-      "label": "Program",
-      "value": "Early college pathway",
-      "note": "high school plus college-level coursework",
-      "highlight": "",
-      "assetSrc": null,
-      "assetAlt": ""
+      "assetAlt": "",
+      "href": null,
+      "hrefLabel": "",
+      "icon": "",
+      "dynamicSource": "",
+      "username": ""
     }
   ],
   "programCredentials": [
@@ -509,277 +398,229 @@
       ]
     }
   ],
-  "skillNarratives": [
-    {
-      "id": "mechanical-design",
-      "title": "CAD practice",
-      "icon": "wrench",
-      "text": "I practice CAD with assemblies, clearances, print orientation, and mounting."
-    },
-    {
-      "id": "hardware-electronics",
-      "title": "Hardware + electronics",
-      "icon": "cpu",
-      "text": "I work on wiring, sensors, actuators, power routing, and controller behavior."
-    },
-    {
-      "id": "software-for-hardware",
-      "title": "Software for hardware",
-      "icon": "route",
-      "text": "I write MPF configs, hardware tests, embedded control code, web tools, and debugging scripts."
-    },
-    {
-      "id": "ai-assisted-engineering",
-      "title": "AI-assisted debugging",
-      "icon": "layers",
-      "text": "I use AI tools for debugging, planning, and code review, then check the results against real tests."
-    }
-  ],
   "skills": [
     {
       "id": "solidworks",
-      "name": "SolidWorks"
-    },
-    {
-      "id": "fast-pinball",
-      "name": "FAST Pinball"
-    },
-    {
-      "id": "mission-pinball-framework",
-      "name": "Mission Pinball Framework"
-    },
-    {
-      "id": "arduino-esp32",
-      "name": "Arduino / ESP32"
-    },
-    {
-      "id": "kicad-basics",
-      "name": "KiCad basics"
+      "category": "Mechanical",
+      "name": "SolidWorks",
+      "projectIds": [
+        "garden-party-pinball",
+        "vividgrasp-ai-vision-robotics-arm"
+      ]
     },
     {
       "id": "3d-printing",
-      "name": "3D printing"
+      "category": "Mechanical",
+      "name": "3D printing",
+      "projectIds": [
+        "garden-party-pinball",
+        "vividgrasp-ai-vision-robotics-arm"
+      ]
     },
     {
       "id": "laser-cutting",
-      "name": "laser cutting"
+      "category": "Mechanical",
+      "name": "Laser cutting",
+      "projectIds": [
+        "garden-party-pinball"
+      ]
     },
     {
-      "id": "cad-assemblies",
-      "name": "CAD assemblies"
+      "id": "fast-pinball",
+      "category": "Electronics",
+      "name": "FAST Pinball",
+      "projectIds": [
+        "garden-party-pinball"
+      ]
+    },
+    {
+      "id": "arduino-esp32",
+      "category": "Electronics",
+      "name": "Arduino / ESP32",
+      "projectIds": [
+        "smart-self-watering-pot"
+      ]
+    },
+    {
+      "id": "kicad",
+      "category": "Electronics",
+      "name": "KiCad",
+      "projectIds": [
+        "smart-self-watering-pot"
+      ]
     },
     {
       "id": "sensor-wiring",
-      "name": "sensor wiring"
+      "category": "Electronics",
+      "name": "Sensor wiring",
+      "projectIds": [
+        "garden-party-pinball",
+        "smart-self-watering-pot"
+      ]
     },
     {
       "id": "pump-motor-control",
-      "name": "pump / motor control"
+      "category": "Electronics",
+      "name": "Pump / motor control",
+      "projectIds": [
+        "smart-self-watering-pot"
+      ]
     },
     {
-      "id": "presentations",
-      "name": "presentations"
+      "id": "mission-pinball-framework",
+      "category": "Software",
+      "name": "Mission Pinball Framework",
+      "projectIds": [
+        "garden-party-pinball"
+      ]
     },
     {
-      "id": "rapid-iteration",
-      "name": "rapid iteration"
+      "id": "python",
+      "category": "Software",
+      "name": "Python",
+      "projectIds": [
+        "vividgrasp-ai-vision-robotics-arm"
+      ]
     },
     {
-      "id": "chatgpt-assisted-debugging",
-      "name": "ChatGPT-assisted debugging"
+      "id": "pybullet",
+      "category": "Software",
+      "name": "PyBullet",
+      "projectIds": [
+        "vividgrasp-ai-vision-robotics-arm"
+      ]
     },
     {
       "id": "electron",
-      "name": "Electron"
+      "category": "Software",
+      "name": "Electron",
+      "projectIds": [
+        "subpix"
+      ]
     },
     {
       "id": "react",
-      "name": "React"
+      "category": "Software",
+      "name": "React",
+      "projectIds": [
+        "subpix"
+      ]
     },
     {
       "id": "typescript",
-      "name": "TypeScript"
+      "category": "Software",
+      "name": "TypeScript",
+      "projectIds": [
+        "subpix"
+      ]
     },
     {
       "id": "vite",
-      "name": "Vite"
-    },
-    {
-      "id": "desktop-packaging",
-      "name": "desktop packaging"
+      "category": "Software",
+      "name": "Vite",
+      "projectIds": [
+        "subpix"
+      ]
     }
   ],
   "fullRecord": [
     {
-      "id": "main-builds",
-      "category": "Main builds",
-      "icon": "wrench",
-      "items": [
-        {
-          "id": "garden-party-pinball",
-          "text": "Garden Party Pinball - full-size homebrew pinball machine using FAST hardware, MPF, coils, switches, lamps, cabinet wiring, and playfield revisions."
-        },
-        {
-          "id": "vividgrasp-ai-vision-robotics-arm",
-          "text": "VividGrasp AI-Vision Robotics Arm - Stanford AI4ALL project built by a team of 10, connecting SolidWorks CAD, URDF/PyBullet simulation, target-based vision/control input, and robotic arm joint motion."
-        },
-        {
-          "id": "smart-self-watering-pot",
-          "text": "Smart Self-Watering Pot / Smart Planter PCB - moisture sensing, pump control, enclosure planning, and a custom PCB direction."
-        },
-        {
-          "id": "subpix",
-          "text": "Subpix - open-source Electron/Vite/React/TypeScript desktop editor for .subpix files, RGB/BGR subpixel canvas editing, JSON validation, PNG export, and Windows installer packaging."
-        }
-      ]
-    },
-    {
-      "id": "software-visualization-ai",
-      "category": "Software, visualization, and AI",
-      "icon": "cpu",
-      "items": [
-        {
-          "id": "check-ins",
-          "text": "Check-ins - live Vercel app for logging consistency and tracking target/max gaps."
-        },
-        {
-          "id": "desmos-3d-solar-system",
-          "text": "Desmos 3D Solar System - 3D math visualization using surfaces, orbits, color mapping, and performance-aware scene design."
-        },
-        {
-          "id": "tinygpt-experiments",
-          "text": "TinyGPT Experiments - small next-token project for learning training vs. instruction behavior."
-        },
-        {
-          "id": "midi-practice-tool",
-          "text": "MIDI Practice Tool - Python music-practice utility for soundfonts, pedals, controls, and keyboard-style interaction."
-        }
-      ]
-    },
-    {
-      "id": "fabrication-maker-skills",
-      "category": "Fabrication and maker skills",
-      "icon": "printer",
-      "items": [
-        {
-          "id": "3d-printing",
-          "text": "3D printing - Bambu Studio, material choices, iteration prints, print orientation, and fit testing."
-        },
-        {
-          "id": "laser-cutting",
-          "text": "Laser cutting - design and fabrication planning for flat-cut parts and enclosures."
-        },
-        {
-          "id": "vex-v5-drivetrain-prototype",
-          "text": "VEX V5 Drivetrain Prototype - robotics drivetrain build using gearing and packaging constraints around structure interference."
-        },
-        {
-          "id": "solidworks-modeling-depth",
-          "text": "SolidWorks modeling - part design, assemblies, complex forms, and fabrication-oriented CAD decisions."
-        }
-      ]
-    },
-    {
-      "id": "academics",
-      "category": "Academics",
+      "id": "programs-credentials",
+      "category": "Programs and credentials",
       "icon": "school",
       "items": [
         {
-          "id": "spring-early-college-academy",
-          "text": "Spring Early College Academy - 9th grade dual-credit student at SECA in Spring ISD."
+          "id": "tetc",
+          "title": "Teen Engineering + Tech Center",
+          "date": "",
+          "detail": "Four-year after-school STEM program supported by the ExxonMobil Foundation.",
+          "href": "https://tetc.org/",
+          "hrefLabel": "Program site"
         },
         {
-          "id": "current-standing",
-          "text": "Current standing - 5.0000 weighted GPA and sole #1 class rank out of 111."
-        },
-        {
-          "id": "school-ranking-context",
-          "text": "School context - SECA is the top-ranked Spring ISD high school, listed at #9 in the Houston metro, #44 in Texas, and #326 nationally for 2025-2026."
-        },
-        {
-          "id": "advanced-course-load",
-          "text": "Advanced course load - all advanced classes, including AP Human Geography and AP Spanish Language."
-        },
-        {
-          "id": "dual-credit-direction",
-          "text": "Dual-credit direction - college-level coursework during high school."
+          "id": "stanford-ai4all",
+          "title": "Stanford AI4ALL",
+          "date": "June 26, 2026",
+          "detail": "Completed the Robotics program while working on the VividGrasp team project.",
+          "href": "https://ai4all.spcs.stanford.edu/",
+          "hrefLabel": "Program site"
         }
       ]
     },
     {
-      "id": "competitions-speaking-leadership",
-      "category": "Competitions, speaking, and leadership",
+      "id": "competitions-leadership",
+      "category": "Competitions and leadership",
       "icon": "trophy",
       "items": [
         {
-          "id": "uil-number-sense",
-          "text": "UIL Number Sense - math competition experience."
-        },
-        {
-          "id": "informative-speaking",
-          "text": "Informative Speaking - public-speaking competition and presentation practice."
-        },
-        {
           "id": "debate",
-          "text": "Debate - JV finals experience."
-        },
-        {
-          "id": "student-council",
-          "text": "Student Council - school leadership."
-        },
-        {
-          "id": "tetc-presentations",
-          "text": "TETC presentations - slides and demos for engineering projects."
+          "title": "Debate",
+          "date": "",
+          "detail": "Reached JV finals.",
+          "href": null,
+          "hrefLabel": ""
         },
         {
           "id": "3d-printing-presentation",
-          "text": "3D Printing Presentation - minor presentation record with slides, printed examples, and robotics examples."
+          "title": "3D Printing Presentation",
+          "date": "",
+          "detail": "Presented slides, printed examples, and robotics applications through TETC.",
+          "href": null,
+          "hrefLabel": ""
         }
       ]
     },
     {
-      "id": "scouts-service-discipline",
-      "category": "Scouts, service, and long-term discipline",
+      "id": "scouts-service",
+      "category": "Scouts and service",
       "icon": "target",
       "items": [
         {
           "id": "scouts-bsa",
-          "text": "Scouts BSA - First Class Scout working toward Eagle."
-        },
-        {
-          "id": "eagle-planning",
-          "text": "Eagle planning - paperwork, service planning, and merit-badge tracking."
-        },
-        {
-          "id": "troop-leadership-interests",
-          "text": "Troop leadership interests - Librarian/Bugler planning, checkout systems, and bugle-call practice."
-        },
-        {
-          "id": "fitness-requirement-tracking",
-          "text": "Fitness requirement tracking - exercise logs and reflections for rank and merit-badge progress."
+          "title": "Scouts BSA",
+          "date": "",
+          "detail": "First Class Scout.",
+          "href": null,
+          "hrefLabel": ""
         }
       ]
     },
     {
       "id": "languages-learning",
-      "category": "Languages and long-term learning",
+      "category": "Languages and ongoing learning",
       "icon": "list",
       "items": [
         {
           "id": "duolingo-streak",
-          "text": "Duolingo streak - public profile currently reports a 1,744-day daily language-learning streak."
+          "title": "Duolingo language practice",
+          "date": "",
+          "detail": "Maintains a public daily language-learning streak.",
+          "href": "https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr",
+          "hrefLabel": "Profile"
         },
         {
           "id": "spanish",
-          "text": "Spanish - AP Spanish Language coursework and continued practice."
+          "title": "Spanish",
+          "date": "",
+          "detail": "AP Spanish Language coursework and continued practice.",
+          "href": null,
+          "hrefLabel": ""
         },
         {
           "id": "french",
-          "text": "French - beginner-to-intermediate practice in pronunciation, listening, and sentence construction."
+          "title": "French",
+          "date": "",
+          "detail": "Practice in pronunciation, listening, and sentence construction.",
+          "href": null,
+          "hrefLabel": ""
         },
         {
           "id": "latin-background",
-          "text": "Latin background - foundational Latin study."
+          "title": "Latin",
+          "date": "",
+          "detail": "Foundational Latin study.",
+          "href": null,
+          "hrefLabel": ""
         }
       ]
     }
@@ -792,13 +633,18 @@
     },
     {
       "id": "skills",
-      "label": "Skills",
+      "label": "Tools",
       "href": "#bench"
     },
     {
       "id": "academics",
       "label": "Academics",
       "href": "#academics"
+    },
+    {
+      "id": "more-projects",
+      "label": "More Projects",
+      "href": "#smaller-projects"
     },
     {
       "id": "contact",

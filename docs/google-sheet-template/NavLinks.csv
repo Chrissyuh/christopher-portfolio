@@ -1,5 +1,6 @@
 "id","order","enabled","label","href"
 "projects","1","true","Projects","#projects"
-"skills","2","true","Skills","#bench"
+"skills","2","true","Tools","#bench"
 "academics","3","true","Academics","#academics"
-"contact","4","true","Contact","#contact"
+"more-projects","4","true","More Projects","#smaller-projects"
+"contact","5","true","Contact","#contact"

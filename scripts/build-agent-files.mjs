@@ -12,6 +12,16 @@ function list(value) {
   return Array.isArray(value) ? value : [];
 }
 
+function groupedSkills(skills) {
+  return list(skills).reduce((groups, skill) => {
+    const category = skill.category || "Other";
+    const group = groups.find((entry) => entry.category === category);
+    if (group) group.skills.push(skill);
+    else groups.push({ category, skills: [skill] });
+    return groups;
+  }, []);
+}
+
 function markdownLink(label, href) {
   return `[${label}](${href})`;
 }
@@ -40,13 +50,8 @@ function projectLinks(project) {
 function mediaSummary(project) {
   const media = list(project.media);
   const filled = media.filter((item) => item.src).length;
-  const placeholders = media.length - filled;
 
-  if (media.length === 0) {
-    return "Media: none";
-  }
-
-  return `Media: ${media.length} slot${media.length === 1 ? "" : "s"}, ${filled} live, ${placeholders} placeholder${placeholders === 1 ? "" : "s"}`;
+  return `Published media: ${filled}`;
 }
 
 function credentialSummary(credential) {
@@ -70,23 +75,7 @@ function credentialSummary(credential) {
 }
 
 function roleSummary(project) {
-  const role = project.role || project.myRole;
-  return role ? ` Role: ${role}` : "";
-}
-
-function stateSummary(project) {
-  return project.state ? ` State: ${project.state}` : "";
-}
-
-function proofSummary(project) {
-  const available = list(project.proofAvailable);
-  const needed = project.proofNeeded || project.next;
-  const parts = [
-    available.length > 0 ? `Best evidence: ${available.join(", ")}` : "",
-    needed ? `Still missing: ${needed}` : "",
-  ].filter(Boolean);
-
-  return parts.join(". ");
+  return project.role ? ` Role: ${project.role}` : "";
 }
 
 function appendSentence(text, suffix) {
@@ -130,7 +119,7 @@ function buildLlmsTxt(content) {
   const meta = content.meta ?? {};
   const primaryLinks = [
     markdownLink("Portfolio homepage", absoluteUrl("/")),
-    markdownLink("Full record", absoluteUrl("/record")),
+    markdownLink("Experience", absoluteUrl("/record")),
     markdownLink("Full portfolio JSON", absoluteUrl("/portfolio.json")),
     markdownLink("Full Markdown summary", absoluteUrl("/llms-full.txt")),
   ];
@@ -143,7 +132,7 @@ function buildLlmsTxt(content) {
   ].filter(Boolean);
 
   return [
-    "# Christopher Portfolio",
+    "# Christopher Heskett",
     "",
     meta.heroIntro ?? "Engineering portfolio for Christopher.",
     "",
@@ -157,11 +146,11 @@ function buildLlmsTxt(content) {
       list(content.projects).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        return appendSentence(`${project.title}: ${project.summary}${stateSummary(project)}${roleSummary(project)}${linkText}`, `${mediaSummary(project)}.`);
+        return appendSentence(`${project.title} (${project.status}): ${project.summary}${roleSummary(project)}${linkText}`, `${mediaSummary(project)}.`);
       }),
     ),
     "",
-    "## B-Level Projects",
+    "## More Projects",
     "",
     markdownList(
       list(content.smallProjects).map((project) => {
@@ -175,7 +164,7 @@ function buildLlmsTxt(content) {
     "",
     markdownList(list(content.programCredentials).map(credentialSummary)),
     "",
-    "## C-Level Projects",
+    "## Small Builds",
     "",
     markdownList(
       list(content.microProjects).map((project) => {
@@ -199,30 +188,25 @@ function buildLlmsTxt(content) {
 function buildLlmsFullTxt(content) {
   const meta = content.meta ?? {};
   const sections = [
-    "# Christopher Portfolio",
+    "# Christopher Heskett",
     "",
     `Canonical URL: ${absoluteUrl("/")}`,
-    `Full record: ${absoluteUrl("/record")}`,
+    `Experience: ${absoluteUrl("/record")}`,
     `Structured JSON: ${absoluteUrl("/portfolio.json")}`,
     "",
     "## Summary",
     "",
     meta.heroIntro ?? "",
     "",
-    "## Current Stack",
-    "",
-    markdownList(list(content.currentStack).map((item) => `${item.number}: ${item.label}`)),
-    "",
     "## Main Projects",
     "",
     list(content.projects)
       .map((project) =>
         [
-          `### ${project.number} ${project.title}`,
+          `### ${project.title}`,
           "",
           `Status: ${project.status}`,
           project.teamContext ? `Context: ${project.teamContext}` : "",
-          project.state ? `State: ${project.state}` : "",
           `Label: ${project.label}`,
           project.href ? `Project: ${project.href}` : "",
           project.sourceHref ? `Source: ${project.sourceHref}` : "",
@@ -232,14 +216,11 @@ function buildLlmsFullTxt(content) {
                 .map((link) => `${link.label} (${link.type}): ${link.href}`)
                 .join("; ")}`
             : "",
-          project.role || project.myRole ? `My role: ${project.role || project.myRole}` : "",
-          project.whatChanged ? `What changed: ${project.whatChanged}` : "",
-          project.whatLearned ? `What I learned: ${project.whatLearned}` : "",
+          project.role ? `My role: ${project.role}` : "",
           project.logoHref ? `Related program/logo link: ${project.logoHref}` : "",
           "",
           project.summary,
           "",
-          proofSummary(project),
           mediaSummary(project),
         ]
           .filter((line) => line !== "")
@@ -295,7 +276,7 @@ function buildLlmsFullTxt(content) {
       }),
     ),
     "",
-    "## C-Level Projects",
+    "## Small Builds",
     "",
     markdownList(
       list(content.microProjects).map((project) => {
@@ -307,11 +288,7 @@ function buildLlmsFullTxt(content) {
     "",
     "## Skills",
     "",
-    markdownList(list(content.skillNarratives).map((skill) => `${skill.title}: ${skill.text}`)),
-    "",
-    "## Working Vocabulary",
-    "",
-    list(content.skills).map((skill) => skill.name).join(", "),
+    markdownList(groupedSkills(content.skills).map((group) => `${group.category}: ${group.skills.map((skill) => skill.name).join(", ")}`)),
     "",
     "## Full Record",
     "",
@@ -320,7 +297,11 @@ function buildLlmsFullTxt(content) {
         [
           `### ${section.category}`,
           "",
-          markdownList(list(section.items).map((item) => item.text)),
+          markdownList(list(section.items).map((item) => {
+            const date = item.date ? ` (${item.date})` : "";
+            const link = item.href ? ` ${markdownLink(item.hrefLabel || "Open", item.href)}` : "";
+            return `${item.title}${date}: ${item.detail}${link}`;
+          })),
         ].join("\n"),
       )
       .join("\n\n"),

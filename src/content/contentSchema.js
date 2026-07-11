@@ -1,7 +1,5 @@
 export const sheetTabNames = [
   "Meta",
-  "HeroTags",
-  "CurrentStack",
   "MainProjects",
   "ProjectArtifactLinks",
   "Academics",
@@ -9,8 +7,8 @@ export const sheetTabNames = [
   "LearningHighlights",
   "SmallProjects",
   "MicroProjects",
-  "SkillNarratives",
   "Skills",
+  "SkillProjects",
   "FullRecordSections",
   "FullRecordItems",
   "NavLinks",
@@ -49,47 +47,38 @@ export const allowedIcons = [
 ];
 
 const requiredFields = {
-  HeroTags: ["id", "label"],
-  CurrentStack: ["id", "number", "label"],
-  MainProjects: ["id", "number", "title", "label", "status", "accent", "summary"],
+  MainProjects: ["id", "title", "label", "status", "accent", "summary"],
   ProjectArtifactLinks: ["id", "project_id", "label", "href", "type"],
   Academics: ["id", "label", "value"],
   ProgramCredentials: ["id", "entry_type", "program", "summary", "accent"],
   LearningHighlights: ["id", "label", "value"],
   SmallProjects: ["id", "title", "type", "description"],
   MicroProjects: ["id", "title", "type", "description"],
-  SkillNarratives: ["id", "title", "icon", "text"],
-  Skills: ["id", "name"],
+  Skills: ["id", "category", "name"],
+  SkillProjects: ["id", "skill_id", "project_id"],
   FullRecordSections: ["id", "category", "icon"],
-  FullRecordItems: ["id", "section_id", "text"],
+  FullRecordItems: ["id", "section_id", "title", "detail"],
   NavLinks: ["id", "label", "href"],
 };
 
 const defaultMeta = {
-  documentTitle: "Christopher Portfolio",
-  navName: "Christopher",
+  documentTitle: "Christopher Heskett | Engineering Portfolio",
+  recordDocumentTitle: "Experience | Christopher Heskett",
+  navName: "Christopher Heskett",
   navSubtitle: "engineering portfolio",
-  heroEyebrow: "current work",
-  heroTitle: "I build hardware projects, robotics simulations, and software tools.",
-  heroIntro:
-    "Current work spans pinball, CAD-to-simulation robotics, planter electronics, and Subpix.",
-  currentStackTitle: "start here",
-  projectIndexCode: "featured work",
+  heroEyebrow: "student engineer",
+  heroTitle: "Christopher Heskett",
+  heroLead: "I build hardware projects, robotics simulations, and software tools.",
+  heroIntro: "Selected work includes Garden Party Pinball, VividGrasp, Smart Planter, and Subpix.",
   projectIndexTitle: "Featured projects",
-  projectIndexText:
-    "Four projects with the clearest mix of build work, links, media, and honest gaps.",
-  academicCode: "academics",
   academicTitle: "Academic profile",
-  academicText: "Current standing, course load, and school context.",
-  credentialsCode: "programs & credentials",
   credentialsTitle: "Programs and credentials",
-  credentialsText: "Programs tied to completed work and issued credentials.",
   credentialPreviewLabel: "View certificate",
   credentialMissingScanLabel: "Certificate scan still needs to be added.",
-  academicSchoolEyebrow: "school context",
+  academicSchoolEyebrow: "early-college student",
   academicSchoolName: "Spring Early College Academy",
   academicSchoolHref: "https://seca.springisd.org/",
-  academicSchoolLogoSrc: "/portfolio-media/academics/seca-logo.png",
+  academicSchoolLogoSrc: "/portfolio-media/academics/seca-logo.webp",
   academicSchoolLogoAlt: "Spring Early College Academy crest",
   academicSchoolDistrictRank: "Top-ranked Spring ISD high school.",
   academicSchoolDistrictSourceHref: "https://www.schooldigger.com/go/TX/district/41220/search.aspx?level=3",
@@ -97,26 +86,15 @@ const defaultMeta = {
   academicSchoolRankSummary: "#9 Houston metro, #44 Texas, #326 national.",
   academicSchoolRankSourceHref: "https://seca.springisd.org/o/seca/article/2369574",
   academicSchoolRankSourceLabel: "Ranking details",
-  smallerProjectsCode: "smaller builds",
-  smallerProjectsTitle: "Smaller projects",
-  smallerProjectsText: "Real projects that are lighter than the featured builds. More will be added here as the evidence improves.",
-  microProjectsCode: "small artifacts",
+  smallerProjectsTitle: "More projects",
   microProjectsTitle: "Small builds",
-  microProjectsText: "Small projects I kept because they have a real artifact, link, or useful lesson.",
   microProjectsOpenLabel: "Open",
   microProjectsSourceLabel: "Source",
-  skillSystemCode: "tools",
-  skillSystemTitle: "Tools behind the projects",
-  skillSystemText:
-    "These skills are tied to the projects above.",
-  workingVocabularyLabel: "working vocabulary",
-  recordEyebrow: "full record",
-  recordTitle: "Projects, school, competitions, Scouts, languages, and learning",
-  recordIntro: "A broader record beyond the main engineering projects.",
-  contactEyebrow: "contact",
-  contactTitle: "Contact and links",
-  contactText:
-    "Spring Early College Academy student focused on CAD, fabrication, electronics, robotics, embedded software, and technical documentation.",
+  skillSystemTitle: "Tools",
+  learningTitle: "Ongoing learning",
+  recordTitle: "Experience and activities",
+  contactTitle: "Contact Christopher",
+  contactText: "Email me or view my work on GitHub.",
   contactEmailHref: "mailto:Chrisaheskett@gmail.com",
   contactEmailLabel: "Email",
   contactGithubHref: "https://github.com/Chrissyuh",
@@ -125,24 +103,15 @@ const defaultMeta = {
   contactProjectLabel: "Open Subpix",
   resumeHref: "",
   resumeLabel: "Resume",
-  footerLeft: "Spring Early College Academy",
-  footerMiddle: "Exxon Teen Engineering + Tech Center",
-  footerName: "Christopher",
-  projectTeamContextLabel: "context",
+  footerName: "Christopher Heskett",
   projectRoleLabel: "role",
-  projectStateLabel: "state",
-  projectProofAvailableLabel: "best evidence",
-  projectProofNeededLabel: "still missing",
-  projectNextLabel: "still missing",
-  projectArtifactLinksLabel: "artifact links",
-  projectWhatChangedLabel: "what changed",
-  projectWhatLearnedLabel: "what I learned",
+  projectArtifactLinksLabel: "links",
   projectOpenLabel: "Open project",
   projectSourceLabel: "Source",
   mediaPlaceholderLabel: "needed",
   mediaSlotLabel: "media slot",
   openProjectsLabel: "View projects",
-  viewRecordLabel: "View full record",
+  viewRecordLabel: "Experience",
   backPortfolioLabel: "Back to portfolio",
 };
 
@@ -165,10 +134,6 @@ function orderedRows(rows = []) {
     .filter(({ row }) => isEnabled(row))
     .sort((a, b) => a.order - b.order || a.index - b.index)
     .map(({ row }) => row);
-}
-
-function compactNumberedFields(row, prefix, count) {
-  return Array.from({ length: count }, (_, index) => text(row[`${prefix}_${index + 1}`])).filter(Boolean);
 }
 
 function compactMediaFields(row, errors, tabName, rowId) {
@@ -250,7 +215,6 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     const accent = text(row.accent);
     requireKnownValue(errors, "MainProjects", id, "accent", accent, allowedAccents);
     const media = compactMediaFields(row, errors, "MainProjects", id);
-    const proofAvailable = compactNumberedFields(row, "proof_available", 6);
 
     if (media.length === 0) {
       errors.push(`MainProjects row "${id}" must include at least one media slot.`);
@@ -258,7 +222,6 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
 
     return {
       id,
-      number: text(row.number),
       title: text(row.title),
       href: hrefOrNull(row.href),
       sourceHref: hrefOrNull(row.source_href),
@@ -267,20 +230,13 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       accent,
       summary: text(row.summary),
       teamContext: text(row.team_context),
-      role: text(row.role) || text(row.my_role),
-      myRole: text(row.role) || text(row.my_role),
-      state: text(row.state) || text(row.status),
-      proofAvailable: proofAvailable.length ? proofAvailable : compactNumberedFields(row, "evidence", 6),
-      proofNeeded: text(row.proof_needed) || text(row.next),
+      role: text(row.role),
       bestLinkLabel: text(row.best_link_label),
-      whatChanged: text(row.what_changed),
-      whatLearned: text(row.what_learned),
       logoSrc: hrefOrNull(row.logo_src),
       logoAlt: text(row.logo_alt),
       logoHref: hrefOrNull(row.logo_href),
       artifactLinks: [],
       media,
-      next: text(row.proof_needed) || text(row.next),
     };
   });
 
@@ -306,18 +262,6 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       type,
     });
   }
-
-  const skillNarratives = simpleRows("SkillNarratives", (row) => {
-    const icon = text(row.icon);
-    requireKnownValue(errors, "SkillNarratives", text(row.id), "icon", icon, allowedIcons);
-
-    return {
-      id: text(row.id),
-      title: text(row.title),
-      icon,
-      text: text(row.text),
-    };
-  });
 
   const smallProjects = simpleRows("SmallProjects", (row) => {
     const id = text(row.id);
@@ -426,6 +370,32 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     };
   });
   const learningHighlights = statRows("LearningHighlights");
+  const skills = simpleRows("Skills", (row) => ({
+    id: text(row.id),
+    category: text(row.category),
+    name: text(row.name),
+    projectIds: [],
+  }));
+  const skillsById = new Map(skills.map((skill) => [skill.id, skill]));
+
+  for (const row of orderedRows(rowsFor(tabRows, "SkillProjects"))) {
+    const id = text(row.id);
+    const skillId = text(row.skill_id);
+    const projectId = text(row.project_id);
+    const skill = skillsById.get(skillId);
+
+    if (!skill) {
+      errors.push(`SkillProjects row "${id}" references missing skill_id "${skillId}".`);
+      continue;
+    }
+
+    if (!projectsById.has(projectId)) {
+      errors.push(`SkillProjects row "${id}" references missing project_id "${projectId}".`);
+      continue;
+    }
+
+    skill.projectIds.push(projectId);
+  }
 
   const fullRecordSections = simpleRows("FullRecordSections", (row) => {
     const icon = text(row.icon);
@@ -452,7 +422,11 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
 
     section.items.push({
       id: text(row.id),
-      text: text(row.text),
+      title: text(row.title),
+      date: text(row.date),
+      detail: text(row.detail),
+      href: hrefOrNull(row.href),
+      hrefLabel: text(row.href_label),
     });
   }
 
@@ -465,26 +439,13 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     source,
     updatedAt: new Date().toISOString(),
     meta,
-    heroTags: simpleRows("HeroTags", (row) => ({
-      id: text(row.id),
-      label: text(row.label),
-    })),
-    currentStack: simpleRows("CurrentStack", (row) => ({
-      id: text(row.id),
-      number: text(row.number),
-      label: text(row.label),
-    })),
     projects,
     academics,
     programCredentials,
     learningHighlights,
     smallProjects,
     microProjects,
-    skillNarratives,
-    skills: simpleRows("Skills", (row) => ({
-      id: text(row.id),
-      name: text(row.name),
-    })),
+    skills,
     fullRecord: fullRecordSections,
     navLinks: simpleRows("NavLinks", (row) => ({
       id: text(row.id),

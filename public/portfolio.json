@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-06-28T01:57:53.686Z",
+  "updatedAt": "2026-07-11T01:32:33.688Z",
   "meta": {
     "documentTitle": "Christopher Portfolio",
     "navName": "Christopher",
@@ -16,6 +16,11 @@
     "academicCode": "academics",
     "academicTitle": "Academic profile",
     "academicText": "Current standing, course load, and school context.",
+    "credentialsCode": "programs & credentials",
+    "credentialsTitle": "Programs and credentials",
+    "credentialsText": "Programs tied to completed work and issued credentials.",
+    "credentialPreviewLabel": "View certificate",
+    "credentialMissingScanLabel": "Certificate scan needed",
     "academicSchoolEyebrow": "school context",
     "academicSchoolName": "Spring Early College Academy",
     "academicSchoolHref": "https://seca.springisd.org/",
@@ -352,6 +357,46 @@
       "highlight": "",
       "assetSrc": null,
       "assetAlt": ""
+    }
+  ],
+  "programCredentials": [
+    {
+      "id": "stanford-ai4all",
+      "program": "Stanford AI4ALL",
+      "credential": "Stanford AI4ALL Certificate",
+      "issuer": "Stanford AI4ALL",
+      "date": "",
+      "summary": "Completed Stanford AI4ALL while working on the 10-person VividGrasp robotics project.",
+      "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
+      "logoAlt": "Stanford AI4ALL logo",
+      "logoHref": "https://ai4all.spcs.stanford.edu/",
+      "scanSrc": null,
+      "scanAlt": "Stanford AI4ALL certificate for Christopher Heskett",
+      "scanCaption": "Stanford AI4ALL certificate",
+      "href": "https://ai4all.spcs.stanford.edu/",
+      "hrefLabel": "Program site",
+      "accent": "amber",
+      "relatedProjectId": "vividgrasp-ai-vision-robotics-arm",
+      "scanAvailable": false
+    },
+    {
+      "id": "tetc-excellence",
+      "program": "Teen Engineering & Tech Center",
+      "credential": "TETC Excellence Certificate",
+      "issuer": "Teen Engineering & Tech Center",
+      "date": "",
+      "summary": "Excellence credential from the Teen Engineering & Tech Center.",
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
+      "scanSrc": null,
+      "scanAlt": "TETC Excellence certificate for Christopher Heskett",
+      "scanCaption": "TETC Excellence certificate",
+      "href": null,
+      "hrefLabel": "",
+      "accent": "blue",
+      "relatedProjectId": null,
+      "scanAvailable": false
     }
   ],
   "learningHighlights": [

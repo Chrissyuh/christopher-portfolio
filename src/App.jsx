@@ -119,6 +119,7 @@ function buildStructuredData(content) {
   const projects = list(content.projects);
   const smallProjects = list(content.smallProjects);
   const microProjects = list(content.microProjects);
+  const programCredentials = list(content.programCredentials);
   const creativeWorks = [
     ...projects.map((project) => ({
       id: project.id,
@@ -172,6 +173,9 @@ function buildStructuredData(content) {
           { "@type": "Organization", name: meta.footerMiddle },
         ],
         knowsAbout: list(content.skills).map((skill) => skill.name),
+        hasCredential: programCredentials.map((credential) => ({
+          "@id": `${siteUrl("/")}#credential-${credential.id}`,
+        })),
         sameAs: [meta.contactGithubHref].filter(Boolean),
       },
       {
@@ -244,6 +248,20 @@ function buildStructuredData(content) {
         ...(list(project.artifactLinks).length > 0
           ? { isBasedOn: list(project.artifactLinks).map((link) => link.href).filter(Boolean) }
           : {}),
+      })),
+      ...programCredentials.map((credential) => ({
+        "@type": "EducationalOccupationalCredential",
+        "@id": `${siteUrl("/")}#credential-${credential.id}`,
+        name: credential.credential,
+        description: credential.summary,
+        credentialCategory: "certificate",
+        recognizedBy: {
+          "@type": "Organization",
+          name: credential.issuer,
+          ...(credential.href ? { url: credential.href } : {}),
+        },
+        ...(credential.date ? { dateCreated: credential.date } : {}),
+        ...(credential.scanSrc ? { image: siteUrl(credential.scanSrc) } : {}),
       })),
     ],
   };
@@ -997,6 +1015,199 @@ function AcademicCard({ item, index }) {
   );
 }
 
+function CredentialPreviewPopover({ credential, label, missingLabel, align = "left" }) {
+  const containerRef = useRef(null);
+  const triggerRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isPinned, setIsPinned] = useState(false);
+  const panelId = `credential-preview-${credential.id}`;
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    function closePreview(event) {
+      if (!containerRef.current?.contains(event.target)) {
+        setIsOpen(false);
+        setIsPinned(false);
+      }
+    }
+
+    function closeOnEscape(event) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        setIsPinned(false);
+        triggerRef.current?.focus();
+      }
+    }
+
+    document.addEventListener("pointerdown", closePreview);
+    document.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.removeEventListener("pointerdown", closePreview);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isOpen]);
+
+  function handlePointerEnter(event) {
+    if (event.pointerType === "mouse") setIsOpen(true);
+  }
+
+  function handlePointerLeave(event) {
+    if (event.pointerType === "mouse" && !isPinned) setIsOpen(false);
+  }
+
+  function handleBlur(event) {
+    if (!containerRef.current?.contains(event.relatedTarget) && !isPinned) {
+      setIsOpen(false);
+    }
+  }
+
+  function handleClick() {
+    const nextOpen = !isPinned;
+    setIsOpen(nextOpen);
+    setIsPinned(nextOpen);
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative basis-full md:basis-auto"
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      onBlur={handleBlur}
+    >
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        aria-haspopup="dialog"
+        onFocus={() => setIsOpen(true)}
+        onClick={handleClick}
+        className="inline-flex items-center border border-[#cfc4b4] bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-900 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:px-3 sm:py-2 sm:text-xs"
+      >
+        <Icon name={credential.scanAvailable ? "school" : "list"} className="mr-1.5 h-3.5 w-3.5" />
+        {credential.scanAvailable ? label : missingLabel}
+      </button>
+
+      {isOpen && (
+        <div
+          id={panelId}
+          role="dialog"
+          aria-label={`${credential.credential} preview`}
+          className={cn(
+            "relative z-40 mt-3 w-full border border-[#cfc4b4] bg-white p-2.5 shadow-[0_18px_50px_rgba(34,28,18,0.18)] sm:p-3 md:absolute md:top-[calc(100%+0.75rem)] md:mt-0 md:w-[min(88vw,34rem)]",
+            align === "right" ? "md:right-0" : "md:left-0",
+          )}
+        >
+          {credential.scanSrc ? (
+            <figure>
+              <img
+                src={credential.scanSrc}
+                alt={credential.scanAlt || credential.credential}
+                className="max-h-[62vh] w-full bg-[#fbfaf7] object-contain"
+              />
+              {credential.scanCaption && (
+                <figcaption className="border-t border-[#e1d7c8] px-1 pt-2 text-xs leading-5 text-slate-700">
+                  {credential.scanCaption}
+                </figcaption>
+              )}
+            </figure>
+          ) : (
+            <div className="flex min-h-36 items-center gap-3 border border-dashed border-[#d6cec0] bg-[#fbfaf7] p-4">
+              <span className="grid h-10 w-10 shrink-0 place-items-center border border-[#d2c8b9] bg-white text-[#827466]">
+                <Icon name="school" className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-slate-950">Certificate scan not added yet</p>
+                <p className="mt-1 text-xs leading-5 text-slate-600">The credential is listed, but the public scan is still missing.</p>
+              </div>
+            </div>
+          )}
+          <span
+            aria-hidden="true"
+            className={cn(
+              "absolute -top-2 h-4 w-4 rotate-45 border-l border-t border-[#cfc4b4] bg-white",
+              align === "right" ? "right-8" : "left-8",
+            )}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProgramCredentialCard({ credential, index, meta }) {
+  const accent = accentStyles[credential.accent] ?? accentStyles.amber;
+  const initials = credential.id === "tetc-excellence"
+    ? "TETC"
+    : credential.program
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((word) => word[0])
+        .join("");
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.25, delay: index * 0.04 }}
+      className={cn("relative border bg-white p-4 shadow-sm sm:p-5", accent.border)}
+    >
+      <div aria-hidden="true" className={cn("absolute inset-x-0 top-0 h-1", accent.bg)} />
+      <div className="flex items-start gap-3 sm:gap-4">
+        {credential.logoSrc ? (
+          <a
+            href={credential.logoHref || credential.href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Open ${credential.program} website`}
+            className="grid h-12 w-16 shrink-0 place-items-center border border-[#d6cec0] bg-white p-1.5 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:h-14 sm:w-20"
+          >
+            <img src={credential.logoSrc} alt={credential.logoAlt || `${credential.program} logo`} loading="lazy" className="h-full w-full object-contain" />
+          </a>
+        ) : (
+          <div className={cn("grid h-12 w-16 shrink-0 place-items-center border font-mono text-sm font-semibold", accent.border, accent.soft, accent.text)} aria-hidden="true">
+            {initials}
+          </div>
+        )}
+        <div className="min-w-0 flex-1">
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">{credential.program}</p>
+          <h3 className="mt-1 text-base font-semibold leading-5 text-slate-950 sm:text-lg sm:leading-6">{credential.credential}</h3>
+          <p className="mt-1 text-[11px] leading-4 text-slate-600 sm:text-xs">
+            {credential.issuer}{credential.date ? ` · ${credential.date}` : ""}
+          </p>
+        </div>
+      </div>
+
+      <p className="mt-3 text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{credential.summary}</p>
+
+      <div className="mt-3 flex flex-wrap items-center gap-2 sm:mt-4">
+        <CredentialPreviewPopover
+          credential={credential}
+          label={meta.credentialPreviewLabel || "View certificate"}
+          missingLabel={meta.credentialMissingScanLabel || "Certificate scan needed"}
+          align={index % 2 === 1 ? "right" : "left"}
+        />
+        {credential.href && (
+          <a
+            href={credential.href}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center px-1 py-1.5 text-[11px] font-semibold text-slate-700 transition hover:text-[#244fd6] focus:outline-none focus:ring-2 focus:ring-slate-400 sm:text-xs"
+          >
+            {credential.hrefLabel || "Program site"}
+            <Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" />
+          </a>
+        )}
+      </div>
+    </motion.article>
+  );
+}
+
 function MicroProjectTile({ project, index, meta }) {
   const media = list(project.media)[0] ?? {};
   const mediaType = media.type === "video" ? "video" : "photo";
@@ -1247,6 +1458,27 @@ function PortfolioPage({ content }) {
             <AcademicCard key={item.id} item={item} index={index} />
           ))}
         </div>
+
+        {list(content.programCredentials).length > 0 && (
+          <div className="mt-6 border-t border-[#d2c8b9] pt-5 sm:mt-8 sm:pt-6">
+            <div className="mb-3 max-w-2xl sm:mb-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466] sm:text-xs sm:tracking-[0.2em]">
+                {meta.credentialsCode || "programs & credentials"}
+              </p>
+              <h2 className="mt-1.5 text-xl font-semibold leading-6 text-slate-950 sm:text-2xl sm:leading-7">
+                {meta.credentialsTitle || "Programs and credentials"}
+              </h2>
+              <p className="mt-1.5 text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">
+                {meta.credentialsText || "Programs tied to completed work and issued credentials."}
+              </p>
+            </div>
+            <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
+              {list(content.programCredentials).map((credential, index) => (
+                <ProgramCredentialCard key={credential.id} credential={credential} index={index} meta={meta} />
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       <section id="smaller-projects" className="relative z-10 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-12 md:px-8 md:py-16">

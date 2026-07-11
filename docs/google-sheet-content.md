@@ -44,6 +44,12 @@ Use this for concrete project evidence links beyond the primary live/source link
 
 Leave optional fields blank when an academic card should only show the label and value. Set `highlight` to `gold` for the restrained gold-card accent. Use `href` / `href_label` for a corner link and `icon` for a small card icon.
 
+### ProgramCredentials
+
+`id,order,enabled,program,credential,issuer,date,summary,logo_src,logo_alt,logo_href,scan_src,scan_alt,scan_caption,href,href_label,accent,related_project_id`
+
+Use this for issued credentials tied to real programs. Allowed `accent` values are `blue`, `teal`, `amber`, and `clay`. `related_project_id` may be blank or must match a `MainProjects.id`. Leave `scan_src` blank until a real certificate scan is ready; the site will show an honest missing-scan state instead of a broken image. Certificate scans are public portfolio assets, so remove private IDs, addresses, or sensitive verification codes before publishing.
+
 ### LearningHighlights
 
 `id,order,enabled,label,value,note,highlight,asset_src,asset_alt,href,href_label,icon,dynamic_source,username`

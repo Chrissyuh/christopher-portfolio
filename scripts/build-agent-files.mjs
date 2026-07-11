@@ -49,6 +49,17 @@ function mediaSummary(project) {
   return `Media: ${media.length} slot${media.length === 1 ? "" : "s"}, ${filled} live, ${placeholders} placeholder${placeholders === 1 ? "" : "s"}`;
 }
 
+function credentialSummary(credential) {
+  const details = [
+    credential.issuer ? `Issuer: ${credential.issuer}` : "",
+    credential.date ? `Date: ${credential.date}` : "",
+    credential.scanAvailable ? "Certificate scan: available" : "Certificate scan: not yet published",
+    credential.href ? markdownLink(credential.hrefLabel || "program", credential.href) : "",
+  ].filter(Boolean);
+
+  return `${credential.credential}: ${credential.summary}${details.length ? ` (${details.join("; ")})` : ""}`;
+}
+
 function roleSummary(project) {
   const role = project.role || project.myRole;
   return role ? ` Role: ${role}` : "";
@@ -151,6 +162,10 @@ function buildLlmsTxt(content) {
       }),
     ),
     "",
+    "## Programs And Credentials",
+    "",
+    markdownList(list(content.programCredentials).map(credentialSummary)),
+    "",
     "## C-Level Projects",
     "",
     markdownList(
@@ -228,6 +243,29 @@ function buildLlmsFullTxt(content) {
     markdownList(
       list(content.academics).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
     ),
+    "",
+    "## Programs And Credentials",
+    "",
+    list(content.programCredentials)
+      .map((credential) =>
+        [
+          `### ${credential.credential}`,
+          "",
+          `Program: ${credential.program}`,
+          `Issuer: ${credential.issuer}`,
+          credential.date ? `Date: ${credential.date}` : "",
+          credential.relatedProjectId ? `Related project ID: ${credential.relatedProjectId}` : "",
+          credential.href ? `Program link: ${credential.href}` : "",
+          credential.scanAvailable && credential.scanSrc
+            ? `Certificate scan: ${absoluteUrl(credential.scanSrc)}`
+            : "Certificate scan: not yet published",
+          "",
+          credential.summary,
+        ]
+          .filter((line) => line !== "")
+          .join("\n"),
+      )
+      .join("\n\n"),
     "",
     "## Learning Highlights",
     "",

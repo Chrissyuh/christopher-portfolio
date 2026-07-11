@@ -20,6 +20,11 @@ Current work spans pinball, CAD-to-simulation robotics, planter electronics, and
 
 - Check-ins: Logs check-ins and shows gaps, streaks, and progress. ([project](https://check-ins-zeta.vercel.app/)). Media: 1 slot, 0 live, 1 placeholder.
 
+## Programs And Credentials
+
+- Stanford AI4ALL Certificate: Completed Stanford AI4ALL while working on the 10-person VividGrasp robotics project. (Issuer: Stanford AI4ALL; Certificate scan: not yet published; [Program site](https://ai4all.spcs.stanford.edu/))
+- TETC Excellence Certificate: Excellence credential from the Teen Engineering & Tech Center. (Issuer: Teen Engineering & Tech Center; Certificate scan: not yet published)
+
 ## C-Level Projects
 
 - MIDI Practice Tool: Small Python tool for soundfonts, pedals, controls, and keyboard practice. Media: 1 slot, 0 live, 1 placeholder.

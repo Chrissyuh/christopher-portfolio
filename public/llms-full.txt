@@ -70,6 +70,22 @@ Media: 2 slots, 1 live, 1 placeholder
 - Course load: AP + advanced coursework (AP Human Geography, AP Spanish Language, and advanced classes)
 - Program: Early college pathway (high school plus college-level coursework)
 
+## Programs And Credentials
+
+### Stanford AI4ALL Certificate
+Program: Stanford AI4ALL
+Issuer: Stanford AI4ALL
+Related project ID: vividgrasp-ai-vision-robotics-arm
+Program link: https://ai4all.spcs.stanford.edu/
+Certificate scan: not yet published
+Completed Stanford AI4ALL while working on the 10-person VividGrasp robotics project.
+
+### TETC Excellence Certificate
+Program: Teen Engineering & Tech Center
+Issuer: Teen Engineering & Tech Center
+Certificate scan: not yet published
+Excellence credential from the Teen Engineering & Tech Center.
+
 ## Learning Highlights
 
 - Duolingo streak: 1,744 (~4.77 years)

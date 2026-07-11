@@ -5,6 +5,7 @@ export const sheetTabNames = [
   "MainProjects",
   "ProjectArtifactLinks",
   "Academics",
+  "ProgramCredentials",
   "LearningHighlights",
   "SmallProjects",
   "MicroProjects",
@@ -51,6 +52,7 @@ const requiredFields = {
   MainProjects: ["id", "number", "title", "label", "status", "accent", "summary"],
   ProjectArtifactLinks: ["id", "project_id", "label", "href", "type"],
   Academics: ["id", "label", "value"],
+  ProgramCredentials: ["id", "program", "credential", "issuer", "summary", "accent"],
   LearningHighlights: ["id", "label", "value"],
   SmallProjects: ["id", "title", "type", "description"],
   MicroProjects: ["id", "title", "type", "description"],
@@ -77,6 +79,11 @@ const defaultMeta = {
   academicCode: "academics",
   academicTitle: "Academic profile",
   academicText: "Current standing, course load, and school context.",
+  credentialsCode: "programs & credentials",
+  credentialsTitle: "Programs and credentials",
+  credentialsText: "Programs tied to completed work and issued credentials.",
+  credentialPreviewLabel: "View certificate",
+  credentialMissingScanLabel: "Certificate scan still needs to be added.",
   academicSchoolEyebrow: "school context",
   academicSchoolName: "Spring Early College Academy",
   academicSchoolHref: "https://seca.springisd.org/",
@@ -374,6 +381,37 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
   });
 
   const academics = statRows("Academics");
+  const programCredentials = simpleRows("ProgramCredentials", (row) => {
+    const id = text(row.id);
+    const accent = text(row.accent);
+    const relatedProjectId = text(row.related_project_id);
+
+    requireKnownValue(errors, "ProgramCredentials", id, "accent", accent, allowedAccents);
+
+    if (relatedProjectId && !projectsById.has(relatedProjectId)) {
+      errors.push(`ProgramCredentials row "${id}" references missing related_project_id "${relatedProjectId}".`);
+    }
+
+    return {
+      id,
+      program: text(row.program),
+      credential: text(row.credential),
+      issuer: text(row.issuer),
+      date: text(row.date),
+      summary: text(row.summary),
+      logoSrc: hrefOrNull(row.logo_src),
+      logoAlt: text(row.logo_alt),
+      logoHref: hrefOrNull(row.logo_href),
+      scanSrc: hrefOrNull(row.scan_src),
+      scanAlt: text(row.scan_alt),
+      scanCaption: text(row.scan_caption),
+      href: hrefOrNull(row.href),
+      hrefLabel: text(row.href_label),
+      accent,
+      relatedProjectId: relatedProjectId || null,
+      scanAvailable: Boolean(text(row.scan_src)),
+    };
+  });
   const learningHighlights = statRows("LearningHighlights");
 
   const fullRecordSections = simpleRows("FullRecordSections", (row) => {
@@ -425,6 +463,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     })),
     projects,
     academics,
+    programCredentials,
     learningHighlights,
     smallProjects,
     microProjects,

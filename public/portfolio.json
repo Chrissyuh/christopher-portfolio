@@ -134,7 +134,7 @@
         "coils / switches / lamps",
         "playfield revisions"
       ],
-      "proofNeeded": "Playfield/cabinet photos, wiring maps, driver tests, and rule notes.",
+      "proofNeeded": "Wiring maps, driver tests, rule notes, and test videos.",
       "bestLinkLabel": "",
       "whatChanged": "",
       "whatLearned": "",
@@ -146,19 +146,19 @@
         {
           "id": "media-1",
           "type": "photo",
-          "src": null,
-          "alt": "Garden Party playfield or cabinet photo needed",
-          "caption": "Add playfield or cabinet photo"
+          "src": "/portfolio-media/garden-party/playfield-in-cabinet.jpg",
+          "alt": "Garden Party playfield installed in the cabinet",
+          "caption": "Playfield in cabinet"
         },
         {
           "id": "media-2",
-          "type": "video",
-          "src": null,
-          "alt": "Garden Party switch or coil test video needed",
-          "caption": "Add switch or coil test video"
+          "type": "photo",
+          "src": "/portfolio-media/garden-party/control-board.jpg",
+          "alt": "Garden Party control board and power supplies mounted on plywood",
+          "caption": "Control board"
         }
       ],
-      "next": "Playfield/cabinet photos, wiring maps, driver tests, and rule notes."
+      "next": "Wiring maps, driver tests, rule notes, and test videos."
     },
     {
       "id": "vividgrasp-ai-vision-robotics-arm",

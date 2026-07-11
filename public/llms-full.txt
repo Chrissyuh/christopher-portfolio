@@ -24,8 +24,8 @@ State: Active build with playable subsystems still being documented.
 Label: pinball machine build
 My role: I am building the cabinet, playfield systems, wiring, MPF configuration, and test workflow.
 A full-size homebrew pinball machine in progress using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and playfield revisions.
-Best evidence: FAST boards, MPF configs, coils / switches / lamps, playfield revisions. Still missing: Playfield/cabinet photos, wiring maps, driver tests, and rule notes.
-Media: 2 slots, 0 live, 2 placeholders
+Best evidence: FAST boards, MPF configs, coils / switches / lamps, playfield revisions. Still missing: Wiring maps, driver tests, rule notes, and test videos.
+Media: 2 slots, 2 live, 0 placeholders
 
 ### A02 VividGrasp AI-Vision Robotics Arm
 Status: Stanford AI4ALL team project

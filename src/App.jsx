@@ -1183,11 +1183,7 @@ function ProgramCredentialCard({ credential, index, meta }) {
       className={cn("relative border bg-white p-4 shadow-sm sm:p-5", accent.border)}
     >
       {credential.id === "tetc" ? (
-        <div aria-hidden="true" className="absolute inset-x-0 top-0 grid h-1 grid-cols-3">
-          <span className="bg-[#00afab]" />
-          <span className="bg-[#b0217a]" />
-          <span className="bg-[#f79320]" />
-        </div>
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#00afab]" />
       ) : (
         <div aria-hidden="true" className={cn("absolute inset-x-0 top-0 h-1", credential.id === "stanford-ai4all" ? "bg-[#8c1515]" : accent.bg)} />
       )}

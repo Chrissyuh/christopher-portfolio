@@ -1072,7 +1072,7 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
   return (
     <div
       ref={containerRef}
-      className="relative basis-full md:basis-auto"
+      className="relative basis-full md:static md:basis-auto"
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
       onBlur={handleBlur}
@@ -1097,8 +1097,8 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
           role="dialog"
           aria-label={`${credential.credential} preview`}
           className={cn(
-            "relative z-40 mt-3 w-full border border-[#cfc4b4] bg-white p-2.5 shadow-[0_18px_50px_rgba(34,28,18,0.18)] sm:p-3 md:absolute md:top-[calc(100%+0.75rem)] md:mt-0 md:w-[min(88vw,34rem)]",
-            align === "right" ? "md:right-0" : "md:left-0",
+            "relative z-40 mt-3 w-full border border-[#cfc4b4] bg-white p-2.5 shadow-[0_18px_50px_rgba(34,28,18,0.18)] sm:p-3 md:absolute md:top-1/2 md:mt-0 md:w-[min(47vw,38rem)] md:-translate-y-1/2",
+            align === "right" ? "md:right-[calc(100%+0.75rem)]" : "md:left-[calc(100%+0.75rem)]",
           )}
         >
           {credential.scanSrc ? (
@@ -1125,11 +1125,12 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
               </div>
             </div>
           )}
+          <span aria-hidden="true" className="absolute -top-2 left-8 h-4 w-4 rotate-45 border-l border-t border-[#cfc4b4] bg-white md:hidden" />
           <span
             aria-hidden="true"
             className={cn(
-              "absolute -top-2 h-4 w-4 rotate-45 border-l border-t border-[#cfc4b4] bg-white",
-              align === "right" ? "right-8" : "left-8",
+              "absolute top-1/2 hidden h-4 w-4 -translate-y-1/2 rotate-45 border-[#cfc4b4] bg-white md:block",
+              align === "right" ? "-right-2 border-r border-t" : "-left-2 border-b border-l",
             )}
           />
         </div>
@@ -1140,14 +1141,12 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
 
 function ProgramCredentialCard({ credential, index, meta }) {
   const accent = accentStyles[credential.accent] ?? accentStyles.amber;
-  const initials = credential.id === "tetc-excellence"
-    ? "TETC"
-    : credential.program
-        .split(/\s+/)
-        .filter(Boolean)
-        .slice(0, 2)
-        .map((word) => word[0])
-        .join("");
+  const initials = credential.program
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("");
 
   return (
     <motion.article
@@ -1445,7 +1444,7 @@ function PortfolioPage({ content }) {
         </div>
       </section>
 
-      <section id="academics" className="relative z-10 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-10 md:px-8 md:py-14">
+      <section id="academics" className="relative z-20 mx-auto max-w-7xl px-3 py-8 sm:px-5 sm:py-10 md:px-8 md:py-14">
         <div className="mb-4 grid gap-3 border-t border-[#d2c8b9] pt-5 sm:mb-6 sm:gap-4 sm:pt-7 lg:grid-cols-[minmax(360px,1fr)_minmax(460px,0.95fr)]">
           <TitleBlock code={meta.academicCode} title={meta.academicTitle}>
             {meta.academicText}

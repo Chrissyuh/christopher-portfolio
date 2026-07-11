@@ -72,19 +72,14 @@ Media: 2 slots, 1 live, 1 placeholder
 
 ## Programs And Credentials
 
-### Stanford AI4ALL Certificate
+### Stanford AI4ALL Certificate of Completion
 Program: Stanford AI4ALL
-Issuer: Stanford AI4ALL
+Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies
+Date: June 26, 2026
 Related project ID: vividgrasp-ai-vision-robotics-arm
 Program link: https://ai4all.spcs.stanford.edu/
-Certificate scan: not yet published
-Completed Stanford AI4ALL while working on the 10-person VividGrasp robotics project.
-
-### TETC Excellence Certificate
-Program: Teen Engineering & Tech Center
-Issuer: Teen Engineering & Tech Center
-Certificate scan: not yet published
-Excellence credential from the Teen Engineering & Tech Center.
+Certificate scan: https://chrisaheskett.vercel.app/portfolio-media/credentials/stanford-ai4all-certificate.jpg
+Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project.
 
 ## Learning Highlights
 

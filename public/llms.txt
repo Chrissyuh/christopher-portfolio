@@ -22,8 +22,7 @@ Current work spans pinball, CAD-to-simulation robotics, planter electronics, and
 
 ## Programs And Credentials
 
-- Stanford AI4ALL Certificate: Completed Stanford AI4ALL while working on the 10-person VividGrasp robotics project. (Issuer: Stanford AI4ALL; Certificate scan: not yet published; [Program site](https://ai4all.spcs.stanford.edu/))
-- TETC Excellence Certificate: Excellence credential from the Teen Engineering & Tech Center. (Issuer: Teen Engineering & Tech Center; Certificate scan: not yet published)
+- Stanford AI4ALL Certificate of Completion: Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project. (Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies; Date: June 26, 2026; Certificate scan: available; [Program site](https://ai4all.spcs.stanford.edu/))
 
 ## C-Level Projects
 

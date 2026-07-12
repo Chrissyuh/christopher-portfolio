@@ -1,0 +1,3 @@
+"id","order","enabled","skill_id","title","type","src","alt","caption","context","project_id"
+"cad-project-work-1","1","true","solidworks","Project CAD","photo","","Project CAD screenshot needed","Project CAD - add a screenshot tied to a listed project","project","vividgrasp-ai-vision-robotics-arm"
+"cad-independent-work-1","2","true","solidworks","Independent CAD","photo","","Independent CAD screenshot needed","Independent CAD - add a practice screenshot","independent",""

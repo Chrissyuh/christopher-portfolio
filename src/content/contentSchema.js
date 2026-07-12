@@ -9,6 +9,7 @@ export const sheetTabNames = [
   "MicroProjects",
   "Skills",
   "SkillProjects",
+  "ToolMedia",
   "FullRecordSections",
   "FullRecordItems",
   "NavLinks",
@@ -21,6 +22,8 @@ export const allowedMediaTypes = ["photo", "video"];
 export const allowedArtifactLinkTypes = ["live", "source", "cad", "wiring", "schematic", "demo", "notes", "release", "test", "other"];
 
 export const allowedProgramCredentialTypes = ["program", "credential"];
+
+export const allowedToolMediaContexts = ["project", "independent"];
 
 const mediaSlotCount = 8;
 
@@ -56,6 +59,7 @@ const requiredFields = {
   MicroProjects: ["id", "title", "type", "description"],
   Skills: ["id", "category", "name"],
   SkillProjects: ["id", "skill_id"],
+  ToolMedia: ["id", "skill_id", "title", "type", "context"],
   FullRecordSections: ["id", "category", "icon"],
   FullRecordItems: ["id", "section_id", "title", "detail"],
   NavLinks: ["id", "label", "href"],
@@ -91,6 +95,8 @@ const defaultMeta = {
   microProjectsOpenLabel: "Open",
   microProjectsSourceLabel: "Source",
   skillSystemTitle: "Tools",
+  toolMediaTitle: "CAD work",
+  toolMediaSubtitle: "Project work and independent practice.",
   learningTitle: "Ongoing learning",
   recordTitle: "Experience and activities",
   contactTitle: "Contact Christopher",
@@ -416,6 +422,45 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     }
   }
 
+  const toolMedia = simpleRows("ToolMedia", (row) => {
+    const id = text(row.id);
+    const skillId = text(row.skill_id);
+    const projectId = text(row.project_id);
+    const type = text(row.type);
+    const context = text(row.context);
+
+    requireKnownValue(errors, "ToolMedia", id, "type", type, allowedMediaTypes);
+    requireKnownValue(errors, "ToolMedia", id, "context", context, allowedToolMediaContexts);
+
+    if (!skillsById.has(skillId)) {
+      errors.push(`ToolMedia row "${id}" references missing skill_id "${skillId}".`);
+    }
+
+    if (projectId && !projectsById.has(projectId)) {
+      errors.push(`ToolMedia row "${id}" references missing project_id "${projectId}".`);
+    }
+
+    if (context === "project" && !projectId) {
+      errors.push(`ToolMedia row "${id}" uses project context but is missing project_id.`);
+    }
+
+    if (context === "independent" && projectId) {
+      errors.push(`ToolMedia row "${id}" uses independent context but includes project_id "${projectId}".`);
+    }
+
+    return {
+      id,
+      skillId,
+      title: text(row.title),
+      type,
+      src: hrefOrNull(row.src),
+      alt: text(row.alt),
+      caption: text(row.caption),
+      context,
+      projectId: projectId || null,
+    };
+  });
+
   const fullRecordSections = simpleRows("FullRecordSections", (row) => {
     const icon = text(row.icon);
     requireKnownValue(errors, "FullRecordSections", text(row.id), "icon", icon, allowedIcons);
@@ -465,6 +510,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     smallProjects,
     microProjects,
     skills,
+    toolMedia,
     fullRecord: fullRecordSections,
     navLinks: simpleRows("NavLinks", (row) => ({
       id: text(row.id),

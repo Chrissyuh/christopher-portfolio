@@ -32,6 +32,8 @@
     "microProjectsOpenLabel": "Open",
     "microProjectsSourceLabel": "Source",
     "skillSystemTitle": "Tools",
+    "toolMediaTitle": "CAD work",
+    "toolMediaSubtitle": "Project work and independent practice.",
     "learningTitle": "Ongoing learning",
     "recordTitle": "Experience and activities",
     "contactTitle": "Contact Christopher",
@@ -406,6 +408,9 @@
       "projectIds": [
         "garden-party-pinball",
         "vividgrasp-ai-vision-robotics-arm"
+      ],
+      "credentialIds": [
+        "tetc"
       ]
     },
     {
@@ -415,6 +420,9 @@
       "projectIds": [
         "garden-party-pinball",
         "vividgrasp-ai-vision-robotics-arm"
+      ],
+      "credentialIds": [
+        "tetc"
       ]
     },
     {
@@ -496,6 +504,9 @@
       "name": "Python",
       "projectIds": [
         "vividgrasp-ai-vision-robotics-arm"
+      ],
+      "credentialIds": [
+        "tetc"
       ]
     },
     {
@@ -555,6 +566,30 @@
       "credentialIds": [
         "tetc"
       ]
+    }
+  ],
+  "toolMedia": [
+    {
+      "id": "cad-project-work-1",
+      "skillId": "solidworks",
+      "title": "Project CAD",
+      "type": "photo",
+      "src": null,
+      "alt": "Project CAD screenshot needed",
+      "caption": "Project CAD - add a screenshot tied to a listed project",
+      "context": "project",
+      "projectId": "vividgrasp-ai-vision-robotics-arm"
+    },
+    {
+      "id": "cad-independent-work-1",
+      "skillId": "solidworks",
+      "title": "Independent CAD",
+      "type": "photo",
+      "src": null,
+      "alt": "Independent CAD screenshot needed",
+      "caption": "Independent CAD - add a practice screenshot",
+      "context": "independent",
+      "projectId": null
     }
   ],
   "fullRecord": [

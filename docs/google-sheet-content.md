@@ -16,6 +16,7 @@ Import the CSV files from `docs/google-sheet-template/` into one public Google S
 - `MicroProjects`: image-first small-build tiles.
 - `Skills`: project-backed skills grouped by category.
 - `SkillProjects`: validated links between a skill and either a featured project or program credential.
+- `ToolMedia`: project-affiliated and independent tool-work screenshots.
 - `FullRecordSections`: Experience-page section headings.
 - `FullRecordItems`: structured Experience entries.
 - `NavLinks`: homepage navigation links.

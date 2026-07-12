@@ -90,10 +90,10 @@ Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp 
 
 ## Skills
 
-- Mechanical: SolidWorks, 3D printing, Bambu Studio
-- Electronics: FAST Pinball, Arduino / ESP32, KiCad, Sensor wiring, Soldering, Pump / motor control
-- Software: Mission Pinball Framework, Python, PyBullet, Electron, React, TypeScript, Vite
-- TETC lessons: Laser cutting, VEX Robotics
+- Mechanical (personal / hobby work): SolidWorks, 3D printing, Bambu Studio
+- Electronics (personal / hobby work): FAST Pinball, Arduino / ESP32, KiCad, Sensor wiring, Soldering, Pump / motor control
+- Software (personal / hobby work): Mission Pinball Framework, Python, PyBullet, Electron, React, TypeScript, Vite
+- TETC lessons: SolidWorks, 3D printing, Bambu Studio, Soldering, Python, Laser cutting, VEX Robotics
 
 ## Full Record
 

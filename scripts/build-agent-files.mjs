@@ -13,13 +13,18 @@ function list(value) {
 }
 
 function groupedSkills(skills) {
-  return list(skills).reduce((groups, skill) => {
+  const groups = list(skills).filter((skill) => list(skill.projectIds).length > 0).reduce((entries, skill) => {
     const category = skill.category || "Other";
-    const group = groups.find((entry) => entry.category === category);
+    const group = entries.find((entry) => entry.category === category);
     if (group) group.skills.push(skill);
-    else groups.push({ category, skills: [skill] });
-    return groups;
+    else entries.push({ category, skills: [skill], context: "personal / hobby work" });
+    return entries;
   }, []);
+  const tetcSkills = list(skills).filter((skill) => list(skill.credentialIds).includes("tetc"));
+
+  if (tetcSkills.length > 0) groups.push({ category: "TETC lessons", skills: tetcSkills });
+
+  return groups;
 }
 
 function markdownLink(label, href) {
@@ -288,7 +293,7 @@ function buildLlmsFullTxt(content) {
     "",
     "## Skills",
     "",
-    markdownList(groupedSkills(content.skills).map((group) => `${group.category}: ${group.skills.map((skill) => skill.name).join(", ")}`)),
+    markdownList(groupedSkills(content.skills).map((group) => `${group.category}${group.context ? ` (${group.context})` : ""}: ${group.skills.map((skill) => skill.name).join(", ")}`)),
     "",
     "## Full Record",
     "",

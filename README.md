@@ -24,6 +24,16 @@ npm run sync-content
 
 The generated JSON stays as the deployment-safe fallback if live Google Sheet loading fails.
 
+## Smart Planter 3D Asset
+
+The deployed GLB and poster are committed under `public/portfolio-media/smart-planter/`. Rebuild them from the current cost-down Board A STEP export and KiCad render with:
+
+```sh
+npm run build-pcb-model
+```
+
+The script uses the local Smart Planter workspace by default. Set `SMART_PLANTER_ROOT` or pass STEP and poster paths as the first two arguments when the source files move. Vercel serves the generated assets and does not run CAD conversion during deployment.
+
 ## Checks
 
 ```sh

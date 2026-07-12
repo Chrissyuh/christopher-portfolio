@@ -158,15 +158,25 @@
       "media": [
         {
           "id": "media-1",
+          "type": "model",
+          "src": "/portfolio-media/smart-planter/board-a-cost-down.glb",
+          "posterSrc": "/portfolio-media/smart-planter/board-a-cost-down-poster.webp",
+          "alt": "Board A cost-down PCB for the Smart Planter",
+          "caption": "Interactive Board A cost-down PCB"
+        },
+        {
+          "id": "media-2",
           "type": "photo",
           "src": null,
+          "posterSrc": null,
           "alt": "Smart self-watering pot prototype or enclosure photo needed",
           "caption": "Add prototype or enclosure photo"
         },
         {
-          "id": "media-2",
+          "id": "media-3",
           "type": "video",
           "src": null,
+          "posterSrc": null,
           "alt": "Smart self-watering pot watering test video needed",
           "caption": "Add watering test video"
         }

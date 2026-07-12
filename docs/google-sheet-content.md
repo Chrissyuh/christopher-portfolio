@@ -21,7 +21,7 @@ Import the CSV files from `docs/google-sheet-template/` into one public Google S
 - `FullRecordItems`: structured Experience entries.
 - `NavLinks`: homepage navigation links.
 
-Allowed project accents are `blue`, `teal`, `amber`, and `clay`. Allowed media types are `photo` and `video`. Every project must contain at least one media slot; a blank source renders the subdued documentation-needed state.
+Allowed project accents are `blue`, `teal`, `amber`, and `clay`. Allowed media types are `photo`, `video`, and `model`. A published `model` also requires its matching `media_N_poster_src`; mobile, reduced-data, reduced-motion, and unsupported browsers use that poster instead of loading 3D. Every project must contain at least one media slot; a blank source renders the subdued documentation-needed state.
 
 ## Publish And Configure
 

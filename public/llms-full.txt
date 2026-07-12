@@ -35,7 +35,7 @@ Context: Solo
 Label: plant-watering prototype
 My role: I worked on the sensing and control concept, electronics packaging, PCB direction, and enclosure constraints.
 A plant-watering prototype involving moisture sensing, pump control, electronics packaging, enclosure planning, and PCB work.
-Published media: 0
+Published media: 1; interactive 3D models: 1
 
 ### Subpix
 Status: Functional v1

@@ -54,9 +54,11 @@ function projectLinks(project) {
 
 function mediaSummary(project) {
   const media = list(project.media);
-  const filled = media.filter((item) => item.src).length;
+  const published = media.filter((item) => item.src);
+  const modelCount = published.filter((item) => item.type === "model").length;
+  const modelText = modelCount ? `; interactive 3D models: ${modelCount}` : "";
 
-  return `Published media: ${filled}`;
+  return `Published media: ${published.length}${modelText}`;
 }
 
 function credentialSummary(credential) {

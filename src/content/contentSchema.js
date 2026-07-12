@@ -17,7 +17,7 @@ export const sheetTabNames = [
 
 export const allowedAccents = ["blue", "teal", "amber", "clay"];
 
-export const allowedMediaTypes = ["photo", "video"];
+export const allowedMediaTypes = ["photo", "video", "model"];
 
 export const allowedArtifactLinkTypes = ["live", "source", "cad", "wiring", "schematic", "demo", "notes", "release", "test", "other"];
 
@@ -147,10 +147,11 @@ function compactMediaFields(row, errors, tabName, rowId) {
     const slot = index + 1;
     const type = text(row[`media_${slot}_type`]);
     const src = text(row[`media_${slot}_src`]);
+    const posterSrc = text(row[`media_${slot}_poster_src`]);
     const alt = text(row[`media_${slot}_alt`]);
     const caption = text(row[`media_${slot}_caption`]);
 
-    if (!type && !src && !alt && !caption) {
+    if (!type && !src && !posterSrc && !alt && !caption) {
       return null;
     }
 
@@ -158,10 +159,15 @@ function compactMediaFields(row, errors, tabName, rowId) {
       errors.push(`${tabName} row "${rowId}" has unsupported media_${slot}_type "${type}".`);
     }
 
+    if (type === "model" && src && !posterSrc) {
+      errors.push(`${tabName} row "${rowId}" must include media_${slot}_poster_src for a published model.`);
+    }
+
     return {
       id: `media-${slot}`,
       type: type || "photo",
       src: hrefOrNull(src),
+      posterSrc: hrefOrNull(posterSrc),
       alt,
       caption,
     };

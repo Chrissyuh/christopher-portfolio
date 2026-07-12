@@ -8,6 +8,7 @@
     "prebuild": "npm run build-agent-files",
     "build": "vite build",
     "build-agent-files": "node scripts/build-agent-files.mjs",
+    "build-pcb-model": "node scripts/build-pcb-model.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "sync-content": "node scripts/sync-content.mjs"
@@ -15,14 +16,19 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
     "framer-motion": "^12.38.0",
+    "meshoptimizer": "^1.2.0",
     "papaparse": "^5.5.3",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-router-dom": "^7.15.1",
-    "tailwindcss": "^4.2.4"
+    "tailwindcss": "^4.2.4",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@gltf-transform/core": "^4.4.1",
+    "@gltf-transform/extensions": "^4.4.1",
+    "@gltf-transform/functions": "^4.4.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
@@ -30,6 +36,8 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
+    "occt-import-js": "^0.0.23",
+    "sharp": "^0.33.5",
     "vite": "^8.0.10"
   }
 }

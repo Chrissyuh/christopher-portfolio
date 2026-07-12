@@ -78,6 +78,8 @@ const accentStyles = {
 
 const carouselAutoAdvanceMs = 6000;
 const carouselInteractionPauseMs = 10000;
+const LazyPcbModelViewer = React.lazy(() => import("./components/PcbModelViewer.jsx"));
+const pcbFallbackStorageKey = "portfolio-pcb-model-fallback";
 
 const SITE_URL = "https://chrisaheskett.vercel.app";
 const DUOLINGO_PROFILE_URL = "https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr";
@@ -133,6 +135,7 @@ function buildStructuredData(content) {
       role: project.role,
       teamContext: project.teamContext,
       artifactLinks: project.artifactLinks,
+      media: project.media,
     })),
     ...smallProjects.map((project) => ({
       id: `more-${project.id}`,
@@ -142,6 +145,7 @@ function buildStructuredData(content) {
       sourceHref: project.sourceHref,
       label: project.type,
       summary: project.description,
+      media: project.media,
     })),
     ...microProjects.map((project) => ({
       id: `small-${project.id}`,
@@ -151,6 +155,7 @@ function buildStructuredData(content) {
       sourceHref: project.sourceHref,
       label: project.type,
       summary: project.description,
+      media: project.media,
     })),
   ];
 
@@ -242,6 +247,19 @@ function buildStructuredData(content) {
         ...(list(project.artifactLinks).length > 0
           ? { isBasedOn: list(project.artifactLinks).map((link) => link.href).filter(Boolean) }
           : {}),
+        ...(list(project.media).some((item) => item.src)
+          ? {
+              encoding: list(project.media)
+                .filter((item) => item.src)
+                .map((item) => ({
+                  "@type": item.type === "photo" ? "ImageObject" : item.type === "video" ? "VideoObject" : "MediaObject",
+                  contentUrl: siteUrl(item.src),
+                  ...(item.type === "model" ? { encodingFormat: "model/gltf-binary" } : {}),
+                  ...(item.posterSrc ? { thumbnailUrl: siteUrl(item.posterSrc) } : {}),
+                  ...(item.caption ? { caption: item.caption } : {}),
+                })),
+            }
+          : {}),
       })),
       ...issuedCredentials.map((credential) => ({
         "@type": "EducationalOccupationalCredential",
@@ -306,8 +324,91 @@ function FittedPhoto({ src, alt }) {
   );
 }
 
-function MediaFrame({ item, label, compact = false }) {
-  const mediaType = item.type === "video" ? "video" : "photo";
+function ModelMedia({ item, label, onInteractionChange }) {
+  const hostRef = useRef(null);
+  const [eligible, setEligible] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [ready, setReady] = useState(false);
+  const posterSrc = item.posterSrc;
+  const alt = item.alt || label;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px) and (pointer: fine)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let sessionFallback = false;
+    try {
+      sessionFallback = window.sessionStorage.getItem(pcbFallbackStorageKey) === "1";
+    } catch {
+      sessionFallback = false;
+    }
+
+    function checkEligibility() {
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const hasWebGl2 = (() => {
+        try {
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("webgl2");
+          context?.getExtension("WEBGL_lose_context")?.loseContext();
+          return Boolean(context);
+        } catch {
+          return false;
+        }
+      })();
+      setEligible(mediaQuery.matches && !reducedMotion && !connection?.saveData && !sessionFallback && hasWebGl2);
+    }
+
+    checkEligibility();
+    mediaQuery.addEventListener?.("change", checkEligibility);
+    return () => mediaQuery.removeEventListener?.("change", checkEligibility);
+  }, []);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host || !eligible) return undefined;
+
+    if (!window.IntersectionObserver) {
+      const timer = window.setTimeout(() => setVisible(true), 0);
+      return () => window.clearTimeout(timer);
+    }
+
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "240px" },
+    );
+    observer.observe(host);
+    return () => observer.disconnect();
+  }, [eligible]);
+
+  const fallback = posterSrc ? <FittedPhoto src={posterSrc} alt={alt} /> : null;
+
+  return (
+    <div ref={hostRef} className="absolute inset-0">
+      {(!eligible || !visible || failed || !ready) && fallback}
+      {eligible && visible && !failed && (
+        <React.Suspense fallback={fallback}>
+          <div className={cn("absolute inset-0", ready ? "opacity-100" : "pointer-events-none opacity-0")}>
+            <LazyPcbModelViewer
+              src={item.src}
+              label={`${alt}. Interactive 3D model.`}
+              onReady={() => setReady(true)}
+              onFallback={() => setFailed(true)}
+              onInteractionChange={onInteractionChange}
+            />
+          </div>
+        </React.Suspense>
+      )}
+    </div>
+  );
+}
+
+function MediaFrame({ item, label, compact = false, onModelInteractionChange }) {
+  const mediaType = item.type === "video" ? "video" : item.type === "model" ? "model" : "photo";
   const caption = item.caption || item.alt || label;
   const frameClass = compact ? "w-full flex-none" : "w-[82%] flex-none sm:w-[calc((100%_-_0.75rem)/2)]";
 
@@ -323,6 +424,9 @@ function MediaFrame({ item, label, compact = false }) {
             className="h-full w-full bg-[#ded8cd] object-contain"
           />
         )}
+        {item.src && mediaType === "model" && (
+          <ModelMedia item={item} label={label} onInteractionChange={onModelInteractionChange} />
+        )}
         {item.src && mediaType === "photo" && <FittedPhoto src={item.src} alt={item.alt || caption} />}
         {!item.src && (
           <div
@@ -331,7 +435,7 @@ function MediaFrame({ item, label, compact = false }) {
           >
             <div className="max-w-[16rem] text-center">
               <span className="inline-flex items-center border border-[#cfc4b4] bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">
-                {mediaType === "video" ? "video needed" : "photo needed"}
+                {mediaType === "video" ? "video needed" : mediaType === "model" ? "model needed" : "photo needed"}
               </span>
               <p className="mt-3 text-xs font-medium leading-5 text-slate-600">{caption}</p>
             </div>
@@ -353,6 +457,7 @@ function MediaCarousel({ media, label, compact = false }) {
   const scrollEndTimerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lastInteractionAt, setLastInteractionAt] = useState(0);
+  const [modelInteractionActive, setModelInteractionActive] = useState(false);
   const [visibleCount, setVisibleCount] = useState(1);
   const maxStartIndex = Math.max(items.length - visibleCount, 0);
   const safeActiveIndex = items.length > 0 ? Math.min(activeIndex, maxStartIndex) : 0;
@@ -363,6 +468,14 @@ function MediaCarousel({ media, label, compact = false }) {
   const markInteraction = useCallback(() => {
     setLastInteractionAt(Date.now());
   }, []);
+
+  const handleModelInteractionChange = useCallback(
+    (active) => {
+      setModelInteractionActive(active);
+      if (!active) markInteraction();
+    },
+    [markInteraction],
+  );
 
   const measureVisibleCount = useCallback(() => {
     const track = trackRef.current;
@@ -475,7 +588,7 @@ function MediaCarousel({ media, label, compact = false }) {
   }, [safeActiveIndex]);
 
   useEffect(() => {
-    if (!canScroll) return undefined;
+    if (!canScroll || modelInteractionActive) return undefined;
 
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
@@ -495,7 +608,7 @@ function MediaCarousel({ media, label, compact = false }) {
     }, delay);
 
     return () => window.clearTimeout(timer);
-  }, [canScroll, lastInteractionAt, maxStartIndex, safeActiveIndex, visibleCount]);
+  }, [canScroll, lastInteractionAt, maxStartIndex, modelInteractionActive, safeActiveIndex, visibleCount]);
 
   useEffect(
     () => () => {
@@ -544,7 +657,13 @@ function MediaCarousel({ media, label, compact = false }) {
         className="flex w-full min-w-0 touch-pan-x snap-x snap-mandatory gap-2 overflow-x-auto overflow-y-hidden pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-3 sm:overflow-hidden sm:pb-2"
       >
         {items.map((item, index) => (
-          <MediaFrame key={`${item.id}-${index}`} item={item} label={label} compact={compact} />
+          <MediaFrame
+            key={`${item.id}-${index}`}
+            item={item}
+            label={label}
+            compact={compact}
+            onModelInteractionChange={handleModelInteractionChange}
+          />
         ))}
         {!compact && items.length > 1 && <span aria-hidden="true" className="w-[18%] shrink-0 sm:hidden" />}
       </div>

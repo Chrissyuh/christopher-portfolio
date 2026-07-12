@@ -11,3 +11,28 @@
     }
   }
 }
+
+@keyframes credential-jump-focus {
+  0%,
+  72% {
+    border-color: #244fd6;
+    box-shadow: 0 0 0 2px rgb(36 79 214 / 24%);
+  }
+
+  100% {
+    border-color: #d2c8b9;
+    box-shadow: 0 0 0 0 rgb(36 79 214 / 0%);
+  }
+}
+
+.credential-jump-highlight {
+  animation: credential-jump-focus 1s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .credential-jump-highlight {
+    animation: none;
+    border-color: #244fd6;
+    box-shadow: 0 0 0 2px rgb(36 79 214 / 24%);
+  }
+}

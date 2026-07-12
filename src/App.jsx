@@ -576,6 +576,8 @@ function ProjectFact({ label, children }) {
 function ProjectLinkButton({ href, label, icon = "arrowRight", type }) {
   if (!href || !label) return null;
 
+  const showType = type && type !== "source";
+
   return (
     <a
       href={href}
@@ -584,11 +586,46 @@ function ProjectLinkButton({ href, label, icon = "arrowRight", type }) {
       className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:px-3 sm:py-2 sm:text-xs"
     >
       {icon !== "arrowRight" && <Icon name={icon} className="mr-2 h-3.5 w-3.5" />}
-      {type && <span className="mr-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[#827466]">{type}</span>}
+      {showType && <span className="mr-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[#827466]">{type}</span>}
       {label}
       {icon === "arrowRight" && <Icon name="arrowRight" className="ml-2 h-3.5 w-3.5" />}
     </a>
   );
+}
+
+const credentialFocusTimers = new WeakMap();
+
+function credentialAnchorId(credentialId) {
+  return `credential-${credentialId}`;
+}
+
+function jumpToCredential(event, credentialId) {
+  event.preventDefault();
+
+  const targetId = credentialAnchorId(credentialId);
+  const target = document.getElementById(targetId);
+
+  if (!target) return;
+
+  const priorTimer = credentialFocusTimers.get(target);
+  if (priorTimer) window.clearTimeout(priorTimer);
+
+  window.history.replaceState(null, "", `#${targetId}`);
+  target.scrollIntoView({
+    behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    block: "center",
+  });
+  target.focus({ preventScroll: true });
+  target.classList.remove("credential-jump-highlight");
+  void target.offsetWidth;
+  target.classList.add("credential-jump-highlight");
+
+  const timer = window.setTimeout(() => {
+    target.classList.remove("credential-jump-highlight");
+    credentialFocusTimers.delete(target);
+  }, 1000);
+
+  credentialFocusTimers.set(target, timer);
 }
 
 function projectArtifactButtons(project, meta) {
@@ -627,6 +664,8 @@ function ProjectRow({ project, index, meta }) {
   const artifactButtons = projectArtifactButtons(project, meta);
   const hasProjectLinks = Boolean(project.logoSrc || artifactButtons.length > 0);
   const hasCompactLogo = project.id === "vividgrasp-ai-vision-robotics-arm";
+  const linkedCredentialId = hasCompactLogo ? "stanford-ai4all" : null;
+  const logoHref = linkedCredentialId ? `#${credentialAnchorId(linkedCredentialId)}` : project.logoHref;
   const logoContainerClass = cn(
     "border border-[#d6cec0] bg-white transition",
     hasCompactLogo ? "inline-flex px-2 py-1.5" : "block px-3 py-2",
@@ -636,7 +675,7 @@ function ProjectRow({ project, index, meta }) {
       src={project.logoSrc}
       alt={project.logoAlt || `${project.title} logo`}
       loading="lazy"
-      className={cn("object-contain", hasCompactLogo ? "h-4 w-auto max-w-24" : "h-8 w-full")}
+      className={cn("object-contain", hasCompactLogo ? "h-6 w-[132px] max-w-full" : "h-8 w-full")}
     />
   ) : null;
 
@@ -647,7 +686,7 @@ function ProjectRow({ project, index, meta }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3, delay: index * 0.045 }}
-      className="group grid min-w-0 scroll-mt-20 border border-[#d2c8b9] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(34,28,18,0.08)] sm:scroll-mt-24 xl:grid-cols-[190px_minmax(0,1fr)]"
+      className="group grid min-w-0 scroll-mt-20 border border-[#d2c8b9] bg-white shadow-sm sm:scroll-mt-24 xl:grid-cols-[190px_minmax(0,1fr)]"
     >
       <div className={`flex flex-wrap items-center gap-2 border-b border-[#e1d7c8] p-2.5 sm:p-4 xl:block xl:border-b-0 xl:border-r xl:p-5 ${style.soft}`}>
         <div className="flex items-center gap-2 xl:justify-between">
@@ -667,12 +706,13 @@ function ProjectRow({ project, index, meta }) {
             </p>
             <div className="mt-2 flex flex-wrap items-stretch gap-2 xl:flex-col">
               {project.logoSrc &&
-                (project.logoHref ? (
+                (logoHref ? (
                   <a
-                    href={project.logoHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`Open ${project.logoAlt || `${project.title} logo`} link`}
+                    href={logoHref}
+                    target={linkedCredentialId ? undefined : "_blank"}
+                    rel={linkedCredentialId ? undefined : "noreferrer"}
+                    onClick={linkedCredentialId ? (event) => jumpToCredential(event, linkedCredentialId) : undefined}
+                    aria-label={linkedCredentialId ? "View Stanford AI4ALL credential" : `Open ${project.logoAlt || `${project.title} logo`} link`}
                     className={cn(
                       logoContainerClass,
                       "hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
@@ -720,7 +760,7 @@ function SmallProjectCard({ project, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.25, delay: index * 0.035 }}
-      className="group flex h-full flex-col border border-[#d2c8b9] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(34,28,18,0.07)]"
+      className="group flex h-full flex-col border border-[#d2c8b9] bg-white shadow-sm"
     >
       <div className="flex items-start justify-between gap-3 border-b border-[#e1d7c8] bg-[#fbfaf7] p-3 sm:p-4">
         <p className="w-fit border border-[#d6cec0] bg-white px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#827466]">{project.type}</p>
@@ -1119,11 +1159,13 @@ function ProgramCredentialCard({ credential, index, meta }) {
 
   return (
     <motion.article
+      id={credentialAnchorId(credential.id)}
+      tabIndex={-1}
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.25, delay: index * 0.04 }}
-      className={cn("relative border bg-white p-3 shadow-sm sm:p-5", accent.border)}
+      className={cn("relative scroll-mt-24 border bg-white p-3 shadow-sm outline-none sm:p-5", accent.border)}
     >
       {credential.id === "tetc" ? (
         <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#00afab]" />
@@ -1197,7 +1239,7 @@ function MicroProjectTile({ project, index, meta }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.22, delay: index * 0.025 }}
-      className="group relative border border-[#d2c8b9] bg-white shadow-sm outline-none transition hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(34,28,18,0.08)] focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
+      className="group relative border border-[#d2c8b9] bg-white shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
     >
       <div className="relative overflow-hidden border-b border-[#e1d7c8]">
         <div className="aspect-video bg-[#fbfaf7]">

@@ -1,6 +1,6 @@
 # Christopher Heskett
 
-> I build hardware projects, robotics simulations, and software tools.
+> I make software, electronics, and mechanisms that work together.
 
 This index points agents to concise, structured, and complete representations of the same public work shown on the portfolio.
 

@@ -66,6 +66,7 @@ export function buildPortfolioStructuredData(content) {
         name: "Christopher Heskett",
         givenName: "Christopher",
         url: siteUrl("/"),
+        ...(meta.heroImageSrc ? { image: siteUrl(meta.heroImageSrc) } : {}),
         email: stripMailto(meta.contactEmailHref),
         affiliation: [{ "@type": "EducationalOrganization", name: meta.academicSchoolName }],
         knowsAbout: list(content.skills).map((skill) => skill.name),

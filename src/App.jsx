@@ -1482,6 +1482,7 @@ function useActiveNavigationSection(sectionLinks, enabled) {
 
 function PortfolioPage({ content }) {
   const meta = content.meta ?? {};
+  const heroHasImage = Boolean(meta.heroImageSrc);
   const projectsById = new Map(list(content.projects).map((project) => [project.id, project]));
   const skills = list(content.skills);
   const personalSkillGroups = skills.filter((skill) => list(skill.projectIds).length > 0).reduce((groups, skill) => {
@@ -1499,31 +1500,66 @@ function PortfolioPage({ content }) {
 
   return (
     <>
-      <section id="top" className="relative z-10 mx-auto max-w-7xl px-3 pb-5 pt-4 sm:px-5 sm:pb-10 sm:pt-10 md:px-8 md:pb-8 md:pt-14">
-        <div className="max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.42 }}
-            className="border border-[#d2c8b9] bg-white p-3.5 shadow-sm sm:p-6 md:p-8"
-          >
-            <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#827466]">{meta.heroEyebrow}</p>
-            <h1 className="mt-2 max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.025em] text-slate-950 sm:mt-4 sm:text-4xl sm:tracking-[-0.045em] md:text-5xl">{meta.heroTitle}</h1>
-            <p className="mt-2.5 max-w-3xl text-lg font-semibold leading-6 text-slate-900 sm:mt-5 sm:text-2xl sm:leading-8">{meta.heroLead}</p>
-            <p className="mt-2.5 max-w-2xl text-[13px] leading-5 text-slate-700 sm:mt-4 sm:text-base sm:leading-7">{meta.heroIntro}</p>
+      <section id="top" className="relative z-10 mx-auto max-w-7xl px-3 pb-4 pt-4 sm:px-5 sm:pb-8 sm:pt-8 md:px-8 md:pb-10 md:pt-10">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.32, ease: "easeOut" }}
+          className={cn(
+            "relative overflow-hidden border-y border-[#cfc4b4]",
+            heroHasImage ? "min-h-[24rem] bg-slate-950 sm:min-h-[30rem]" : "bg-[#f5f3ee]/45",
+          )}
+        >
+          {heroHasImage && (
+            <>
+              <picture className="absolute inset-0">
+                {meta.heroImageMobileSrc && <source media="(max-width: 639px)" srcSet={meta.heroImageMobileSrc} />}
+                <img
+                  src={meta.heroImageSrc}
+                  alt={meta.heroImageAlt || meta.heroTitle}
+                  fetchPriority="high"
+                  className="h-full w-full object-cover"
+                  style={{ objectPosition: meta.heroImagePosition || "center center" }}
+                />
+              </picture>
+              <span aria-hidden="true" className="absolute inset-0 bg-slate-950/60" />
+            </>
+          )}
 
-            <div className="mt-4 flex flex-row flex-wrap gap-2 sm:mt-8 sm:gap-3">
-              <Button asChild className="rounded-none bg-slate-950 px-3 py-2.5 text-xs font-semibold text-white hover:bg-[#244fd6] sm:px-5 sm:py-5 sm:text-sm">
-                <a href="#projects">
-                  {meta.openProjectsLabel} <Icon name="arrowRight" className="ml-2 h-4 w-4" />
+          <div className="relative z-10 flex min-h-[16.5rem] items-center py-5 sm:min-h-[21rem] sm:py-8 md:min-h-[23rem] md:py-10">
+            <div className={cn("w-full border-l-4 border-[#244fd6] pl-4 sm:pl-7 md:ml-[8%] md:max-w-4xl md:pl-9", heroHasImage && "pr-4 sm:pr-7")}>
+              <p className={cn("font-mono text-[9px] uppercase tracking-[0.13em] sm:text-[11px] sm:tracking-[0.17em]", heroHasImage ? "text-white/75" : "text-[#244fd6]")}>{meta.heroEyebrow}</p>
+              <h1 className={cn("mt-2 text-3xl font-semibold leading-[1.03] tracking-normal sm:mt-3 sm:text-5xl md:text-6xl", heroHasImage ? "text-white" : "text-slate-950")}>{meta.heroTitle}</h1>
+              <p className={cn("mt-3 max-w-4xl text-xl font-semibold leading-[1.18] tracking-normal sm:mt-5 sm:text-3xl sm:leading-tight md:text-4xl", heroHasImage ? "text-white" : "text-slate-900")}>{meta.heroLead}</p>
+              <p className={cn("mt-3 max-w-3xl text-[12px] leading-5 sm:mt-5 sm:text-base sm:leading-7", heroHasImage ? "text-white/82" : "text-slate-700")}>{meta.heroIntro}</p>
+
+              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 sm:mt-6 sm:gap-x-7">
+                <a
+                  href="#projects"
+                  className={cn(
+                    "inline-flex items-center border-b-2 py-1 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-sm",
+                    heroHasImage ? "border-white text-white hover:border-[#8fa8ff] hover:text-[#c9d4ff] focus:ring-offset-slate-950" : "border-[#244fd6] text-slate-950 hover:text-[#244fd6] focus:ring-offset-[#f5f3ee]",
+                  )}
+                >
+                  {meta.openProjectsLabel}
+                  <Icon name="arrowRight" className="ml-2 h-4 w-4" />
                 </a>
-              </Button>
-              <Button asChild className="rounded-none bg-white px-3 py-2.5 text-xs font-semibold text-slate-950 ring-1 ring-[#cfc4b4] hover:bg-[#fbfaf7] sm:px-5 sm:py-5 sm:text-sm">
-                <a href={meta.contactGithubHref} target="_blank" rel="noreferrer"><Icon name="github" className="mr-2 h-4 w-4" />{meta.contactGithubLabel}</a>
-              </Button>
+                <a
+                  href={meta.contactGithubHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={cn(
+                    "inline-flex items-center py-1 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-sm",
+                    heroHasImage ? "text-white/78 hover:text-white focus:ring-offset-slate-950" : "text-slate-600 hover:text-slate-950 focus:ring-offset-[#f5f3ee]",
+                  )}
+                >
+                  <Icon name="github" className="mr-2 h-4 w-4" />
+                  {meta.contactGithubLabel}
+                </a>
+              </div>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </section>
 
       <section id="projects" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-10">

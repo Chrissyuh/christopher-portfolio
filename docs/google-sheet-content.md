@@ -6,7 +6,7 @@ The deployed site currently uses `src/content/portfolioContent.generated.json`. 
 
 Import the CSV files from `docs/google-sheet-template/` into one public Google Sheet. Keep each file name as the tab name and preserve its headers.
 
-- `Meta`: site labels, titles, links, and school context.
+- `Meta`: site labels, titles, links, school context, and optional hero-image fields. Leave `heroImageSrc`, `heroImageMobileSrc`, and `heroImageAlt` blank for the photo-free masthead; when publishing a photo, provide accurate alt text and use `heroImagePosition` to control its crop.
 - `MainProjects`: featured-project status, summary, role, links, logo, and media.
 - `ProjectArtifactLinks`: additional public project evidence links.
 - `Academics`: GPA, rank, and coursework cards.

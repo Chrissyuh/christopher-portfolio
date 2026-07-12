@@ -6,7 +6,7 @@ Structured JSON: https://chrisaheskett.vercel.app/portfolio.json
 
 ## Summary
 
-Selected work includes Garden Party Pinball, VividGrasp, Smart Planter, and Subpix.
+Current work includes a full-size pinball machine, an AI-vision robotics arm, a self-watering planter PCB, and a subpixel image editor.
 
 ## Main Projects
 

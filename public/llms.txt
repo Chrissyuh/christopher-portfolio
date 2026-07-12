@@ -1,43 +1,41 @@
 # Christopher Heskett
 
-Selected work includes Garden Party Pinball, VividGrasp, Smart Planter, and Subpix.
+> I build hardware projects, robotics simulations, and software tools.
+
+This index points agents to concise, structured, and complete representations of the same public work shown on the portfolio.
 
 ## Primary Pages
 
-- [Portfolio homepage](https://chrisaheskett.vercel.app/)
-- [Experience](https://chrisaheskett.vercel.app/record)
-- [Full portfolio JSON](https://chrisaheskett.vercel.app/portfolio.json)
-- [Full Markdown summary](https://chrisaheskett.vercel.app/llms-full.txt)
+- [Portfolio homepage](https://chrisaheskett.vercel.app/): Human-facing portfolio and project media.
+- [Experience](https://chrisaheskett.vercel.app/record): Activities, programs, and full record.
+- [Full Markdown summary](https://chrisaheskett.vercel.app/llms-full.txt): Complete portfolio context in one text file.
+- [Full portfolio JSON](https://chrisaheskett.vercel.app/portfolio.json): Normalized structured portfolio data.
 
-## Main Projects
+## Featured Projects
 
-- Garden Party Pinball (In progress): A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield. Role: I am building the cabinet, playfield systems, wiring, MPF configuration, and test setup. Published media: 2.
-- VividGrasp AI-Vision Robotics Arm (Completed team project): A Stanford AI4ALL team project connecting SolidWorks CAD, STL export, URDF/PyBullet simulation, target input, and robotic-arm motion. Role: Head CAD designer; prepared URDF files and worked with a teammate on a physical prototype. ([source](https://github.com/LenekyRadish/VividGrasp)). Published media: 4.
-- Smart Self-Watering Pot / Smart Planter PCB (Prototype in progress): A plant-watering prototype involving moisture sensing, pump control, electronics packaging, enclosure planning, and PCB work. Role: I worked on the sensing and control concept, electronics packaging, PCB direction, and enclosure constraints. Published media: 4; interactive 3D models: 1.
-- Subpix (Functional v1): An open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON data, exporting PNGs, and packaging for Windows. Role: Built the editor, file-format flow, export path, product site, and Windows packaging. ([Open app](https://subpix-editor.vercel.app/), [source](https://github.com/Chrissyuh/Subpix)). Published media: 2.
+- [Garden Party Pinball](https://chrisaheskett.vercel.app/#project-garden-party-pinball): Status: In progress. A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield. Role: I am building the cabinet, playfield systems, wiring, MPF configuration, and test setup. Published media: 2.
+- [VividGrasp AI-Vision Robotics Arm](https://chrisaheskett.vercel.app/#project-vividgrasp-ai-vision-robotics-arm): Status: Completed team project. A Stanford AI4ALL team project connecting SolidWorks CAD, STL export, URDF/PyBullet simulation, target input, and robotic-arm motion. Role: Head CAD designer; prepared URDF files and worked with a teammate on a physical prototype. ([source](https://github.com/LenekyRadish/VividGrasp)). Published media: 4.
+- [Smart Self-Watering Pot / Smart Planter PCB](https://chrisaheskett.vercel.app/#project-smart-self-watering-pot): Status: Prototype in progress. A plant-watering prototype involving moisture sensing, pump control, electronics packaging, enclosure planning, and PCB work. Role: I worked on the sensing and control concept, electronics packaging, PCB direction, and enclosure constraints. Published media: 4; interactive 3D models: 1.
+- [Subpix](https://chrisaheskett.vercel.app/#project-subpix): Status: Functional v1. An open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON data, exporting PNGs, and packaging for Windows. Role: Built the editor, file-format flow, export path, product site, and Windows packaging. ([Open app](https://subpix-editor.vercel.app/), [source](https://github.com/Chrissyuh/Subpix)). Published media: 2.
 
 ## More Projects
 
-- Check-ins: Logs check-ins and shows gaps, streaks, and progress. ([project](https://check-ins-zeta.vercel.app/)). Published media: 0.
+- [Check-ins](https://chrisaheskett.vercel.app/#smaller-projects): Logs check-ins and shows gaps, streaks, and progress. ([project](https://check-ins-zeta.vercel.app/)). Published media: 0.
 
 ## Programs And Credentials
 
-- Teen Engineering + Tech Center: Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation. (Organization: ExxonMobil Foundation; [Program site](https://tetc.org/))
-- Stanford AI4ALL Certificate of Completion: Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project. (Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies; Date: June 26, 2026; Certificate scan: available; [Program site](https://ai4all.spcs.stanford.edu/))
+- [Teen Engineering + Tech Center](https://chrisaheskett.vercel.app/#credential-tetc): Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation. (Organization: ExxonMobil Foundation; [Program site](https://tetc.org/))
+- [Stanford AI4ALL Certificate of Completion](https://chrisaheskett.vercel.app/#credential-stanford-ai4all): Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project. (Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies; Date: June 26, 2026; Certificate scan: available; [Program site](https://ai4all.spcs.stanford.edu/))
 
 ## Small Builds
 
-- MIDI Practice Tool: Small Python tool for soundfonts, pedals, controls, and keyboard practice. Published media: 0.
-- Desmos 3D Solar System: 3D orbit scene built in Desmos to practice surfaces and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Published media: 0.
-- TinyGPT Experiments: Small next-token model experiments for learning training vs. instruction behavior. Published media: 0.
-- VEX V5 Drivetrain Prototype: Quick drivetrain prototype for gearing, shaft spacing, and packaging. Published media: 0.
+- [MIDI Practice Tool](https://chrisaheskett.vercel.app/#bench-notes): Small Python tool for soundfonts, pedals, controls, and keyboard practice. Published media: 0.
+- [Desmos 3D Solar System](https://chrisaheskett.vercel.app/#bench-notes): 3D orbit scene built in Desmos to practice surfaces and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Published media: 0.
+- [TinyGPT Experiments](https://chrisaheskett.vercel.app/#bench-notes): Small next-token model experiments for learning training vs. instruction behavior. Published media: 0.
+- [VEX V5 Drivetrain Prototype](https://chrisaheskett.vercel.app/#bench-notes): Quick drivetrain prototype for gearing, shaft spacing, and packaging. Published media: 0.
 
 ## Contact
 
-- [View GitHub](https://github.com/Chrissyuh)
-- [Open Subpix](https://subpix-editor.vercel.app/)
-- [Email](mailto:Chrisaheskett@gmail.com)
-
-## Notes For Agents
-
-Use `/portfolio.json` for structured data. Use `/llms-full.txt` when a single Markdown context file is easier to ingest.
+- [View GitHub](https://github.com/Chrissyuh): Public source repositories.
+- [Open Subpix](https://subpix-editor.vercel.app/): Current live project.
+- [Email](mailto:Chrisaheskett@gmail.com): Contact Christopher.

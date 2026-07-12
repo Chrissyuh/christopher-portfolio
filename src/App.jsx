@@ -112,197 +112,6 @@ function siteUrl(path = "/") {
   return new URL(path, SITE_URL).toString();
 }
 
-function stripMailto(href) {
-  return href?.startsWith("mailto:") ? href.slice("mailto:".length) : href;
-}
-
-function buildStructuredData(content) {
-  const meta = content.meta ?? {};
-  const personId = `${siteUrl("/")}#christopher-heskett`;
-  const websiteId = `${siteUrl("/")}#website`;
-  const projects = list(content.projects);
-  const smallProjects = list(content.smallProjects);
-  const microProjects = list(content.microProjects);
-  const programCredentials = list(content.programCredentials);
-  const issuedCredentials = programCredentials.filter((entry) => entry.entryType !== "program");
-  const programEntries = programCredentials.filter((entry) => entry.entryType === "program");
-  const creativeWorks = [
-    ...projects.map((project) => ({
-      id: project.id,
-      title: project.title,
-      href: project.href,
-      sourceHref: project.sourceHref,
-      label: project.label,
-      summary: project.summary,
-      role: project.role,
-      teamContext: project.teamContext,
-      artifactLinks: project.artifactLinks,
-      media: project.media,
-    })),
-    ...smallProjects.map((project) => ({
-      id: `more-${project.id}`,
-      sectionUrl: siteUrl("/#smaller-projects"),
-      title: project.title,
-      href: project.href,
-      sourceHref: project.sourceHref,
-      label: project.type,
-      summary: project.description,
-      media: project.media,
-    })),
-    ...microProjects.map((project) => ({
-      id: `small-${project.id}`,
-      sectionUrl: siteUrl("/#bench-notes"),
-      title: project.title,
-      href: project.href,
-      sourceHref: project.sourceHref,
-      label: project.type,
-      summary: project.description,
-      media: project.media,
-    })),
-  ];
-
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Person",
-        "@id": personId,
-        name: "Christopher Heskett",
-        givenName: "Christopher",
-        url: siteUrl("/"),
-        email: stripMailto(meta.contactEmailHref),
-        affiliation: [{ "@type": "EducationalOrganization", name: meta.academicSchoolName }],
-        knowsAbout: list(content.skills).map((skill) => skill.name),
-        hasCredential: issuedCredentials.map((credential) => ({
-          "@id": `${siteUrl("/")}#credential-${credential.id}`,
-        })),
-        memberOf: programEntries.map((program) => ({
-          "@id": `${siteUrl("/")}#program-${program.id}`,
-        })),
-        sameAs: [meta.contactGithubHref].filter(Boolean),
-      },
-      {
-        "@type": "WebSite",
-        "@id": websiteId,
-        name: meta.documentTitle,
-        url: siteUrl("/"),
-        inLanguage: "en-US",
-        author: { "@id": personId },
-        description: meta.heroIntro,
-      },
-      {
-        "@type": "ItemList",
-        "@id": `${siteUrl("/")}#main-projects`,
-        name: "Christopher Heskett engineering projects",
-        url: siteUrl("/#projects"),
-        numberOfItems: projects.length,
-        itemListElement: projects.map((project, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          item: { "@id": `${siteUrl("/")}#project-${project.id}` },
-        })),
-      },
-      {
-        "@type": "ItemList",
-        "@id": `${siteUrl("/")}#more-projects`,
-        name: "More projects by Christopher Heskett",
-        url: siteUrl("/#smaller-projects"),
-        numberOfItems: smallProjects.length,
-        itemListElement: smallProjects.map((project, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          item: { "@id": `${siteUrl("/")}#project-more-${project.id}` },
-        })),
-      },
-      {
-        "@type": "ItemList",
-        "@id": `${siteUrl("/")}#small-projects`,
-        name: "Small builds by Christopher Heskett",
-        url: siteUrl("/#bench-notes"),
-        numberOfItems: microProjects.length,
-        itemListElement: microProjects.map((project, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          item: { "@id": `${siteUrl("/")}#project-small-${project.id}` },
-        })),
-      },
-      ...creativeWorks.map((project) => ({
-        "@type": "CreativeWork",
-        "@id": `${siteUrl("/")}#project-${project.id}`,
-        name: project.title,
-        url: project.href ?? project.sectionUrl ?? siteUrl("/#projects"),
-        creator: { "@id": personId },
-        about: project.label,
-        description: project.summary,
-        keywords: list(project.artifactLinks).map((link) => link.label),
-        ...(project.teamContext ? { creditText: project.teamContext } : {}),
-        ...(project.role
-          ? {
-              contributor: {
-                "@type": "Role",
-                roleName: project.role,
-                contributor: { "@id": personId },
-              },
-            }
-          : {}),
-        ...(project.sourceHref ? { codeRepository: project.sourceHref } : {}),
-        ...(list(project.artifactLinks).length > 0
-          ? { isBasedOn: list(project.artifactLinks).map((link) => link.href).filter(Boolean) }
-          : {}),
-        ...(list(project.media).some((item) => item.src)
-          ? {
-              encoding: list(project.media)
-                .filter((item) => item.src)
-                .map((item) => ({
-                  "@type": item.type === "photo" ? "ImageObject" : item.type === "video" ? "VideoObject" : "MediaObject",
-                  contentUrl: siteUrl(item.src),
-                  ...(item.type === "model" ? { encodingFormat: "model/gltf-binary" } : {}),
-                  ...(item.posterSrc ? { thumbnailUrl: siteUrl(item.posterSrc) } : {}),
-                  ...(item.caption ? { caption: item.caption } : {}),
-                })),
-            }
-          : {}),
-      })),
-      ...issuedCredentials.map((credential) => ({
-        "@type": "EducationalOccupationalCredential",
-        "@id": `${siteUrl("/")}#credential-${credential.id}`,
-        name: credential.credential,
-        description: credential.summary,
-        credentialCategory: "certificate",
-        recognizedBy: {
-          "@type": "Organization",
-          name: credential.issuer,
-          ...(credential.href ? { url: credential.href } : {}),
-        },
-        ...(credential.date ? { dateCreated: credential.date } : {}),
-        ...(credential.scanSrc ? { image: siteUrl(credential.scanSrc) } : {}),
-      })),
-      ...programEntries.map((program) => ({
-        "@type": "EducationalOrganization",
-        "@id": `${siteUrl("/")}#program-${program.id}`,
-        name: program.program,
-        description: program.summary,
-        ...(program.href ? { url: program.href } : {}),
-        ...(program.logoSrc ? { logo: siteUrl(program.logoSrc) } : {}),
-        ...(program.issuer
-          ? {
-              parentOrganization: {
-                "@type": "Organization",
-                name: program.issuer,
-              },
-            }
-          : {}),
-      })),
-    ],
-  };
-}
-
-function StructuredData({ content }) {
-  const json = JSON.stringify(buildStructuredData(content)).replaceAll("</", "<\\/");
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json }} />;
-}
-
 function FittedPhoto({ src, alt }) {
   return (
     <>
@@ -1854,7 +1663,12 @@ function ContactSection({ content }) {
             ))}
           </div>
         </div>
-        <p className="border-t border-[#d2c8b9] bg-[#fbfaf7] p-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] md:p-4 md:text-[11px] md:tracking-[0.16em]">&copy; {new Date().getFullYear()} {meta.footerName}</p>
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#d2c8b9] bg-[#fbfaf7] p-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] md:p-4 md:text-[11px] md:tracking-[0.16em]">
+          <p>&copy; {new Date().getFullYear()} {meta.footerName}</p>
+          <a className="normal-case tracking-normal text-slate-600 underline decoration-[#cfc4b4] underline-offset-4 hover:text-[#244fd6]" href="/llms-full.txt">
+            Machine-readable portfolio
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -1935,7 +1749,6 @@ function ChristopherPortfolioShell() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,46,32,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,46,32,0.055)_1px,transparent_1px)] bg-[size:44px_44px]" />
       </div>
 
-      <StructuredData content={content} />
       <Navigation content={content} />
 
       <Routes>

@@ -61,14 +61,14 @@ function mediaSummary(project) {
   return `Published media: ${published.length}${modelText}`;
 }
 
-function credentialSummary(credential) {
+function credentialDetails(credential) {
   if (credential.entryType === "program") {
     const details = [
       credential.issuer ? `Organization: ${credential.issuer}` : "",
       credential.href ? markdownLink(credential.hrefLabel || "program", credential.href) : "",
     ].filter(Boolean);
 
-    return `${credential.program}: ${credential.summary}${details.length ? ` (${details.join("; ")})` : ""}`;
+    return `${credential.summary}${details.length ? ` (${details.join("; ")})` : ""}`;
   }
 
   const details = [
@@ -78,7 +78,7 @@ function credentialSummary(credential) {
     credential.href ? markdownLink(credential.hrefLabel || "program", credential.href) : "",
   ].filter(Boolean);
 
-  return `${credential.credential}: ${credential.summary}${details.length ? ` (${details.join("; ")})` : ""}`;
+  return `${credential.summary}${details.length ? ` (${details.join("; ")})` : ""}`;
 }
 
 function roleSummary(project) {
@@ -125,35 +125,38 @@ function buildPortfolioJson(content) {
 function buildLlmsTxt(content) {
   const meta = content.meta ?? {};
   const primaryLinks = [
-    markdownLink("Portfolio homepage", absoluteUrl("/")),
-    markdownLink("Experience", absoluteUrl("/record")),
-    markdownLink("Full portfolio JSON", absoluteUrl("/portfolio.json")),
-    markdownLink("Full Markdown summary", absoluteUrl("/llms-full.txt")),
+    `${markdownLink("Portfolio homepage", absoluteUrl("/"))}: Human-facing portfolio and project media.`,
+    `${markdownLink("Experience", absoluteUrl("/record"))}: Activities, programs, and full record.`,
+    `${markdownLink("Full Markdown summary", absoluteUrl("/llms-full.txt"))}: Complete portfolio context in one text file.`,
+    `${markdownLink("Full portfolio JSON", absoluteUrl("/portfolio.json"))}: Normalized structured portfolio data.`,
   ];
 
   const contactLinks = [
-    meta.contactGithubHref && markdownLink(meta.contactGithubLabel ?? "GitHub", meta.contactGithubHref),
-    meta.contactProjectHref && markdownLink(meta.contactProjectLabel ?? "Project", meta.contactProjectHref),
-    meta.resumeHref && markdownLink(meta.resumeLabel ?? "Resume", meta.resumeHref),
-    meta.contactEmailHref && markdownLink(meta.contactEmailLabel ?? "Email", meta.contactEmailHref),
+    meta.contactGithubHref && `${markdownLink(meta.contactGithubLabel ?? "GitHub", meta.contactGithubHref)}: Public source repositories.`,
+    meta.contactProjectHref && `${markdownLink(meta.contactProjectLabel ?? "Project", meta.contactProjectHref)}: Current live project.`,
+    meta.resumeHref && `${markdownLink(meta.resumeLabel ?? "Resume", meta.resumeHref)}: Resume.`,
+    meta.contactEmailHref && `${markdownLink(meta.contactEmailLabel ?? "Email", meta.contactEmailHref)}: Contact Christopher.`,
   ].filter(Boolean);
 
   return [
     "# Christopher Heskett",
     "",
-    meta.heroIntro ?? "Engineering portfolio for Christopher.",
+    `> ${meta.heroLead ?? meta.heroIntro ?? "Student engineering portfolio for Christopher Heskett."}`,
+    "",
+    "This index points agents to concise, structured, and complete representations of the same public work shown on the portfolio.",
     "",
     "## Primary Pages",
     "",
     markdownList(primaryLinks),
     "",
-    "## Main Projects",
+    "## Featured Projects",
     "",
     markdownList(
       list(content.projects).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        return appendSentence(`${project.title} (${project.status}): ${project.summary}${roleSummary(project)}${linkText}`, `${mediaSummary(project)}.`);
+        const description = appendSentence(`Status: ${project.status}. ${project.summary}${roleSummary(project)}${linkText}`, `${mediaSummary(project)}.`);
+        return `${markdownLink(project.title, absoluteUrl(`/#project-${project.id}`))}: ${description}`;
       }),
     ),
     "",
@@ -163,13 +166,19 @@ function buildLlmsTxt(content) {
       list(content.smallProjects).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        return appendSentence(`${project.title}: ${project.description}${linkText}`, `${mediaSummary(project)}.`);
+        const description = appendSentence(`${project.description}${linkText}`, `${mediaSummary(project)}.`);
+        return `${markdownLink(project.title, absoluteUrl("/#smaller-projects"))}: ${description}`;
       }),
     ),
     "",
     "## Programs And Credentials",
     "",
-    markdownList(list(content.programCredentials).map(credentialSummary)),
+    markdownList(
+      list(content.programCredentials).map(
+        (credential) =>
+          `${markdownLink(credential.credential || credential.program, absoluteUrl(`/#credential-${credential.id}`))}: ${credentialDetails(credential)}`,
+      ),
+    ),
     "",
     "## Small Builds",
     "",
@@ -177,17 +186,14 @@ function buildLlmsTxt(content) {
       list(content.microProjects).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        return appendSentence(`${project.title}: ${project.description}${linkText}`, `${mediaSummary(project)}.`);
+        const description = appendSentence(`${project.description}${linkText}`, `${mediaSummary(project)}.`);
+        return `${markdownLink(project.title, absoluteUrl("/#bench-notes"))}: ${description}`;
       }),
     ),
     "",
     "## Contact",
     "",
     markdownList(contactLinks),
-    "",
-    "## Notes For Agents",
-    "",
-    "Use `/portfolio.json` for structured data. Use `/llms-full.txt` when a single Markdown context file is easier to ingest.",
     "",
   ].join("\n");
 }
@@ -352,6 +358,12 @@ function buildSitemapXml() {
 
 function buildRobotsTxt() {
   return [
+    "User-agent: OAI-SearchBot",
+    "Allow: /",
+    "",
+    "User-agent: ChatGPT-User",
+    "Allow: /",
+    "",
     "User-agent: *",
     "Allow: /",
     "",

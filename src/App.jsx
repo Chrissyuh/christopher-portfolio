@@ -594,9 +594,49 @@ function ProjectLinkButton({ href, label, icon = "arrowRight", type }) {
 }
 
 const credentialFocusTimers = new WeakMap();
+const credentialScrollFrames = new WeakMap();
+const credentialHighlightDurationMs = 1600;
 
 function credentialAnchorId(credentialId) {
   return `credential-${credentialId}`;
+}
+
+function highlightCredential(target) {
+  target.focus({ preventScroll: true });
+  target.classList.remove("credential-jump-highlight");
+  void target.offsetWidth;
+  target.classList.add("credential-jump-highlight");
+
+  const timer = window.setTimeout(() => {
+    target.classList.remove("credential-jump-highlight");
+    credentialFocusTimers.delete(target);
+  }, credentialHighlightDurationMs);
+
+  credentialFocusTimers.set(target, timer);
+}
+
+function highlightCredentialAfterScroll(target) {
+  let lastScrollY = window.scrollY;
+  let stableFrames = 0;
+  const startedAt = window.performance.now();
+
+  function checkScrollPosition() {
+    const currentScrollY = window.scrollY;
+    stableFrames = Math.abs(currentScrollY - lastScrollY) < 0.5 ? stableFrames + 1 : 0;
+    lastScrollY = currentScrollY;
+
+    if (stableFrames >= 6 || window.performance.now() - startedAt > 1800) {
+      credentialScrollFrames.delete(target);
+      highlightCredential(target);
+      return;
+    }
+
+    const frame = window.requestAnimationFrame(checkScrollPosition);
+    credentialScrollFrames.set(target, frame);
+  }
+
+  const frame = window.requestAnimationFrame(checkScrollPosition);
+  credentialScrollFrames.set(target, frame);
 }
 
 function jumpToCredential(event, credentialId) {
@@ -609,23 +649,23 @@ function jumpToCredential(event, credentialId) {
 
   const priorTimer = credentialFocusTimers.get(target);
   if (priorTimer) window.clearTimeout(priorTimer);
+  const priorFrame = credentialScrollFrames.get(target);
+  if (priorFrame) window.cancelAnimationFrame(priorFrame);
+
+  target.classList.remove("credential-jump-highlight");
 
   window.history.replaceState(null, "", `#${targetId}`);
+  const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   target.scrollIntoView({
-    behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    behavior: prefersReducedMotion ? "auto" : "smooth",
     block: "center",
   });
-  target.focus({ preventScroll: true });
-  target.classList.remove("credential-jump-highlight");
-  void target.offsetWidth;
-  target.classList.add("credential-jump-highlight");
 
-  const timer = window.setTimeout(() => {
-    target.classList.remove("credential-jump-highlight");
-    credentialFocusTimers.delete(target);
-  }, 1000);
-
-  credentialFocusTimers.set(target, timer);
+  if (prefersReducedMotion) {
+    highlightCredential(target);
+  } else {
+    highlightCredentialAfterScroll(target);
+  }
 }
 
 function projectArtifactButtons(project, meta) {

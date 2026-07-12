@@ -29,6 +29,8 @@ const iconPaths = {
   arrowRight: "M5 12h14M13 5l7 7-7 7",
   chevronLeft: "M15 18l-6-6 6-6",
   chevronRight: "M9 6l6 6-6 6",
+  pause: "M8 5v14M16 5v14",
+  play: "m8 5 11 7-11 7V5z",
   cpu: "M9 9h6v6H9z M9 1v3 M15 1v3 M9 20v3 M15 20v3 M1 9h3 M1 15h3 M20 9h3 M20 15h3 M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z",
   flame: "M12 22c4.4 0 8-3.2 8-7.6 0-2.7-1.3-5-3.7-6.9.2 1.7-.5 3.1-1.8 3.9.2-2.9-1.4-5.8-4.7-8.4.5 3.5-1 5.3-2.4 7-1.2 1.4-2.4 2.8-2.4 5 0 4 3.1 7 7 7z M12 19c1.8 0 3.2-1.3 3.2-3.1 0-1.4-.8-2.7-2.3-3.8.1 1.3-.5 2.1-1.3 2.8-.7.6-1.3 1.2-1.3 2.1 0 1.2.8 2 1.7 2z",
   github:
@@ -416,14 +418,7 @@ function MediaFrame({ item, label, compact = false, onModelInteractionChange }) 
     <figure className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}>
       <div className="relative aspect-video overflow-hidden bg-[#ded8cd]">
         {item.src && mediaType === "video" && (
-          <video
-            src={item.src}
-            poster={item.posterSrc || undefined}
-            controls
-            preload="metadata"
-            aria-label={item.alt || caption}
-            className="h-full w-full bg-[#ded8cd] object-contain"
-          />
+          <ViewportVideo item={item} caption={caption} />
         )}
         {item.src && mediaType === "model" && (
           <ModelMedia item={item} label={label} onInteractionChange={onModelInteractionChange} />
@@ -445,10 +440,99 @@ function MediaFrame({ item, label, compact = false, onModelInteractionChange }) 
       </div>
       {item.src && (
         <figcaption className="border-t border-[#e1d7c8] px-2.5 py-1.5 text-[11px] leading-4 text-slate-700 sm:px-3 sm:py-2 sm:text-xs sm:leading-5">
-          {caption}
+          {caption.startsWith("Interactive ") ? (
+            <>
+              <strong className="font-bold text-[#7c3aed]">Interactive</strong>
+              {caption.slice("Interactive".length)}
+            </>
+          ) : (
+            caption
+          )}
         </figcaption>
       )}
     </figure>
+  );
+}
+
+function ViewportVideo({ item, caption }) {
+  const hostRef = useRef(null);
+  const videoRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const [pageVisible, setPageVisible] = useState(!document.hidden);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [userPaused, setUserPaused] = useState(false);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting && entry.intersectionRatio >= 0.4),
+      { threshold: [0, 0.4, 0.75], rootMargin: "-10% 0px -10%" },
+    );
+
+    observer.observe(host);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    function handleVisibilityChange() {
+      setPageVisible(!document.hidden);
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (inView && pageVisible && !userPaused) {
+      video.play().catch(() => setIsPlaying(false));
+    } else {
+      video.pause();
+    }
+  }, [inView, pageVisible, userPaused]);
+
+  function togglePlayback() {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      setUserPaused(false);
+      video.play().catch(() => setIsPlaying(false));
+    } else {
+      setUserPaused(true);
+      video.pause();
+    }
+  }
+
+  return (
+    <div ref={hostRef} className="relative h-full w-full">
+      <video
+        ref={videoRef}
+        src={item.src}
+        poster={item.posterSrc || undefined}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-label={item.alt || caption}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        className="h-full w-full bg-[#ded8cd] object-contain"
+      />
+      <button
+        type="button"
+        onClick={togglePlayback}
+        aria-label={isPlaying ? "Pause video" : "Play video"}
+        title={isPlaying ? "Pause video" : "Play video"}
+        className="absolute bottom-2 right-2 grid h-8 w-8 place-items-center border border-white/60 bg-slate-950/75 text-white shadow-sm backdrop-blur-sm transition hover:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-900"
+      >
+        <Icon name={isPlaying ? "pause" : "play"} className="h-3.5 w-3.5" />
+      </button>
+    </div>
   );
 }
 
@@ -1140,7 +1224,7 @@ function DuolingoStreakCard({ item, index }) {
         target="_blank"
         rel="noreferrer"
         aria-label="Open Duolingo profile"
-        className="absolute right-3 top-3 inline-flex items-center gap-1.5 border border-[#d8b451] bg-white/90 px-2 py-1 text-[10px] font-semibold text-slate-900 transition hover:bg-[#fff8db] focus:outline-none focus:ring-2 focus:ring-[#d7a31f] focus:ring-offset-2 sm:px-2.5 sm:py-1.5 sm:text-[11px]"
+        className="absolute right-3 top-3 z-20 inline-flex min-h-8 items-center gap-1.5 border border-[#d8b451] bg-white/95 px-2 py-1 text-[10px] font-semibold text-slate-900 transition hover:bg-[#fff8db] focus:outline-none focus:ring-2 focus:ring-[#d7a31f] focus:ring-offset-2 sm:px-2.5 sm:py-1.5 sm:text-[11px]"
       >
         {profileLabel}
         <Icon name="arrowRight" className="h-3 w-3" />
@@ -1190,7 +1274,7 @@ function AcademicCard({ item, index }) {
       )}
       <p className="font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-xs sm:tracking-[0.2em]">{item.label}</p>
       <p className="mt-1.5 text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:mt-3 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em]">{item.value}</p>
-      {item.note && <p className="mt-2 hidden text-xs leading-5 text-slate-700 sm:mt-3 sm:block sm:text-sm sm:leading-6">{item.note}</p>}
+      {item.note && <p className="mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{item.note}</p>}
     </motion.div>
   );
 }
@@ -1445,25 +1529,25 @@ function MicroProjectTile({ project, index, meta }) {
           )}
         </div>
 
-        <div className="pointer-events-none absolute inset-2 flex flex-col justify-between border border-[#d2c8b9] bg-white/95 p-2.5 opacity-0 shadow-sm backdrop-blur-sm transition duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus:pointer-events-auto group-focus:opacity-100 sm:p-3">
+        <div className="pointer-events-none absolute inset-2 flex flex-col border border-[#d2c8b9] bg-white/95 p-2 opacity-0 shadow-sm backdrop-blur-sm transition duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus:pointer-events-auto group-focus:opacity-100">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0f766e]">
               {project.type}
             </p>
-            <p className="mt-2 text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{project.description}</p>
+            <p className="mt-1.5 line-clamp-3 text-[11px] leading-4 text-slate-700">{project.description}</p>
           </div>
 
           {(project.href || project.sourceHref) && (
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-auto flex min-h-7 items-center gap-2 pt-2">
               {project.href && (
                 <a
                   href={project.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center border border-[#cfc4b4] bg-white px-2.5 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee]"
+                  className="inline-flex h-7 items-center justify-center gap-1.5 border border-[#cfc4b4] bg-white px-2 text-[11px] font-semibold leading-none text-slate-950 transition hover:bg-[#f5f3ee]"
                 >
                   {meta.microProjectsOpenLabel}
-                  <Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" />
+                  <Icon name="arrowRight" className="h-3.5 w-3.5" />
                 </a>
               )}
               {project.sourceHref && (
@@ -1471,9 +1555,9 @@ function MicroProjectTile({ project, index, meta }) {
                   href={project.sourceHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center border border-[#cfc4b4] bg-white px-2.5 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#f5f3ee]"
+                  className="inline-flex h-7 items-center justify-center gap-1.5 border border-[#cfc4b4] bg-white px-2 text-[11px] font-semibold leading-none text-slate-950 transition hover:bg-[#f5f3ee]"
                 >
-                  <Icon name="github" className="mr-1.5 h-3.5 w-3.5" />
+                  <Icon name="github" className="h-3.5 w-3.5" />
                   {meta.microProjectsSourceLabel}
                 </a>
               )}

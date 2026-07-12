@@ -283,6 +283,29 @@ function StructuredData({ content }) {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json }} />;
 }
 
+function FittedPhoto({ src, alt }) {
+  return (
+    <>
+      <img
+        src={src}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-45 blur-2xl"
+      />
+      <span aria-hidden="true" className="absolute inset-0 bg-[#f4f1eb]/55" />
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        className="relative z-10 h-full w-full object-contain drop-shadow-[0_2px_10px_rgba(15,23,42,0.16)]"
+      />
+    </>
+  );
+}
+
 function MediaFrame({ item, label, compact = false }) {
   const mediaType = item.type === "video" ? "video" : "photo";
   const caption = item.caption || item.alt || label;
@@ -290,24 +313,17 @@ function MediaFrame({ item, label, compact = false }) {
 
   return (
     <figure className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}>
-      <div className="aspect-video bg-slate-950">
+      <div className="relative aspect-video overflow-hidden bg-[#ded8cd]">
         {item.src && mediaType === "video" && (
           <video
             src={item.src}
             controls
             preload="metadata"
             aria-label={item.alt || caption}
-            className="h-full w-full bg-slate-950 object-contain"
+            className="h-full w-full bg-[#ded8cd] object-contain"
           />
         )}
-        {item.src && mediaType === "photo" && (
-          <img
-            src={item.src}
-            alt={item.alt || caption}
-            loading="lazy"
-            className="h-full w-full bg-slate-950 object-contain"
-          />
-        )}
+        {item.src && mediaType === "photo" && <FittedPhoto src={item.src} alt={item.alt || caption} />}
         {!item.src && (
           <div
             aria-label={`${mediaType} placeholder: ${caption}`}
@@ -1282,7 +1298,7 @@ function MicroProjectTile({ project, index, meta }) {
       className="group relative border border-[#d2c8b9] bg-white shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
     >
       <div className="relative overflow-hidden border-b border-[#e1d7c8]">
-        <div className="aspect-video bg-slate-950">
+        <div className="relative aspect-video overflow-hidden bg-[#ded8cd]">
           {media.src && mediaType === "video" && (
             <video
               src={media.src}
@@ -1290,17 +1306,10 @@ function MicroProjectTile({ project, index, meta }) {
               playsInline
               preload="metadata"
               aria-label={media.alt || caption}
-              className="h-full w-full bg-slate-950 object-contain"
+              className="h-full w-full bg-[#ded8cd] object-contain"
             />
           )}
-          {media.src && mediaType === "photo" && (
-            <img
-              src={media.src}
-              alt={media.alt || caption}
-              loading="lazy"
-              className="h-full w-full bg-slate-950 object-contain"
-            />
-          )}
+          {media.src && mediaType === "photo" && <FittedPhoto src={media.src} alt={media.alt || caption} />}
           {!media.src && (
             <div
               aria-label={`${mediaType} placeholder: ${caption}`}

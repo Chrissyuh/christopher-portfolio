@@ -210,16 +210,17 @@
         {
           "id": "media-1",
           "type": "photo",
-          "src": "/portfolio-media/subpix/subpix-editor-canvas.png",
-          "alt": "Subpix editor showing an RGB horizontal stripe subpixel drawing canvas",
-          "caption": "Subpix editor canvas"
+          "src": "/portfolio-media/subpix/subpix-editor-grid-hidden.webp",
+          "alt": "Subpix editor showing an RGB subpixel drawing with the grid hidden",
+          "caption": "RGB subpixel drawing in Subpix"
         },
         {
           "id": "media-2",
           "type": "video",
-          "src": null,
-          "alt": "Subpix editing demo video needed",
-          "caption": "Add editing demo"
+          "src": "/portfolio-media/subpix/subpix-drawing-demo.mp4",
+          "posterSrc": "/portfolio-media/subpix/subpix-editor-grid-hidden.webp",
+          "alt": "Subpix drawing demonstration with the grid hidden",
+          "caption": "Drawing with RGB subpixels"
         }
       ]
     }

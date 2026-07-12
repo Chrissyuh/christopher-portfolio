@@ -418,6 +418,7 @@ function MediaFrame({ item, label, compact = false, onModelInteractionChange }) 
         {item.src && mediaType === "video" && (
           <video
             src={item.src}
+            poster={item.posterSrc || undefined}
             controls
             preload="metadata"
             aria-label={item.alt || caption}

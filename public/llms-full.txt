@@ -46,7 +46,7 @@ Source: https://github.com/Chrissyuh/Subpix
 Best link label: Open app
 My role: Built the editor, file-format flow, export path, product site, and Windows packaging.
 An open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON data, exporting PNGs, and packaging for Windows.
-Published media: 1
+Published media: 2
 
 ## Academics
 

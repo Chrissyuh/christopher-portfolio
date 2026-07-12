@@ -55,7 +55,7 @@ const requiredFields = {
   SmallProjects: ["id", "title", "type", "description"],
   MicroProjects: ["id", "title", "type", "description"],
   Skills: ["id", "category", "name"],
-  SkillProjects: ["id", "skill_id", "project_id"],
+  SkillProjects: ["id", "skill_id"],
   FullRecordSections: ["id", "category", "icon"],
   FullRecordItems: ["id", "section_id", "title", "detail"],
   NavLinks: ["id", "label", "href"],
@@ -369,12 +369,14 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       scanAvailable: Boolean(text(row.scan_src)),
     };
   });
+  const programCredentialsById = new Map(programCredentials.map((credential) => [credential.id, credential]));
   const learningHighlights = statRows("LearningHighlights");
   const skills = simpleRows("Skills", (row) => ({
     id: text(row.id),
     category: text(row.category),
     name: text(row.name),
     projectIds: [],
+    credentialIds: [],
   }));
   const skillsById = new Map(skills.map((skill) => [skill.id, skill]));
 
@@ -382,6 +384,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     const id = text(row.id);
     const skillId = text(row.skill_id);
     const projectId = text(row.project_id);
+    const credentialId = text(row.credential_id);
     const skill = skillsById.get(skillId);
 
     if (!skill) {
@@ -389,12 +392,28 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       continue;
     }
 
-    if (!projectsById.has(projectId)) {
-      errors.push(`SkillProjects row "${id}" references missing project_id "${projectId}".`);
+    if (Boolean(projectId) === Boolean(credentialId)) {
+      errors.push(`SkillProjects row "${id}" must reference exactly one project_id or credential_id.`);
       continue;
     }
 
-    skill.projectIds.push(projectId);
+    if (projectId) {
+      if (!projectsById.has(projectId)) {
+        errors.push(`SkillProjects row "${id}" references missing project_id "${projectId}".`);
+        continue;
+      }
+
+      skill.projectIds.push(projectId);
+    }
+
+    if (credentialId) {
+      if (!programCredentialsById.has(credentialId)) {
+        errors.push(`SkillProjects row "${id}" references missing credential_id "${credentialId}".`);
+        continue;
+      }
+
+      skill.credentialIds.push(credentialId);
+    }
   }
 
   const fullRecordSections = simpleRows("FullRecordSections", (row) => {

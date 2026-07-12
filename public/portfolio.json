@@ -418,11 +418,15 @@
       ]
     },
     {
-      "id": "laser-cutting",
+      "id": "bambu-studio",
       "category": "Mechanical",
-      "name": "Laser cutting",
+      "name": "Bambu Studio",
       "projectIds": [
-        "garden-party-pinball"
+        "garden-party-pinball",
+        "smart-self-watering-pot"
+      ],
+      "credentialIds": [
+        "tetc"
       ]
     },
     {
@@ -456,6 +460,18 @@
       "projectIds": [
         "garden-party-pinball",
         "smart-self-watering-pot"
+      ]
+    },
+    {
+      "id": "soldering",
+      "category": "Electronics",
+      "name": "Soldering",
+      "projectIds": [
+        "garden-party-pinball",
+        "smart-self-watering-pot"
+      ],
+      "credentialIds": [
+        "tetc"
       ]
     },
     {
@@ -520,6 +536,24 @@
       "name": "Vite",
       "projectIds": [
         "subpix"
+      ]
+    },
+    {
+      "id": "laser-cutting",
+      "category": "TETC lessons",
+      "name": "Laser cutting",
+      "projectIds": [],
+      "credentialIds": [
+        "tetc"
+      ]
+    },
+    {
+      "id": "vex-robotics",
+      "category": "TETC lessons",
+      "name": "VEX Robotics",
+      "projectIds": [],
+      "credentialIds": [
+        "tetc"
       ]
     }
   ],

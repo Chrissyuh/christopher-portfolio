@@ -1399,6 +1399,7 @@ function PageButton({ to, icon, children, end = false }) {
 function PortfolioPage({ content }) {
   const meta = content.meta ?? {};
   const projectsById = new Map(list(content.projects).map((project) => [project.id, project]));
+  const credentialsById = new Map(list(content.programCredentials).map((credential) => [credential.id, credential]));
   const skillGroups = list(content.skills).reduce((groups, skill) => {
     const category = skill.category || "Other";
     const existing = groups.find((group) => group.category === category);
@@ -1447,7 +1448,7 @@ function PortfolioPage({ content }) {
 
       <section id="bench" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
         <SectionHeader title={meta.skillSystemTitle} />
-        <div className="grid gap-3 sm:gap-4 md:grid-cols-3">
+        <div className="grid gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-4">
           {skillGroups.map((group, index) => (
             <motion.article
               key={group.category}
@@ -1457,7 +1458,18 @@ function PortfolioPage({ content }) {
               transition={{ duration: 0.28, delay: index * 0.04 }}
               className="border border-[#d2c8b9] bg-white p-3 shadow-sm sm:p-5"
             >
-              <h3 className="border-b border-[#e1d7c8] pb-2 text-sm font-semibold text-slate-950 sm:pb-3 sm:text-lg">{group.category}</h3>
+              <h3 className="border-b border-[#e1d7c8] pb-2 text-sm font-semibold text-slate-950 sm:pb-3 sm:text-lg">
+                {group.category === "TETC lessons" ? (
+                  <a
+                    href={`#${credentialAnchorId("tetc")}`}
+                    onClick={(event) => jumpToCredential(event, "tetc")}
+                    className="inline-flex items-center text-[#244fd6] hover:underline focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                  >
+                    {group.category}
+                    <Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" />
+                  </a>
+                ) : group.category}
+              </h3>
               <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-2 sm:mt-3 sm:grid-cols-1 sm:gap-3">
                 {group.skills.map((skill) => (
                   <div key={skill.id}>
@@ -1466,6 +1478,19 @@ function PortfolioPage({ content }) {
                       {list(skill.projectIds).map((projectId) => {
                         const project = projectsById.get(projectId);
                         return project ? <a key={projectId} href={`#${projectAnchorId(project)}`} className="text-[11px] text-[#244fd6] hover:underline">{project.title}</a> : null;
+                      })}
+                      {list(skill.credentialIds).map((credentialId) => {
+                        const credential = credentialsById.get(credentialId);
+                        return credential ? (
+                          <a
+                            key={credentialId}
+                            href={`#${credentialAnchorId(credentialId)}`}
+                            onClick={(event) => jumpToCredential(event, credentialId)}
+                            className="text-[11px] text-[#244fd6] hover:underline"
+                          >
+                            {credentialId === "tetc" ? "TETC" : credential.program}
+                          </a>
+                        ) : null;
                       })}
                     </div>
                   </div>

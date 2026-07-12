@@ -167,13 +167,21 @@
         {
           "id": "media-2",
           "type": "photo",
-          "src": null,
+          "src": "/portfolio-media/smart-planter/current-board-a.webp",
           "posterSrc": null,
-          "alt": "Smart self-watering pot prototype or enclosure photo needed",
-          "caption": "Add prototype or enclosure photo"
+          "alt": "Assembled Smart Planter Board A prototype connected for testing",
+          "caption": "Current Board A prototype"
         },
         {
           "id": "media-3",
+          "type": "photo",
+          "src": "/portfolio-media/smart-planter/board-a-kicad-comparison.webp",
+          "posterSrc": null,
+          "alt": "Fabricated Smart Planter Board A held beside its KiCad PCB layout",
+          "caption": "Fabricated Board A beside its KiCad layout"
+        },
+        {
+          "id": "media-4",
           "type": "video",
           "src": null,
           "posterSrc": null,

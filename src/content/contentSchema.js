@@ -97,6 +97,7 @@ const defaultMeta = {
   skillSystemTitle: "Tools",
   toolMediaTitle: "CAD work",
   toolMediaSubtitle: "Project work and independent practice.",
+  toolMediaEnabled: "false",
   learningTitle: "Ongoing learning",
   recordTitle: "Experience and activities",
   contactTitle: "Contact Christopher",

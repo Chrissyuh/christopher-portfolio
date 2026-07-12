@@ -911,7 +911,7 @@ function AcademicSchoolCard({ meta }) {
 
   return (
     <aside className="border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-4">
-      <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-4">
+      <div className="grid gap-3 md:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)] md:items-center md:gap-4">
         <div className="flex items-center gap-3 sm:gap-4">
           {meta.academicSchoolLogoSrc && (
             <a
@@ -1063,7 +1063,7 @@ function LearningHighlightCard({ item, index }) {
   return <AcademicCard item={item} index={index} />;
 }
 
-function AcademicCard({ item, index }) {
+function AcademicCard({ item, index, wide = false }) {
   const isGoldHighlight = item.highlight === "gold";
 
   return (
@@ -1075,6 +1075,7 @@ function AcademicCard({ item, index }) {
       transition={{ duration: 0.25, delay: index * 0.035 }}
       className={cn(
         "relative overflow-hidden border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-5",
+        wide && "col-span-2 lg:col-span-1",
         isGoldHighlight && "border-[#d8b451] bg-[linear-gradient(180deg,#fffdf7_0%,#ffffff_42%)]",
       )}
     >
@@ -1408,8 +1409,8 @@ function PageButton({ to, icon, children, end = false }) {
       end={end}
       className={({ isActive }) =>
         isActive
-          ? "flex items-center gap-1.5 border border-slate-950 bg-slate-950 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-white sm:gap-2 sm:px-3 sm:py-2 sm:text-xs sm:tracking-[0.14em]"
-          : "flex items-center gap-1.5 border border-[#cfc4b4] bg-white px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-700 hover:text-slate-950 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs sm:tracking-[0.14em]"
+          ? "flex h-8 items-center gap-1.5 bg-slate-950 px-2 font-mono text-[9px] uppercase tracking-[0.1em] text-white sm:px-2.5 sm:text-[10px] sm:tracking-[0.12em]"
+          : "flex h-8 items-center gap-1.5 bg-white px-2 font-mono text-[9px] uppercase tracking-[0.1em] text-slate-600 hover:bg-[#fbfaf7] hover:text-slate-950 sm:px-2.5 sm:text-[10px] sm:tracking-[0.12em]"
       }
     >
       <Icon name={icon} className="h-3.5 w-3.5" />
@@ -1516,7 +1517,7 @@ function PortfolioPage({ content }) {
             </motion.article>
           ))}
         </div>
-        {list(content.toolMedia).length > 0 && (
+        {meta.toolMediaEnabled === "true" && list(content.toolMedia).length > 0 && (
           <div className="mt-5 border-t border-[#d2c8b9] pt-4 sm:mt-8 sm:pt-6">
             <h3 className="text-lg font-semibold leading-6 text-slate-950 sm:text-xl">{meta.toolMediaTitle}</h3>
             <p className="mt-1 text-xs leading-5 text-slate-700 sm:text-sm">{meta.toolMediaSubtitle}</p>
@@ -1526,14 +1527,14 @@ function PortfolioPage({ content }) {
       </section>
 
       <section id="academics" className="relative z-20 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
-        <div className="mb-4 grid gap-3 border-t border-[#d2c8b9] pt-5 sm:mb-6 sm:gap-4 sm:pt-7 lg:grid-cols-[minmax(360px,1fr)_minmax(460px,0.95fr)]">
+        <div className="mb-4 grid gap-3 border-t border-[#d2c8b9] pt-5 sm:mb-6 sm:gap-4 sm:pt-7 lg:grid-cols-[minmax(300px,0.55fr)_minmax(0,1.45fr)] lg:items-center">
           <TitleBlock title={meta.academicTitle} />
           <AcademicSchoolCard meta={meta} />
         </div>
 
-        <div className="grid grid-cols-3 gap-2 sm:gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-[0.7fr_0.7fr_1.6fr]">
           {list(content.academics).map((item, index) => (
-            <AcademicCard key={item.id} item={item} index={index} />
+            <AcademicCard key={item.id} item={item} index={index} wide={item.id === "course-load"} />
           ))}
         </div>
 
@@ -1680,32 +1681,37 @@ function Navigation({ content }) {
   const isPortfolioRoute = location.pathname === "/";
 
   return (
-    <nav className="sticky top-0 z-30 border-b border-[#d2c8b9] bg-[#f5f3ee]/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-3 py-2 md:px-8 md:py-4">
-        <Link to="/#top" className="flex min-w-0 items-center gap-2 sm:gap-3">
-          <span className="grid h-8 w-8 shrink-0 place-items-center border border-[#cfc4b4] bg-white font-mono text-xs font-semibold text-[#244fd6] shadow-sm">
+    <nav className="sticky top-0 z-30 border-b border-[#d2c8b9] bg-[#f5f3ee]/95 backdrop-blur-md">
+      <div className="mx-auto grid min-h-12 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-3 py-1.5 sm:gap-3 md:px-8 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-5">
+        <Link to="/#top" className="flex min-w-0 items-center gap-2.5">
+          <span className="grid h-8 w-8 shrink-0 place-items-center border border-[#cfc4b4] bg-white font-mono text-[11px] font-semibold text-[#244fd6] shadow-sm">
             CH
           </span>
           <span className="min-w-0">
-            <span className="block text-sm font-semibold tracking-[-0.01em] text-slate-950">{meta.navName}</span>
-            <span className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-[#827466] sm:block">{meta.navSubtitle}</span>
+            <span className="block whitespace-nowrap text-xs font-semibold text-slate-950 sm:text-sm">
+              <span className="sm:hidden">Christopher</span>
+              <span className="hidden sm:inline">{meta.navName}</span>
+            </span>
+            <span className="hidden font-mono text-[9px] uppercase tracking-[0.16em] text-[#827466] md:block">{meta.navSubtitle}</span>
           </span>
         </Link>
 
-        <div className="flex shrink-0 flex-wrap items-center justify-end gap-1.5 sm:gap-2">
-          <PageButton to="/" end icon="box">Portfolio</PageButton>
-          <PageButton to="/record" icon="list">Experience</PageButton>
-        </div>
-
         {isPortfolioRoute && (
-          <div className="hidden items-center gap-6 font-mono text-xs uppercase tracking-[0.16em] text-slate-600 xl:flex">
+          <div className="hidden min-w-0 items-center justify-center gap-4 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-600 lg:flex xl:gap-6 xl:tracking-[0.16em]">
             {list(content.navLinks).map((link) => (
-              <a key={link.id} className="hover:text-slate-950" href={link.href}>
+              <a key={link.id} className="whitespace-nowrap border-b border-transparent py-1 hover:border-[#827466] hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2" href={link.href}>
                 {link.label}
               </a>
             ))}
           </div>
         )}
+
+        {!isPortfolioRoute && <div className="hidden lg:block" />}
+
+        <div className="grid shrink-0 grid-cols-2 overflow-hidden border border-[#cfc4b4] bg-white p-0.5 shadow-sm">
+          <PageButton to="/" end icon="box">Portfolio</PageButton>
+          <PageButton to="/record" icon="list">Experience</PageButton>
+        </div>
       </div>
     </nav>
   );

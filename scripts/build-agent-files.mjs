@@ -105,8 +105,11 @@ function stripMailto(href) {
 }
 
 function buildPortfolioJson(content) {
+  const toolMediaEnabled = content.meta?.toolMediaEnabled === "true";
+
   return {
     ...content,
+    toolMedia: toolMediaEnabled ? content.toolMedia : [],
     canonicalUrl: absoluteUrl("/"),
     routes: {
       portfolio: absoluteUrl("/"),

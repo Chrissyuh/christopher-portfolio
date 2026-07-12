@@ -182,6 +182,14 @@
         },
         {
           "id": "media-4",
+          "type": "photo",
+          "src": "/portfolio-media/smart-planter/solidworks-system-layout.webp",
+          "posterSrc": null,
+          "alt": "SolidWorks layout showing the Smart Planter PCB, planter support, and water reservoir",
+          "caption": "PCB, planter, and reservoir layout in SolidWorks"
+        },
+        {
+          "id": "media-5",
           "type": "video",
           "src": null,
           "posterSrc": null,

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { motion, MotionConfig } from "framer-motion";
+import { LayoutGroup, motion, MotionConfig } from "framer-motion";
 import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import { usePortfolioContent } from "./content/loadPortfolioContent";
 
@@ -1419,6 +1419,67 @@ function PageButton({ to, icon, children, end = false }) {
   );
 }
 
+function ActiveNavigationFrame() {
+  return (
+    <motion.span
+      layoutId="active-navigation-section"
+      aria-hidden="true"
+      transition={{ type: "spring", stiffness: 420, damping: 34, mass: 0.7 }}
+      className="pointer-events-none absolute -inset-x-2 -inset-y-1 hidden border-x-2 border-[#244fd6] lg:block"
+    />
+  );
+}
+
+function useActiveNavigationSection(sectionLinks, enabled) {
+  const [activeSection, setActiveSection] = useState("top");
+
+  useEffect(() => {
+    if (!enabled) return undefined;
+
+    let frameId = null;
+
+    function updateActiveSection() {
+      frameId = null;
+      const entries = [
+        { id: "top", element: document.getElementById("top") },
+        ...sectionLinks.map((link) => ({
+          id: link.href.replace(/^#/, ""),
+          element: document.querySelector(link.href),
+        })),
+      ].filter((entry) => entry.id && entry.element);
+
+      if (entries.length === 0) return;
+
+      const atPageEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4;
+      const marker = window.scrollY + Math.min(window.innerHeight * 0.5, 360);
+      let nextSection = entries[0].id;
+
+      for (const entry of entries) {
+        if (entry.element.offsetTop <= marker) nextSection = entry.id;
+      }
+
+      if (atPageEnd) nextSection = entries.at(-1).id;
+      setActiveSection((current) => (current === nextSection ? current : nextSection));
+    }
+
+    function scheduleUpdate() {
+      if (frameId === null) frameId = window.requestAnimationFrame(updateActiveSection);
+    }
+
+    scheduleUpdate();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+    };
+  }, [enabled, sectionLinks]);
+
+  return [activeSection, setActiveSection];
+}
+
 function PortfolioPage({ content }) {
   const meta = content.meta ?? {};
   const projectsById = new Map(list(content.projects).map((project) => [project.id, project]));
@@ -1679,40 +1740,65 @@ function Navigation({ content }) {
   const location = useLocation();
   const meta = content.meta ?? {};
   const isPortfolioRoute = location.pathname === "/";
+  const sectionLinks = list(content.navLinks);
+  const [activeSection, setActiveSection] = useActiveNavigationSection(sectionLinks, isPortfolioRoute);
 
   return (
     <nav className="sticky top-0 z-30 border-b border-[#d2c8b9] bg-[#f5f3ee]/95 backdrop-blur-md">
-      <div className="mx-auto grid min-h-12 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-3 py-1.5 sm:gap-3 md:px-8 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-5">
-        <Link to="/#top" className="flex min-w-0 items-center gap-2.5">
-          <span className="grid h-8 w-8 shrink-0 place-items-center border border-[#cfc4b4] bg-white font-mono text-[11px] font-semibold text-[#244fd6] shadow-sm">
-            CH
-          </span>
-          <span className="min-w-0">
-            <span className="block whitespace-nowrap text-xs font-semibold text-slate-950 sm:text-sm">
-              <span className="sm:hidden">Christopher</span>
-              <span className="hidden sm:inline">{meta.navName}</span>
+      <LayoutGroup id="portfolio-section-navigation">
+        <div className="mx-auto grid min-h-12 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-3 py-1.5 sm:gap-3 md:px-8 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-5">
+          <Link
+            to="/#top"
+            aria-current={isPortfolioRoute && activeSection === "top" ? "location" : undefined}
+            onClick={() => setActiveSection("top")}
+            className="relative flex min-w-0 items-center gap-2.5"
+          >
+            {isPortfolioRoute && activeSection === "top" && <ActiveNavigationFrame />}
+            <span className="grid h-8 w-8 shrink-0 place-items-center border border-[#cfc4b4] bg-white font-mono text-[11px] font-semibold text-[#244fd6] shadow-sm">
+              CH
             </span>
-            <span className="hidden font-mono text-[9px] uppercase tracking-[0.16em] text-[#827466] md:block">{meta.navSubtitle}</span>
-          </span>
-        </Link>
+            <span className="min-w-0">
+              <span className="block whitespace-nowrap text-xs font-semibold text-slate-950 sm:text-sm">
+                <span className="sm:hidden">Christopher</span>
+                <span className="hidden sm:inline">{meta.navName}</span>
+              </span>
+              <span className="hidden font-mono text-[9px] uppercase tracking-[0.16em] text-[#827466] md:block">{meta.navSubtitle}</span>
+            </span>
+          </Link>
 
-        {isPortfolioRoute && (
-          <div className="hidden min-w-0 items-center justify-center gap-4 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-600 lg:flex xl:gap-6 xl:tracking-[0.16em]">
-            {list(content.navLinks).map((link) => (
-              <a key={link.id} className="whitespace-nowrap border-b border-transparent py-1 hover:border-[#827466] hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2" href={link.href}>
-                {link.label}
-              </a>
-            ))}
+          {isPortfolioRoute && (
+            <div className="hidden min-w-0 items-center justify-center gap-4 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-600 lg:flex xl:gap-6 xl:tracking-[0.16em]">
+              {sectionLinks.map((link) => {
+                const sectionId = link.href.replace(/^#/, "");
+                const isActive = activeSection === sectionId;
+
+                return (
+                  <a
+                    key={link.id}
+                    aria-current={isActive ? "location" : undefined}
+                    onClick={() => setActiveSection(sectionId)}
+                    className={cn(
+                      "relative whitespace-nowrap py-1 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
+                      isActive ? "text-slate-950" : "border-b border-transparent hover:border-[#827466] hover:text-slate-950",
+                    )}
+                    href={link.href}
+                  >
+                    {isActive && <ActiveNavigationFrame />}
+                    {link.label}
+                  </a>
+                );
+              })}
+            </div>
+          )}
+
+          {!isPortfolioRoute && <div className="hidden lg:block" />}
+
+          <div className="grid shrink-0 grid-cols-2 overflow-hidden border border-[#cfc4b4] bg-white p-0.5 shadow-sm">
+            <PageButton to="/" end icon="box">Portfolio</PageButton>
+            <PageButton to="/record" icon="list">Experience</PageButton>
           </div>
-        )}
-
-        {!isPortfolioRoute && <div className="hidden lg:block" />}
-
-        <div className="grid shrink-0 grid-cols-2 overflow-hidden border border-[#cfc4b4] bg-white p-0.5 shadow-sm">
-          <PageButton to="/" end icon="box">Portfolio</PageButton>
-          <PageButton to="/record" icon="list">Experience</PageButton>
         </div>
-      </div>
+      </LayoutGroup>
     </nav>
   );
 }

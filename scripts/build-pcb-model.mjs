@@ -33,15 +33,40 @@ const componentMaterials = {
   green: { color: [0.05, 0.55, 0.19, 1], roughness: 0.48, metallic: 0.02 },
 };
 
-function materialForComponent(componentName, partIndex, partCount) {
+const ledMaterialLocations = [
+  { material: "red", x: 62.3, y: -99 },
+  { material: "green", x: 65.8, y: -102.2 },
+];
+
+function meshCenter(sourceMesh) {
+  const positions = sourceMesh.attributes.position.array;
+  const minimum = [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY];
+  const maximum = [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY];
+
+  for (let index = 0; index < positions.length; index += 3) {
+    for (let axis = 0; axis < 3; axis += 1) {
+      minimum[axis] = Math.min(minimum[axis], positions[index + axis]);
+      maximum[axis] = Math.max(maximum[axis], positions[index + axis]);
+    }
+  }
+
+  return minimum.map((value, axis) => (value + maximum[axis]) / 2);
+}
+
+function materialForComponent(componentName, partIndex, partCount, center) {
   const name = componentName.toLowerCase();
 
   if (name.includes("smartwateringflowerpot_pcb")) return "board";
   if (name.includes("jst_xh")) return partIndex === partCount - 1 ? "white" : partIndex % 3 === 0 ? "brass" : "white";
   if (name.includes("pinheader")) return partIndex % 2 === 0 ? "dark" : "brass";
-  if (name.includes("usb_c")) return partIndex < Math.ceil(partCount * 0.58) ? "metal" : partIndex % 3 === 0 ? "brass" : "dark";
+  if (name.includes("usb_c")) return "silver";
   if (name.includes("esp32")) return partIndex < Math.ceil(partCount * 0.28) ? "silver" : partIndex % 7 === 0 ? "brass" : "dark";
-  if (name.includes("led")) return partIndex % 2 === 0 ? "green" : "red";
+  if (name.includes("led")) {
+    return ledMaterialLocations.reduce((closest, candidate) => {
+      const distance = Math.hypot(center[0] - candidate.x, center[1] - candidate.y);
+      return distance < closest.distance ? { material: candidate.material, distance } : closest;
+    }, { material: "green", distance: Number.POSITIVE_INFINITY }).material;
+  }
   if (name.includes("cp_radial")) return partIndex % 3 === 0 ? "silver" : "charcoal";
   if (name.includes("bourns") || name.includes("tsot") || name.includes("sot-23") || name.includes("d_sma")) return "dark";
   if (name.startsWith("r_") || name.startsWith("c_")) return partIndex % 3 === 0 ? "silver" : "charcoal";
@@ -121,7 +146,7 @@ async function buildModel() {
 
     const materialName = sourceMesh.color
       ? "board"
-      : materialForComponent(owner.name, owner.position, owner.count);
+      : materialForComponent(owner.name, owner.position, owner.count, meshCenter(sourceMesh));
     primitive.setMaterial(getMaterial(materialName));
 
     const mesh = document.createMesh(sourceMesh.name || owner.name).addPrimitive(primitive);

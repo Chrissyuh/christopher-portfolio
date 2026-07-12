@@ -334,6 +334,7 @@ function MediaFrame({ item, label, compact = false }) {
 function MediaCarousel({ media, label, compact = false }) {
   const items = list(media);
   const trackRef = useRef(null);
+  const scrollEndTimerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lastInteractionAt, setLastInteractionAt] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
@@ -404,6 +405,27 @@ function MediaCarousel({ media, label, compact = false }) {
     [canScroll, markInteraction, moveByPage],
   );
 
+  const handleTrackScroll = useCallback(() => {
+    window.clearTimeout(scrollEndTimerRef.current);
+    scrollEndTimerRef.current = window.setTimeout(() => {
+      const track = trackRef.current;
+
+      if (!track || items.length === 0) return;
+
+      const slides = Array.from(track.children).slice(0, items.length);
+      const closestIndex = slides.reduce(
+        (closest, slide, index) => {
+          const distance = Math.abs(slide.offsetLeft - track.offsetLeft - track.scrollLeft);
+          return distance < closest.distance ? { index, distance } : closest;
+        },
+        { index: 0, distance: Number.POSITIVE_INFINITY },
+      ).index;
+
+      const nextIndex = Math.min(closestIndex, maxStartIndex);
+      setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
+    }, 120);
+  }, [items.length, maxStartIndex]);
+
   useEffect(() => {
     measureVisibleCount();
 
@@ -459,6 +481,13 @@ function MediaCarousel({ media, label, compact = false }) {
     return () => window.clearTimeout(timer);
   }, [canScroll, lastInteractionAt, maxStartIndex, safeActiveIndex, visibleCount]);
 
+  useEffect(
+    () => () => {
+      window.clearTimeout(scrollEndTimerRef.current);
+    },
+    [],
+  );
+
   if (items.length === 0) return null;
 
   return (
@@ -472,7 +501,7 @@ function MediaCarousel({ media, label, compact = false }) {
       onWheel={markInteraction}
     >
       {canScroll && (
-        <div className="mb-1.5 flex justify-end gap-1.5 sm:mb-2">
+        <div className="mb-2 hidden justify-end gap-1.5 sm:flex">
           <button
             type="button"
             aria-label={`Previous media for ${label}`}
@@ -493,7 +522,11 @@ function MediaCarousel({ media, label, compact = false }) {
           </button>
         </div>
       )}
-      <div ref={trackRef} className="flex w-full min-w-0 snap-x gap-2 overflow-hidden pb-1 sm:gap-3 sm:pb-2">
+      <div
+        ref={trackRef}
+        onScroll={handleTrackScroll}
+        className="flex w-full min-w-0 touch-pan-x snap-x snap-mandatory gap-2 overflow-x-auto overflow-y-hidden pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-3 sm:overflow-hidden sm:pb-2"
+      >
         {items.map((item, index) => (
           <MediaFrame key={`${item.id}-${index}`} item={item} label={label} compact={compact} />
         ))}
@@ -593,12 +626,17 @@ function ProjectRow({ project, index, meta }) {
   const style = accentStyles[project.accent] ?? accentStyles.blue;
   const artifactButtons = projectArtifactButtons(project, meta);
   const hasSidebar = Boolean(project.logoSrc || artifactButtons.length > 0);
+  const hasCompactLogo = project.id === "vividgrasp-ai-vision-robotics-arm";
+  const logoContainerClass = cn(
+    "border border-[#d6cec0] bg-white transition",
+    hasCompactLogo ? "inline-flex px-2 py-1.5" : "block px-3 py-2",
+  );
   const logoImage = project.logoSrc ? (
     <img
       src={project.logoSrc}
       alt={project.logoAlt || `${project.title} logo`}
       loading="lazy"
-      className="h-8 w-full object-contain"
+      className={cn("object-contain", hasCompactLogo ? "h-4 w-auto max-w-24" : "h-8 w-full")}
     />
   ) : null;
 
@@ -644,12 +682,15 @@ function ProjectRow({ project, index, meta }) {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={`Open ${project.logoAlt || `${project.title} logo`} link`}
-                    className="block border border-[#d6cec0] bg-white px-3 py-2 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                    className={cn(
+                      logoContainerClass,
+                      "hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
+                    )}
                   >
                     {logoImage}
                   </a>
                 ) : (
-                  <div className="border border-[#d6cec0] bg-white px-3 py-2">{logoImage}</div>
+                  <div className={logoContainerClass}>{logoImage}</div>
                 )}
               </div>
             )}

@@ -50,9 +50,21 @@ Published media: 2
 
 ## Academics
 
+Spring Early College Academy: High-school and college-level coursework through Spring ISD. Top-ranked Spring ISD high school. #9 Houston metro, #44 Texas, #326 national.
+
 - Weighted GPA: 5.0 / 5.0
 - Class rank: 1 of 111 (sole #1 standing)
-- Coursework: AP + advanced (AP Human Geography, AP Spanish Language, and advanced classes)
+- Coursework: AP + dual credit (AP Human Geography, AP Spanish Language, College Algebra, and Geometry completed through Credit by Examination)
+
+### Academic details
+
+- Weighted GPA: 5.0 / 5.0
+- Class rank: #1 of 111 (Sole #1)
+- Geometry A CBE: 91 (Credit by Examination)
+- Geometry B CBE: 97 (Credit by Examination)
+- College Algebra: 95 (Dual credit)
+- EDUC 1300: 100 (Dual credit)
+- Acceleration: Accelerated into college trigonometry and precalculus
 
 ## Programs And Credentials
 
@@ -60,6 +72,9 @@ Published media: 2
 Type: Program
 Program: Teen Engineering + Tech Center
 Organization: ExxonMobil Foundation
+Award: 2026 A1 Excellence Award - Sole recipient
+Award detail: Recognized for consistently going beyond program requirements across CAD, robotics, and engineering work.
+Award quote: "went above and beyond every day." - Coach Taylor
 Program link: https://tetc.org/
 Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation.
 
@@ -79,7 +94,7 @@ Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp 
 
 ## Smaller Projects
 
-- Check-ins - live web app: Logs check-ins and shows gaps, streaks, and progress. ([project](https://check-ins-zeta.vercel.app/)). Published media: 0.
+- Check-ins - React / Vite web app: Stores recurring check-ins locally, tracks target and maximum gaps, marks work due or over max, and keeps progress history. Built with React, Vite, Framer Motion, and Tailwind CSS. ([project](https://check-ins-zeta.vercel.app/), [source](https://github.com/Chrissyuh/check-ins)). Published media: 1.
 
 ## Small Builds
 
@@ -97,19 +112,12 @@ Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp 
 
 ## Full Record
 
-### Programs and credentials
-
-- Teen Engineering + Tech Center: Four-year after-school STEM program supported by the ExxonMobil Foundation. [Program site](https://tetc.org/)
-- Stanford AI4ALL (June 26, 2026): Completed the Robotics program while working on the VividGrasp team project. [Program site](https://ai4all.spcs.stanford.edu/)
-
-### Competitions and leadership
-
-- Debate: Reached JV finals.
-- 3D Printing Presentation: Presented slides, printed examples, and robotics applications through TETC.
-
-### Scouts and service
+### Activities, leadership, and service
 
 - Scouts BSA: First Class Scout.
+- Student Council: Member.
+- Debate: Reached JV finals.
+- TETC 3D Printing Presentation: Presented slides, printed examples, and robotics applications.
 
 ### Languages and ongoing learning
 

@@ -3,6 +3,7 @@ export const sheetTabNames = [
   "MainProjects",
   "ProjectArtifactLinks",
   "Academics",
+  "AcademicDetails",
   "ProgramCredentials",
   "LearningHighlights",
   "SmallProjects",
@@ -53,6 +54,7 @@ const requiredFields = {
   MainProjects: ["id", "title", "label", "status", "accent", "summary"],
   ProjectArtifactLinks: ["id", "project_id", "label", "href", "type"],
   Academics: ["id", "label", "value"],
+  AcademicDetails: ["id", "label", "value"],
   ProgramCredentials: ["id", "entry_type", "program", "summary", "accent"],
   LearningHighlights: ["id", "label", "value"],
   SmallProjects: ["id", "title", "type", "description"],
@@ -80,7 +82,10 @@ const defaultMeta = {
   heroImagePosition: "center center",
   projectIndexTitle: "Featured projects",
   academicTitle: "Academic profile",
+  academicDetailsTitle: "Academic details",
+  academicDetailsLabel: "Academic details",
   credentialsTitle: "Programs and credentials",
+  activitiesTitle: "Activities and involvement",
   credentialPreviewLabel: "View certificate",
   credentialMissingScanLabel: "Certificate scan still needs to be added.",
   academicSchoolEyebrow: "early-college student",
@@ -344,6 +349,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
   });
 
   const academics = statRows("Academics");
+  const academicDetails = statRows("AcademicDetails");
   const programCredentials = simpleRows("ProgramCredentials", (row) => {
     const id = text(row.id);
     const entryType = text(row.entry_type) || "credential";
@@ -384,6 +390,12 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       accent,
       relatedProjectId: relatedProjectId || null,
       scanAvailable: Boolean(text(row.scan_src)),
+      awardTitle: text(row.award_title),
+      awardDate: text(row.award_date),
+      awardDistinction: text(row.award_distinction),
+      awardSummary: text(row.award_summary),
+      awardQuote: text(row.award_quote),
+      awardQuoteAttribution: text(row.award_quote_attribution),
     };
   });
   const programCredentialsById = new Map(programCredentials.map((credential) => [credential.id, credential]));
@@ -480,6 +492,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       id: text(row.id),
       category: text(row.category),
       icon,
+      showOnHomepage: ["1", "true", "yes", "y", "on"].includes(text(row.show_on_homepage).toLowerCase()),
       items: [],
     };
   });
@@ -516,6 +529,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     meta,
     projects,
     academics,
+    academicDetails,
     programCredentials,
     learningHighlights,
     smallProjects,

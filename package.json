@@ -8,10 +8,13 @@
     "prebuild": "npm run build-agent-files",
     "build": "vite build",
     "build-agent-files": "node scripts/build-agent-files.mjs",
+    "build-template-content": "node scripts/build-template-content.mjs",
     "build-pcb-model": "node scripts/build-pcb-model.mjs",
+    "check-parity": "node scripts/check-content-parity.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "sync-content": "node scripts/sync-content.mjs"
+    "sync-content": "node scripts/sync-content.mjs",
+    "test": "npm run build-agent-files && npm run check-parity"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",

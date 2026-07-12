@@ -18,6 +18,20 @@ function escapeHtml(value) {
 function buildStaticSummary(content) {
   const meta = content.meta ?? {};
   const projects = Array.isArray(content.projects) ? content.projects : [];
+  const academics = Array.isArray(content.academics) ? content.academics : [];
+  const academicDetails = Array.isArray(content.academicDetails) ? content.academicDetails : [];
+  const credentials = Array.isArray(content.programCredentials) ? content.programCredentials : [];
+  const smallProjects = Array.isArray(content.smallProjects) ? content.smallProjects : [];
+  const microProjects = Array.isArray(content.microProjects) ? content.microProjects : [];
+  const learningHighlights = Array.isArray(content.learningHighlights) ? content.learningHighlights : [];
+  const fullRecord = Array.isArray(content.fullRecord) ? content.fullRecord : [];
+
+  function credentialText(credential) {
+    const award = credential.awardTitle
+      ? ` ${credential.awardDate} ${credential.awardTitle}${credential.awardDistinction ? ` - ${credential.awardDistinction}` : ""}. ${credential.awardSummary}${credential.awardQuote ? ` ${credential.awardQuoteAttribution || "Program staff"}: "${credential.awardQuote}"` : ""}`
+      : "";
+    return `${credential.summary}${award}`;
+  }
 
   return [
     '<main id="portfolio-static-fallback" aria-label="Christopher Heskett portfolio summary">',
@@ -31,6 +45,51 @@ function buildStaticSummary(content) {
       (project) =>
         `      <li><a href="/#project-${encodeURIComponent(project.id)}">${escapeHtml(project.title)}</a>: ${escapeHtml(project.summary)}</li>`,
     ),
+    "    </ul>",
+    "  </section>",
+    '  <section aria-labelledby="static-academics-heading">',
+    '    <h2 id="static-academics-heading">Academics</h2>',
+    "    <ul>",
+    ...academics.map((item) => `      <li>${escapeHtml(item.label)}: ${escapeHtml(item.value)}${item.note ? ` - ${escapeHtml(item.note)}` : ""}</li>`),
+    "    </ul>",
+    "    <details>",
+    "      <summary>Academic details</summary>",
+    "      <ul>",
+    ...academicDetails.map((item) => `        <li>${escapeHtml(item.label)}: ${escapeHtml(item.value)}${item.note ? ` - ${escapeHtml(item.note)}` : ""}</li>`),
+    "      </ul>",
+    "    </details>",
+    "  </section>",
+    '  <section aria-labelledby="static-programs-heading">',
+    '    <h2 id="static-programs-heading">Programs and credentials</h2>',
+    "    <ul>",
+    ...credentials.map((credential) => `      <li>${credential.href ? `<a href="${escapeHtml(credential.href)}">${escapeHtml(credential.program)}</a>` : escapeHtml(credential.program)}: ${escapeHtml(credentialText(credential))}</li>`),
+    "    </ul>",
+    "  </section>",
+    '  <section aria-labelledby="static-more-projects-heading">',
+    '    <h2 id="static-more-projects-heading">More projects</h2>',
+    "    <ul>",
+    ...smallProjects.map((project) => `      <li>${project.href ? `<a href="${escapeHtml(project.href)}">${escapeHtml(project.title)}</a>` : escapeHtml(project.title)}: ${escapeHtml(project.description)}</li>`),
+    "    </ul>",
+    "  </section>",
+    '  <section aria-labelledby="static-small-builds-heading">',
+    '    <h2 id="static-small-builds-heading">Small builds</h2>',
+    "    <ul>",
+    ...microProjects.map((project) => `      <li>${escapeHtml(project.title)}: ${escapeHtml(project.description)}</li>`),
+    "    </ul>",
+    "  </section>",
+    '  <section aria-labelledby="static-record-heading">',
+    '    <h2 id="static-record-heading">Activities and record</h2>',
+    ...fullRecord.flatMap((section) => [
+      `    <h3>${escapeHtml(section.category)}</h3>`,
+      "    <ul>",
+      ...section.items.map((item) => `      <li>${escapeHtml(item.title)}: ${escapeHtml(item.detail)}</li>`),
+      "    </ul>",
+    ]),
+    "  </section>",
+    '  <section aria-labelledby="static-learning-heading">',
+    '    <h2 id="static-learning-heading">Ongoing learning</h2>',
+    "    <ul>",
+    ...learningHighlights.map((item) => `      <li>${escapeHtml(item.label)}: ${escapeHtml(item.value)}${item.note ? ` - ${escapeHtml(item.note)}` : ""}</li>`),
     "    </ul>",
     "  </section>",
     '  <nav aria-label="Machine-readable portfolio">',

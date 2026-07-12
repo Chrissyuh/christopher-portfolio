@@ -1063,7 +1063,79 @@ function LearningHighlightCard({ item, index }) {
   return <AcademicCard item={item} index={index} />;
 }
 
-function AcademicCard({ item, index, wide = false }) {
+function AcademicDetailsDialog({ details, meta }) {
+  const dialogRef = useRef(null);
+  const triggerRef = useRef(null);
+  const dialogTitleId = "academic-details-title";
+
+  if (details.length === 0) return null;
+
+  function openDialog() {
+    dialogRef.current?.showModal();
+  }
+
+  function closeOnBackdrop(event) {
+    if (event.target === event.currentTarget) dialogRef.current?.close();
+  }
+
+  return (
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="academic-details-dialog"
+        onClick={openDialog}
+        className="mt-2 inline-flex items-center border-b border-[#244fd6] py-1 text-[10px] font-semibold text-slate-800 transition hover:text-[#244fd6] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:mt-4 sm:text-xs"
+      >
+        {meta.academicDetailsLabel || "Academic details"}
+        <Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" />
+      </button>
+      <dialog
+        ref={dialogRef}
+        id="academic-details-dialog"
+        aria-labelledby={dialogTitleId}
+        data-content-collection="academicDetails"
+        onClick={closeOnBackdrop}
+        onCancel={(event) => {
+          event.preventDefault();
+          dialogRef.current?.close();
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            dialogRef.current?.close();
+          }
+        }}
+        onClose={() => triggerRef.current?.focus()}
+        className="m-auto max-h-[calc(100vh-2rem)] w-[calc(100%-1.5rem)] max-w-3xl overflow-y-auto border border-[#cfc4b4] bg-white p-0 text-slate-950 shadow-[0_24px_70px_rgba(15,23,42,0.28)] backdrop:bg-slate-950/45 sm:w-[calc(100%-3rem)]"
+      >
+        <div className="border-t-4 border-[#244fd6]">
+          <div className="flex items-start justify-between gap-4 border-b border-[#e1d7c8] bg-[#fbfaf7] p-3 sm:p-5">
+            <div>
+              <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[#244fd6] sm:text-[10px]">Academic profile</p>
+              <h2 id={dialogTitleId} className="mt-1 text-xl font-semibold sm:text-2xl">{meta.academicDetailsTitle || "Academic details"}</h2>
+            </div>
+            <form method="dialog">
+              <button type="submit" aria-label="Close academic details" className="grid h-8 w-8 place-items-center border border-[#cfc4b4] bg-white text-lg text-slate-700 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2">&times;</button>
+            </form>
+          </div>
+          <div className="grid grid-cols-2 gap-px bg-[#e1d7c8] sm:grid-cols-3">
+            {details.map((detail) => (
+              <div key={detail.id} className={cn("bg-white p-3 sm:p-4", detail.id === "math-acceleration" && "col-span-2 sm:col-span-3")}>
+                <p className="font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-[10px] sm:tracking-[0.14em]">{detail.label}</p>
+                <p className={cn("mt-1.5 font-semibold leading-5 text-slate-950 sm:mt-2", detail.id === "math-acceleration" ? "text-sm sm:text-base" : "text-lg sm:text-xl")}>{detail.value}</p>
+                {detail.note && <p className="mt-1 text-[10px] leading-4 text-slate-600 sm:text-xs">{detail.note}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </dialog>
+    </>
+  );
+}
+
+function AcademicCard({ item, index, wide = false, children = null }) {
   const isGoldHighlight = item.highlight === "gold";
 
   return (
@@ -1085,6 +1157,7 @@ function AcademicCard({ item, index, wide = false }) {
       <p className="font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-xs sm:tracking-[0.2em]">{item.label}</p>
       <p className="mt-1.5 text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:mt-3 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em]">{item.value}</p>
       {item.note && <p className="mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{item.note}</p>}
+      {children}
     </motion.div>
   );
 }
@@ -1270,6 +1343,23 @@ function ProgramCredentialCard({ credential, index, meta }) {
 
       <p className="mt-2 text-[11px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{credential.summary}</p>
 
+      {credential.awardTitle && (
+        <div className="relative mt-3 overflow-hidden border border-[#d8b451] bg-[#fffdf7] p-2.5 sm:mt-4 sm:p-3.5">
+          <div aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-[#d7a31f]" />
+          <p className="pl-2 font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-[#8a6500] sm:text-[10px] sm:tracking-[0.13em]">
+            {credential.awardDate} {credential.awardTitle}
+            {credential.awardDistinction && <span> &middot; {credential.awardDistinction}</span>}
+          </p>
+          {credential.awardSummary && <p className="mt-1.5 pl-2 text-[11px] leading-4 text-slate-700 sm:text-xs sm:leading-5">{credential.awardSummary}</p>}
+          {credential.awardQuote && (
+            <blockquote className="mt-2 border-t border-[#eadcae] pl-2 pt-2 text-[11px] italic leading-4 text-slate-700 sm:text-xs sm:leading-5">
+              <q>{credential.awardQuote}</q>
+              {credential.awardQuoteAttribution && <cite className="ml-1 not-italic text-slate-600">- {credential.awardQuoteAttribution}</cite>}
+            </blockquote>
+          )}
+        </div>
+      )}
+
       <div className="mt-2 flex flex-wrap items-center gap-2 sm:mt-4">
         {isCredential && (
           <CredentialPreviewPopover
@@ -1290,6 +1380,61 @@ function ProgramCredentialCard({ credential, index, meta }) {
             <Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" />
           </a>
         )}
+      </div>
+    </motion.article>
+  );
+}
+
+function HomepageActivitySection({ section, title }) {
+  if (!section) return null;
+
+  return (
+    <div className="mt-5 border-t border-[#d2c8b9] pt-4 sm:mt-8 sm:pt-6" data-content-collection="fullRecord">
+      <h2 className="text-xl font-semibold leading-6 text-slate-950 sm:text-2xl sm:leading-7">{title}</h2>
+      <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:gap-3 lg:grid-cols-4">
+        {list(section.items).map((item) => (
+          <article key={item.id} className="border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-4">
+            <h3 className="text-xs font-semibold leading-4 text-slate-950 sm:text-sm sm:leading-5">{item.title}</h3>
+            <p className="mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-2 sm:text-xs sm:leading-5">{item.detail}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function programRecordDetail(credential) {
+  const awardLine = credential.awardTitle
+    ? `${credential.awardDate} ${credential.awardTitle}${credential.awardDistinction ? `, ${credential.awardDistinction}` : ""}. ${credential.awardSummary}${credential.awardQuote ? ` ${credential.awardQuoteAttribution || "Program staff"}: "${credential.awardQuote}"` : ""}`
+    : "";
+
+  return [credential.summary, awardLine].filter(Boolean).join(" ");
+}
+
+function RecordSectionCard({ section, collection = "fullRecord" }) {
+  return (
+    <motion.article
+      data-content-collection={collection}
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="border border-[#d2c8b9] bg-white shadow-sm"
+    >
+      <div className="flex items-center gap-2.5 border-b border-[#d2c8b9] bg-[#fbfaf7] p-2.5 sm:gap-3 sm:p-5">
+        <div className="grid h-8 w-8 shrink-0 place-items-center border border-[#d2c8b9] bg-white text-[#244fd6] sm:h-10 sm:w-10"><Icon name={section.icon} className="h-4 w-4" /></div>
+        <h2 className="text-lg font-semibold tracking-[-0.02em] text-slate-950 sm:text-2xl sm:tracking-[-0.03em]">{section.category}</h2>
+      </div>
+      <div className="divide-y divide-[#e1d7c8]">
+        {list(section.items).map((item) => (
+          <div key={item.id} className="grid gap-1.5 p-2.5 sm:gap-2 sm:p-5 md:grid-cols-[minmax(180px,0.35fr)_1fr_auto] md:items-start md:gap-5">
+            <div>
+              <h3 className="text-sm font-semibold text-slate-950 sm:text-base">{item.title}</h3>
+              {item.date && <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] sm:text-xs">{item.date}</p>}
+            </div>
+            <p className="text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{item.detail}</p>
+            {item.href && <a href={item.href} target="_blank" rel="noreferrer" className="inline-flex items-center text-xs font-semibold text-[#244fd6] hover:underline">{item.hrefLabel || "Open"}<Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" /></a>}
+          </div>
+        ))}
       </div>
     </motion.article>
   );
@@ -1483,6 +1628,7 @@ function useActiveNavigationSection(sectionLinks, enabled) {
 function PortfolioPage({ content }) {
   const meta = content.meta ?? {};
   const heroHasImage = Boolean(meta.heroImageSrc);
+  const homepageActivitySection = list(content.fullRecord).find((section) => section.showOnHomepage);
   const projectsById = new Map(list(content.projects).map((project) => [project.id, project]));
   const skills = list(content.skills);
   const personalSkillGroups = skills.filter((skill) => list(skill.projectIds).length > 0).reduce((groups, skill) => {
@@ -1500,7 +1646,7 @@ function PortfolioPage({ content }) {
 
   return (
     <>
-      <section id="top" className="relative z-10 mx-auto max-w-7xl px-3 pb-4 pt-4 sm:px-5 sm:pb-8 sm:pt-8 md:px-8 md:pb-10 md:pt-10">
+      <section id="top" data-content-collection="meta" className="relative z-10 mx-auto max-w-7xl px-3 pb-4 pt-4 sm:px-5 sm:pb-8 sm:pt-8 md:px-8 md:pb-10 md:pt-10">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -1562,7 +1708,7 @@ function PortfolioPage({ content }) {
         </motion.div>
       </section>
 
-      <section id="projects" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-10">
+      <section id="projects" data-content-collection="projects" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-10">
         <SectionHeader title={meta.projectIndexTitle} />
         <div className="grid gap-3 sm:gap-4">
           {list(content.projects).map((project, index) => (
@@ -1571,7 +1717,7 @@ function PortfolioPage({ content }) {
         </div>
       </section>
 
-      <section id="bench" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
+      <section id="bench" data-content-collection="skills" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
         <SectionHeader title={meta.skillSystemTitle} />
         <div className="grid gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-4">
           {skillGroups.map((group, index) => (
@@ -1623,7 +1769,7 @@ function PortfolioPage({ content }) {
         )}
       </section>
 
-      <section id="academics" className="relative z-20 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
+      <section id="academics" data-content-collection="academics" className="relative z-20 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
         <div className="mb-4 grid gap-3 border-t border-[#d2c8b9] pt-5 sm:mb-6 sm:gap-4 sm:pt-7 lg:grid-cols-[minmax(300px,0.55fr)_minmax(0,1.45fr)] lg:items-center">
           <TitleBlock title={meta.academicTitle} />
           <AcademicSchoolCard meta={meta} />
@@ -1631,12 +1777,14 @@ function PortfolioPage({ content }) {
 
         <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-[0.7fr_0.7fr_1.6fr]">
           {list(content.academics).map((item, index) => (
-            <AcademicCard key={item.id} item={item} index={index} wide={item.id === "course-load"} />
+            <AcademicCard key={item.id} item={item} index={index} wide={item.id === "course-load"}>
+              {item.id === "course-load" && <AcademicDetailsDialog details={list(content.academicDetails)} meta={meta} />}
+            </AcademicCard>
           ))}
         </div>
 
         {list(content.programCredentials).length > 0 && (
-          <div className="mt-5 border-t border-[#d2c8b9] pt-4 sm:mt-8 sm:pt-6">
+          <div className="mt-5 border-t border-[#d2c8b9] pt-4 sm:mt-8 sm:pt-6" data-content-collection="programCredentials">
             <div className="mb-3 max-w-2xl sm:mb-4">
               <h2 className="text-xl font-semibold leading-6 text-slate-950 sm:text-2xl sm:leading-7">
                 {meta.credentialsTitle || "Programs and credentials"}
@@ -1649,9 +1797,11 @@ function PortfolioPage({ content }) {
             </div>
           </div>
         )}
+
+        <HomepageActivitySection section={homepageActivitySection} title={meta.activitiesTitle || "Activities and involvement"} />
       </section>
 
-      <section id="smaller-projects" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-12 md:px-8 md:py-16">
+      <section id="smaller-projects" data-content-collection="smallProjects" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-12 md:px-8 md:py-16">
         <SectionHeader title={meta.smallerProjectsTitle} />
         <div className="grid gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
           {list(content.smallProjects).map((project, index) => (
@@ -1661,7 +1811,7 @@ function PortfolioPage({ content }) {
       </section>
 
       {list(content.microProjects).length > 0 && (
-        <section id="bench-notes" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-12 md:px-8 md:py-16">
+        <section id="bench-notes" data-content-collection="microProjects" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-12 md:px-8 md:py-16">
           <SectionHeader title={meta.microProjectsTitle} />
           <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
             {list(content.microProjects).map((project, index) => (
@@ -1672,7 +1822,7 @@ function PortfolioPage({ content }) {
       )}
 
       {list(content.learningHighlights).length > 0 && (
-        <section id="learning" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
+        <section id="learning" data-content-collection="learningHighlights" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
           <SectionHeader title={meta.learningTitle} />
           <div className="max-w-md">
             {list(content.learningHighlights).map((item, index) => <LearningHighlightCard key={item.id} item={item} index={index} />)}
@@ -1687,6 +1837,32 @@ function PortfolioPage({ content }) {
 
 function RecordPage({ content }) {
   const meta = content.meta ?? {};
+  const academicRecordSection = {
+    id: "academic-record",
+    category: "Academic record",
+    icon: "school",
+    items: list(content.academicDetails).map((item) => ({
+      id: item.id,
+      title: item.label,
+      date: "",
+      detail: `${item.value}${item.note ? ` - ${item.note}` : ""}`,
+      href: null,
+      hrefLabel: "",
+    })),
+  };
+  const programRecordSection = {
+    id: "programs-credentials",
+    category: meta.credentialsTitle || "Programs and credentials",
+    icon: "school",
+    items: list(content.programCredentials).map((credential) => ({
+      id: credential.id,
+      title: credential.program,
+      date: credential.date,
+      detail: programRecordDetail(credential),
+      href: credential.href,
+      hrefLabel: credential.hrefLabel,
+    })),
+  };
 
   return (
     <>
@@ -1703,32 +1879,9 @@ function RecordPage({ content }) {
 
       <section className="relative z-10 mx-auto max-w-7xl px-3 py-4 sm:px-5 sm:py-8 md:px-8 md:py-12">
         <div className="grid gap-3 sm:gap-5">
-          {list(content.fullRecord).map((section, sectionIndex) => (
-            <motion.article
-              key={section.id}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: sectionIndex * 0.035 }}
-              className="border border-[#d2c8b9] bg-white shadow-sm"
-            >
-              <div className="flex items-center gap-2.5 border-b border-[#d2c8b9] bg-[#fbfaf7] p-2.5 sm:gap-3 sm:p-5">
-                <div className="grid h-8 w-8 shrink-0 place-items-center border border-[#d2c8b9] bg-white text-[#244fd6] sm:h-10 sm:w-10"><Icon name={section.icon} className="h-4 w-4" /></div>
-                <h2 className="text-lg font-semibold tracking-[-0.02em] text-slate-950 sm:text-2xl sm:tracking-[-0.03em]">{section.category}</h2>
-              </div>
-              <div className="divide-y divide-[#e1d7c8]">
-                {list(section.items).map((item) => (
-                  <div key={item.id} className="grid gap-1.5 p-2.5 sm:gap-2 sm:p-5 md:grid-cols-[minmax(180px,0.35fr)_1fr_auto] md:items-start md:gap-5">
-                    <div>
-                      <h3 className="text-sm font-semibold text-slate-950 sm:text-base">{item.title}</h3>
-                      {item.date && <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] sm:text-xs">{item.date}</p>}
-                    </div>
-                    <p className="text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{item.detail}</p>
-                    {item.href && <a href={item.href} target="_blank" rel="noreferrer" className="inline-flex items-center text-xs font-semibold text-[#244fd6] hover:underline">{item.hrefLabel || "Open"}<Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" /></a>}
-                  </div>
-                ))}
-              </div>
-            </motion.article>
-          ))}
+          <RecordSectionCard section={academicRecordSection} collection="academicDetails" />
+          <RecordSectionCard section={programRecordSection} collection="programCredentials" />
+          {list(content.fullRecord).map((section) => <RecordSectionCard key={section.id} section={section} />)}
         </div>
       </section>
 

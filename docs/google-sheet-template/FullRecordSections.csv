@@ -1,5 +1,3 @@
-"id","order","enabled","category","icon"
-"programs-credentials","1","true","Programs and credentials","school"
-"competitions-leadership","2","true","Competitions and leadership","trophy"
-"scouts-service","3","true","Scouts and service","target"
-"languages-learning","4","true","Languages and ongoing learning","list"
+"id","order","enabled","category","icon","show_on_homepage"
+"activities-leadership-service","1","true","Activities, leadership, and service","trophy","true"
+"languages-learning","2","true","Languages and ongoing learning","list","false"

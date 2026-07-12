@@ -62,13 +62,17 @@ function mediaSummary(project) {
 }
 
 function credentialDetails(credential) {
+  const award = credential.awardTitle
+    ? `${credential.awardDate} ${credential.awardTitle}${credential.awardDistinction ? ` - ${credential.awardDistinction}` : ""}. ${credential.awardSummary}${credential.awardQuote ? ` ${credential.awardQuoteAttribution || "Program staff"}: "${credential.awardQuote}"` : ""}`
+    : "";
+
   if (credential.entryType === "program") {
     const details = [
       credential.issuer ? `Organization: ${credential.issuer}` : "",
       credential.href ? markdownLink(credential.hrefLabel || "program", credential.href) : "",
     ].filter(Boolean);
 
-    return `${credential.summary}${details.length ? ` (${details.join("; ")})` : ""}`;
+    return `${credential.summary}${award ? ` ${award}` : ""}${details.length ? ` (${details.join("; ")})` : ""}`;
   }
 
   const details = [
@@ -114,6 +118,18 @@ function buildPortfolioJson(content) {
     routes: {
       portfolio: absoluteUrl("/"),
       fullRecord: absoluteUrl("/record"),
+    },
+    humanSurfaces: {
+      meta: absoluteUrl("/#top"),
+      projects: absoluteUrl("/#projects"),
+      academics: absoluteUrl("/#academics"),
+      academicDetails: absoluteUrl("/#academics"),
+      programCredentials: absoluteUrl("/#academics"),
+      fullRecord: absoluteUrl("/record"),
+      smallProjects: absoluteUrl("/#smaller-projects"),
+      microProjects: absoluteUrl("/#bench-notes"),
+      skills: absoluteUrl("/#bench"),
+      learningHighlights: absoluteUrl("/#learning"),
     },
     agentFiles: {
       llms: absoluteUrl("/llms.txt"),
@@ -163,6 +179,23 @@ function buildLlmsTxt(content) {
       }),
     ),
     "",
+    "## Academic Record",
+    "",
+    markdownList(
+      [
+        `${meta.academicSchoolName}: ${meta.academicSchoolContext} ${meta.academicSchoolDistrictRank} ${meta.academicSchoolRankSummary}`,
+        ...list(content.academicDetails).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
+      ],
+    ),
+    "",
+    "## Activities, Leadership, Service, And Learning",
+    "",
+    markdownList(
+      list(content.fullRecord)
+        .flatMap((section) => list(section.items))
+        .map((item) => `${item.title}: ${item.detail}`),
+    ),
+    "",
     "## More Projects",
     "",
     markdownList(
@@ -192,6 +225,16 @@ function buildLlmsTxt(content) {
         const description = appendSentence(`${project.description}${linkText}`, `${mediaSummary(project)}.`);
         return `${markdownLink(project.title, absoluteUrl("/#bench-notes"))}: ${description}`;
       }),
+    ),
+    "",
+    "## Tools",
+    "",
+    markdownList(groupedSkills(content.skills).map((group) => `${group.category}${group.context ? ` (${group.context})` : ""}: ${group.skills.map((skill) => skill.name).join(", ")}`)),
+    "",
+    "## Ongoing Learning",
+    "",
+    markdownList(
+      list(content.learningHighlights).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
     ),
     "",
     "## Contact",
@@ -246,8 +289,16 @@ function buildLlmsFullTxt(content) {
     "",
     "## Academics",
     "",
+    `${meta.academicSchoolName}: ${meta.academicSchoolContext} ${meta.academicSchoolDistrictRank} ${meta.academicSchoolRankSummary}`,
+    "",
     markdownList(
       list(content.academics).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
+    ),
+    "",
+    "### Academic details",
+    "",
+    markdownList(
+      list(content.academicDetails).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
     ),
     "",
     "## Programs And Credentials",
@@ -262,6 +313,9 @@ function buildLlmsFullTxt(content) {
           credential.issuer ? `${credential.entryType === "program" ? "Organization" : "Issuer"}: ${credential.issuer}` : "",
           credential.date ? `Date: ${credential.date}` : "",
           credential.relatedProjectId ? `Related project ID: ${credential.relatedProjectId}` : "",
+          credential.awardTitle ? `Award: ${credential.awardDate} ${credential.awardTitle}${credential.awardDistinction ? ` - ${credential.awardDistinction}` : ""}` : "",
+          credential.awardSummary ? `Award detail: ${credential.awardSummary}` : "",
+          credential.awardQuote ? `Award quote: "${credential.awardQuote}" - ${credential.awardQuoteAttribution}` : "",
           credential.href ? `Program link: ${credential.href}` : "",
           credential.entryType !== "program"
             ? credential.scanAvailable && credential.scanSrc

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-12T08:36:09.097Z",
+  "updatedAt": "2026-07-12T09:28:06.518Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -17,7 +17,10 @@
     "heroImagePosition": "center center",
     "projectIndexTitle": "Featured projects",
     "academicTitle": "Academic profile",
+    "academicDetailsTitle": "Academic details",
+    "academicDetailsLabel": "Academic details",
     "credentialsTitle": "Programs and credentials",
+    "activitiesTitle": "Activities and involvement",
     "credentialPreviewLabel": "View certificate",
     "credentialMissingScanLabel": "Certificate scan needed",
     "academicSchoolEyebrow": "early-college student",
@@ -85,6 +88,7 @@
           "id": "media-1",
           "type": "photo",
           "src": "/portfolio-media/garden-party/playfield-in-cabinet.jpg",
+          "posterSrc": null,
           "alt": "Garden Party playfield installed in the cabinet",
           "caption": "Playfield in cabinet"
         },
@@ -92,6 +96,7 @@
           "id": "media-2",
           "type": "photo",
           "src": "/portfolio-media/garden-party/control-board.jpg",
+          "posterSrc": null,
           "alt": "Garden Party control board and power supplies mounted on plywood",
           "caption": "Control board"
         }
@@ -118,6 +123,7 @@
           "id": "media-1",
           "type": "photo",
           "src": "/portfolio-media/vividgrasp/solidworks-arm-assembly.webp",
+          "posterSrc": null,
           "alt": "SolidWorks robotic arm assembly for VividGrasp",
           "caption": "SolidWorks arm assembly"
         },
@@ -125,6 +131,7 @@
           "id": "media-2",
           "type": "photo",
           "src": "/portfolio-media/vividgrasp/pybullet-joint-controls.webp",
+          "posterSrc": null,
           "alt": "PyBullet joint control demo for the VividGrasp arm",
           "caption": "PyBullet joint controls"
         },
@@ -132,6 +139,7 @@
           "id": "media-3",
           "type": "photo",
           "src": "/portfolio-media/vividgrasp/pybullet-target-demo.webp",
+          "posterSrc": null,
           "alt": "PyBullet target scene for the VividGrasp robotic arm",
           "caption": "PyBullet target demo"
         },
@@ -139,6 +147,7 @@
           "id": "media-4",
           "type": "photo",
           "src": "/portfolio-media/vividgrasp/printed-gear-prototype.webp",
+          "posterSrc": null,
           "alt": "Printed gear prototype from the VividGrasp arm work",
           "caption": "Printed gear prototype"
         }
@@ -216,6 +225,7 @@
           "id": "media-1",
           "type": "photo",
           "src": "/portfolio-media/subpix/subpix-editor-grid-hidden.webp",
+          "posterSrc": null,
           "alt": "Subpix editor showing an RGB subpixel drawing with the grid hidden",
           "caption": "RGB subpixel drawing in Subpix"
         },
@@ -262,8 +272,108 @@
     {
       "id": "course-load",
       "label": "Coursework",
-      "value": "AP + advanced",
-      "note": "AP Human Geography, AP Spanish Language, and advanced classes",
+      "value": "AP + dual credit",
+      "note": "AP Human Geography, AP Spanish Language, College Algebra, and Geometry completed through Credit by Examination",
+      "highlight": "",
+      "assetSrc": null,
+      "assetAlt": "",
+      "href": null,
+      "hrefLabel": "",
+      "icon": "",
+      "dynamicSource": "",
+      "username": ""
+    }
+  ],
+  "academicDetails": [
+    {
+      "id": "weighted-gpa",
+      "label": "Weighted GPA",
+      "value": "5.0 / 5.0",
+      "note": "",
+      "highlight": "gold",
+      "assetSrc": null,
+      "assetAlt": "",
+      "href": null,
+      "hrefLabel": "",
+      "icon": "",
+      "dynamicSource": "",
+      "username": ""
+    },
+    {
+      "id": "class-rank",
+      "label": "Class rank",
+      "value": "#1 of 111",
+      "note": "Sole #1",
+      "highlight": "gold",
+      "assetSrc": null,
+      "assetAlt": "",
+      "href": null,
+      "hrefLabel": "",
+      "icon": "",
+      "dynamicSource": "",
+      "username": ""
+    },
+    {
+      "id": "geometry-a-cbe",
+      "label": "Geometry A CBE",
+      "value": "91",
+      "note": "Credit by Examination",
+      "highlight": "",
+      "assetSrc": null,
+      "assetAlt": "",
+      "href": null,
+      "hrefLabel": "",
+      "icon": "",
+      "dynamicSource": "",
+      "username": ""
+    },
+    {
+      "id": "geometry-b-cbe",
+      "label": "Geometry B CBE",
+      "value": "97",
+      "note": "Credit by Examination",
+      "highlight": "",
+      "assetSrc": null,
+      "assetAlt": "",
+      "href": null,
+      "hrefLabel": "",
+      "icon": "",
+      "dynamicSource": "",
+      "username": ""
+    },
+    {
+      "id": "college-algebra",
+      "label": "College Algebra",
+      "value": "95",
+      "note": "Dual credit",
+      "highlight": "",
+      "assetSrc": null,
+      "assetAlt": "",
+      "href": null,
+      "hrefLabel": "",
+      "icon": "",
+      "dynamicSource": "",
+      "username": ""
+    },
+    {
+      "id": "educ-1300",
+      "label": "EDUC 1300",
+      "value": "100",
+      "note": "Dual credit",
+      "highlight": "",
+      "assetSrc": null,
+      "assetAlt": "",
+      "href": null,
+      "hrefLabel": "",
+      "icon": "",
+      "dynamicSource": "",
+      "username": ""
+    },
+    {
+      "id": "math-acceleration",
+      "label": "Acceleration",
+      "value": "Accelerated into college trigonometry and precalculus",
+      "note": "",
       "highlight": "",
       "assetSrc": null,
       "assetAlt": "",
@@ -293,7 +403,13 @@
       "hrefLabel": "Program site",
       "accent": "blue",
       "relatedProjectId": null,
-      "scanAvailable": false
+      "scanAvailable": false,
+      "awardTitle": "A1 Excellence Award",
+      "awardDate": "2026",
+      "awardDistinction": "Sole recipient",
+      "awardSummary": "Recognized for consistently going beyond program requirements across CAD, robotics, and engineering work.",
+      "awardQuote": "went above and beyond every day.",
+      "awardQuoteAttribution": "Coach Taylor"
     },
     {
       "id": "stanford-ai4all",
@@ -313,7 +429,13 @@
       "hrefLabel": "Program site",
       "accent": "amber",
       "relatedProjectId": "vividgrasp-ai-vision-robotics-arm",
-      "scanAvailable": true
+      "scanAvailable": true,
+      "awardTitle": "",
+      "awardDate": "",
+      "awardDistinction": "",
+      "awardSummary": "",
+      "awardQuote": "",
+      "awardQuoteAttribution": ""
     }
   ],
   "learningHighlights": [
@@ -337,19 +459,20 @@
       "id": "check-ins",
       "title": "Check-ins",
       "href": "https://check-ins-zeta.vercel.app/",
-      "sourceHref": null,
+      "sourceHref": "https://github.com/Chrissyuh/check-ins",
       "logoSrc": null,
       "logoAlt": "",
       "logoHref": null,
-      "type": "live web app",
-      "description": "Logs check-ins and shows gaps, streaks, and progress.",
+      "type": "React / Vite web app",
+      "description": "Stores recurring check-ins locally, tracks target and maximum gaps, marks work due or over max, and keeps progress history. Built with React, Vite, Framer Motion, and Tailwind CSS.",
       "media": [
         {
           "id": "media-1",
           "type": "photo",
-          "src": null,
-          "alt": "Check-ins dashboard screenshot needed",
-          "caption": "Add dashboard screenshot"
+          "src": "/portfolio-media/check-ins/check-ins-overview.webp",
+          "posterSrc": null,
+          "alt": "Check-ins onboarding over the recurring project gap-tracking dashboard",
+          "caption": "Target and maximum gap tracking"
         }
       ]
     }
@@ -367,6 +490,7 @@
           "id": "media-1",
           "type": "photo",
           "src": null,
+          "posterSrc": null,
           "alt": "MIDI practice tool interface or keyboard setup photo needed",
           "caption": "Add tool interface or keyboard setup photo"
         }
@@ -384,6 +508,7 @@
           "id": "media-1",
           "type": "photo",
           "src": null,
+          "posterSrc": null,
           "alt": "Desmos 3D solar system scene screenshot needed",
           "caption": "Add 3D scene screenshot"
         }
@@ -401,6 +526,7 @@
           "id": "media-1",
           "type": "photo",
           "src": null,
+          "posterSrc": null,
           "alt": "TinyGPT training or output screenshot needed",
           "caption": "Add training or output screenshot"
         }
@@ -418,6 +544,7 @@
           "id": "media-1",
           "type": "photo",
           "src": null,
+          "posterSrc": null,
           "alt": "VEX V5 drivetrain prototype photo needed",
           "caption": "Add drivetrain prototype photo"
         }
@@ -467,7 +594,8 @@
       "name": "FAST Pinball",
       "projectIds": [
         "garden-party-pinball"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "arduino-esp32",
@@ -475,7 +603,8 @@
       "name": "Arduino / ESP32",
       "projectIds": [
         "smart-self-watering-pot"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "kicad",
@@ -483,7 +612,8 @@
       "name": "KiCad",
       "projectIds": [
         "smart-self-watering-pot"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "sensor-wiring",
@@ -492,7 +622,8 @@
       "projectIds": [
         "garden-party-pinball",
         "smart-self-watering-pot"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "soldering",
@@ -512,7 +643,8 @@
       "name": "Pump / motor control",
       "projectIds": [
         "smart-self-watering-pot"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "mission-pinball-framework",
@@ -520,7 +652,8 @@
       "name": "Mission Pinball Framework",
       "projectIds": [
         "garden-party-pinball"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "python",
@@ -539,7 +672,8 @@
       "name": "PyBullet",
       "projectIds": [
         "vividgrasp-ai-vision-robotics-arm"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "electron",
@@ -547,7 +681,8 @@
       "name": "Electron",
       "projectIds": [
         "subpix"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "react",
@@ -555,7 +690,8 @@
       "name": "React",
       "projectIds": [
         "subpix"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "typescript",
@@ -563,7 +699,8 @@
       "name": "TypeScript",
       "projectIds": [
         "subpix"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "vite",
@@ -571,7 +708,8 @@
       "name": "Vite",
       "projectIds": [
         "subpix"
-      ]
+      ],
+      "credentialIds": []
     },
     {
       "id": "laser-cutting",
@@ -618,33 +756,27 @@
   ],
   "fullRecord": [
     {
-      "id": "programs-credentials",
-      "category": "Programs and credentials",
-      "icon": "school",
+      "id": "activities-leadership-service",
+      "category": "Activities, leadership, and service",
+      "icon": "trophy",
+      "showOnHomepage": true,
       "items": [
         {
-          "id": "tetc",
-          "title": "Teen Engineering + Tech Center",
+          "id": "scouts-bsa",
+          "title": "Scouts BSA",
           "date": "",
-          "detail": "Four-year after-school STEM program supported by the ExxonMobil Foundation.",
-          "href": "https://tetc.org/",
-          "hrefLabel": "Program site"
+          "detail": "First Class Scout.",
+          "href": null,
+          "hrefLabel": ""
         },
         {
-          "id": "stanford-ai4all",
-          "title": "Stanford AI4ALL",
-          "date": "June 26, 2026",
-          "detail": "Completed the Robotics program while working on the VividGrasp team project.",
-          "href": "https://ai4all.spcs.stanford.edu/",
-          "hrefLabel": "Program site"
-        }
-      ]
-    },
-    {
-      "id": "competitions-leadership",
-      "category": "Competitions and leadership",
-      "icon": "trophy",
-      "items": [
+          "id": "student-council",
+          "title": "Student Council",
+          "date": "",
+          "detail": "Member.",
+          "href": null,
+          "hrefLabel": ""
+        },
         {
           "id": "debate",
           "title": "Debate",
@@ -655,24 +787,9 @@
         },
         {
           "id": "3d-printing-presentation",
-          "title": "3D Printing Presentation",
+          "title": "TETC 3D Printing Presentation",
           "date": "",
-          "detail": "Presented slides, printed examples, and robotics applications through TETC.",
-          "href": null,
-          "hrefLabel": ""
-        }
-      ]
-    },
-    {
-      "id": "scouts-service",
-      "category": "Scouts and service",
-      "icon": "target",
-      "items": [
-        {
-          "id": "scouts-bsa",
-          "title": "Scouts BSA",
-          "date": "",
-          "detail": "First Class Scout.",
+          "detail": "Presented slides, printed examples, and robotics applications.",
           "href": null,
           "hrefLabel": ""
         }
@@ -682,6 +799,7 @@
       "id": "languages-learning",
       "category": "Languages and ongoing learning",
       "icon": "list",
+      "showOnHomepage": false,
       "items": [
         {
           "id": "duolingo-streak",

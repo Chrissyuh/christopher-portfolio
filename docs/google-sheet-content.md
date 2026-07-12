@@ -10,6 +10,7 @@ Import the CSV files from `docs/google-sheet-template/` into one public Google S
 - `MainProjects`: featured-project status, summary, role, links, logo, and media.
 - `ProjectArtifactLinks`: additional public project evidence links.
 - `Academics`: GPA, rank, and coursework cards.
+- `AcademicDetails`: the compact academic-details dialog and the corresponding Experience record.
 - `ProgramCredentials`: programs, credentials, logos, links, and certificate scans.
 - `LearningHighlights`: non-academic learning statistics such as Duolingo.
 - `SmallProjects`: additional project cards.
@@ -28,6 +29,8 @@ Allowed project accents are `blue`, `teal`, `amber`, and `clay`. Allowed media t
 For every tab, use `File -> Share -> Publish to web`, choose the individual tab, choose CSV, and copy the published URL. Add every URL to the matching entry in `src/content/googleSheetConfig.js`.
 
 The runtime deliberately rejects partial configuration. Either all required URLs must be present or all should remain blank.
+
+When Google Sheet URLs are not configured, edit the template CSV files and run `npm run build-template-content` before building. This regenerates the same normalized snapshot used by the visible site and machine-readable files.
 
 ## Sync And Fallback
 

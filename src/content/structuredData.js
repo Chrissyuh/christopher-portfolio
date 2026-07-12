@@ -22,6 +22,13 @@ export function buildPortfolioStructuredData(content) {
   const programCredentials = list(content.programCredentials);
   const issuedCredentials = programCredentials.filter((entry) => entry.entryType !== "program");
   const programEntries = programCredentials.filter((entry) => entry.entryType === "program");
+  const academicDetails = list(content.academicDetails);
+  const academics = list(content.academics);
+  const activityItems = list(content.fullRecord).flatMap((section) => list(section.items));
+  const learningHighlights = list(content.learningHighlights);
+  const awards = programCredentials.filter((entry) => entry.awardTitle).map((entry) =>
+    `${entry.awardDate} ${entry.awardTitle}${entry.awardDistinction ? ` - ${entry.awardDistinction}` : ""}. ${entry.awardSummary}${entry.awardQuote ? ` ${entry.awardQuoteAttribution || "Program staff"}: "${entry.awardQuote}"` : ""}`,
+  );
   const creativeWorks = [
     ...projects.map((project) => ({
       id: project.id,
@@ -29,6 +36,7 @@ export function buildPortfolioStructuredData(content) {
       href: project.href,
       sourceHref: project.sourceHref,
       label: project.label,
+      status: project.status,
       summary: project.summary,
       role: project.role,
       teamContext: project.teamContext,
@@ -66,6 +74,17 @@ export function buildPortfolioStructuredData(content) {
         name: "Christopher Heskett",
         givenName: "Christopher",
         url: siteUrl("/"),
+        description: [
+          meta.heroLead,
+          meta.heroIntro,
+          `${meta.academicSchoolName}: ${meta.academicSchoolContext} ${meta.academicSchoolDistrictRank} ${meta.academicSchoolRankSummary}`,
+          academics.map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}.`).join(" "),
+          academicDetails.map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}.`).join(" "),
+          awards.join(" "),
+          activityItems.map((item) => `${item.title}: ${item.detail}`).join(" "),
+          learningHighlights.map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}.`).join(" "),
+        ].filter(Boolean).join(" "),
+        ...(awards.length > 0 ? { award: awards } : {}),
         ...(meta.heroImageSrc ? { image: siteUrl(meta.heroImageSrc) } : {}),
         email: stripMailto(meta.contactEmailHref),
         affiliation: [{ "@type": "EducationalOrganization", name: meta.academicSchoolName }],
@@ -131,6 +150,7 @@ export function buildPortfolioStructuredData(content) {
         creator: { "@id": personId },
         about: project.label,
         description: project.summary,
+        ...(project.status ? { creativeWorkStatus: project.status } : {}),
         keywords: list(project.artifactLinks).map((link) => link.label),
         ...(project.teamContext ? { creditText: project.teamContext } : {}),
         ...(project.role
@@ -178,7 +198,12 @@ export function buildPortfolioStructuredData(content) {
         "@type": "EducationalOrganization",
         "@id": `${siteUrl("/")}#program-${program.id}`,
         name: program.program,
-        description: program.summary,
+        description: [
+          program.summary,
+          program.awardTitle
+            ? `${program.awardDate} ${program.awardTitle}${program.awardDistinction ? ` - ${program.awardDistinction}` : ""}. ${program.awardSummary}${program.awardQuote ? ` ${program.awardQuoteAttribution || "Program staff"}: "${program.awardQuote}"` : ""}`
+            : "",
+        ].filter(Boolean).join(" "),
         ...(program.href ? { url: program.href } : {}),
         ...(program.logoSrc ? { logo: siteUrl(program.logoSrc) } : {}),
         ...(program.issuer

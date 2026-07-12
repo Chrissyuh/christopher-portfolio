@@ -290,14 +290,14 @@ function MediaFrame({ item, label, compact = false }) {
 
   return (
     <figure className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}>
-      <div className="aspect-video">
+      <div className="aspect-video bg-slate-950">
         {item.src && mediaType === "video" && (
           <video
             src={item.src}
             controls
             preload="metadata"
             aria-label={item.alt || caption}
-            className="h-full w-full bg-slate-950 object-cover"
+            className="h-full w-full bg-slate-950 object-contain"
           />
         )}
         {item.src && mediaType === "photo" && (
@@ -305,7 +305,7 @@ function MediaFrame({ item, label, compact = false }) {
             src={item.src}
             alt={item.alt || caption}
             loading="lazy"
-            className="h-full w-full object-cover"
+            className="h-full w-full bg-slate-950 object-contain"
           />
         )}
         {!item.src && (
@@ -1282,7 +1282,7 @@ function MicroProjectTile({ project, index, meta }) {
       className="group relative border border-[#d2c8b9] bg-white shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
     >
       <div className="relative overflow-hidden border-b border-[#e1d7c8]">
-        <div className="aspect-video bg-[#fbfaf7]">
+        <div className="aspect-video bg-slate-950">
           {media.src && mediaType === "video" && (
             <video
               src={media.src}
@@ -1290,7 +1290,7 @@ function MicroProjectTile({ project, index, meta }) {
               playsInline
               preload="metadata"
               aria-label={media.alt || caption}
-              className="h-full w-full bg-slate-950 object-cover"
+              className="h-full w-full bg-slate-950 object-contain"
             />
           )}
           {media.src && mediaType === "photo" && (
@@ -1298,7 +1298,7 @@ function MicroProjectTile({ project, index, meta }) {
               src={media.src}
               alt={media.alt || caption}
               loading="lazy"
-              className="h-full w-full object-cover"
+              className="h-full w-full bg-slate-950 object-contain"
             />
           )}
           {!media.src && (

@@ -625,7 +625,7 @@ function projectArtifactButtons(project, meta) {
 function ProjectRow({ project, index, meta }) {
   const style = accentStyles[project.accent] ?? accentStyles.blue;
   const artifactButtons = projectArtifactButtons(project, meta);
-  const hasSidebar = Boolean(project.logoSrc || artifactButtons.length > 0);
+  const hasProjectLinks = Boolean(project.logoSrc || artifactButtons.length > 0);
   const hasCompactLogo = project.id === "vividgrasp-ai-vision-robotics-arm";
   const logoContainerClass = cn(
     "border border-[#d6cec0] bg-white transition",
@@ -660,23 +660,14 @@ function ProjectRow({ project, index, meta }) {
             <p className="text-[10px] font-semibold leading-4 text-slate-900 sm:text-sm sm:leading-5">{project.teamContext}</p>
           </div>
         )}
-      </div>
-
-      <div className={cn("grid min-w-0", hasSidebar && "lg:grid-cols-[minmax(0,1fr)_250px]")}>
-        <div className="min-w-0 p-3 md:p-6">
-          <h3 className="text-lg font-semibold leading-tight tracking-[-0.02em] text-slate-950 sm:text-2xl sm:tracking-[-0.03em]">{project.title}</h3>
-          <p className="mt-2 max-w-3xl text-[13px] leading-5 text-slate-700 sm:mt-3 sm:text-base sm:leading-7 md:text-lg">{project.summary}</p>
-          <div className="mt-3 sm:mt-5">
-            <ProjectFact label={meta.projectRoleLabel}>{project.role}</ProjectFact>
-          </div>
-          <MediaCarousel media={project.media} label={project.title} />
-        </div>
-
-        {hasSidebar && (
-          <div className="border-t border-[#e1d7c8] bg-[#fbfaf7] p-3 sm:p-5 lg:border-l lg:border-t-0">
-            {project.logoSrc && (
-              <div>
-                {project.logoHref ? (
+        {hasProjectLinks && (
+          <div className="w-full border-t border-[#d6cec0] pt-2 xl:mt-5 xl:pt-4">
+            <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[#827466] sm:text-[10px] sm:tracking-[0.16em]">
+              {meta.projectArtifactLinksLabel}
+            </p>
+            <div className="mt-2 flex flex-wrap items-stretch gap-2 xl:flex-col">
+              {project.logoSrc &&
+                (project.logoHref ? (
                   <a
                     href={project.logoHref}
                     target="_blank"
@@ -691,19 +682,22 @@ function ProjectRow({ project, index, meta }) {
                   </a>
                 ) : (
                   <div className={logoContainerClass}>{logoImage}</div>
-                )}
-              </div>
-            )}
-            {artifactButtons.length > 0 && (
-              <div className={cn("flex flex-col gap-2", project.logoSrc && "mt-4 sm:mt-5")}>
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">{meta.projectArtifactLinksLabel}</p>
-                {artifactButtons.map((link) => (
-                  <ProjectLinkButton key={link.id ?? link.href} href={link.href} label={link.label} icon={link.icon} type={link.type} />
                 ))}
-              </div>
-            )}
+              {artifactButtons.map((link) => (
+                <ProjectLinkButton key={link.id ?? link.href} href={link.href} label={link.label} icon={link.icon} type={link.type} />
+              ))}
+            </div>
           </div>
         )}
+      </div>
+
+      <div className="min-w-0 p-3 md:p-6">
+        <h3 className="text-lg font-semibold leading-tight tracking-[-0.02em] text-slate-950 sm:text-2xl sm:tracking-[-0.03em]">{project.title}</h3>
+        <p className="mt-2 max-w-3xl text-[13px] leading-5 text-slate-700 sm:mt-3 sm:text-base sm:leading-7 md:text-lg">{project.summary}</p>
+        <div className="mt-3 sm:mt-5">
+          <ProjectFact label={meta.projectRoleLabel}>{project.role}</ProjectFact>
+        </div>
+        <MediaCarousel media={project.media} label={project.title} />
       </div>
     </motion.article>
   );

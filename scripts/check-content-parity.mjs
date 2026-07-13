@@ -61,7 +61,7 @@ content.smallProjects.forEach((project) => add(project.title, project.type, proj
 content.microProjects.forEach((project) => add(project.title, project.type, project.description));
 content.skills.forEach((skill) => add(skill.name));
 content.fullRecord.forEach((section) => {
-  section.items.forEach((item) => add(item.title, item.date, item.detail));
+  section.items.forEach((item) => add(item.title, item.date, item.detail, item.achievements));
 });
 
 const publicSerialized = JSON.stringify(publicContent);

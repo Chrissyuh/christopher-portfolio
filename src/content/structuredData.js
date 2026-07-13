@@ -12,6 +12,12 @@ function stripMailto(href) {
   return href?.startsWith("mailto:") ? href.slice("mailto:".length) : href;
 }
 
+function activityItemSummary(item) {
+  const achievements = list(item.achievements);
+  const achievementText = achievements.length > 0 ? `Achievements: ${achievements.join("; ")}.` : "";
+  return [item.detail, achievementText].filter(Boolean).join(" ");
+}
+
 export function buildPortfolioStructuredData(content) {
   const meta = content.meta ?? {};
   const personId = `${siteUrl("/")}#christopher-heskett`;
@@ -81,7 +87,7 @@ export function buildPortfolioStructuredData(content) {
           academics.map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}.`).join(" "),
           academicDetails.map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}.`).join(" "),
           awards.join(" "),
-          activityItems.map((item) => `${item.title}: ${item.detail}`).join(" "),
+          activityItems.map((item) => `${item.title}: ${activityItemSummary(item)}`).join(" "),
           learningHighlights.map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}.`).join(" "),
         ].filter(Boolean).join(" "),
         ...(awards.length > 0 ? { award: awards } : {}),

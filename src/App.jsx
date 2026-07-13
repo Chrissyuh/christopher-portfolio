@@ -1355,6 +1355,9 @@ function ProgramCredentialCard({ credential, index, meta }) {
     ? "Stanford Pre-Collegiate Studies"
     : isCredential ? "certificate of completion" : credential.issuer;
   const detail = credential.date;
+  const awardLabel = credential.awardTitle
+    ? `${credential.awardDate} ${credential.awardTitle}${credential.awardDistinction ? ` · ${credential.awardDistinction}` : ""}.${credential.awardSummary ? ` ${credential.awardSummary}` : ""}`
+    : "";
   const initials = credential.program
     .split(/\s+/)
     .filter(Boolean)
@@ -1405,24 +1408,14 @@ function ProgramCredentialCard({ credential, index, meta }) {
 
       <p className="mt-2 text-[11px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{credential.summary}</p>
 
-      {credential.awardTitle && (
-        <div className="relative mt-3 overflow-hidden border border-[#d8b451] bg-[#fffdf7] p-2.5 sm:mt-4 sm:p-3.5">
-          <div aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-[#d7a31f]" />
-          <p className="pl-2 font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-[#8a6500] sm:text-[10px] sm:tracking-[0.13em]">
-            {credential.awardDate} {credential.awardTitle}
-            {credential.awardDistinction && <span> &middot; {credential.awardDistinction}</span>}
-          </p>
-          {credential.awardSummary && <p className="mt-1.5 pl-2 text-[11px] leading-4 text-slate-700 sm:text-xs sm:leading-5">{credential.awardSummary}</p>}
-          {credential.awardQuote && (
-            <blockquote className="mt-2 border-t border-[#eadcae] pl-2 pt-2 text-[11px] italic leading-4 text-slate-700 sm:text-xs sm:leading-5">
-              <q>{credential.awardQuote}</q>
-              {credential.awardQuoteAttribution && <cite className="ml-1 not-italic text-slate-600">- {credential.awardQuoteAttribution}</cite>}
-            </blockquote>
-          )}
-        </div>
-      )}
-
       <div className="mt-2 flex flex-wrap items-center gap-2 sm:mt-4">
+        {awardLabel && (
+          <AchievementTrophy
+            id={`${credential.id}-award`}
+            label={awardLabel}
+            align={index % 2 === 1 ? "right" : "left"}
+          />
+        )}
         {isCredential && (
           <CredentialPreviewPopover
             credential={credential}
@@ -1447,6 +1440,124 @@ function ProgramCredentialCard({ credential, index, meta }) {
   );
 }
 
+function AchievementTrophy({ id, label, align = "left" }) {
+  const containerRef = useRef(null);
+  const triggerRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isPinned, setIsPinned] = useState(false);
+  const tooltipId = `achievement-${id}`;
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    function closeAchievement(event) {
+      if (!containerRef.current?.contains(event.target)) {
+        setIsOpen(false);
+        setIsPinned(false);
+      }
+    }
+
+    function closeOnEscape(event) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        setIsPinned(false);
+        triggerRef.current?.focus();
+      }
+    }
+
+    document.addEventListener("pointerdown", closeAchievement);
+    document.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.removeEventListener("pointerdown", closeAchievement);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isOpen]);
+
+  function handlePointerEnter(event) {
+    if (event.pointerType === "mouse") setIsOpen(true);
+  }
+
+  function handlePointerLeave(event) {
+    if (event.pointerType === "mouse" && !isPinned) setIsOpen(false);
+  }
+
+  function handleBlur(event) {
+    if (!containerRef.current?.contains(event.relatedTarget) && !isPinned) setIsOpen(false);
+  }
+
+  function handleClick() {
+    const nextOpen = !isPinned;
+    setIsOpen(nextOpen);
+    setIsPinned(nextOpen);
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative"
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      onBlur={handleBlur}
+    >
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-label={label}
+        aria-expanded={isOpen}
+        aria-describedby={isOpen ? tooltipId : undefined}
+        onFocus={() => setIsOpen(true)}
+        onClick={handleClick}
+        className="grid h-8 w-8 place-items-center border border-[#d8b451] bg-[#fff4c7] text-[#946700] shadow-sm transition hover:border-[#bd8b13] hover:bg-[#ffedaa] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:h-9 sm:w-9"
+      >
+        <Icon name="trophy" className="h-4 w-4" />
+      </button>
+
+      {isOpen && (
+        <span
+          id={tooltipId}
+          role="tooltip"
+          className={cn(
+            "pointer-events-none absolute left-0 top-[calc(100%+0.55rem)] z-40 w-52 border border-[#d8b451] bg-[#fffdf7] px-2.5 py-2 text-[10px] font-semibold leading-4 text-slate-800 shadow-[0_12px_30px_rgba(93,67,13,0.18)] sm:bottom-[calc(100%+0.55rem)] sm:top-auto sm:text-xs sm:leading-5",
+            align === "right" && "sm:left-auto sm:right-0",
+          )}
+        >
+          {label}
+          <span
+            aria-hidden="true"
+            className="absolute -top-1 left-3 h-2 w-2 rotate-45 border-l border-t border-[#d8b451] bg-[#fffdf7] sm:hidden"
+          />
+          <span
+            aria-hidden="true"
+            className={cn(
+              "absolute -bottom-1 left-3 hidden h-2 w-2 rotate-45 border-b border-r border-[#d8b451] bg-[#fffdf7] sm:block",
+              align === "right" && "sm:left-auto sm:right-3",
+            )}
+          />
+        </span>
+      )}
+    </div>
+  );
+}
+
+function AchievementTrophies({ item, className = "" }) {
+  const achievements = list(item.achievements);
+  if (achievements.length === 0) return null;
+
+  return (
+    <div className={cn("flex items-center gap-2", className)} aria-label={`${item.title} achievements`}>
+      {achievements.map((achievement, index) => (
+        <AchievementTrophy
+          key={achievement}
+          id={`${item.id}-${index + 1}`}
+          label={achievement}
+          align={index === achievements.length - 1 ? "right" : "left"}
+        />
+      ))}
+    </div>
+  );
+}
+
 function HomepageActivitySection({ section, title }) {
   if (!section) return null;
 
@@ -1455,9 +1566,10 @@ function HomepageActivitySection({ section, title }) {
       <h2 className="text-xl font-semibold leading-6 text-slate-950 sm:text-2xl sm:leading-7">{title}</h2>
       <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:gap-3 lg:grid-cols-4">
         {list(section.items).map((item) => (
-          <article key={item.id} className="border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-4">
+          <article key={item.id} className="flex min-h-full flex-col border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-4">
             <h3 className="text-xs font-semibold leading-4 text-slate-950 sm:text-sm sm:leading-5">{item.title}</h3>
             <p className="mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-2 sm:text-xs sm:leading-5">{item.detail}</p>
+            <AchievementTrophies item={item} className="mt-auto pt-2 sm:pt-3" />
           </article>
         ))}
       </div>
@@ -1493,7 +1605,10 @@ function RecordSectionCard({ section, collection = "fullRecord" }) {
               <h3 className="text-sm font-semibold text-slate-950 sm:text-base">{item.title}</h3>
               {item.date && <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] sm:text-xs">{item.date}</p>}
             </div>
-            <p className="text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{item.detail}</p>
+            <div>
+              <p className="text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{item.detail}</p>
+              <AchievementTrophies item={item} className="mt-2.5" />
+            </div>
             {item.href && <a href={item.href} target="_blank" rel="noreferrer" className="inline-flex items-center text-xs font-semibold text-[#244fd6] hover:underline">{item.hrefLabel || "Open"}<Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" /></a>}
           </div>
         ))}

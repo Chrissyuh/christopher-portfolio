@@ -513,6 +513,9 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       title: text(row.title),
       date: text(row.date),
       detail: text(row.detail),
+      achievements: [1, 2, 3, 4]
+        .map((index) => text(row[`achievement_${index}`]))
+        .filter(Boolean),
       href: hrefOrNull(row.href),
       hrefLabel: text(row.href_label),
     });

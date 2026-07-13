@@ -85,6 +85,12 @@ function credentialDetails(credential) {
   return `${credential.summary}${details.length ? ` (${details.join("; ")})` : ""}`;
 }
 
+function recordItemSummary(item) {
+  const achievements = list(item.achievements);
+  const achievementText = achievements.length > 0 ? `Achievements: ${achievements.join("; ")}.` : "";
+  return [item.detail, achievementText].filter(Boolean).join(" ");
+}
+
 function roleSummary(project) {
   return project.role ? ` Role: ${project.role}` : "";
 }
@@ -193,7 +199,7 @@ function buildLlmsTxt(content) {
     markdownList(
       list(content.fullRecord)
         .flatMap((section) => list(section.items))
-        .map((item) => `${item.title}: ${item.detail}`),
+        .map((item) => `${item.title}: ${recordItemSummary(item)}`),
     ),
     "",
     "## More Projects",
@@ -370,7 +376,7 @@ function buildLlmsFullTxt(content) {
           markdownList(list(section.items).map((item) => {
             const date = item.date ? ` (${item.date})` : "";
             const link = item.href ? ` ${markdownLink(item.hrefLabel || "Open", item.href)}` : "";
-            return `${item.title}${date}: ${item.detail}${link}`;
+            return `${item.title}${date}: ${recordItemSummary(item)}${link}`;
           })),
         ].join("\n"),
       )

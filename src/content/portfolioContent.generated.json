@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-12T09:28:06.518Z",
+  "updatedAt": "2026-07-13T05:05:51.802Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -766,6 +766,7 @@
           "title": "Scouts BSA",
           "date": "",
           "detail": "First Class Scout.",
+          "achievements": [],
           "href": null,
           "hrefLabel": ""
         },
@@ -774,6 +775,7 @@
           "title": "Student Council",
           "date": "",
           "detail": "Member.",
+          "achievements": [],
           "href": null,
           "hrefLabel": ""
         },
@@ -782,6 +784,10 @@
           "title": "Debate",
           "date": "",
           "detail": "Reached JV finals.",
+          "achievements": [
+            "CASE Debates tournament #4, 2025",
+            "CASE Debates tournament #5, 2026"
+          ],
           "href": null,
           "hrefLabel": ""
         },
@@ -790,6 +796,7 @@
           "title": "TETC 3D Printing Presentation",
           "date": "",
           "detail": "Presented slides, printed examples, and robotics applications.",
+          "achievements": [],
           "href": null,
           "hrefLabel": ""
         }
@@ -806,6 +813,7 @@
           "title": "Duolingo language practice",
           "date": "",
           "detail": "Maintains a public daily language-learning streak.",
+          "achievements": [],
           "href": "https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr",
           "hrefLabel": "Profile"
         },
@@ -814,6 +822,7 @@
           "title": "Spanish",
           "date": "",
           "detail": "AP Spanish Language coursework and continued practice.",
+          "achievements": [],
           "href": null,
           "hrefLabel": ""
         },
@@ -822,6 +831,7 @@
           "title": "French",
           "date": "",
           "detail": "Practice in pronunciation, listening, and sentence construction.",
+          "achievements": [],
           "href": null,
           "hrefLabel": ""
         },
@@ -830,6 +840,7 @@
           "title": "Latin",
           "date": "",
           "detail": "Foundational Latin study.",
+          "achievements": [],
           "href": null,
           "hrefLabel": ""
         }

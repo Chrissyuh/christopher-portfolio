@@ -82,6 +82,22 @@ const expectedFeaturedProjects = [
 ];
 assert.deepEqual(content.projects.map((project) => project.title), expectedFeaturedProjects);
 
+const expectedAcademicDetails = [
+  ["ap-human-geography", "AP exams", "AP Human Geography", "5", "2026 exam score"],
+  ["ap-spanish-language", "AP exams", "AP Spanish Language and Culture", "4", "2026 exam score"],
+  ["college-algebra", "College credit", "College Algebra", "95", "Dual credit"],
+  ["educ-1300", "College credit", "EDUC 1300", "100", "Dual credit"],
+  ["geometry-a-cbe", "Credit by Examination", "Geometry A", "91", "Credit by Examination"],
+  ["geometry-b-cbe", "Credit by Examination", "Geometry B", "97", "Credit by Examination"],
+  ["math-acceleration", "Progression", "Math progression", "Accelerated into college trigonometry and precalculus", ""],
+];
+assert.deepEqual(
+  content.academicDetails.map((item) => [item.id, item.group, item.label, item.value, item.note]),
+  expectedAcademicDetails,
+  "Academic coursework and scores drifted from the verified visible record.",
+);
+assert.ok(!content.academicDetails.some((item) => item.id === "weighted-gpa" || item.id === "class-rank"), "Academic details must not duplicate the GPA and rank cards.");
+
 const requiredHumanCollections = [
   "meta",
   "projects",

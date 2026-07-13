@@ -54,17 +54,17 @@ Spring Early College Academy: High-school and college-level coursework through S
 
 - Weighted GPA: 5.0 / 5.0
 - Class rank: 1 of 111 (sole #1 standing)
-- Coursework: AP + dual credit (AP Human Geography, AP Spanish Language, College Algebra, and Geometry completed through Credit by Examination)
+- Coursework: AP + dual credit (AP exams, dual-credit coursework, credit-by-examination scores, and accelerated math)
 
-### Academic details
+### Coursework & scores
 
-- Weighted GPA: 5.0 / 5.0
-- Class rank: #1 of 111 (Sole #1)
-- Geometry A CBE: 91 (Credit by Examination)
-- Geometry B CBE: 97 (Credit by Examination)
-- College Algebra: 95 (Dual credit)
-- EDUC 1300: 100 (Dual credit)
-- Acceleration: Accelerated into college trigonometry and precalculus
+- AP exams - AP Human Geography: 5 (2026 exam score)
+- AP exams - AP Spanish Language and Culture: 4 (2026 exam score)
+- College credit - College Algebra: 95 (Dual credit)
+- College credit - EDUC 1300: 100 (Dual credit)
+- Credit by Examination - Geometry A: 91 (Credit by Examination)
+- Credit by Examination - Geometry B: 97 (Credit by Examination)
+- Progression - Math progression: Accelerated into college trigonometry and precalculus
 
 ## Programs And Credentials
 

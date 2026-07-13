@@ -26,6 +26,8 @@ export const allowedProgramCredentialTypes = ["program", "credential"];
 
 export const allowedToolMediaContexts = ["project", "independent"];
 
+export const allowedAcademicDetailFormats = ["ap-score", "grade", "text"];
+
 const mediaSlotCount = 8;
 
 export const allowedIcons = [
@@ -54,7 +56,7 @@ const requiredFields = {
   MainProjects: ["id", "title", "label", "status", "accent", "summary"],
   ProjectArtifactLinks: ["id", "project_id", "label", "href", "type"],
   Academics: ["id", "label", "value"],
-  AcademicDetails: ["id", "label", "value"],
+  AcademicDetails: ["id", "group", "format", "label", "value"],
   ProgramCredentials: ["id", "entry_type", "program", "summary", "accent"],
   LearningHighlights: ["id", "label", "value"],
   SmallProjects: ["id", "title", "type", "description"],
@@ -82,8 +84,8 @@ const defaultMeta = {
   heroImagePosition: "center center",
   projectIndexTitle: "Featured projects",
   academicTitle: "Academic profile",
-  academicDetailsTitle: "Academic details",
-  academicDetailsLabel: "Academic details",
+  academicDetailsTitle: "Coursework & scores",
+  academicDetailsLabel: "Coursework & scores",
   credentialsTitle: "Programs and credentials",
   activitiesTitle: "Activities and involvement",
   credentialPreviewLabel: "View certificate",
@@ -337,6 +339,8 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       label: text(row.label),
       value: text(row.value),
       note: text(row.note),
+      group: text(row.group),
+      format: text(row.format),
       highlight: text(row.highlight),
       assetSrc: hrefOrNull(row.asset_src),
       assetAlt: text(row.asset_alt),
@@ -350,6 +354,9 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
 
   const academics = statRows("Academics");
   const academicDetails = statRows("AcademicDetails");
+  for (const detail of academicDetails) {
+    requireKnownValue(errors, "AcademicDetails", detail.id, "format", detail.format, allowedAcademicDetailFormats);
+  }
   const programCredentials = simpleRows("ProgramCredentials", (row) => {
     const id = text(row.id);
     const entryType = text(row.entry_type) || "credential";

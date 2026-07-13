@@ -35,6 +35,16 @@ function markdownList(items) {
   return items.map((item) => `- ${item}`).join("\n");
 }
 
+function academicRecordItems(content) {
+  const summary = list(content.academics).filter((item) => item.id === "gpa" || item.id === "rank");
+  return [...summary, ...list(content.academicDetails)];
+}
+
+function academicItemLine(item) {
+  const group = item.group ? `${item.group} - ` : "";
+  return `${group}${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`;
+}
+
 function projectLinks(project) {
   const links = [
     project.href && { label: project.bestLinkLabel || "project", href: project.href },
@@ -190,7 +200,7 @@ function buildLlmsTxt(content) {
     markdownList(
       [
         `${meta.academicSchoolName}: ${meta.academicSchoolContext} ${meta.academicSchoolDistrictRank} ${meta.academicSchoolRankSummary}`,
-        ...list(content.academicDetails).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
+        ...academicRecordItems(content).map(academicItemLine),
       ],
     ),
     "",
@@ -301,10 +311,10 @@ function buildLlmsFullTxt(content) {
       list(content.academics).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
     ),
     "",
-    "### Academic details",
+    "### Coursework & scores",
     "",
     markdownList(
-      list(content.academicDetails).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
+      list(content.academicDetails).map(academicItemLine),
     ),
     "",
     "## Programs And Credentials",

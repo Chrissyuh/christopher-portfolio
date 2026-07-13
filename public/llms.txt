@@ -22,12 +22,14 @@ This index points agents to concise, structured, and complete representations of
 
 - Spring Early College Academy: High-school and college-level coursework through Spring ISD. Top-ranked Spring ISD high school. #9 Houston metro, #44 Texas, #326 national.
 - Weighted GPA: 5.0 / 5.0
-- Class rank: #1 of 111 (Sole #1)
-- Geometry A CBE: 91 (Credit by Examination)
-- Geometry B CBE: 97 (Credit by Examination)
-- College Algebra: 95 (Dual credit)
-- EDUC 1300: 100 (Dual credit)
-- Acceleration: Accelerated into college trigonometry and precalculus
+- Class rank: 1 of 111 (sole #1 standing)
+- AP exams - AP Human Geography: 5 (2026 exam score)
+- AP exams - AP Spanish Language and Culture: 4 (2026 exam score)
+- College credit - College Algebra: 95 (Dual credit)
+- College credit - EDUC 1300: 100 (Dual credit)
+- Credit by Examination - Geometry A: 91 (Credit by Examination)
+- Credit by Examination - Geometry B: 97 (Credit by Examination)
+- Progression - Math progression: Accelerated into college trigonometry and precalculus
 
 ## Activities, Leadership, Service, And Learning
 

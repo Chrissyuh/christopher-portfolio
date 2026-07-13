@@ -10,7 +10,7 @@ Import the CSV files from `docs/google-sheet-template/` into one public Google S
 - `MainProjects`: featured-project status, summary, role, links, logo, and media.
 - `ProjectArtifactLinks`: additional public project evidence links.
 - `Academics`: GPA, rank, and coursework cards.
-- `AcademicDetails`: the compact academic-details dialog and the corresponding Experience record.
+- `AcademicDetails`: grouped AP exam scores, college-credit grades, Credit by Examination scores, and math progression shown in the inline coursework disclosure and full record. Allowed `format` values are `ap-score`, `grade`, and `text`.
 - `ProgramCredentials`: programs, credentials, logos, links, and certificate scans.
 - `LearningHighlights`: non-academic learning statistics such as Duolingo.
 - `SmallProjects`: additional project cards.

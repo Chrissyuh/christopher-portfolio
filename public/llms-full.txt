@@ -74,7 +74,6 @@ Program: Teen Engineering + Tech Center
 Organization: ExxonMobil Foundation
 Award: 2026 A1 Excellence Award - Sole recipient
 Award detail: Recognized for consistently going beyond program requirements across CAD, robotics, and engineering work.
-Award quote: "went above and beyond every day." - Coach Taylor
 Program link: https://tetc.org/
 Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation.
 

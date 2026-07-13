@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { LayoutGroup, motion, MotionConfig } from "framer-motion";
-import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { usePortfolioContent } from "./content/loadPortfolioContent";
 
 function cn(...classes) {
@@ -1609,23 +1609,6 @@ function ContactButton({ href, icon, children, primary = false }) {
   );
 }
 
-function PageButton({ to, icon, children, end = false }) {
-  return (
-    <NavLink
-      to={to}
-      end={end}
-      className={({ isActive }) =>
-        isActive
-          ? "flex h-8 items-center gap-1.5 bg-slate-950 px-2 font-mono text-[9px] uppercase tracking-[0.1em] text-white sm:px-2.5 sm:text-[10px] sm:tracking-[0.12em]"
-          : "flex h-8 items-center gap-1.5 bg-white px-2 font-mono text-[9px] uppercase tracking-[0.1em] text-slate-600 hover:bg-[#fbfaf7] hover:text-slate-950 sm:px-2.5 sm:text-[10px] sm:tracking-[0.12em]"
-      }
-    >
-      <Icon name={icon} className="h-3.5 w-3.5" />
-      {children}
-    </NavLink>
-  );
-}
-
 function ActiveNavigationFrame() {
   return (
     <motion.span
@@ -2017,7 +2000,7 @@ function Navigation({ content }) {
   return (
     <nav className="sticky top-0 z-30 border-b border-[#d2c8b9] bg-[#f5f3ee]/95 backdrop-blur-md">
       <LayoutGroup id="portfolio-section-navigation">
-        <div className="mx-auto grid min-h-12 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-3 py-1.5 sm:gap-3 md:px-8 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-5">
+        <div className="mx-auto grid min-h-12 max-w-7xl grid-cols-1 items-center px-3 py-1.5 md:px-8 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-5">
           <Link
             to="/#top"
             aria-current={isPortfolioRoute && activeSection === "top" ? "location" : undefined}
@@ -2068,12 +2051,6 @@ function Navigation({ content }) {
             </div>
           )}
 
-          {!isPortfolioRoute && <div className="hidden lg:block" />}
-
-          <div className="grid shrink-0 grid-cols-2 overflow-hidden border border-[#cfc4b4] bg-white p-0.5 shadow-sm">
-            <PageButton to="/" end icon="box">Portfolio</PageButton>
-            <PageButton to="/record" icon="list">Experience</PageButton>
-          </div>
         </div>
       </LayoutGroup>
     </nav>

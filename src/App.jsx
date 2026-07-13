@@ -1258,15 +1258,16 @@ function AcademicCard({ item, index, wide = false, children = null }) {
       {isGoldHighlight && (
         <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1.5 bg-[#d7a31f]" />
       )}
-      <p className="font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-xs sm:tracking-[0.2em]">{item.label}</p>
       {wide ? (
-        <div className="mt-1.5 flex flex-col sm:mt-3 lg:grid lg:grid-cols-[minmax(210px,0.92fr)_minmax(0,1.08fr)] lg:grid-rows-[auto_auto] lg:gap-x-6">
-          <p className="order-1 text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em] lg:col-start-1 lg:row-start-1">{item.value}</p>
-          {item.note && <p className="order-2 mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0">{item.note}</p>}
-          <div className="order-3 lg:col-start-1 lg:row-start-2">{children}</div>
+        <div className="flex flex-col lg:grid lg:grid-cols-[minmax(260px,280px)_minmax(0,1fr)] lg:grid-rows-[auto_auto_auto] lg:gap-x-8">
+          <p className="order-1 font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-xs sm:tracking-[0.2em] lg:col-start-1 lg:row-start-1">{item.label}</p>
+          <p className="order-2 mt-1.5 text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:mt-3 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em] lg:col-start-1 lg:row-start-2">{item.value}</p>
+          {item.note && <p className="order-3 mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6 lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:mt-0">{item.note}</p>}
+          <div className="order-4 lg:col-start-1 lg:row-start-3">{children}</div>
         </div>
       ) : (
         <>
+          <p className="font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-xs sm:tracking-[0.2em]">{item.label}</p>
           <p className="mt-1.5 text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:mt-3 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em]">{item.value}</p>
           {item.note && <p className="mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{item.note}</p>}
           {children}

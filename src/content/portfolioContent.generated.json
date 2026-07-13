@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-13T05:57:23.275Z",
+  "updatedAt": "2026-07-13T06:13:25.024Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -176,7 +176,7 @@
           "src": "/portfolio-media/smart-planter/board-a-cost-down.glb",
           "posterSrc": "/portfolio-media/smart-planter/board-a-cost-down-poster.webp",
           "alt": "Board A cost-down PCB for the Smart Planter",
-          "caption": "Interactive Board A cost-down PCB"
+          "caption": "Board A cost-down PCB"
         },
         {
           "id": "media-2",

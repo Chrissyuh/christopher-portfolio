@@ -137,7 +137,7 @@ function FittedPhoto({ src, alt }) {
   );
 }
 
-function ModelMedia({ item, label, onInteractionChange }) {
+function ModelMedia({ item, label, onInteractionChange, onInteractiveStateChange }) {
   const hostRef = useRef(null);
   const [eligible, setEligible] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -198,6 +198,14 @@ function ModelMedia({ item, label, onInteractionChange }) {
     return () => observer.disconnect();
   }, [eligible]);
 
+  const isInteractive = eligible && visible && ready && !failed;
+
+  useEffect(() => {
+    onInteractiveStateChange?.(isInteractive);
+  }, [isInteractive, onInteractiveStateChange]);
+
+  useEffect(() => () => onInteractiveStateChange?.(false), [onInteractiveStateChange]);
+
   const fallback = posterSrc ? <FittedPhoto src={posterSrc} alt={alt} /> : null;
 
   return (
@@ -223,6 +231,8 @@ function ModelMedia({ item, label, onInteractionChange }) {
 function MediaFrame({ item, label, compact = false, onModelInteractionChange, onInteractiveHoverChange, clone = false }) {
   const mediaType = item.type === "video" ? "video" : item.type === "model" ? "model" : "photo";
   const caption = item.caption || item.alt || label;
+  const [modelIsInteractive, setModelIsInteractive] = useState(false);
+  const visibleCaption = mediaType === "model" && modelIsInteractive ? `Interactive ${caption}` : caption;
   const frameClass = compact ? "w-full flex-none" : "w-[82%] flex-none sm:w-[calc((100%_-_0.75rem)/2)]";
 
   return (
@@ -237,7 +247,12 @@ function MediaFrame({ item, label, compact = false, onModelInteractionChange, on
           <ViewportVideo item={item} caption={caption} />
         )}
         {item.src && mediaType === "model" && (
-          <ModelMedia item={item} label={label} onInteractionChange={onModelInteractionChange} />
+          <ModelMedia
+            item={item}
+            label={label}
+            onInteractionChange={onModelInteractionChange}
+            onInteractiveStateChange={setModelIsInteractive}
+          />
         )}
         {item.src && mediaType === "photo" && <FittedPhoto src={item.src} alt={item.alt || caption} />}
         {!item.src && (
@@ -256,13 +271,13 @@ function MediaFrame({ item, label, compact = false, onModelInteractionChange, on
       </div>
       {item.src && (
         <figcaption className="border-t border-[#e1d7c8] px-2.5 py-1.5 text-[11px] leading-4 text-slate-700 sm:px-3 sm:py-2 sm:text-xs sm:leading-5">
-          {caption.startsWith("Interactive ") ? (
+          {visibleCaption.startsWith("Interactive ") ? (
             <>
               <strong className="font-bold text-[#7c3aed]">Interactive</strong>
-              {caption.slice("Interactive".length)}
+              {visibleCaption.slice("Interactive".length)}
             </>
           ) : (
-            caption
+            visibleCaption
           )}
         </figcaption>
       )}

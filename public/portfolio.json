@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-13T06:13:25.024Z",
+  "updatedAt": "2026-07-13T06:28:19.996Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -28,6 +28,7 @@
     "academicSchoolHref": "https://seca.springisd.org/",
     "academicSchoolLogoSrc": "/portfolio-media/academics/seca-logo.webp",
     "academicSchoolLogoAlt": "Spring Early College Academy crest",
+    "academicSchoolContext": "Spring ISD dual-credit early-college program in partnership with Lone Star College.",
     "academicSchoolDistrictRank": "Top-ranked Spring ISD high school.",
     "academicSchoolDistrictSourceHref": "https://www.schooldigger.com/go/TX/district/41220/search.aspx?level=3",
     "academicSchoolDistrictSourceLabel": "District rankings",
@@ -63,8 +64,7 @@
     "mediaSlotLabel": "media slot",
     "openProjectsLabel": "View selected work",
     "viewRecordLabel": "Experience",
-    "backPortfolioLabel": "Back to portfolio",
-    "academicSchoolContext": "High-school and college-level coursework through Spring ISD."
+    "backPortfolioLabel": "Back to portfolio"
   },
   "projects": [
     {
@@ -276,8 +276,8 @@
     {
       "id": "course-load",
       "label": "Coursework",
-      "value": "AP + dual credit",
-      "note": "AP exams, dual-credit coursework, credit-by-examination scores, and accelerated math",
+      "value": "Academic results",
+      "note": "AP exam scores, college grades, credit-by-examination scores, and accelerated math",
       "group": "",
       "format": "",
       "highlight": "",

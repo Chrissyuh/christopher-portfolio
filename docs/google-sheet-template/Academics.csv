@@ -1,4 +1,4 @@
 "id","order","enabled","label","value","note","highlight","asset_src","asset_alt","href","href_label","icon","dynamic_source","username"
 "gpa","1","true","Weighted GPA","5.0 / 5.0","","gold","","","","","","",""
 "rank","2","true","Class rank","1 of 111","sole #1 standing","gold","","","","","","",""
-"course-load","3","true","Coursework","AP + dual credit","AP exams, dual-credit coursework, credit-by-examination scores, and accelerated math","","","","","","","",""
+"course-load","3","true","Coursework","Academic results","AP exam scores, college grades, credit-by-examination scores, and accelerated math","","","","","","","",""

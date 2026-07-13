@@ -95,6 +95,7 @@ const defaultMeta = {
   academicSchoolHref: "https://seca.springisd.org/",
   academicSchoolLogoSrc: "/portfolio-media/academics/seca-logo.webp",
   academicSchoolLogoAlt: "Spring Early College Academy crest",
+  academicSchoolContext: "Spring ISD dual-credit early-college program in partnership with Lone Star College.",
   academicSchoolDistrictRank: "Top-ranked Spring ISD high school.",
   academicSchoolDistrictSourceHref: "https://www.schooldigger.com/go/TX/district/41220/search.aspx?level=3",
   academicSchoolDistrictSourceLabel: "District rankings",

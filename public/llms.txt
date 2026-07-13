@@ -29,7 +29,7 @@ This index points agents to concise, structured, and complete representations of
 - College credit - EDUC 1300: 100 (Dual credit)
 - Credit by Examination - Geometry A: 91 (Credit by Examination)
 - Credit by Examination - Geometry B: 97 (Credit by Examination)
-- Progression - Math progression: Accelerated into college trigonometry and precalculus
+- Progression - Math progression: Only student in the SECA class of 2029 taking college trigonometry and precalculus in sophomore year
 
 ## Activities, Leadership, Service, And Learning
 

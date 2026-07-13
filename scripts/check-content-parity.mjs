@@ -96,7 +96,7 @@ const expectedAcademicDetails = [
   ["educ-1300", "College credit", "EDUC 1300", "100", "Dual credit"],
   ["geometry-a-cbe", "Credit by Examination", "Geometry A", "91", "Credit by Examination"],
   ["geometry-b-cbe", "Credit by Examination", "Geometry B", "97", "Credit by Examination"],
-  ["math-acceleration", "Progression", "Math progression", "Accelerated into college trigonometry and precalculus", ""],
+  ["math-acceleration", "Progression", "Math progression", "Only student in the SECA class of 2029 taking college trigonometry and precalculus in sophomore year", ""],
 ];
 assert.deepEqual(
   content.academicDetails.map((item) => [item.id, item.group, item.label, item.value, item.note]),

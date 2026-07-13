@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-13T06:28:19.996Z",
+  "updatedAt": "2026-07-13T06:37:07.094Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -390,7 +390,7 @@
     {
       "id": "math-acceleration",
       "label": "Math progression",
-      "value": "Accelerated into college trigonometry and precalculus",
+      "value": "Only student in the SECA class of 2029 taking college trigonometry and precalculus in sophomore year",
       "note": "",
       "group": "Progression",
       "format": "text",

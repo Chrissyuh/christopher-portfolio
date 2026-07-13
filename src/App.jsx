@@ -80,6 +80,8 @@ const accentStyles = {
 
 const carouselAutoAdvanceMs = 6000;
 const carouselInteractionPauseMs = 10000;
+const carouselInteractiveExitPauseMs = 2000;
+const carouselWrapResetMs = 650;
 const LazyPcbModelViewer = React.lazy(() => import("./components/PcbModelViewer.jsx"));
 const pcbFallbackStorageKey = "portfolio-pcb-model-fallback";
 
@@ -218,13 +220,18 @@ function ModelMedia({ item, label, onInteractionChange }) {
   );
 }
 
-function MediaFrame({ item, label, compact = false, onModelInteractionChange }) {
+function MediaFrame({ item, label, compact = false, onModelInteractionChange, onInteractiveHoverChange, clone = false }) {
   const mediaType = item.type === "video" ? "video" : item.type === "model" ? "model" : "photo";
   const caption = item.caption || item.alt || label;
   const frameClass = compact ? "w-full flex-none" : "w-[82%] flex-none sm:w-[calc((100%_-_0.75rem)/2)]";
 
   return (
-    <figure className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}>
+    <figure
+      aria-hidden={clone || undefined}
+      className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}
+      onMouseEnter={mediaType === "model" && !clone ? () => onInteractiveHoverChange?.(true) : undefined}
+      onMouseLeave={mediaType === "model" && !clone ? () => onInteractiveHoverChange?.(false) : undefined}
+    >
       <div className="relative aspect-video overflow-hidden bg-[#ded8cd]">
         {item.src && mediaType === "video" && (
           <ViewportVideo item={item} caption={caption} />
@@ -349,15 +356,19 @@ function MediaCarousel({ media, label, compact = false }) {
   const items = list(media);
   const trackRef = useRef(null);
   const scrollEndTimerRef = useRef(null);
+  const wrapResetTimerRef = useRef(null);
+  const touchStartXRef = useRef(null);
+  const wrappingRef = useRef(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lastInteractionAt, setLastInteractionAt] = useState(0);
   const [modelInteractionActive, setModelInteractionActive] = useState(false);
+  const [interactiveHoverActive, setInteractiveHoverActive] = useState(false);
+  const [interactiveResumeAt, setInteractiveResumeAt] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
   const maxStartIndex = Math.max(items.length - visibleCount, 0);
   const safeActiveIndex = items.length > 0 ? Math.min(activeIndex, maxStartIndex) : 0;
   const canScroll = maxStartIndex > 0;
-  const canMoveBackward = safeActiveIndex > 0;
-  const canMoveForward = safeActiveIndex < maxStartIndex;
+  const cloneCount = canScroll ? Math.min(visibleCount, items.length) : 0;
 
   const markInteraction = useCallback(() => {
     setLastInteractionAt(Date.now());
@@ -366,10 +377,15 @@ function MediaCarousel({ media, label, compact = false }) {
   const handleModelInteractionChange = useCallback(
     (active) => {
       setModelInteractionActive(active);
-      if (!active) markInteraction();
+      if (!active) setInteractiveResumeAt(Date.now() + carouselInteractiveExitPauseMs);
     },
-    [markInteraction],
+    [],
   );
+
+  const handleInteractiveHoverChange = useCallback((active) => {
+    setInteractiveHoverActive(active);
+    if (!active) setInteractiveResumeAt(Date.now() + carouselInteractiveExitPauseMs);
+  }, []);
 
   const measureVisibleCount = useCallback(() => {
     const track = trackRef.current;
@@ -403,10 +419,34 @@ function MediaCarousel({ media, label, compact = false }) {
   );
 
   const moveByPage = useCallback(
-    (direction) => {
-      goTo(safeActiveIndex + direction * visibleCount, true);
+    (direction, userInitiated = true) => {
+      if (!canScroll || wrappingRef.current) return;
+
+      if (userInitiated) markInteraction();
+      const nextIndex = safeActiveIndex + direction * visibleCount;
+
+      if (direction > 0 && nextIndex > maxStartIndex) {
+        const track = trackRef.current;
+        const firstClone = track?.children?.[items.length];
+        if (!track || !firstClone) {
+          goTo(0);
+          return;
+        }
+
+        wrappingRef.current = true;
+        track.scrollTo({ left: firstClone.offsetLeft - track.offsetLeft, behavior: "smooth" });
+        window.clearTimeout(wrapResetTimerRef.current);
+        wrapResetTimerRef.current = window.setTimeout(() => {
+          track.scrollTo({ left: 0, behavior: "auto" });
+          setActiveIndex(0);
+          wrappingRef.current = false;
+        }, carouselWrapResetMs);
+        return;
+      }
+
+      goTo(direction < 0 && nextIndex < 0 ? maxStartIndex : nextIndex);
     },
-    [goTo, safeActiveIndex, visibleCount],
+    [canScroll, goTo, items.length, markInteraction, maxStartIndex, safeActiveIndex, visibleCount],
   );
 
   const handleKeyDown = useCallback(
@@ -431,6 +471,8 @@ function MediaCarousel({ media, label, compact = false }) {
   const handleTrackScroll = useCallback(() => {
     window.clearTimeout(scrollEndTimerRef.current);
     scrollEndTimerRef.current = window.setTimeout(() => {
+      if (wrappingRef.current) return;
+
       const track = trackRef.current;
 
       if (!track || items.length === 0) return;
@@ -448,6 +490,20 @@ function MediaCarousel({ media, label, compact = false }) {
       setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
     }, 120);
   }, [items.length, maxStartIndex]);
+
+  const handleTouchStart = useCallback((event) => {
+    touchStartXRef.current = event.touches[0]?.clientX ?? null;
+    markInteraction();
+  }, [markInteraction]);
+
+  const handleTouchEnd = useCallback((event) => {
+    const startX = touchStartXRef.current;
+    const endX = event.changedTouches[0]?.clientX;
+    touchStartXRef.current = null;
+
+    if (startX == null || endX == null || Math.abs(endX - startX) < 40) return;
+    moveByPage(endX < startX ? 1 : -1);
+  }, [moveByPage]);
 
   useEffect(() => {
     measureVisibleCount();
@@ -482,31 +538,27 @@ function MediaCarousel({ media, label, compact = false }) {
   }, [safeActiveIndex]);
 
   useEffect(() => {
-    if (!canScroll || modelInteractionActive) return undefined;
+    if (!canScroll || modelInteractionActive || interactiveHoverActive || wrappingRef.current) return undefined;
 
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion) return undefined;
 
-    const msSinceInteraction = lastInteractionAt ? Date.now() - lastInteractionAt : carouselInteractionPauseMs;
-    const delay =
-      lastInteractionAt && msSinceInteraction < carouselInteractionPauseMs
-        ? carouselInteractionPauseMs - msSinceInteraction
-        : carouselAutoAdvanceMs;
+    const interactionResumeAt = lastInteractionAt ? lastInteractionAt + carouselInteractionPauseMs : 0;
+    const resumeAt = Math.max(interactionResumeAt, interactiveResumeAt);
+    const delay = Math.max(carouselAutoAdvanceMs, resumeAt - Date.now());
 
     const timer = window.setTimeout(() => {
-      setActiveIndex((index) => {
-        const currentIndex = Math.min(index, maxStartIndex);
-        return currentIndex >= maxStartIndex ? 0 : Math.min(currentIndex + visibleCount, maxStartIndex);
-      });
+      moveByPage(1, false);
     }, delay);
 
     return () => window.clearTimeout(timer);
-  }, [canScroll, lastInteractionAt, maxStartIndex, modelInteractionActive, safeActiveIndex, visibleCount]);
+  }, [canScroll, interactiveHoverActive, interactiveResumeAt, lastInteractionAt, modelInteractionActive, moveByPage, safeActiveIndex]);
 
   useEffect(
     () => () => {
       window.clearTimeout(scrollEndTimerRef.current);
+      window.clearTimeout(wrapResetTimerRef.current);
     },
     [],
   );
@@ -528,18 +580,16 @@ function MediaCarousel({ media, label, compact = false }) {
           <button
             type="button"
             aria-label={`Previous media for ${label}`}
-            disabled={!canMoveBackward}
             onClick={() => moveByPage(-1)}
-            className="grid h-8 w-8 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#f8f6f1] disabled:text-slate-400 sm:h-9 sm:w-9"
+            className="grid h-8 w-8 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:h-9 sm:w-9"
           >
             <Icon name="chevronLeft" className="h-4 w-4" />
           </button>
           <button
             type="button"
             aria-label={`Next media for ${label}`}
-            disabled={!canMoveForward}
             onClick={() => moveByPage(1)}
-            className="grid h-8 w-8 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#f8f6f1] disabled:text-slate-400 sm:h-9 sm:w-9"
+            className="grid h-8 w-8 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:h-9 sm:w-9"
           >
             <Icon name="chevronRight" className="h-4 w-4" />
           </button>
@@ -548,6 +598,8 @@ function MediaCarousel({ media, label, compact = false }) {
       <div
         ref={trackRef}
         onScroll={handleTrackScroll}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         className="flex w-full min-w-0 touch-pan-x snap-x snap-mandatory gap-2 overflow-x-auto overflow-y-hidden pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-3 sm:overflow-hidden sm:pb-2"
       >
         {items.map((item, index) => (
@@ -557,6 +609,16 @@ function MediaCarousel({ media, label, compact = false }) {
             label={label}
             compact={compact}
             onModelInteractionChange={handleModelInteractionChange}
+            onInteractiveHoverChange={handleInteractiveHoverChange}
+          />
+        ))}
+        {items.slice(0, cloneCount).map((item, index) => (
+          <MediaFrame
+            key={`${item.id}-loop-clone-${index}`}
+            item={item.type === "photo" ? item : { ...item, type: "photo", src: item.posterSrc || "" }}
+            label={label}
+            compact={compact}
+            clone
           />
         ))}
         {!compact && items.length > 1 && <span aria-hidden="true" className="w-[18%] shrink-0 sm:hidden" />}

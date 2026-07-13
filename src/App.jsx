@@ -1413,6 +1413,9 @@ function ProgramCredentialCard({ credential, index, meta }) {
           <AchievementTrophy
             id={`${credential.id}-award`}
             label={awardLabel}
+            title={`${credential.awardDate} ${credential.awardTitle}`}
+            subtitle={credential.awardDistinction}
+            detail={credential.awardSummary}
             align={index % 2 === 1 ? "right" : "left"}
           />
         )}
@@ -1440,7 +1443,7 @@ function ProgramCredentialCard({ credential, index, meta }) {
   );
 }
 
-function AchievementTrophy({ id, label, align = "left" }) {
+function AchievementTrophy({ id, label, title = "", subtitle = "", detail = "", align = "left" }) {
   const containerRef = useRef(null);
   const triggerRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -1522,7 +1525,13 @@ function AchievementTrophy({ id, label, align = "left" }) {
             align === "right" && "sm:left-auto sm:right-0",
           )}
         >
-          {label}
+          {title ? (
+            <>
+              <span className="block font-mono text-[9px] uppercase tracking-[0.1em] text-[#8a6500] sm:text-[10px] sm:tracking-[0.12em]">{title}</span>
+              {subtitle && <span className="mt-1 block font-semibold text-slate-950">{subtitle}</span>}
+              {detail && <span className="mt-1.5 block font-normal text-slate-700">{detail}</span>}
+            </>
+          ) : label}
           <span
             aria-hidden="true"
             className="absolute -top-1 left-3 h-2 w-2 rotate-45 border-l border-t border-[#d8b451] bg-[#fffdf7] sm:hidden"

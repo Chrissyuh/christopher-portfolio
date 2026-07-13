@@ -1925,6 +1925,26 @@ function ContactSection({ content }) {
   );
 }
 
+function scrollToPageSection(event, href, setActiveSection) {
+  if (!href?.startsWith("#")) return;
+
+  const target = document.querySelector(href);
+  if (!target) return;
+
+  event.preventDefault();
+  setActiveSection(href.slice(1));
+
+  if (window.location.hash !== href) {
+    window.history.pushState(null, "", href);
+  }
+
+  const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  target.scrollIntoView({
+    behavior: prefersReducedMotion ? "auto" : "smooth",
+    block: "start",
+  });
+}
+
 function Navigation({ content }) {
   const location = useLocation();
   const meta = content.meta ?? {};
@@ -1939,7 +1959,13 @@ function Navigation({ content }) {
           <Link
             to="/#top"
             aria-current={isPortfolioRoute && activeSection === "top" ? "location" : undefined}
-            onClick={() => setActiveSection("top")}
+            onClick={(event) => {
+              if (isPortfolioRoute) {
+                scrollToPageSection(event, "#top", setActiveSection);
+              } else {
+                setActiveSection("top");
+              }
+            }}
             className="relative flex min-w-0 items-center gap-2.5"
           >
             {isPortfolioRoute && activeSection === "top" && <ActiveNavigationFrame />}
@@ -1965,7 +1991,7 @@ function Navigation({ content }) {
                   <a
                     key={link.id}
                     aria-current={isActive ? "location" : undefined}
-                    onClick={() => setActiveSection(sectionId)}
+                    onClick={(event) => scrollToPageSection(event, link.href, setActiveSection)}
                     className={cn(
                       "relative whitespace-nowrap py-1 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
                       isActive ? "text-slate-950" : "border-b border-transparent hover:border-[#827466] hover:text-slate-950",
@@ -1998,7 +2024,11 @@ function ScrollToRouteTarget() {
   useEffect(() => {
     if (location.hash) {
       window.setTimeout(() => {
-        document.querySelector(location.hash)?.scrollIntoView();
+        const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+        document.querySelector(location.hash)?.scrollIntoView({
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+          block: "start",
+        });
       }, 0);
       return;
     }

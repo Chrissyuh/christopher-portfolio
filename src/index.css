@@ -3,6 +3,7 @@
 @layer base {
   html {
     font-size: 15px;
+    scroll-padding-top: 3.5rem;
   }
 
   @media (min-width: 640px) {

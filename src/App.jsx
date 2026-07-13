@@ -1781,7 +1781,7 @@ function PortfolioPage({ content }) {
 
       <section id="bench" data-content-collection="skills" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
         <SectionHeader title={meta.skillSystemTitle} />
-        <div className="grid gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 xl:grid-cols-4">
           {skillGroups.map((group, index) => (
             <motion.article
               key={group.category}
@@ -1789,25 +1789,25 @@ function PortfolioPage({ content }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.28, delay: index * 0.04 }}
-              className="border border-[#d2c8b9] bg-white p-3 shadow-sm sm:p-5"
+              className="min-w-0 border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-5"
             >
-              <h3 className="border-b border-[#e1d7c8] pb-2 text-sm font-semibold text-slate-950 sm:pb-3 sm:text-lg">
+              <h3 className="border-b border-[#e1d7c8] pb-1.5 text-[13px] font-semibold leading-5 text-slate-950 sm:pb-3 sm:text-lg">
                 {group.credentialId ? (
                   <a
                     href={`#${credentialAnchorId(group.credentialId)}`}
                     onClick={(event) => jumpToCredential(event, group.credentialId)}
-                    className="inline-flex items-center text-[#244fd6] hover:underline focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                    className="inline-flex min-w-0 items-center text-[#244fd6] hover:underline focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
                   >
                     {group.category}
-                    <Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" />
+                    <Icon name="arrowRight" className="ml-1 h-3 w-3 shrink-0 sm:ml-1.5 sm:h-3.5 sm:w-3.5" />
                   </a>
                 ) : group.category}
               </h3>
-              <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.14em] text-[#827466] sm:text-[10px]">{group.context}</p>
-              <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-2 sm:mt-3 sm:grid-cols-1 sm:gap-3">
+              <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-[10px] sm:tracking-[0.14em]">{group.context}</p>
+              <div className="mt-2 grid grid-cols-1 gap-1.5 sm:mt-3 sm:gap-3">
                 {group.skills.map((skill) => (
-                  <div key={skill.id}>
-                    <p className="text-xs font-semibold leading-4 text-slate-900 sm:text-sm">{skill.name}</p>
+                  <div key={skill.id} className="min-w-0">
+                    <p className="break-words text-[11px] font-semibold leading-4 text-slate-900 sm:text-sm">{skill.name}</p>
                     {!group.credentialId && (
                       <div className="mt-1 hidden flex-wrap gap-x-2 gap-y-1 sm:flex">
                         {list(skill.projectIds).map((projectId) => {

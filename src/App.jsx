@@ -1140,25 +1140,9 @@ function LearningHighlightCard({ item, index }) {
   return <AcademicCard item={item} index={index} />;
 }
 
-function AcademicDetailsToggle({ isOpen, label, onToggle, triggerRef }) {
-  return (
-    <button
-      type="button"
-      ref={triggerRef}
-      aria-expanded={isOpen}
-      aria-controls="academic-details-panel"
-      onClick={onToggle}
-      className="mt-2 inline-flex items-center border-b border-[#244fd6] py-1 text-[10px] font-semibold text-slate-800 transition hover:text-[#244fd6] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:mt-4 sm:text-xs"
-    >
-      {label}
-      <Icon name="chevronRight" className={cn("ml-1 h-3.5 w-3.5 transition-transform", isOpen && "rotate-90")} />
-    </button>
-  );
-}
-
-function AcademicDetailsPanel({ details, isOpen, meta, onClose }) {
-  if (!isOpen || details.length === 0) return null;
-
+function AcademicDetailsDialog({ details, meta }) {
+  const dialogRef = useRef(null);
+  const triggerRef = useRef(null);
   const groupedDetails = details.reduce((groups, detail) => {
     const groupName = detail.group || "Coursework";
     const existing = groups.find((group) => group.name === groupName);
@@ -1168,62 +1152,90 @@ function AcademicDetailsPanel({ details, isOpen, meta, onClose }) {
   }, []);
   const progression = groupedDetails.find((group) => group.name === "Progression");
   const scoreGroups = groupedDetails.filter((group) => group.name !== "Progression");
+  const titleId = "academic-details-title";
+
+  if (details.length === 0) return null;
+
+  function closeDialog() {
+    dialogRef.current?.close();
+  }
 
   return (
-    <motion.div
-      id="academic-details-panel"
-      data-content-collection="academicDetails"
-      initial={{ opacity: 0, y: -6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
-      className="mt-2 border border-[#cfc4b4] border-t-4 border-t-[#244fd6] bg-white shadow-sm sm:mt-4"
-    >
-      <div className="flex items-start justify-between gap-3 border-b border-[#e1d7c8] bg-[#fbfaf7] px-3 py-2.5 sm:px-5 sm:py-4">
-        <div>
-          <p className="font-mono text-[8px] uppercase tracking-[0.12em] text-[#244fd6] sm:text-[10px] sm:tracking-[0.16em]">Academic record</p>
-          <h3 className="mt-0.5 text-base font-semibold text-slate-950 sm:mt-1 sm:text-xl">{meta.academicDetailsTitle || "Coursework & scores"}</h3>
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
-          className="inline-flex min-h-8 items-center gap-1 border border-[#cfc4b4] bg-white px-2.5 text-[10px] font-semibold text-slate-700 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-xs"
-        >
-          Hide
-          <Icon name="chevronRight" className="h-3.5 w-3.5 -rotate-90" />
-        </button>
-      </div>
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="academic-details-dialog"
+        onClick={() => dialogRef.current?.showModal()}
+        className="mt-2 inline-flex items-center border-b border-[#244fd6] py-1 text-[10px] font-semibold text-slate-800 transition hover:text-[#244fd6] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:mt-4 sm:text-xs"
+      >
+        {meta.academicDetailsLabel || "Coursework & scores"}
+        <Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" />
+      </button>
 
-      <div className="grid gap-px bg-[#e1d7c8] sm:grid-cols-3">
-        {scoreGroups.map((group) => (
-          <section key={group.name} className="bg-white p-3 sm:p-4">
-            <h4 className="font-mono text-[8px] uppercase tracking-[0.12em] text-[#827466] sm:text-[10px] sm:tracking-[0.15em]">{group.name}</h4>
-            <div className="mt-2 grid grid-cols-2 gap-2 sm:mt-3">
-              {group.items.map((detail) => (
-                <div key={detail.id} className="min-w-0 border-l-2 border-[#d2c8b9] pl-2.5">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-xl font-semibold leading-none text-slate-950 sm:text-2xl">{detail.value}</span>
-                    {detail.format === "ap-score" && <span className="text-[10px] font-semibold text-slate-500 sm:text-xs">/ 5</span>}
+      <dialog
+        ref={dialogRef}
+        id="academic-details-dialog"
+        aria-labelledby={titleId}
+        data-content-collection="academicDetails"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) closeDialog();
+        }}
+        onClose={() => triggerRef.current?.focus()}
+        className="m-auto max-h-[calc(100dvh-1.5rem)] w-[calc(100%-1rem)] max-w-4xl overflow-hidden border border-[#cfc4b4] bg-white p-0 text-slate-950 shadow-[0_24px_70px_rgba(15,23,42,0.28)] backdrop:bg-slate-950/45 sm:w-[calc(100%-3rem)]"
+      >
+        <div className="flex max-h-[calc(100dvh-1.5rem)] flex-col border-t-4 border-t-[#244fd6]">
+          <div className="flex shrink-0 items-start justify-between gap-3 border-b border-[#e1d7c8] bg-[#fbfaf7] px-3 py-2.5 sm:px-5 sm:py-4">
+            <div>
+              <p className="font-mono text-[8px] uppercase tracking-[0.12em] text-[#244fd6] sm:text-[10px] sm:tracking-[0.16em]">Academic record</p>
+              <h2 id={titleId} className="mt-0.5 text-base font-semibold text-slate-950 sm:mt-1 sm:text-xl">{meta.academicDetailsTitle || "Coursework & scores"}</h2>
+            </div>
+            <button
+              type="button"
+              aria-label="Close coursework and scores"
+              onClick={closeDialog}
+              className="grid h-8 w-8 shrink-0 place-items-center border border-[#cfc4b4] bg-white text-lg leading-none text-slate-700 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2"
+            >
+              &times;
+            </button>
+          </div>
+
+          <div className="overflow-y-auto overscroll-contain">
+            <div className="grid gap-px bg-[#e1d7c8] sm:grid-cols-3">
+              {scoreGroups.map((group) => (
+                <section key={group.name} className="bg-white p-3 sm:p-4">
+                  <h3 className="font-mono text-[8px] uppercase tracking-[0.12em] text-[#827466] sm:text-[10px] sm:tracking-[0.15em]">{group.name}</h3>
+                  <div className="mt-2 grid grid-cols-2 gap-2 sm:mt-3">
+                    {group.items.map((detail) => (
+                      <div key={detail.id} className="min-w-0 border-l-2 border-[#d2c8b9] pl-2.5">
+                        <div className="flex items-baseline gap-1">
+                          <span className="text-xl font-semibold leading-none text-slate-950 sm:text-2xl">{detail.value}</span>
+                          {detail.format === "ap-score" && <span className="text-[10px] font-semibold text-slate-500 sm:text-xs">/ 5</span>}
+                        </div>
+                        <p className="mt-1 text-[10px] font-semibold leading-4 text-slate-900 sm:text-xs sm:leading-5">{detail.label}</p>
+                        {detail.note && <p className="mt-0.5 text-[9px] leading-4 text-slate-600 sm:text-[11px]">{detail.note}</p>}
+                      </div>
+                    ))}
                   </div>
-                  <p className="mt-1 text-[10px] font-semibold leading-4 text-slate-900 sm:text-xs sm:leading-5">{detail.label}</p>
-                  {detail.note && <p className="mt-0.5 text-[9px] leading-4 text-slate-600 sm:text-[11px]">{detail.note}</p>}
-                </div>
+                </section>
               ))}
             </div>
-          </section>
-        ))}
-      </div>
 
-      {progression && (
-        <div className="border-t border-[#e1d7c8] bg-[#fbfaf7] px-3 py-2.5 sm:px-5 sm:py-3.5">
-          {progression.items.map((detail) => (
-            <div key={detail.id} className="sm:flex sm:items-baseline sm:gap-4">
-              <p className="font-mono text-[8px] uppercase tracking-[0.12em] text-[#827466] sm:min-w-28 sm:text-[10px] sm:tracking-[0.15em]">{detail.label}</p>
-              <p className="mt-1 text-xs font-semibold leading-5 text-slate-950 sm:mt-0 sm:text-sm">{detail.value}</p>
-            </div>
-          ))}
+            {progression && (
+              <div className="border-t border-[#e1d7c8] bg-[#fbfaf7] px-3 py-2.5 sm:px-5 sm:py-3.5">
+                {progression.items.map((detail) => (
+                  <div key={detail.id} className="sm:flex sm:items-baseline sm:gap-4">
+                    <p className="font-mono text-[8px] uppercase tracking-[0.12em] text-[#827466] sm:min-w-28 sm:text-[10px] sm:tracking-[0.15em]">{detail.label}</p>
+                    <p className="mt-1 text-xs font-semibold leading-5 text-slate-950 sm:mt-0 sm:text-sm">{detail.value}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      )}
-    </motion.div>
+      </dialog>
+    </>
   );
 }
 
@@ -1834,8 +1846,6 @@ function useActiveNavigationSection(sectionLinks, enabled) {
 
 function PortfolioPage({ content }) {
   const meta = content.meta ?? {};
-  const [academicDetailsOpen, setAcademicDetailsOpen] = useState(false);
-  const academicDetailsTriggerRef = useRef(null);
   const heroHasImage = Boolean(meta.heroImageSrc);
   const homepageActivitySection = list(content.fullRecord).find((section) => section.showOnHomepage);
   const projectsById = new Map(list(content.projects).map((project) => [project.id, project]));
@@ -1987,26 +1997,10 @@ function PortfolioPage({ content }) {
         <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-[0.7fr_0.7fr_1.6fr]">
           {list(content.academics).map((item, index) => (
             <AcademicCard key={item.id} item={item} index={index} wide={item.id === "course-load"}>
-              {item.id === "course-load" && (
-                <AcademicDetailsToggle
-                  isOpen={academicDetailsOpen}
-                  label={meta.academicDetailsLabel || "Coursework & scores"}
-                  onToggle={() => setAcademicDetailsOpen((current) => !current)}
-                  triggerRef={academicDetailsTriggerRef}
-                />
-              )}
+              {item.id === "course-load" && <AcademicDetailsDialog details={list(content.academicDetails)} meta={meta} />}
             </AcademicCard>
           ))}
         </div>
-        <AcademicDetailsPanel
-          details={list(content.academicDetails)}
-          isOpen={academicDetailsOpen}
-          meta={meta}
-          onClose={() => {
-            setAcademicDetailsOpen(false);
-            requestAnimationFrame(() => academicDetailsTriggerRef.current?.focus());
-          }}
-        />
 
         {list(content.programCredentials).length > 0 && (
           <div className="mt-5 border-t border-[#d2c8b9] pt-4 sm:mt-8 sm:pt-6" data-content-collection="programCredentials">

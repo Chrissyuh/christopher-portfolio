@@ -1527,8 +1527,8 @@ function AchievementTrophy({ id, label, title = "", subtitle = "", detail = "", 
         >
           {title ? (
             <>
-              <span className="block font-mono text-[9px] uppercase tracking-[0.1em] text-[#8a6500] sm:text-[10px] sm:tracking-[0.12em]">{title}</span>
-              {subtitle && <span className="mt-1 block font-semibold text-slate-950">{subtitle}</span>}
+              <span className="block text-[11px] font-semibold leading-4 text-slate-950 sm:text-xs sm:leading-5">{title}</span>
+              {subtitle && <span className="mt-1 block font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-[#8a6500] sm:text-[10px] sm:tracking-[0.12em]">{subtitle}</span>}
               {detail && <span className="mt-1.5 block font-normal text-slate-700">{detail}</span>}
             </>
           ) : label}
@@ -1555,14 +1555,22 @@ function AchievementTrophies({ item, className = "" }) {
 
   return (
     <div className={cn("flex items-center gap-2", className)} aria-label={`${item.title} achievements`}>
-      {achievements.map((achievement, index) => (
-        <AchievementTrophy
-          key={achievement}
-          id={`${item.id}-${index + 1}`}
-          label={achievement}
-          align={index === achievements.length - 1 ? "right" : "left"}
-        />
-      ))}
+      {achievements.map((achievement, index) => {
+        const separatorIndex = achievement.lastIndexOf(" - ");
+        const title = separatorIndex >= 0 ? achievement.slice(0, separatorIndex) : achievement;
+        const subtitle = separatorIndex >= 0 ? achievement.slice(separatorIndex + 3) : "";
+
+        return (
+          <AchievementTrophy
+            key={achievement}
+            id={`${item.id}-${index + 1}`}
+            label={achievement}
+            title={title}
+            subtitle={subtitle}
+            align={index === achievements.length - 1 ? "right" : "left"}
+          />
+        );
+      })}
     </div>
   );
 }

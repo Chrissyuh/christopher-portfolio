@@ -40,6 +40,7 @@ const iconPaths = {
     "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.8c0-1-.4-1.7-.9-2.2 3-.3 6.1-1.5 6.1-6.6 0-1.5-.5-2.7-1.4-3.7.1-.3.6-1.8-.1-3.7 0 0-1.2-.4-3.8 1.4a13.2 13.2 0 0 0-7 0C6.3.6 5.1 1 5.1 1c-.7 1.9-.2 3.4-.1 3.7a5.2 5.2 0 0 0-1.4 3.7c0 5.1 3.1 6.3 6.1 6.6-.4.4-.8 1-.9 1.8v4.2",
   linkedin: "M6.5 10v9M6.5 6.5v.1M10.5 19v-9M10.5 13.5c0-2 1.2-3.5 3.5-3.5s3.5 1.5 3.5 4v5M3 3h18v18H3z",
   mail: "M4 6h16v12H4z M4 7l8 6 8-6",
+  phone: "M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z",
   printer:
     "M7 8V3h10v5 M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2 M7 14h10v7H7z M17 11h.01",
   school: "M3 10l9-5 9 5-9 5-9-5z M7 12v5c2 2 8 2 10 0v-5 M21 10v7",
@@ -2399,9 +2400,9 @@ function ContactSection({ content }) {
   const meta = content.meta ?? {};
   const [copyStatus, setCopyStatus] = useState("idle");
   const contactButtons = [
-    { href: meta.contactEmailHref, icon: "mail", label: meta.contactEmailLabel, primary: true },
+    { href: meta.contactPhoneHref, icon: "phone", label: meta.contactPhoneLabel, primary: true },
+    { href: meta.contactEmailHref, icon: "mail", label: meta.contactEmailLabel },
     { href: meta.contactGithubHref, icon: "github", label: meta.contactGithubLabel },
-    { href: meta.contactProjectHref, icon: "link", label: meta.contactProjectLabel },
     { href: meta.resumeHref, icon: "list", label: meta.resumeLabel },
   ].filter((button) => button.href && button.label);
 

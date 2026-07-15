@@ -166,6 +166,6 @@ Passed the CSWA exam, demonstrating core proficiency in SOLIDWORKS part modeling
 
 ## Contact
 
+- Phone: 901-356-1000
 - Email: Chrisaheskett@gmail.com
 - GitHub: https://github.com/Chrissyuh
-- Open Subpix: https://subpix-editor.vercel.app/

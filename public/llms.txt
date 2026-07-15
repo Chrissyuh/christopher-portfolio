@@ -102,6 +102,6 @@ This index points agents to concise, structured, and complete representations of
 
 ## Contact
 
+- [901-356-1000](tel:+19013561000): Primary contact for Christopher.
+- [Email](mailto:Chrisaheskett@gmail.com): Email Christopher.
 - [View GitHub](https://github.com/Chrissyuh): Public source repositories.
-- [Open Subpix](https://subpix-editor.vercel.app/): Current live project.
-- [Email](mailto:Chrisaheskett@gmail.com): Contact Christopher.

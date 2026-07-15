@@ -187,10 +187,10 @@ function buildLlmsTxt(content) {
   ];
 
   const contactLinks = [
+    meta.contactPhoneHref && `${markdownLink(meta.contactPhoneLabel ?? "Phone", meta.contactPhoneHref)}: Primary contact for Christopher.`,
+    meta.contactEmailHref && `${markdownLink(meta.contactEmailLabel ?? "Email", meta.contactEmailHref)}: Email Christopher.`,
     meta.contactGithubHref && `${markdownLink(meta.contactGithubLabel ?? "GitHub", meta.contactGithubHref)}: Public source repositories.`,
-    meta.contactProjectHref && `${markdownLink(meta.contactProjectLabel ?? "Project", meta.contactProjectHref)}: Current live project.`,
     meta.resumeHref && `${markdownLink(meta.resumeLabel ?? "Resume", meta.resumeHref)}: Resume.`,
-    meta.contactEmailHref && `${markdownLink(meta.contactEmailLabel ?? "Email", meta.contactEmailHref)}: Contact Christopher.`,
   ].filter(Boolean);
 
   return [
@@ -424,9 +424,9 @@ function buildLlmsFullTxt(content) {
     "",
     markdownList(
       [
+        meta.contactPhoneHref && `Phone: ${meta.contactPhoneLabel ?? meta.contactPhoneHref.replace(/^tel:/, "")}`,
         meta.contactEmailHref && `Email: ${stripMailto(meta.contactEmailHref)}`,
         meta.contactGithubHref && `GitHub: ${meta.contactGithubHref}`,
-        meta.contactProjectHref && `${meta.contactProjectLabel ?? "Project"}: ${meta.contactProjectHref}`,
         meta.resumeHref && `${meta.resumeLabel ?? "Resume"}: ${meta.resumeHref}`,
       ].filter(Boolean),
     ),

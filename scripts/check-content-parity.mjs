@@ -117,6 +117,10 @@ assert.deepEqual(
   "Academic coursework and scores drifted from the verified visible record.",
 );
 assert.ok(!content.academicDetails.some((item) => item.id === "weighted-gpa" || item.id === "class-rank"), "Academic details must not duplicate the GPA and rank cards.");
+assert.equal(content.meta.contactPhoneLabel, "901-356-1000", "The primary phone contact drifted.");
+assert.equal(content.meta.contactPhoneHref, "tel:+19013561000", "The primary phone link drifted.");
+assert.ok(llms.includes("[901-356-1000](tel:+19013561000): Primary contact for Christopher."), "llms.txt is missing the primary phone contact.");
+assert.ok(!content.meta.contactProjectHref, "Subpix must remain a project rather than a contact action.");
 
 const requiredHumanCollections = [
   "meta",

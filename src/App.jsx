@@ -1463,8 +1463,12 @@ function ProgramCredentialCard({ credential, index, meta }) {
             rel="noreferrer"
             aria-label={`Open ${credential.program} website`}
             className={cn(
-              "grid h-12 shrink-0 place-items-center overflow-hidden border border-[#d6cec0] bg-white p-1.5 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:h-14",
-              isCredential ? "w-16 sm:w-20" : "w-24 sm:w-28",
+              "grid shrink-0 place-items-center overflow-hidden border border-[#d6cec0] bg-white transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
+              credential.id === "stanford-ai4all"
+                ? "h-10 w-28 p-1 sm:w-32"
+                : isCredential
+                  ? "h-12 w-16 p-1.5 sm:h-14 sm:w-20"
+                  : "h-12 w-24 p-1.5 sm:h-14 sm:w-28",
             )}
           >
             <img src={credential.logoSrc} alt={credential.logoAlt || `${credential.program} logo`} loading="lazy" className="block h-full w-full min-h-0 min-w-0 object-contain" />

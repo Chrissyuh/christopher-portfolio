@@ -210,10 +210,15 @@ function ModelMedia({ item, label, onInteractionChange, onInteractiveStateChange
 
   return (
     <div ref={hostRef} className="absolute inset-0">
-      {(!eligible || !visible || failed || !ready) && fallback}
+      {fallback}
       {eligible && visible && !failed && (
-        <React.Suspense fallback={fallback}>
-          <div className={cn("absolute inset-0", ready ? "opacity-100" : "pointer-events-none opacity-0")}>
+        <React.Suspense fallback={null}>
+          <div
+            className={cn(
+              "absolute inset-0 transition-opacity duration-300",
+              ready ? "opacity-100" : "pointer-events-none opacity-0",
+            )}
+          >
             <LazyPcbModelViewer
               src={item.src}
               label={`${alt}. Interactive 3D model.`}
@@ -249,6 +254,7 @@ function MediaFrame({
     <figure
       aria-hidden={clone || undefined}
       data-carousel-slide="true"
+      data-carousel-source-type={item.sourceType || mediaType}
       className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}
       onMouseEnter={mediaType === "model" && !clone ? () => onInteractiveHoverChange?.(true) : undefined}
       onMouseLeave={mediaType === "model" && !clone ? () => onInteractiveHoverChange?.(false) : undefined}
@@ -524,7 +530,7 @@ function carouselSlideScrollLeft(track, slide) {
 }
 
 function carouselCloneItem(item) {
-  return item.type === "photo" ? item : { ...item, type: "photo", src: item.posterSrc || "" };
+  return item.type === "photo" ? item : { ...item, sourceType: item.type, type: "photo", src: item.posterSrc || "" };
 }
 
 function MediaCarousel({ media, label, compact = false, mobileMediaType = null }) {
@@ -617,18 +623,26 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
       if (userInitiated) markInteraction();
 
       const currentRenderedIndex = closestCarouselSlideIndex(track, slides);
-      const targetRenderedIndex = Math.max(0, Math.min(currentRenderedIndex + direction, slides.length - 1));
+      const requestedRenderedIndex = Math.max(0, Math.min(currentRenderedIndex + direction, slides.length - 1));
+      const requestedSlide = slides[requestedRenderedIndex];
+      const requestedIsClone = requestedSlide?.getAttribute("aria-hidden") === "true";
+      const requestedSourceType = requestedSlide?.dataset.carouselSourceType;
+      const requestedLogicalIndex = loopIndex(requestedRenderedIndex - cloneCount, itemCount);
+      const targetRenderedIndex =
+        requestedIsClone && requestedSourceType !== "photo"
+          ? cloneCount + requestedLogicalIndex
+          : requestedRenderedIndex;
       const targetSlide = slides[targetRenderedIndex];
       if (!targetSlide) return;
 
       const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
       track.scrollTo({
         left: carouselSlideScrollLeft(track, targetSlide),
-        behavior: prefersReducedMotion ? "auto" : "smooth",
+        behavior: prefersReducedMotion || targetRenderedIndex !== requestedRenderedIndex ? "auto" : "smooth",
       });
       settleTrackPosition();
     },
-    [canScroll, markInteraction, settleTrackPosition],
+    [canScroll, cloneCount, itemCount, markInteraction, settleTrackPosition],
   );
 
   const handleKeyDown = useCallback(

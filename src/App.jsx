@@ -52,7 +52,7 @@ const iconPaths = {
     "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z",
   link: "M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1 M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1",
   list: "M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01",
-  trophy: "M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z M5 5H3v3a4 4 0 0 0 4 4M19 5h2v3a4 4 0 0 1-4 4",
+  awardRibbon: "M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12z M8.5 14.5 7 22l5-3 5 3-1.5-7.5",
 };
 
 function Icon({ name, className = "h-5 w-5" }) {
@@ -1619,7 +1619,7 @@ function ProgramCredentialCard({ credential, index, meta }) {
 
       <div className="mt-2 flex flex-wrap items-center gap-2 sm:mt-4">
         {awardLabel && (
-          <AchievementTrophy
+          <AchievementRibbon
             id={`${credential.id}-award`}
             label={awardLabel}
             title={`${credential.awardDate} ${credential.awardTitle}`}
@@ -1652,7 +1652,7 @@ function ProgramCredentialCard({ credential, index, meta }) {
   );
 }
 
-function AchievementTrophy({ id, label, title = "", subtitle = "", detail = "", align = "left" }) {
+function AchievementRibbon({ id, label, title = "", subtitle = "", detail = "", align = "left" }) {
   const containerRef = useRef(null);
   const triggerRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -1722,7 +1722,7 @@ function AchievementTrophy({ id, label, title = "", subtitle = "", detail = "", 
         onClick={handleClick}
         className="grid h-8 w-8 place-items-center border border-[#d8b451] bg-[#fff4c7] text-[#946700] shadow-sm transition hover:border-[#bd8b13] hover:bg-[#ffedaa] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:h-9 sm:w-9"
       >
-        <Icon name="trophy" className="h-4 w-4" />
+        <Icon name="awardRibbon" className="h-4 w-4" />
       </button>
 
       {isOpen && (
@@ -1770,7 +1770,7 @@ function AchievementTrophies({ item, className = "" }) {
         const subtitle = separatorIndex >= 0 ? achievement.slice(separatorIndex + 3) : "";
 
         return (
-          <AchievementTrophy
+          <AchievementRibbon
             key={achievement}
             id={`${item.id}-${index + 1}`}
             label={achievement}

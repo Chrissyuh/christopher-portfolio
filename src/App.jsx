@@ -228,12 +228,12 @@ function ModelMedia({ item, label, onInteractionChange, onInteractiveStateChange
   );
 }
 
-function MediaFrame({ item, label, compact = false, onModelInteractionChange, onInteractiveHoverChange, clone = false }) {
+function MediaFrame({ item, label, compact = false, fullWidth = false, onModelInteractionChange, onInteractiveHoverChange, clone = false }) {
   const mediaType = item.type === "video" ? "video" : item.type === "model" ? "model" : "photo";
   const caption = item.caption || item.alt || label;
   const [modelIsInteractive, setModelIsInteractive] = useState(false);
   const visibleCaption = mediaType === "model" && modelIsInteractive ? `Interactive ${caption}` : caption;
-  const frameClass = compact ? "w-full flex-none" : "w-[82%] flex-none sm:w-[calc((100%_-_0.75rem)/2)]";
+  const frameClass = compact || fullWidth ? "w-full flex-none" : "w-[82%] flex-none sm:w-[calc((100%_-_0.75rem)/2)]";
 
   return (
     <figure
@@ -367,8 +367,25 @@ function ViewportVideo({ item, caption }) {
   );
 }
 
-function MediaCarousel({ media, label, compact = false }) {
-  const items = list(media);
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() => window.matchMedia?.(query).matches ?? false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia?.(query);
+    if (!mediaQuery) return undefined;
+
+    const handleChange = (event) => setMatches(event.matches);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, [query]);
+
+  return matches;
+}
+
+function MediaCarousel({ media, label, compact = false, mobileMediaType = null }) {
+  const isMobile = useMediaQuery("(max-width: 639px)");
+  const allItems = list(media);
+  const items = isMobile && mobileMediaType ? allItems.filter((item) => item.type === mobileMediaType) : allItems;
   const trackRef = useRef(null);
   const scrollEndTimerRef = useRef(null);
   const wrapResetTimerRef = useRef(null);
@@ -623,6 +640,7 @@ function MediaCarousel({ media, label, compact = false }) {
             item={item}
             label={label}
             compact={compact}
+            fullWidth={items.length === 1}
             onModelInteractionChange={handleModelInteractionChange}
             onInteractiveHoverChange={handleInteractiveHoverChange}
           />
@@ -883,7 +901,11 @@ function ProjectRow({ project, index, meta }) {
         <div className="mt-3 sm:mt-5">
           <ProjectFact label={meta.projectRoleLabel}>{project.role}</ProjectFact>
         </div>
-        <MediaCarousel media={project.media} label={project.title} />
+        <MediaCarousel
+          media={project.media}
+          label={project.title}
+          mobileMediaType={project.id === "subpix" ? "video" : null}
+        />
       </div>
     </motion.article>
   );

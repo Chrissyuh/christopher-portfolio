@@ -13,7 +13,7 @@
   }
 }
 
-@keyframes credential-jump-focus {
+@keyframes jump-target-focus {
   0%,
   72% {
     border-color: #244fd6;
@@ -26,12 +26,12 @@
   }
 }
 
-.credential-jump-highlight {
-  animation: credential-jump-focus 1.6s ease-out;
+.jump-target-highlight {
+  animation: jump-target-focus 1.6s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .credential-jump-highlight {
+  .jump-target-highlight {
     animation: none;
     border-color: #244fd6;
     box-shadow: 0 0 0 2px rgb(36 79 214 / 24%);

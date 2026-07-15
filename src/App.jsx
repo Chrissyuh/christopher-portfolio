@@ -833,29 +833,29 @@ function ProjectLinkButton({ href, label, icon = "arrowRight", type }) {
   );
 }
 
-const credentialFocusTimers = new WeakMap();
-const credentialScrollFrames = new WeakMap();
-const credentialHighlightDurationMs = 1600;
+const jumpFocusTimers = new WeakMap();
+const jumpScrollFrames = new WeakMap();
+const jumpHighlightDurationMs = 1600;
 
 function credentialAnchorId(credentialId) {
   return `credential-${credentialId}`;
 }
 
-function highlightCredential(target) {
+function highlightJumpTarget(target) {
   target.focus({ preventScroll: true });
-  target.classList.remove("credential-jump-highlight");
+  target.classList.remove("jump-target-highlight");
   void target.offsetWidth;
-  target.classList.add("credential-jump-highlight");
+  target.classList.add("jump-target-highlight");
 
   const timer = window.setTimeout(() => {
-    target.classList.remove("credential-jump-highlight");
-    credentialFocusTimers.delete(target);
-  }, credentialHighlightDurationMs);
+    target.classList.remove("jump-target-highlight");
+    jumpFocusTimers.delete(target);
+  }, jumpHighlightDurationMs);
 
-  credentialFocusTimers.set(target, timer);
+  jumpFocusTimers.set(target, timer);
 }
 
-function highlightCredentialAfterScroll(target) {
+function highlightJumpTargetAfterScroll(target) {
   let lastScrollY = window.scrollY;
   let stableFrames = 0;
   const startedAt = window.performance.now();
@@ -866,33 +866,32 @@ function highlightCredentialAfterScroll(target) {
     lastScrollY = currentScrollY;
 
     if (stableFrames >= 6 || window.performance.now() - startedAt > 1800) {
-      credentialScrollFrames.delete(target);
-      highlightCredential(target);
+      jumpScrollFrames.delete(target);
+      highlightJumpTarget(target);
       return;
     }
 
     const frame = window.requestAnimationFrame(checkScrollPosition);
-    credentialScrollFrames.set(target, frame);
+    jumpScrollFrames.set(target, frame);
   }
 
   const frame = window.requestAnimationFrame(checkScrollPosition);
-  credentialScrollFrames.set(target, frame);
+  jumpScrollFrames.set(target, frame);
 }
 
-function jumpToCredential(event, credentialId) {
+function jumpToTarget(event, targetId) {
   event.preventDefault();
 
-  const targetId = credentialAnchorId(credentialId);
   const target = document.getElementById(targetId);
 
   if (!target) return;
 
-  const priorTimer = credentialFocusTimers.get(target);
+  const priorTimer = jumpFocusTimers.get(target);
   if (priorTimer) window.clearTimeout(priorTimer);
-  const priorFrame = credentialScrollFrames.get(target);
+  const priorFrame = jumpScrollFrames.get(target);
   if (priorFrame) window.cancelAnimationFrame(priorFrame);
 
-  target.classList.remove("credential-jump-highlight");
+  target.classList.remove("jump-target-highlight");
 
   window.history.replaceState(null, "", `#${targetId}`);
   const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -902,10 +901,18 @@ function jumpToCredential(event, credentialId) {
   });
 
   if (prefersReducedMotion) {
-    highlightCredential(target);
+    highlightJumpTarget(target);
   } else {
-    highlightCredentialAfterScroll(target);
+    highlightJumpTargetAfterScroll(target);
   }
+}
+
+function jumpToCredential(event, credentialId) {
+  jumpToTarget(event, credentialAnchorId(credentialId));
+}
+
+function jumpToProject(event, project) {
+  jumpToTarget(event, projectAnchorId(project));
 }
 
 function projectArtifactButtons(project, meta) {
@@ -962,11 +969,12 @@ function ProjectRow({ project, index, meta }) {
   return (
     <motion.article
       id={projectAnchorId(project)}
+      tabIndex={-1}
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3, delay: index * 0.045 }}
-      className="group grid min-w-0 scroll-mt-20 border border-[#d2c8b9] bg-white shadow-sm sm:scroll-mt-24 xl:grid-cols-[190px_minmax(0,1fr)]"
+      className="group grid min-w-0 scroll-mt-20 border border-[#d2c8b9] bg-white shadow-sm outline-none sm:scroll-mt-24 xl:grid-cols-[190px_minmax(0,1fr)]"
     >
       <div className={`flex flex-wrap items-center gap-2 border-b border-[#e1d7c8] p-2.5 sm:p-4 xl:block xl:border-b-0 xl:border-r xl:p-5 ${style.soft}`}>
         <div className="flex items-center gap-2 xl:justify-between">
@@ -2118,7 +2126,16 @@ function PortfolioPage({ content }) {
                       <div className="mt-1 hidden flex-wrap gap-x-2 gap-y-1 sm:flex">
                         {list(skill.projectIds).map((projectId) => {
                           const project = projectsById.get(projectId);
-                          return project ? <a key={projectId} href={`#${projectAnchorId(project)}`} className="text-[11px] text-[#244fd6] hover:underline">{project.title}</a> : null;
+                          return project ? (
+                            <a
+                              key={projectId}
+                              href={`#${projectAnchorId(project)}`}
+                              onClick={(event) => jumpToProject(event, project)}
+                              className="text-[11px] text-[#244fd6] hover:underline focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                            >
+                              {project.title}
+                            </a>
+                          ) : null;
                         })}
                       </div>
                     )}

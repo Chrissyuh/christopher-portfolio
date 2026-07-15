@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>document.documentElement.classList.add("js")</script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href="https://chrisaheskett.vercel.app/" />
     <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM site index" />
@@ -10,17 +11,62 @@
     <meta name="description" content="Christopher Heskett builds hardware projects, robotics simulations, and software tools." />
     <!-- portfolio-structured-data -->
     <style>
+      html { background: #f5f3ee; }
+      body { margin: 0; background: #f5f3ee; color: #0f172a; }
+      #portfolio-boot-shell { display: none; min-height: 100vh; background: #f5f3ee; font-family: system-ui, sans-serif; }
+      .js #portfolio-boot-shell { display: block; }
+      .js #portfolio-static-fallback { display: none; }
+      .portfolio-boot-nav { min-height: 3.25rem; border-bottom: 1px solid #d2c8b9; background: rgba(245, 243, 238, 0.96); }
+      .portfolio-boot-nav-inner { display: flex; max-width: 80rem; min-height: 3.25rem; margin: 0 auto; padding: 0 2rem; align-items: center; gap: 0.65rem; }
+      .portfolio-boot-mark { display: grid; width: 2rem; height: 2rem; place-items: center; border: 1px solid #cfc4b4; background: #fff; color: #244fd6; font: 600 0.7rem/1 ui-monospace, monospace; }
+      .portfolio-boot-name { font-size: 0.875rem; font-weight: 650; }
+      .portfolio-boot-main { max-width: 80rem; margin: 0 auto; padding: 2.5rem 2rem; }
+      .portfolio-boot-card { display: flex; min-height: 22rem; align-items: center; border-top: 1px solid #cfc4b4; border-bottom: 1px solid #cfc4b4; background: rgba(245, 243, 238, 0.45); }
+      .portfolio-boot-copy { width: min(48rem, 82%); margin-left: 8%; padding-left: 2.25rem; border-left: 4px solid #244fd6; }
+      .portfolio-boot-line { height: 0.8rem; margin-top: 1rem; background: #ded8cd; }
+      .portfolio-boot-line:first-child { width: 28%; height: 0.55rem; margin-top: 0; background: #b9c6f5; }
+      .portfolio-boot-line:nth-child(2) { width: 58%; height: 2.75rem; }
+      .portfolio-boot-line:nth-child(3) { width: 82%; height: 1.2rem; }
+      .portfolio-boot-line:nth-child(4) { width: 68%; height: 0.8rem; }
       #portfolio-static-fallback { max-width: 72rem; margin: 2rem auto; padding: 1.5rem; font-family: system-ui, sans-serif; color: #0f172a; }
       #portfolio-static-fallback h1 { margin: 0.5rem 0; font-size: 2rem; }
       #portfolio-static-fallback h2 { margin-top: 2rem; font-size: 1.25rem; }
       #portfolio-static-fallback li { margin: 0.75rem 0; line-height: 1.5; }
       #portfolio-static-fallback nav { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+      @media (max-width: 639px) {
+        .portfolio-boot-nav-inner { padding: 0 0.75rem; }
+        .portfolio-boot-main { padding: 1rem 0.75rem; }
+        .portfolio-boot-card { min-height: 16.5rem; }
+        .portfolio-boot-copy { width: calc(100% - 2rem); margin-left: 0; padding-left: 1rem; }
+        .portfolio-boot-line:nth-child(2) { width: 72%; height: 2rem; }
+        .portfolio-boot-line:nth-child(3) { width: 92%; }
+      }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Christopher Heskett | Engineering Portfolio</title>
   </head>
   <body>
-    <div id="root"><!-- portfolio-static-fallback --></div>
+    <div id="root">
+      <div id="portfolio-boot-shell" aria-hidden="true">
+        <div class="portfolio-boot-nav">
+          <div class="portfolio-boot-nav-inner">
+            <span class="portfolio-boot-mark">CH</span>
+            <span class="portfolio-boot-name">Christopher Heskett</span>
+          </div>
+        </div>
+        <main class="portfolio-boot-main">
+          <div class="portfolio-boot-card">
+            <div class="portfolio-boot-copy">
+              <div class="portfolio-boot-line"></div>
+              <div class="portfolio-boot-line"></div>
+              <div class="portfolio-boot-line"></div>
+              <div class="portfolio-boot-line"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+      <!-- portfolio-static-fallback -->
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

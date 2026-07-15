@@ -9,14 +9,16 @@ const llmsUrl = new URL("../public/llms.txt", import.meta.url);
 const llmsFullUrl = new URL("../public/llms-full.txt", import.meta.url);
 const appUrl = new URL("../src/App.jsx", import.meta.url);
 const appStylesUrl = new URL("../src/index.css", import.meta.url);
+const indexHtmlUrl = new URL("../index.html", import.meta.url);
 
-const [content, publicContent, llms, llmsFull, appSource, appStyles] = await Promise.all([
+const [content, publicContent, llms, llmsFull, appSource, appStyles, indexHtml] = await Promise.all([
   fs.readFile(generatedUrl, "utf8").then(JSON.parse),
   fs.readFile(publicJsonUrl, "utf8").then(JSON.parse),
   fs.readFile(llmsUrl, "utf8"),
   fs.readFile(llmsFullUrl, "utf8"),
   fs.readFile(appUrl, "utf8"),
   fs.readFile(appStylesUrl, "utf8"),
+  fs.readFile(indexHtmlUrl, "utf8"),
 ]);
 
 const claims = new Set();
@@ -127,6 +129,9 @@ assert.ok(appSource.includes("prepareNavigationScrollPath"), "Top navigation mus
 assert.ok(appSource.includes('image.loading = "eager"'), "Navigation preparation must eagerly start images along the scroll path.");
 assert.ok(appSource.includes('data-scroll-reveal="true"'), "Viewport-revealed cards must be identifiable during navigation preparation.");
 assert.ok(appStyles.includes(".navigation-scroll-ready"), "Prepared navigation cards must render before the smooth scroll begins.");
+assert.ok(indexHtml.includes('document.documentElement.classList.add("js")'), "The document must identify JavaScript-capable loads before first paint.");
+assert.ok(indexHtml.includes('id="portfolio-boot-shell"'), "The document must provide a critical styled boot shell.");
+assert.ok(indexHtml.includes(".js #portfolio-static-fallback { display: none; }"), "JavaScript loads must not paint the raw static fallback.");
 
 const requiredHumanCollections = [
   "meta",

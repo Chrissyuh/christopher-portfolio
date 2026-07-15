@@ -519,8 +519,8 @@
           "type": "photo",
           "src": "/portfolio-media/check-ins/check-ins-overview.webp",
           "posterSrc": null,
-          "alt": "Check-ins onboarding over the recurring project gap-tracking dashboard",
-          "caption": "Target and maximum gap tracking"
+          "alt": "Check-ins dashboard showing recurring work and study items with target and maximum gaps",
+          "caption": "Recurring check-ins with target and maximum gaps"
         }
       ]
     }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-15T09:48:42.700Z",
+  "updatedAt": "2026-07-15T10:07:39.448Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -81,6 +81,8 @@
       "logoSrc": null,
       "logoAlt": "",
       "logoHref": null,
+      "logoCredentialId": "",
+      "relatedProgramNote": "",
       "artifactLinks": [],
       "media": [
         {
@@ -116,6 +118,8 @@
       "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
       "logoAlt": "Stanford AI4ALL logo",
       "logoHref": "https://ai4all.spcs.stanford.edu/",
+      "logoCredentialId": "stanford-ai4all",
+      "relatedProgramNote": "",
       "artifactLinks": [],
       "media": [
         {
@@ -164,9 +168,11 @@
       "teamContext": "Solo",
       "role": "I worked on the sensing and control concept, electronics packaging, PCB direction, and enclosure constraints.",
       "bestLinkLabel": "",
-      "logoSrc": null,
-      "logoAlt": "",
-      "logoHref": null,
+      "logoSrc": "/portfolio-media/programs/tetc-logo.png",
+      "logoAlt": "ExxonMobil Foundation Teen Engineering and Tech Center logo",
+      "logoHref": "https://tetc.org/",
+      "logoCredentialId": "tetc",
+      "relatedProgramNote": "Well... kinda. Coach Taylor, my ninth grade coach at the TETC challenged me to make this, so while it wasn't a lesson, it has a connection to TETC.",
       "artifactLinks": [],
       "media": [
         {
@@ -218,6 +224,8 @@
       "logoSrc": null,
       "logoAlt": "",
       "logoHref": null,
+      "logoCredentialId": "",
+      "relatedProgramNote": "",
       "artifactLinks": [],
       "media": [
         {
@@ -990,6 +998,17 @@
       "caption": "Printed gear prototype",
       "context": "",
       "src": "/portfolio-media/vividgrasp/printed-gear-prototype.webp"
+    },
+    {
+      "id": "projects/smart-self-watering-pot/logo",
+      "surface": "projects",
+      "owner": "Smart Self-Watering Pot / Smart Planter PCB logo",
+      "kind": "logo",
+      "status": "published",
+      "description": "ExxonMobil Foundation Teen Engineering and Tech Center logo",
+      "caption": "",
+      "context": "",
+      "src": "/portfolio-media/programs/tetc-logo.png"
     },
     {
       "id": "projects/smart-self-watering-pot/media-1",

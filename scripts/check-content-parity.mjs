@@ -41,6 +41,7 @@ content.projects.forEach((project) => add(
   project.summary,
   project.role,
   project.state,
+  project.relatedProgramNote,
   project.proofAvailable,
   project.proofNeeded,
   project.whatChanged,
@@ -132,6 +133,9 @@ assert.ok(appStyles.includes(".navigation-scroll-ready"), "Prepared navigation c
 assert.ok(indexHtml.includes('document.documentElement.classList.add("js")'), "The document must identify JavaScript-capable loads before first paint.");
 assert.ok(indexHtml.includes('id="portfolio-boot-shell"'), "The document must provide a critical styled boot shell.");
 assert.ok(indexHtml.includes(".js #portfolio-static-fallback { display: none; }"), "JavaScript loads must not paint the raw static fallback.");
+const smartPlanter = content.projects.find((project) => project.id === "smart-self-watering-pot");
+assert.equal(smartPlanter?.logoCredentialId, "tetc", "The Smart Planter TETC block must link to the TETC credential.");
+assert.ok(smartPlanter?.relatedProgramNote?.startsWith("Well... kinda."), "The Smart Planter must explain its TETC connection.");
 
 const requiredHumanCollections = [
   "meta",

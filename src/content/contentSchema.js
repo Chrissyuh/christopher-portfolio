@@ -260,6 +260,8 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       logoSrc: hrefOrNull(row.logo_src),
       logoAlt: text(row.logo_alt),
       logoHref: hrefOrNull(row.logo_href),
+      logoCredentialId: text(row.logo_credential_id),
+      relatedProgramNote: text(row.related_program_note),
       artifactLinks: [],
       media,
     };
@@ -407,6 +409,11 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     };
   });
   const programCredentialsById = new Map(programCredentials.map((credential) => [credential.id, credential]));
+  for (const project of projects) {
+    if (project.logoCredentialId && !programCredentialsById.has(project.logoCredentialId)) {
+      errors.push(`MainProjects row "${project.id}" references missing logo_credential_id "${project.logoCredentialId}".`);
+    }
+  }
   const learningHighlights = statRows("LearningHighlights");
   const skills = simpleRows("Skills", (row) => ({
     id: text(row.id),

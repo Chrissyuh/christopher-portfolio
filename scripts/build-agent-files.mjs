@@ -317,6 +317,7 @@ function buildLlmsFullTxt(content) {
             : "",
           project.role ? `My role: ${project.role}` : "",
           project.logoHref ? `Related program/logo link: ${project.logoHref}` : "",
+          project.relatedProgramNote ? `Related program context: ${project.relatedProgramNote}` : "",
           "",
           project.summary,
           "",

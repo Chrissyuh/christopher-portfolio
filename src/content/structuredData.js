@@ -46,6 +46,7 @@ export function buildPortfolioStructuredData(content) {
       summary: project.summary,
       role: project.role,
       teamContext: project.teamContext,
+      relatedProgramNote: project.relatedProgramNote,
       artifactLinks: project.artifactLinks,
       media: project.media,
     })),
@@ -159,7 +160,9 @@ export function buildPortfolioStructuredData(content) {
         description: project.summary,
         ...(project.status ? { creativeWorkStatus: project.status } : {}),
         keywords: list(project.artifactLinks).map((link) => link.label),
-        ...(project.teamContext ? { creditText: project.teamContext } : {}),
+        ...([project.teamContext, project.relatedProgramNote].filter(Boolean).length > 0
+          ? { creditText: [project.teamContext, project.relatedProgramNote].filter(Boolean).join(" ") }
+          : {}),
         ...(project.role
           ? {
               contributor: {

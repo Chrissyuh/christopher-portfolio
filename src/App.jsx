@@ -1141,7 +1141,7 @@ function ProjectRow({ project, index, meta }) {
   const artifactButtons = projectArtifactButtons(project, meta);
   const hasProjectLinks = Boolean(project.logoSrc || artifactButtons.length > 0);
   const hasCompactLogo = project.id === "vividgrasp-ai-vision-robotics-arm";
-  const linkedCredentialId = hasCompactLogo ? "stanford-ai4all" : null;
+  const linkedCredentialId = project.logoCredentialId || null;
   const logoHref = linkedCredentialId ? `#${credentialAnchorId(linkedCredentialId)}` : project.logoHref;
   const logoContainerClass = cn(
     "border border-[#d6cec0] bg-white transition",
@@ -1184,24 +1184,32 @@ function ProjectRow({ project, index, meta }) {
               {meta.projectArtifactLinksLabel}
             </p>
             <div className="mt-2 flex flex-wrap items-stretch gap-2 xl:flex-col">
-              {project.logoSrc &&
-                (logoHref ? (
-                  <a
-                    href={logoHref}
-                    target={linkedCredentialId ? undefined : "_blank"}
-                    rel={linkedCredentialId ? undefined : "noreferrer"}
-                    onClick={linkedCredentialId ? (event) => jumpToCredential(event, linkedCredentialId) : undefined}
-                    aria-label={linkedCredentialId ? "View Stanford AI4ALL credential" : `Open ${project.logoAlt || `${project.title} logo`} link`}
-                    className={cn(
-                      logoContainerClass,
-                      "hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
-                    )}
-                  >
-                    {logoImage}
-                  </a>
-                ) : (
-                  <div className={logoContainerClass}>{logoImage}</div>
-                ))}
+              {project.logoSrc && (
+                <div className="min-w-0 flex-1 xl:w-full">
+                  {logoHref ? (
+                    <a
+                      href={logoHref}
+                      target={linkedCredentialId ? undefined : "_blank"}
+                      rel={linkedCredentialId ? undefined : "noreferrer"}
+                      onClick={linkedCredentialId ? (event) => jumpToCredential(event, linkedCredentialId) : undefined}
+                      aria-label={linkedCredentialId ? `View related credential for ${project.title}` : `Open ${project.logoAlt || `${project.title} logo`} link`}
+                      className={cn(
+                        logoContainerClass,
+                        "hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
+                      )}
+                    >
+                      {logoImage}
+                    </a>
+                  ) : (
+                    <div className={logoContainerClass}>{logoImage}</div>
+                  )}
+                  {project.relatedProgramNote && (
+                    <p className="mt-1.5 text-[9px] leading-4 text-slate-600 sm:text-[10px] sm:leading-4">
+                      {project.relatedProgramNote}
+                    </p>
+                  )}
+                </div>
+              )}
               {artifactButtons.map((link) => (
                 <ProjectLinkButton key={link.id ?? link.href} href={link.href} label={link.label} icon={link.icon} type={link.type} />
               ))}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { LayoutGroup, motion, MotionConfig } from "framer-motion";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { usePortfolioContent } from "./content/loadPortfolioContent";
@@ -82,7 +82,6 @@ const accentStyles = {
 const carouselAutoAdvanceMs = 6000;
 const carouselInteractionPauseMs = 10000;
 const carouselInteractiveExitPauseMs = 2000;
-const carouselWrapResetMs = 650;
 const LazyPcbModelViewer = React.lazy(() => import("./components/PcbModelViewer.jsx"));
 const pcbFallbackStorageKey = "portfolio-pcb-model-fallback";
 
@@ -249,6 +248,7 @@ function MediaFrame({
   return (
     <figure
       aria-hidden={clone || undefined}
+      data-carousel-slide="true"
       className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}
       onMouseEnter={mediaType === "model" && !clone ? () => onInteractiveHoverChange?.(true) : undefined}
       onMouseLeave={mediaType === "model" && !clone ? () => onInteractiveHoverChange?.(false) : undefined}
@@ -496,25 +496,60 @@ function useMediaQuery(query) {
   return matches;
 }
 
+function loopIndex(index, length) {
+  return length > 0 ? ((index % length) + length) % length : 0;
+}
+
+function carouselSlideElements(track) {
+  return track ? Array.from(track.querySelectorAll('[data-carousel-slide="true"]')) : [];
+}
+
+function closestCarouselSlideIndex(track, slides = carouselSlideElements(track)) {
+  if (!track || slides.length === 0) return 0;
+
+  const trackLeft = track.getBoundingClientRect().left;
+  return slides.reduce(
+    (closest, slide, index) => {
+      const distance = Math.abs(slide.getBoundingClientRect().left - trackLeft);
+      return distance < closest.distance ? { index, distance } : closest;
+    },
+    { index: 0, distance: Number.POSITIVE_INFINITY },
+  ).index;
+}
+
+function carouselSlideScrollLeft(track, slide) {
+  const trackRect = track.getBoundingClientRect();
+  const slideRect = slide.getBoundingClientRect();
+  return track.scrollLeft + slideRect.left - trackRect.left;
+}
+
+function carouselCloneItem(item) {
+  return item.type === "photo" ? item : { ...item, type: "photo", src: item.posterSrc || "" };
+}
+
 function MediaCarousel({ media, label, compact = false, mobileMediaType = null }) {
   const isMobile = useMediaQuery("(max-width: 639px)");
   const allItems = list(media);
   const items = isMobile && mobileMediaType ? allItems.filter((item) => item.type === mobileMediaType) : allItems;
+  const itemCount = items.length;
+  const carouselRef = useRef(null);
   const trackRef = useRef(null);
   const scrollEndTimerRef = useRef(null);
-  const wrapResetTimerRef = useRef(null);
-  const touchStartXRef = useRef(null);
-  const wrappingRef = useRef(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lastInteractionAt, setLastInteractionAt] = useState(0);
   const [modelInteractionActive, setModelInteractionActive] = useState(false);
   const [interactiveHoverActive, setInteractiveHoverActive] = useState(false);
+  const [carouselHoverActive, setCarouselHoverActive] = useState(false);
+  const [focusWithin, setFocusWithin] = useState(false);
+  const [carouselVisible, setCarouselVisible] = useState(false);
+  const [pageVisible, setPageVisible] = useState(!document.hidden);
   const [interactiveResumeAt, setInteractiveResumeAt] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
-  const maxStartIndex = Math.max(items.length - visibleCount, 0);
-  const safeActiveIndex = items.length > 0 ? Math.min(activeIndex, maxStartIndex) : 0;
-  const canScroll = maxStartIndex > 0;
-  const cloneCount = canScroll ? Math.min(visibleCount, items.length) : 0;
+  const safeActiveIndex = loopIndex(activeIndex, itemCount);
+  const canScroll = itemCount > visibleCount;
+  const cloneCount = canScroll ? Math.min(Math.max(visibleCount, 1), itemCount) : 0;
+  const leadingClones = canScroll ? items.slice(-cloneCount) : [];
+  const trailingClones = canScroll ? items.slice(0, cloneCount) : [];
 
   const markInteraction = useCallback(() => {
     setLastInteractionAt(Date.now());
@@ -535,7 +570,7 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
 
   const measureVisibleCount = useCallback(() => {
     const track = trackRef.current;
-    const firstSlide = track?.children?.[0];
+    const firstSlide = carouselSlideElements(track)[0];
 
     if (!track || !firstSlide) {
       setVisibleCount(1);
@@ -544,112 +579,81 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
 
     const trackWidth = track.getBoundingClientRect().width;
     const slideWidth = firstSlide.getBoundingClientRect().width;
-    const nextVisibleCount = slideWidth > 0 ? Math.max(1, Math.min(items.length, Math.floor((trackWidth + 1) / slideWidth))) : 1;
+    const nextVisibleCount = slideWidth > 0 ? Math.max(1, Math.min(itemCount, Math.floor((trackWidth + 1) / slideWidth))) : 1;
 
     setVisibleCount((current) => (current === nextVisibleCount ? current : nextVisibleCount));
-  }, [items.length]);
+  }, [itemCount]);
 
-  const goTo = useCallback(
-    (index, userInitiated = false) => {
-      if (items.length === 0) return;
+  const settleTrackPosition = useCallback(() => {
+    window.clearTimeout(scrollEndTimerRef.current);
+    scrollEndTimerRef.current = window.setTimeout(() => {
+      const track = trackRef.current;
+      const slides = carouselSlideElements(track);
 
-      const nextIndex = Math.max(0, Math.min(index, maxStartIndex));
+      if (!track || slides.length === 0 || itemCount === 0) return;
 
-      if (userInitiated) {
-        markInteraction();
+      const renderedIndex = closestCarouselSlideIndex(track, slides);
+      const logicalIndex = canScroll ? loopIndex(renderedIndex - cloneCount, itemCount) : renderedIndex;
+      const canonicalRenderedIndex = canScroll ? cloneCount + logicalIndex : logicalIndex;
+
+      setActiveIndex((current) => (current === logicalIndex ? current : logicalIndex));
+
+      if (canScroll && renderedIndex !== canonicalRenderedIndex) {
+        const canonicalSlide = slides[canonicalRenderedIndex];
+        if (canonicalSlide) {
+          track.scrollTo({ left: carouselSlideScrollLeft(track, canonicalSlide), behavior: "auto" });
+        }
       }
+    }, 140);
+  }, [canScroll, cloneCount, itemCount]);
 
-      setActiveIndex(nextIndex);
-    },
-    [items.length, markInteraction, maxStartIndex],
-  );
-
-  const moveByPage = useCallback(
+  const moveByStep = useCallback(
     (direction, userInitiated = true) => {
-      if (!canScroll || wrappingRef.current) return;
+      const track = trackRef.current;
+      const slides = carouselSlideElements(track);
+
+      if (!canScroll || !track || slides.length === 0) return;
 
       if (userInitiated) markInteraction();
-      const nextIndex = safeActiveIndex + direction * visibleCount;
 
-      if (direction > 0 && nextIndex > maxStartIndex) {
-        const track = trackRef.current;
-        const firstClone = track?.children?.[items.length];
-        if (!track || !firstClone) {
-          goTo(0);
-          return;
-        }
+      const currentRenderedIndex = closestCarouselSlideIndex(track, slides);
+      const targetRenderedIndex = Math.max(0, Math.min(currentRenderedIndex + direction, slides.length - 1));
+      const targetSlide = slides[targetRenderedIndex];
+      if (!targetSlide) return;
 
-        wrappingRef.current = true;
-        track.scrollTo({ left: firstClone.offsetLeft - track.offsetLeft, behavior: "smooth" });
-        window.clearTimeout(wrapResetTimerRef.current);
-        wrapResetTimerRef.current = window.setTimeout(() => {
-          track.scrollTo({ left: 0, behavior: "auto" });
-          setActiveIndex(0);
-          wrappingRef.current = false;
-        }, carouselWrapResetMs);
-        return;
-      }
-
-      goTo(direction < 0 && nextIndex < 0 ? maxStartIndex : nextIndex);
+      const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+      track.scrollTo({
+        left: carouselSlideScrollLeft(track, targetSlide),
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+      });
+      settleTrackPosition();
     },
-    [canScroll, goTo, items.length, markInteraction, maxStartIndex, safeActiveIndex, visibleCount],
+    [canScroll, markInteraction, settleTrackPosition],
   );
 
   const handleKeyDown = useCallback(
     (event) => {
+      if (event.target !== event.currentTarget) return;
       markInteraction();
 
       if (!canScroll) return;
 
       if (event.key === "ArrowLeft") {
         event.preventDefault();
-        moveByPage(-1);
+        moveByStep(-1);
       }
 
       if (event.key === "ArrowRight") {
         event.preventDefault();
-        moveByPage(1);
+        moveByStep(1);
       }
     },
-    [canScroll, markInteraction, moveByPage],
+    [canScroll, markInteraction, moveByStep],
   );
 
   const handleTrackScroll = useCallback(() => {
-    window.clearTimeout(scrollEndTimerRef.current);
-    scrollEndTimerRef.current = window.setTimeout(() => {
-      if (wrappingRef.current) return;
-
-      const track = trackRef.current;
-
-      if (!track || items.length === 0) return;
-
-      const slides = Array.from(track.children).slice(0, items.length);
-      const closestIndex = slides.reduce(
-        (closest, slide, index) => {
-          const distance = Math.abs(slide.offsetLeft - track.offsetLeft - track.scrollLeft);
-          return distance < closest.distance ? { index, distance } : closest;
-        },
-        { index: 0, distance: Number.POSITIVE_INFINITY },
-      ).index;
-
-      const nextIndex = Math.min(closestIndex, maxStartIndex);
-      setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
-    }, 120);
-  }, [items.length, maxStartIndex]);
-
-  const handleTouchStart = useCallback((event) => {
-    touchStartXRef.current = event.touches[0]?.clientX ?? null;
-    markInteraction();
-  }, [markInteraction]);
-
-  const handleTouchEnd = useCallback((event) => {
-    const startX = touchStartXRef.current;
-    const endX = event.changedTouches[0]?.clientX;
-    touchStartXRef.current = null;
-
-    if (startX == null || endX == null || Math.abs(endX - startX) < 40) return;
-    moveByPage(endX < startX ? 1 : -1);
-  }, [moveByPage]);
+    settleTrackPosition();
+  }, [settleTrackPosition]);
 
   useEffect(() => {
     measureVisibleCount();
@@ -668,23 +672,55 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
     return () => window.removeEventListener("resize", measureVisibleCount);
   }, [measureVisibleCount]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const track = trackRef.current;
-    const slide = track?.children?.[safeActiveIndex];
+    const slides = carouselSlideElements(track);
 
-    if (!track || !slide) return;
+    if (!track || slides.length === 0 || itemCount === 0) return;
 
-    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const slideLeft = slide.offsetLeft - track.offsetLeft;
+    const canonicalRenderedIndex = canScroll ? cloneCount + safeActiveIndex : safeActiveIndex;
+    const slide = slides[canonicalRenderedIndex];
 
-    track.scrollTo({
-      left: slideLeft,
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-    });
-  }, [safeActiveIndex]);
+    if (slide) {
+      track.scrollTo({ left: carouselSlideScrollLeft(track, slide), behavior: "auto" });
+    }
+  }, [canScroll, cloneCount, itemCount, safeActiveIndex]);
 
   useEffect(() => {
-    if (!canScroll || modelInteractionActive || interactiveHoverActive || wrappingRef.current) return undefined;
+    const carousel = carouselRef.current;
+
+    if (!carousel || !window.IntersectionObserver) {
+      setCarouselVisible(true);
+      return undefined;
+    }
+
+    const observer = new window.IntersectionObserver(
+      ([entry]) => setCarouselVisible(entry.isIntersecting && entry.intersectionRatio >= 0.35),
+      { threshold: [0, 0.35, 0.65] },
+    );
+
+    observer.observe(carousel);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => setPageVisible(!document.hidden);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  useEffect(() => {
+    if (
+      !canScroll ||
+      !carouselVisible ||
+      !pageVisible ||
+      modelInteractionActive ||
+      interactiveHoverActive ||
+      carouselHoverActive ||
+      focusWithin
+    ) {
+      return undefined;
+    }
 
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
@@ -695,38 +731,79 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
     const delay = Math.max(carouselAutoAdvanceMs, resumeAt - Date.now());
 
     const timer = window.setTimeout(() => {
-      moveByPage(1, false);
+      moveByStep(1, false);
     }, delay);
 
     return () => window.clearTimeout(timer);
-  }, [canScroll, interactiveHoverActive, interactiveResumeAt, lastInteractionAt, modelInteractionActive, moveByPage, safeActiveIndex]);
+  }, [
+    canScroll,
+    carouselHoverActive,
+    carouselVisible,
+    focusWithin,
+    interactiveHoverActive,
+    interactiveResumeAt,
+    lastInteractionAt,
+    modelInteractionActive,
+    moveByStep,
+    pageVisible,
+    safeActiveIndex,
+  ]);
 
   useEffect(
     () => () => {
       window.clearTimeout(scrollEndTimerRef.current);
-      window.clearTimeout(wrapResetTimerRef.current);
     },
     [],
   );
 
-  if (items.length === 0) return null;
+  if (itemCount === 0) return null;
 
   return (
     <div
+      ref={carouselRef}
       className={compact ? "mt-2.5 min-w-0 sm:mt-4" : "mt-3 min-w-0 sm:mt-5"}
       aria-label={`${label} media`}
       aria-roledescription="carousel"
-      onFocusCapture={markInteraction}
+      onMouseEnter={() => setCarouselHoverActive(true)}
+      onMouseLeave={() => {
+        setCarouselHoverActive(false);
+        setInteractiveResumeAt(Date.now() + carouselInteractiveExitPauseMs);
+      }}
+      onFocusCapture={() => {
+        setFocusWithin(true);
+        markInteraction();
+      }}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setFocusWithin(false);
+          setInteractiveResumeAt(Date.now() + carouselInteractiveExitPauseMs);
+        }
+      }}
       onPointerDown={markInteraction}
-      onKeyDown={handleKeyDown}
       onWheel={markInteraction}
     >
       {canScroll && (
-        <div className="mb-2 hidden justify-end gap-1.5 sm:flex">
+        <div className="mb-2 hidden items-center justify-end gap-1.5 sm:flex">
+          <div className="mr-1 flex items-center gap-2" aria-live="polite">
+            <span className="font-mono text-[10px] tabular-nums text-[#6f6256]">
+              {safeActiveIndex + 1} / {itemCount}
+            </span>
+            <span aria-hidden="true" className="flex items-center gap-1">
+              {items.map((item, index) => (
+                <span
+                  key={`${item.id}-position-${index}`}
+                  className={cn(
+                    "h-1 w-4 transition-colors duration-300",
+                    index === safeActiveIndex ? "bg-[#244fd6]" : "bg-[#d8d0c5]",
+                  )}
+                />
+              ))}
+            </span>
+          </div>
           <button
             type="button"
             aria-label={`Previous media for ${label}`}
-            onClick={() => moveByPage(-1)}
+            onClick={() => moveByStep(-1)}
             className="grid h-8 w-8 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:h-9 sm:w-9"
           >
             <Icon name="chevronLeft" className="h-4 w-4" />
@@ -734,7 +811,7 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
           <button
             type="button"
             aria-label={`Next media for ${label}`}
-            onClick={() => moveByPage(1)}
+            onClick={() => moveByStep(1)}
             className="grid h-8 w-8 place-items-center border border-[#cfc4b4] bg-white text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:h-9 sm:w-9"
           >
             <Icon name="chevronRight" className="h-4 w-4" />
@@ -743,35 +820,57 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
       )}
       <div
         ref={trackRef}
+        tabIndex={canScroll ? 0 : undefined}
+        aria-label={`${label} media, item ${safeActiveIndex + 1} of ${itemCount}`}
+        onKeyDown={handleKeyDown}
         onScroll={handleTrackScroll}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        className="flex w-full min-w-0 touch-pan-x snap-x snap-mandatory gap-2 overflow-x-auto overflow-y-hidden pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-3 sm:overflow-hidden sm:pb-2"
+        className="flex w-full min-w-0 touch-pan-x snap-x snap-mandatory gap-2 overflow-x-auto overflow-y-hidden overscroll-x-contain pb-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244fd6] focus-visible:ring-offset-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-3 sm:overflow-hidden sm:pb-2"
       >
+        {leadingClones.map((item, index) => (
+          <MediaFrame
+            key={`${item.id}-leading-loop-clone-${index}`}
+            item={carouselCloneItem(item)}
+            label={label}
+            compact={compact}
+            clone
+          />
+        ))}
         {items.map((item, index) => (
           <MediaFrame
             key={`${item.id}-${index}`}
             item={item}
             label={label}
             compact={compact}
-            fullWidth={items.length === 1}
+            fullWidth={itemCount === 1}
             onModelInteractionChange={handleModelInteractionChange}
             onInteractiveHoverChange={handleInteractiveHoverChange}
             onVideoFocusChange={handleInteractiveHoverChange}
             videoFocusEnabled={!isMobile}
           />
         ))}
-        {items.slice(0, cloneCount).map((item, index) => (
+        {trailingClones.map((item, index) => (
           <MediaFrame
-            key={`${item.id}-loop-clone-${index}`}
-            item={item.type === "photo" ? item : { ...item, type: "photo", src: item.posterSrc || "" }}
+            key={`${item.id}-trailing-loop-clone-${index}`}
+            item={carouselCloneItem(item)}
             label={label}
             compact={compact}
             clone
           />
         ))}
-        {!compact && items.length > 1 && <span aria-hidden="true" className="w-[18%] shrink-0 sm:hidden" />}
       </div>
+      {canScroll && (
+        <div className="mt-1.5 flex items-center justify-center gap-1 sm:hidden" aria-hidden="true">
+          {items.map((item, index) => (
+            <span
+              key={`${item.id}-mobile-position-${index}`}
+              className={cn(
+                "h-1 transition-[width,background-color] duration-300",
+                index === safeActiveIndex ? "w-5 bg-[#244fd6]" : "w-2 bg-[#d8d0c5]",
+              )}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

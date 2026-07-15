@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-15T09:06:50.582Z",
+  "updatedAt": "2026-07-15T09:46:05.335Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -389,7 +389,7 @@
     {
       "id": "math-acceleration",
       "label": "Math progression",
-      "value": "Only student in the SECA class of 2029 taking college trigonometry and precalculus in sophomore year",
+      "value": "Current: sophomore student taking college trigonometry and precalculus through Lone Star College",
       "note": "",
       "group": "Progression",
       "format": "text",

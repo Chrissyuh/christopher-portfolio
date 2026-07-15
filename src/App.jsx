@@ -32,6 +32,8 @@ const iconPaths = {
   pause: "M8 5v14M16 5v14",
   play: "m8 5 11 7-11 7V5z",
   maximize: "M8 3H3v5 M16 3h5v5 M8 21H3v-5 M21 16v5h-5",
+  copy: "M8 8h12v12H8z M4 16V4h12",
+  check: "m5 12 4 4L19 6",
   cpu: "M9 9h6v6H9z M9 1v3 M15 1v3 M9 20v3 M15 20v3 M1 9h3 M1 15h3 M20 9h3 M20 15h3 M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z",
   flame: "M12 22c4.4 0 8-3.2 8-7.6 0-2.7-1.3-5-3.7-6.9.2 1.7-.5 3.1-1.8 3.9.2-2.9-1.4-5.8-4.7-8.4.5 3.5-1 5.3-2.4 7-1.2 1.4-2.4 2.8-2.4 5 0 4 3.1 7 7 7z M12 19c1.8 0 3.2-1.3 3.2-3.1 0-1.4-.8-2.7-2.3-3.8.1 1.3-.5 2.1-1.3 2.8-.7.6-1.3 1.2-1.3 2.1 0 1.2.8 2 1.7 2z",
   github:
@@ -2395,12 +2397,50 @@ function RecordPage({ content }) {
 
 function ContactSection({ content }) {
   const meta = content.meta ?? {};
+  const [copyStatus, setCopyStatus] = useState("idle");
   const contactButtons = [
     { href: meta.contactEmailHref, icon: "mail", label: meta.contactEmailLabel, primary: true },
     { href: meta.contactGithubHref, icon: "github", label: meta.contactGithubLabel },
     { href: meta.contactProjectHref, icon: "link", label: meta.contactProjectLabel },
     { href: meta.resumeHref, icon: "list", label: meta.resumeLabel },
   ].filter((button) => button.href && button.label);
+
+  async function copyPortfolioText() {
+    setCopyStatus("copying");
+
+    try {
+      const response = await fetch("/llms-full.txt", { cache: "no-store" });
+      if (!response.ok) throw new Error(`Could not load portfolio text (${response.status}).`);
+
+      const portfolioText = await response.text();
+      let copied = false;
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(portfolioText);
+          copied = true;
+        } catch {
+          copied = false;
+        }
+      }
+
+      if (!copied) {
+        const textarea = document.createElement("textarea");
+        textarea.value = portfolioText;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        copied = document.execCommand("copy");
+        textarea.remove();
+        if (!copied) throw new Error("Clipboard copy was blocked.");
+      }
+
+      setCopyStatus("copied");
+    } catch {
+      setCopyStatus("error");
+    }
+  }
 
   return (
     <section id="contact" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-12 md:px-8 md:py-20">
@@ -2415,6 +2455,18 @@ function ContactSection({ content }) {
                 {button.label}
               </ContactButton>
             ))}
+            <Button
+              type="button"
+              onClick={copyPortfolioText}
+              disabled={copyStatus === "copying"}
+              className="rounded-none border border-[#cfc4b4] bg-white px-3 py-2.5 text-xs font-semibold text-slate-950 hover:bg-[#fbfaf7] sm:px-5 sm:py-5 sm:text-sm"
+            >
+              <Icon name={copyStatus === "copied" ? "check" : "copy"} className="mr-2 h-4 w-4" />
+              {copyStatus === "copying" ? "Copying..." : copyStatus === "copied" ? "Copied" : "Copy as text"}
+            </Button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {copyStatus === "copied" ? "Portfolio text copied to clipboard." : copyStatus === "error" ? "Portfolio text could not be copied." : ""}
+            </span>
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#d2c8b9] bg-[#fbfaf7] p-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] md:p-4 md:text-[11px] md:tracking-[0.16em]">

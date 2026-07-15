@@ -31,6 +31,7 @@ const iconPaths = {
   chevronRight: "M9 6l6 6-6 6",
   pause: "M8 5v14M16 5v14",
   play: "m8 5 11 7-11 7V5z",
+  maximize: "M8 3H3v5 M16 3h5v5 M8 21H3v-5 M21 16v5h-5",
   cpu: "M9 9h6v6H9z M9 1v3 M15 1v3 M9 20v3 M15 20v3 M1 9h3 M1 15h3 M20 9h3 M20 15h3 M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z",
   flame: "M12 22c4.4 0 8-3.2 8-7.6 0-2.7-1.3-5-3.7-6.9.2 1.7-.5 3.1-1.8 3.9.2-2.9-1.4-5.8-4.7-8.4.5 3.5-1 5.3-2.4 7-1.2 1.4-2.4 2.8-2.4 5 0 4 3.1 7 7 7z M12 19c1.8 0 3.2-1.3 3.2-3.1 0-1.4-.8-2.7-2.3-3.8.1 1.3-.5 2.1-1.3 2.8-.7.6-1.3 1.2-1.3 2.1 0 1.2.8 2 1.7 2z",
   github:
@@ -228,7 +229,17 @@ function ModelMedia({ item, label, onInteractionChange, onInteractiveStateChange
   );
 }
 
-function MediaFrame({ item, label, compact = false, fullWidth = false, onModelInteractionChange, onInteractiveHoverChange, clone = false }) {
+function MediaFrame({
+  item,
+  label,
+  compact = false,
+  fullWidth = false,
+  onModelInteractionChange,
+  onInteractiveHoverChange,
+  onVideoFocusChange,
+  videoFocusEnabled = false,
+  clone = false,
+}) {
   const mediaType = item.type === "video" ? "video" : item.type === "model" ? "model" : "photo";
   const caption = item.caption || item.alt || label;
   const [modelIsInteractive, setModelIsInteractive] = useState(false);
@@ -244,7 +255,12 @@ function MediaFrame({ item, label, compact = false, fullWidth = false, onModelIn
     >
       <div className="relative aspect-video overflow-hidden bg-[#ded8cd]">
         {item.src && mediaType === "video" && (
-          <ViewportVideo item={item} caption={caption} />
+          <ViewportVideo
+            item={item}
+            caption={caption}
+            focusEnabled={!clone && videoFocusEnabled}
+            onFocusChange={onVideoFocusChange}
+          />
         )}
         {item.src && mediaType === "model" && (
           <ModelMedia
@@ -285,13 +301,14 @@ function MediaFrame({ item, label, compact = false, fullWidth = false, onModelIn
   );
 }
 
-function ViewportVideo({ item, caption }) {
+function ViewportVideo({ item, caption, focusEnabled = false, onFocusChange }) {
   const hostRef = useRef(null);
   const videoRef = useRef(null);
   const [inView, setInView] = useState(false);
   const [pageVisible, setPageVisible] = useState(!document.hidden);
   const [isPlaying, setIsPlaying] = useState(false);
   const [userPaused, setUserPaused] = useState(false);
+  const [focusedVideo, setFocusedVideo] = useState(null);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -319,12 +336,12 @@ function ViewportVideo({ item, caption }) {
     const video = videoRef.current;
     if (!video) return;
 
-    if (inView && pageVisible && !userPaused) {
+    if (inView && pageVisible && !userPaused && !focusedVideo) {
       video.play().catch(() => setIsPlaying(false));
     } else {
       video.pause();
     }
-  }, [inView, pageVisible, userPaused]);
+  }, [focusedVideo, inView, pageVisible, userPaused]);
 
   function togglePlayback() {
     const video = videoRef.current;
@@ -340,30 +357,127 @@ function ViewportVideo({ item, caption }) {
   }
 
   return (
-    <div ref={hostRef} className="relative h-full w-full">
-      <video
-        ref={videoRef}
-        src={item.src}
-        poster={item.posterSrc || undefined}
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-label={item.alt || caption}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        className="h-full w-full bg-[#ded8cd] object-contain"
+    <>
+      <div ref={hostRef} className="relative h-full w-full">
+        <video
+          ref={videoRef}
+          src={item.src}
+          poster={item.posterSrc || undefined}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={item.alt || caption}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          className="h-full w-full bg-[#ded8cd] object-contain"
+        />
+        {focusEnabled && (
+          <button
+            type="button"
+            onClick={(event) => {
+              setFocusedVideo({ item, caption, trigger: event.currentTarget });
+              onFocusChange?.(true);
+            }}
+            aria-label={`Enlarge video: ${caption}`}
+            title="Enlarge video"
+            className="group absolute inset-0 z-10 hidden cursor-zoom-in focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white sm:block"
+          >
+            <span className="absolute right-2 top-2 grid h-8 w-8 place-items-center border border-white/60 bg-slate-950/75 text-white shadow-sm backdrop-blur-sm transition group-hover:bg-slate-950">
+              <Icon name="maximize" className="h-4 w-4" />
+            </span>
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={togglePlayback}
+          aria-label={isPlaying ? "Pause video" : "Play video"}
+          title={isPlaying ? "Pause video" : "Play video"}
+          className="absolute bottom-2 right-2 z-20 grid h-8 w-8 place-items-center border border-white/60 bg-slate-950/75 text-white shadow-sm backdrop-blur-sm transition hover:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-900"
+        >
+          <Icon name={isPlaying ? "pause" : "play"} className="h-3.5 w-3.5" />
+        </button>
+      </div>
+      <FocusedVideoDialog
+        focusedVideo={focusedVideo}
+        onClose={() => {
+          setFocusedVideo(null);
+          onFocusChange?.(false);
+        }}
       />
-      <button
-        type="button"
-        onClick={togglePlayback}
-        aria-label={isPlaying ? "Pause video" : "Play video"}
-        title={isPlaying ? "Pause video" : "Play video"}
-        className="absolute bottom-2 right-2 grid h-8 w-8 place-items-center border border-white/60 bg-slate-950/75 text-white shadow-sm backdrop-blur-sm transition hover:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-900"
-      >
-        <Icon name={isPlaying ? "pause" : "play"} className="h-3.5 w-3.5" />
-      </button>
-    </div>
+    </>
+  );
+}
+
+function FocusedVideoDialog({ focusedVideo, onClose }) {
+  const dialogRef = useRef(null);
+  const lastFocusedVideoRef = useRef(null);
+
+  useEffect(() => {
+    if (focusedVideo) lastFocusedVideoRef.current = focusedVideo;
+  }, [focusedVideo]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (focusedVideo && !dialog.open) {
+      dialog.showModal();
+    } else if (!focusedVideo && dialog.open) {
+      dialog.close();
+    }
+  }, [focusedVideo]);
+
+  function closeDialog() {
+    dialogRef.current?.close();
+  }
+
+  return (
+    <dialog
+      ref={dialogRef}
+      aria-label={focusedVideo ? `Enlarged video: ${focusedVideo.caption}` : "Enlarged video"}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) closeDialog();
+      }}
+      onClose={() => {
+        const trigger = lastFocusedVideoRef.current?.trigger;
+        onClose();
+        window.requestAnimationFrame(() => trigger?.focus());
+      }}
+      className="m-auto max-h-[calc(100dvh-4rem)] w-[88vw] max-w-6xl overflow-hidden border border-[#cfc4b4] bg-white p-0 text-slate-950 shadow-[0_24px_70px_rgba(15,23,42,0.35)] backdrop:bg-slate-950/65"
+    >
+      {focusedVideo && (
+        <div className="flex max-h-[calc(100dvh-4rem)] flex-col border-t-4 border-t-[#244fd6]">
+          <div className="flex shrink-0 items-center justify-between gap-4 border-b border-[#e1d7c8] bg-[#fbfaf7] px-4 py-3">
+            <h2 className="min-w-0 truncate text-sm font-semibold text-slate-950 sm:text-base">
+              {focusedVideo.caption}
+            </h2>
+            <button
+              type="button"
+              aria-label="Close enlarged video"
+              onClick={closeDialog}
+              className="grid h-9 w-9 shrink-0 place-items-center border border-[#cfc4b4] bg-white text-xl leading-none text-slate-700 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2"
+            >
+              &times;
+            </button>
+          </div>
+          <div className="flex min-h-0 items-center justify-center bg-[#ded8cd] p-2 sm:p-3">
+            <video
+              src={focusedVideo.item.src}
+              poster={focusedVideo.item.posterSrc || undefined}
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label={focusedVideo.item.alt || focusedVideo.caption}
+              className="aspect-video max-h-[calc(100dvh-10rem)] w-full bg-slate-950 object-contain"
+            />
+          </div>
+        </div>
+      )}
+    </dialog>
   );
 }
 
@@ -643,6 +757,8 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
             fullWidth={items.length === 1}
             onModelInteractionChange={handleModelInteractionChange}
             onInteractiveHoverChange={handleInteractiveHoverChange}
+            onVideoFocusChange={handleInteractiveHoverChange}
+            videoFocusEnabled={!isMobile}
           />
         ))}
         {items.slice(0, cloneCount).map((item, index) => (

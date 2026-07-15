@@ -30,6 +30,11 @@
   animation: jump-target-focus 1.6s ease-out;
 }
 
+.navigation-scroll-ready {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .jump-target-highlight {
     animation: none;

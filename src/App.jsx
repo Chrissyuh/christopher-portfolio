@@ -952,6 +952,79 @@ function ProjectLinkButton({ href, label, icon = "arrowRight", type }) {
 const jumpFocusTimers = new WeakMap();
 const jumpScrollFrames = new WeakMap();
 const jumpHighlightDurationMs = 1600;
+const navigationPreloadBudgetMs = 450;
+let navigationScrollSequence = 0;
+
+function elementIsInNavigationPath(element, startY, endY) {
+  const bounds = element.getBoundingClientRect();
+  const top = bounds.top + window.scrollY;
+  const bottom = bounds.bottom + window.scrollY;
+  return bottom >= startY && top <= endY;
+}
+
+function waitForNavigationImage(image) {
+  image.loading = "eager";
+  image.dataset.navigationPreloaded = "true";
+
+  if (image.complete) {
+    return image.decode?.().catch(() => undefined) ?? Promise.resolve();
+  }
+
+  return new Promise((resolve) => {
+    image.addEventListener("load", resolve, { once: true });
+    image.addEventListener("error", resolve, { once: true });
+  });
+}
+
+function preloadImageUrl(src) {
+  return new Promise((resolve) => {
+    const image = new window.Image();
+    image.addEventListener("load", resolve, { once: true });
+    image.addEventListener("error", resolve, { once: true });
+    image.src = src;
+  });
+}
+
+async function prepareNavigationScrollPath(target) {
+  const targetBounds = target.getBoundingClientRect();
+  const targetTop = targetBounds.top + window.scrollY;
+  if (targetTop <= window.scrollY) return;
+
+  const pathStart = window.scrollY;
+  const pathEnd = targetBounds.bottom + window.scrollY + window.innerHeight * 0.25;
+  const inPath = (element) => elementIsInNavigationPath(element, pathStart, pathEnd);
+
+  document.querySelectorAll('[data-scroll-reveal="true"]').forEach((element) => {
+    if (inPath(element)) element.classList.add("navigation-scroll-ready");
+  });
+
+  const imagePromises = [...document.querySelectorAll('img[loading="lazy"]')]
+    .filter(inPath)
+    .map(waitForNavigationImage);
+  const posterPromises = [...new Set(
+    [...document.querySelectorAll("video[poster]")]
+      .filter(inPath)
+      .map((video) => video.poster)
+      .filter(Boolean),
+  )].map(preloadImageUrl);
+
+  await new Promise((resolve) => window.requestAnimationFrame(() => window.requestAnimationFrame(resolve)));
+
+  if (imagePromises.length + posterPromises.length === 0) return;
+
+  await Promise.race([
+    Promise.allSettled([...imagePromises, ...posterPromises]),
+    new Promise((resolve) => window.setTimeout(resolve, navigationPreloadBudgetMs)),
+  ]);
+}
+
+async function scrollToPreparedTarget(target, options) {
+  const requestId = ++navigationScrollSequence;
+  await prepareNavigationScrollPath(target);
+  if (requestId !== navigationScrollSequence || !target.isConnected) return false;
+  target.scrollIntoView(options);
+  return true;
+}
 
 function credentialAnchorId(credentialId) {
   return `credential-${credentialId}`;
@@ -995,7 +1068,7 @@ function highlightJumpTargetAfterScroll(target) {
   jumpScrollFrames.set(target, frame);
 }
 
-function jumpToTarget(event, targetId) {
+async function jumpToTarget(event, targetId) {
   event.preventDefault();
 
   const target = document.getElementById(targetId);
@@ -1011,10 +1084,11 @@ function jumpToTarget(event, targetId) {
 
   window.history.replaceState(null, "", `#${targetId}`);
   const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  target.scrollIntoView({
+  const didScroll = await scrollToPreparedTarget(target, {
     behavior: prefersReducedMotion ? "auto" : "smooth",
     block: "center",
   });
+  if (!didScroll) return;
 
   if (prefersReducedMotion) {
     highlightJumpTarget(target);
@@ -1086,6 +1160,7 @@ function ProjectRow({ project, index, meta }) {
     <motion.article
       id={projectAnchorId(project)}
       tabIndex={-1}
+      data-scroll-reveal="true"
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -1164,6 +1239,7 @@ function SmallProjectCard({ project, index }) {
 
   return (
     <motion.article
+      data-scroll-reveal="true"
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -1359,6 +1435,7 @@ function DuolingoStreakCard({ item, index }) {
   return (
     <motion.article
       key={item.id}
+      data-scroll-reveal="true"
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -1507,6 +1584,7 @@ function AcademicCard({ item, index, wide = false, valueAction = null }) {
   return (
     <motion.div
       key={item.id}
+      data-scroll-reveal="true"
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -1690,6 +1768,7 @@ function ProgramCredentialCard({ credential, index, meta }) {
     <motion.article
       id={credentialAnchorId(credential.id)}
       tabIndex={-1}
+      data-scroll-reveal="true"
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -1969,6 +2048,7 @@ function MicroProjectTile({ project, index, meta }) {
     <motion.article
       tabIndex={0}
       aria-labelledby={labelId}
+      data-scroll-reveal="true"
       initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -2215,6 +2295,7 @@ function PortfolioPage({ content }) {
           {skillGroups.map((group, index) => (
             <motion.article
               key={group.category}
+              data-scroll-reveal="true"
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -2481,7 +2562,7 @@ function ContactSection({ content }) {
   );
 }
 
-function scrollToPageSection(event, href, setActiveSection) {
+async function scrollToPageSection(event, href, setActiveSection) {
   if (!href?.startsWith("#")) return;
 
   const target = document.querySelector(href);
@@ -2495,7 +2576,7 @@ function scrollToPageSection(event, href, setActiveSection) {
   }
 
   const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  target.scrollIntoView({
+  await scrollToPreparedTarget(target, {
     behavior: prefersReducedMotion ? "auto" : "smooth",
     block: "start",
   });

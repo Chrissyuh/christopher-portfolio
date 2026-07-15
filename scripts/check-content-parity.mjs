@@ -8,13 +8,15 @@ const publicJsonUrl = new URL("../public/portfolio.json", import.meta.url);
 const llmsUrl = new URL("../public/llms.txt", import.meta.url);
 const llmsFullUrl = new URL("../public/llms-full.txt", import.meta.url);
 const appUrl = new URL("../src/App.jsx", import.meta.url);
+const appStylesUrl = new URL("../src/index.css", import.meta.url);
 
-const [content, publicContent, llms, llmsFull, appSource] = await Promise.all([
+const [content, publicContent, llms, llmsFull, appSource, appStyles] = await Promise.all([
   fs.readFile(generatedUrl, "utf8").then(JSON.parse),
   fs.readFile(publicJsonUrl, "utf8").then(JSON.parse),
   fs.readFile(llmsUrl, "utf8"),
   fs.readFile(llmsFullUrl, "utf8"),
   fs.readFile(appUrl, "utf8"),
+  fs.readFile(appStylesUrl, "utf8"),
 ]);
 
 const claims = new Set();
@@ -121,6 +123,10 @@ assert.equal(content.meta.contactPhoneLabel, "901-356-1000", "The primary phone 
 assert.equal(content.meta.contactPhoneHref, "tel:+19013561000", "The primary phone link drifted.");
 assert.ok(llms.includes("[901-356-1000](tel:+19013561000): Primary contact for Christopher."), "llms.txt is missing the primary phone contact.");
 assert.ok(!content.meta.contactProjectHref, "Subpix must remain a project rather than a contact action.");
+assert.ok(appSource.includes("prepareNavigationScrollPath"), "Top navigation must prepare lazy content before scrolling.");
+assert.ok(appSource.includes('image.loading = "eager"'), "Navigation preparation must eagerly start images along the scroll path.");
+assert.ok(appSource.includes('data-scroll-reveal="true"'), "Viewport-revealed cards must be identifiable during navigation preparation.");
+assert.ok(appStyles.includes(".navigation-scroll-ready"), "Prepared navigation cards must render before the smooth scroll begins.");
 
 const requiredHumanCollections = [
   "meta",

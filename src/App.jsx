@@ -1465,7 +1465,7 @@ function ProgramCredentialCard({ credential, index, meta }) {
             className={cn(
               "grid shrink-0 place-items-center overflow-hidden border border-[#d6cec0] bg-white transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
               credential.id === "stanford-ai4all"
-                ? "h-10 w-28 p-1 sm:w-32"
+                ? "h-9 w-20 p-1 sm:w-24"
                 : isCredential
                   ? "h-12 w-16 p-1.5 sm:h-14 sm:w-20"
                   : "h-12 w-24 p-1.5 sm:h-14 sm:w-28",

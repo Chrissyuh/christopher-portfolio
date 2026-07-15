@@ -1943,22 +1943,12 @@ function PortfolioPage({ content }) {
 
               <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 sm:mt-6 sm:gap-x-7">
                 <a
-                  href="#projects"
-                  className={cn(
-                    "inline-flex items-center border-b-2 py-1 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-sm",
-                    heroHasImage ? "border-white text-white hover:border-[#8fa8ff] hover:text-[#c9d4ff] focus:ring-offset-slate-950" : "border-[#244fd6] text-slate-950 hover:text-[#244fd6] focus:ring-offset-[#f5f3ee]",
-                  )}
-                >
-                  {meta.openProjectsLabel}
-                  <Icon name="arrowRight" className="ml-2 h-4 w-4" />
-                </a>
-                <a
                   href={meta.contactGithubHref}
                   target="_blank"
                   rel="noreferrer"
                   className={cn(
-                    "inline-flex items-center py-1 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-sm",
-                    heroHasImage ? "text-white/78 hover:text-white focus:ring-offset-slate-950" : "text-slate-600 hover:text-slate-950 focus:ring-offset-[#f5f3ee]",
+                    "inline-flex items-center border-b-2 py-1 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-sm",
+                    heroHasImage ? "border-white text-white hover:border-[#8fa8ff] hover:text-[#c9d4ff] focus:ring-offset-slate-950" : "border-[#244fd6] text-slate-950 hover:text-[#244fd6] focus:ring-offset-[#f5f3ee]",
                   )}
                 >
                   <Icon name="github" className="mr-2 h-4 w-4" />

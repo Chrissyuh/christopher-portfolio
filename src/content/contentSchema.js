@@ -129,7 +129,6 @@ const defaultMeta = {
   projectSourceLabel: "Source",
   mediaPlaceholderLabel: "needed",
   mediaSlotLabel: "media slot",
-  openProjectsLabel: "View selected work",
   viewRecordLabel: "Experience",
   backPortfolioLabel: "Back to portfolio",
 };

@@ -87,6 +87,15 @@ Program link: https://ai4all.spcs.stanford.edu/
 Certificate scan: https://chrisaheskett.vercel.app/portfolio-media/credentials/stanford-ai4all-certificate.jpg
 Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project.
 
+### Certified SOLIDWORKS Design Associate (CSWA)
+Type: Credential
+Program: Certified SOLIDWORKS Design Associate (CSWA)
+Issuer: Dassault Systèmes
+Date: July 15, 2026
+Program link: https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url
+Certificate scan: https://chrisaheskett.vercel.app/portfolio-media/credentials/cswa-certificate.png
+Passed the CSWA exam, demonstrating core proficiency in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials.
+
 ## Learning Highlights
 
 - Duolingo streak: 1,744 (~4.77 years)

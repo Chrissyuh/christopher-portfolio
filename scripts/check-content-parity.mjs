@@ -123,7 +123,19 @@ for (const collection of requiredHumanCollections) {
   assert.ok(appSource.includes(`data-content-collection="${collection}"`) || appSource.includes(`collection="${collection}"`), `App.jsx is missing a visible renderer marker for ${collection}`);
 }
 
-for (const excludedClaim of ["BetterQuizzes", "CSWA", "Murder Drones Unreal Engine Prototype"]) {
+const cswaCredential = content.programCredentials.find((credential) => credential.id === "cswa");
+assert.deepEqual(
+  [cswaCredential?.program, cswaCredential?.issuer, cswaCredential?.date, cswaCredential?.href],
+  [
+    "Certified SOLIDWORKS Design Associate (CSWA)",
+    "Dassault Systèmes",
+    "July 15, 2026",
+    "https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url",
+  ],
+  "The verified CSWA credential record drifted.",
+);
+
+for (const excludedClaim of ["BetterQuizzes", "Murder Drones Unreal Engine Prototype"]) {
   assert.ok(!publicSerialized.includes(excludedClaim), `Unsupported claim was published: ${excludedClaim}`);
 }
 

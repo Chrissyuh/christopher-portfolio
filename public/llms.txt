@@ -50,6 +50,7 @@ This index points agents to concise, structured, and complete representations of
 
 - [Teen Engineering + Tech Center](https://chrisaheskett.vercel.app/#credential-tetc): Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation. 2026 A1 Excellence Award - Sole recipient. Recognized for consistently going beyond program requirements across CAD, robotics, and engineering work. (Organization: ExxonMobil Foundation; [Program site](https://tetc.org/))
 - [Stanford AI4ALL Certificate of Completion](https://chrisaheskett.vercel.app/#credential-stanford-ai4all): Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project. (Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies; Date: June 26, 2026; Certificate scan: available; [Program site](https://ai4all.spcs.stanford.edu/))
+- [Certified SOLIDWORKS Design Associate (CSWA)](https://chrisaheskett.vercel.app/#credential-cswa): Passed the CSWA exam, demonstrating core proficiency in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials. (Issuer: Dassault Systèmes; Date: July 15, 2026; Certificate scan: available; [Verify badge](https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url))
 
 ## Small Builds
 

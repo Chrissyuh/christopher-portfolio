@@ -1406,7 +1406,7 @@ function ProgramCredentialCard({ credential, index, meta }) {
   const isCredential = credential.entryType !== "program";
   const eyebrow = credential.id === "stanford-ai4all"
     ? "Stanford Pre-Collegiate Studies"
-    : isCredential ? "certificate of completion" : credential.issuer;
+    : credential.issuer;
   const detail = credential.date;
   const awardLabel = credential.awardTitle
     ? `${credential.awardDate} ${credential.awardTitle}${credential.awardDistinction ? ` · ${credential.awardDistinction}` : ""}.${credential.awardSummary ? ` ${credential.awardSummary}` : ""}`
@@ -2020,7 +2020,7 @@ function PortfolioPage({ content }) {
                 {meta.credentialsTitle || "Programs and credentials"}
               </h2>
             </div>
-            <div className="grid gap-2 sm:gap-4 md:grid-cols-2">
+            <div className="grid gap-2 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
               {list(content.programCredentials).map((credential, index) => (
                 <ProgramCredentialCard key={credential.id} credential={credential} index={index} meta={meta} />
               ))}

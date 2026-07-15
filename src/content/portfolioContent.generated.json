@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-13T06:37:07.094Z",
+  "updatedAt": "2026-07-15T07:12:49.108Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -456,6 +456,32 @@
       "awardSummary": "",
       "awardQuote": "",
       "awardQuoteAttribution": ""
+    },
+    {
+      "id": "cswa",
+      "entryType": "credential",
+      "program": "Certified SOLIDWORKS Design Associate (CSWA)",
+      "credential": "Certified SOLIDWORKS Design Associate (CSWA)",
+      "issuer": "Dassault Systèmes",
+      "date": "July 15, 2026",
+      "summary": "Passed the CSWA exam, demonstrating core proficiency in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials.",
+      "logoSrc": "/portfolio-media/credentials/cswa-badge.png",
+      "logoAlt": "Certified SOLIDWORKS Design Associate badge",
+      "logoHref": "https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url",
+      "scanSrc": "/portfolio-media/credentials/cswa-certificate.png",
+      "scanAlt": "SOLIDWORKS Design Associate certificate awarded to Christopher Heskett",
+      "scanCaption": "Certified SOLIDWORKS Design Associate, issued July 15, 2026",
+      "href": "https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url",
+      "hrefLabel": "Verify badge",
+      "accent": "blue",
+      "relatedProjectId": null,
+      "scanAvailable": true,
+      "awardTitle": "",
+      "awardDate": "",
+      "awardDistinction": "",
+      "awardSummary": "",
+      "awardQuote": "",
+      "awardQuoteAttribution": ""
     }
   ],
   "learningHighlights": [
@@ -583,7 +609,8 @@
         "vividgrasp-ai-vision-robotics-arm"
       ],
       "credentialIds": [
-        "tetc"
+        "tetc",
+        "cswa"
       ]
     },
     {

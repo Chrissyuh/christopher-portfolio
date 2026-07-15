@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import { buildVisualInventory } from "../src/content/visualInventory.js";
 
 const SITE_URL = "https://chrisaheskett.vercel.app";
 const contentUrl = new URL("../src/content/portfolioContent.generated.json", import.meta.url);
@@ -71,6 +72,24 @@ function mediaSummary(project) {
   return `Published media: ${published.length}${modelText}`;
 }
 
+function visualKindLabel(kind) {
+  if (kind === "interactive_3d_model") return "interactive 3D model";
+  if (kind === "certificate") return "certificate image";
+  return kind.replaceAll("_", " ");
+}
+
+function visualInventoryLine(visual) {
+  const status = visual.status === "planned" ? "planned placeholder" : visualKindLabel(visual.kind);
+  const caption = visual.caption && visual.caption !== visual.description ? ` Caption: ${visual.caption}.` : "";
+  const context = visual.context ? ` Context: ${visual.context}.` : "";
+  const source = visual.src ? ` ${markdownLink("Open asset", absoluteUrl(visual.src))}` : "";
+  return `${visual.owner} - ${status}: ${visual.description}.${caption}${context}${source}`;
+}
+
+function visualInventoryMarkdown(content) {
+  return markdownList(buildVisualInventory(content).map(visualInventoryLine));
+}
+
 function credentialDetails(credential) {
   const award = credential.awardTitle
     ? `${credential.awardDate} ${credential.awardTitle}${credential.awardDistinction ? ` - ${credential.awardDistinction}` : ""}. ${credential.awardSummary}${credential.awardQuote ? ` ${credential.awardQuoteAttribution || "Program staff"}: "${credential.awardQuote}"` : ""}`
@@ -130,6 +149,7 @@ function buildPortfolioJson(content) {
   return {
     ...content,
     toolMedia: toolMediaEnabled ? content.toolMedia : [],
+    visualInventory: buildVisualInventory(content),
     canonicalUrl: absoluteUrl("/"),
     routes: {
       portfolio: absoluteUrl("/"),
@@ -194,6 +214,10 @@ function buildLlmsTxt(content) {
         return `${markdownLink(project.title, absoluteUrl(`/#project-${project.id}`))}: ${description}`;
       }),
     ),
+    "",
+    "## Visual Descriptions",
+    "",
+    visualInventoryMarkdown(content),
     "",
     "## Academic Record",
     "",
@@ -302,6 +326,10 @@ function buildLlmsFullTxt(content) {
           .join("\n"),
       )
       .join("\n\n"),
+    "",
+    "## Visual Descriptions",
+    "",
+    visualInventoryMarkdown(content),
     "",
     "## Academics",
     "",

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { buildPortfolioStructuredData } from "../src/content/structuredData.js";
+import { buildVisualInventory } from "../src/content/visualInventory.js";
 
 const generatedUrl = new URL("../src/content/portfolioContent.generated.json", import.meta.url);
 const publicJsonUrl = new URL("../public/portfolio.json", import.meta.url);
@@ -67,11 +68,23 @@ content.fullRecord.forEach((section) => {
 const publicSerialized = JSON.stringify(publicContent);
 const markdownCombined = `${llms}\n${llmsFull}`;
 const structuredSerialized = JSON.stringify(buildPortfolioStructuredData(content));
+const visualInventory = buildVisualInventory(content);
 
 for (const claim of claims) {
   assert.ok(publicSerialized.includes(claim), `portfolio.json is missing material claim: ${claim}`);
   assert.ok(markdownCombined.includes(claim), `LLM Markdown is missing material claim: ${claim}`);
   assert.ok(structuredSerialized.includes(claim), `structured data is missing material claim: ${claim}`);
+}
+
+assert.deepEqual(publicContent.visualInventory, visualInventory, "portfolio.json visual inventory drifted from the source content.");
+for (const visual of visualInventory) {
+  assert.ok(visual.description, `Visual ${visual.id} is missing a text description.`);
+  assert.ok(llms.includes(visual.description), `llms.txt is missing visual description for ${visual.id}: ${visual.description}`);
+  assert.ok(llmsFull.includes(visual.description), `llms-full.txt is missing visual description for ${visual.id}: ${visual.description}`);
+  if (visual.caption) {
+    assert.ok(llms.includes(visual.caption), `llms.txt is missing visual caption for ${visual.id}: ${visual.caption}`);
+    assert.ok(llmsFull.includes(visual.caption), `llms-full.txt is missing visual caption for ${visual.id}: ${visual.caption}`);
+  }
 }
 
 const expectedFeaturedProjects = [

@@ -74,7 +74,7 @@ const defaultMeta = {
   recordDocumentTitle: "Experience | Christopher Heskett",
   navName: "Christopher Heskett",
   navSubtitle: "engineering portfolio",
-  heroEyebrow: "mechanical / electronics / software",
+  heroEyebrow: "Mechatronics - Mechanical, electronic, software, robotics",
   heroTitle: "Christopher Heskett",
   heroLead: "I make software, electronics, and mechanisms that work together.",
   heroIntro: "Current work includes a full-size pinball machine, an AI-vision robotics arm, a self-watering planter PCB, and a subpixel image editor.",

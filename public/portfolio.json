@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-15T07:12:49.108Z",
+  "updatedAt": "2026-07-15T09:06:50.582Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -522,6 +522,27 @@
           "caption": "Recurring check-ins with target and maximum gaps"
         }
       ]
+    },
+    {
+      "id": "vex-v5-drivetrain-prototype",
+      "title": "VEX Robotics Builds",
+      "href": null,
+      "sourceHref": null,
+      "logoSrc": "/portfolio-media/programs/tetc-logo.png",
+      "logoAlt": "ExxonMobil Foundation Teen Engineering and Tech Center logo",
+      "logoHref": "https://tetc.org/",
+      "type": "robotics builds",
+      "description": "VEX robotics builds exploring gearing, drivetrain layout, shaft spacing, and mechanical packaging.",
+      "media": [
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": null,
+          "posterSrc": null,
+          "alt": "VEX robotics builds photo needed",
+          "caption": "Add VEX robotics build photos"
+        }
+      ]
     }
   ],
   "microProjects": [
@@ -576,24 +597,6 @@
           "posterSrc": null,
           "alt": "TinyGPT training or output screenshot needed",
           "caption": "Add training or output screenshot"
-        }
-      ]
-    },
-    {
-      "id": "vex-v5-drivetrain-prototype",
-      "title": "VEX V5 Drivetrain Prototype",
-      "href": null,
-      "sourceHref": null,
-      "type": "robotics prototype",
-      "description": "Quick drivetrain prototype for gearing, shaft spacing, and packaging.",
-      "media": [
-        {
-          "id": "media-1",
-          "type": "photo",
-          "src": null,
-          "posterSrc": null,
-          "alt": "VEX V5 drivetrain prototype photo needed",
-          "caption": "Add drivetrain prototype photo"
         }
       ]
     }

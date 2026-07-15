@@ -103,13 +103,13 @@ Passed the CSWA exam, demonstrating core proficiency in SOLIDWORKS part modeling
 ## Smaller Projects
 
 - Check-ins - React / Vite web app: Stores recurring check-ins locally, tracks target and maximum gaps, marks work due or over max, and keeps progress history. Built with React, Vite, Framer Motion, and Tailwind CSS. ([project](https://check-ins-zeta.vercel.app/), [source](https://github.com/Chrissyuh/check-ins)). Published media: 1.
+- VEX Robotics Builds - robotics builds: VEX robotics builds exploring gearing, drivetrain layout, shaft spacing, and mechanical packaging. Published media: 0.
 
 ## Small Builds
 
 - MIDI Practice Tool - python / music: Small Python tool for soundfonts, pedals, controls, and keyboard practice. Published media: 0.
 - Desmos 3D Solar System - math visualization: 3D orbit scene built in Desmos to practice surfaces and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Published media: 0.
 - TinyGPT Experiments - machine learning: Small next-token model experiments for learning training vs. instruction behavior. Published media: 0.
-- VEX V5 Drivetrain Prototype - robotics prototype: Quick drivetrain prototype for gearing, shaft spacing, and packaging. Published media: 0.
 
 ## Skills
 

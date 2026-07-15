@@ -86,7 +86,7 @@ assert.equal(
   "Spring ISD dual-credit early-college program in partnership with Lone Star College.",
   "The SECA card must explain the dual-credit partnership.",
 );
-assert.equal(content.academics.find((item) => item.id === "course-load")?.value, "Academic results");
+assert.equal(content.academics.find((item) => item.id === "course-load")?.value, "Academic Results");
 assert.ok(!publicSerialized.includes("AP + dual credit"), "The coursework card must not present SECA's standard AP and dual-credit model as an individual distinction.");
 
 const expectedAcademicDetails = [

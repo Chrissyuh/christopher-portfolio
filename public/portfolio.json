@@ -276,7 +276,7 @@
     {
       "id": "course-load",
       "label": "Coursework",
-      "value": "Academic results",
+      "value": "Academic Results",
       "note": "AP exam scores, college grades, credit-by-examination scores, and accelerated math",
       "group": "",
       "format": "",

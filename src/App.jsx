@@ -1162,7 +1162,7 @@ function LearningHighlightCard({ item, index }) {
   return <AcademicCard item={item} index={index} />;
 }
 
-function AcademicDetailsDialog({ details, meta }) {
+function AcademicDetailsDialog({ details, meta, triggerLabel }) {
   const dialogRef = useRef(null);
   const triggerRef = useRef(null);
   const groupedDetails = details.reduce((groups, detail) => {
@@ -1190,10 +1190,10 @@ function AcademicDetailsDialog({ details, meta }) {
         aria-haspopup="dialog"
         aria-controls="academic-details-dialog"
         onClick={() => dialogRef.current?.showModal()}
-        className="mt-2 inline-flex items-center border-b border-[#244fd6] py-1 text-[10px] font-semibold text-slate-800 transition hover:text-[#244fd6] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:mt-4 sm:text-xs lg:mt-2"
+        className="group inline-flex items-center text-left text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 transition hover:text-[#244fd6] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em]"
       >
-        {meta.academicDetailsLabel || "Coursework & scores"}
-        <Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" />
+        <span className="border-b border-[#244fd6]/45 group-hover:border-[#244fd6]">{triggerLabel || "Academic Results"}</span>
+        <Icon name="arrowRight" className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:h-5 sm:w-5" />
       </button>
 
       <dialog
@@ -1261,7 +1261,7 @@ function AcademicDetailsDialog({ details, meta }) {
   );
 }
 
-function AcademicCard({ item, index, wide = false, children = null }) {
+function AcademicCard({ item, index, wide = false, valueAction = null }) {
   const isGoldHighlight = item.highlight === "gold";
 
   return (
@@ -1283,16 +1283,22 @@ function AcademicCard({ item, index, wide = false, children = null }) {
       {wide ? (
         <div className="flex flex-col lg:grid lg:grid-cols-[minmax(260px,280px)_minmax(0,1fr)] lg:grid-rows-[auto_auto_auto] lg:gap-x-8">
           <p className="order-1 font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-xs sm:tracking-[0.2em] lg:col-start-1 lg:row-start-1">{item.label}</p>
-          <p className="order-2 mt-1.5 text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:mt-3 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em] lg:col-start-1 lg:row-start-2">{item.value}</p>
+          {valueAction ? (
+            <div className="order-2 mt-1.5 sm:mt-3 lg:col-start-1 lg:row-start-2">{valueAction}</div>
+          ) : (
+            <p className="order-2 mt-1.5 text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:mt-3 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em] lg:col-start-1 lg:row-start-2">{item.value}</p>
+          )}
           {item.note && <p className="order-3 mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6 lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:mt-0">{item.note}</p>}
-          <div className="order-4 lg:col-start-1 lg:row-start-3">{children}</div>
         </div>
       ) : (
         <>
           <p className="font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-xs sm:tracking-[0.2em]">{item.label}</p>
-          <p className="mt-1.5 text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:mt-3 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em]">{item.value}</p>
+          {valueAction ? (
+            <div className="mt-1.5 sm:mt-3">{valueAction}</div>
+          ) : (
+            <p className="mt-1.5 text-base font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:mt-3 sm:text-2xl sm:leading-7 sm:tracking-[-0.03em]">{item.value}</p>
+          )}
           {item.note && <p className="mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{item.note}</p>}
-          {children}
         </>
       )}
     </motion.div>
@@ -2033,9 +2039,13 @@ function PortfolioPage({ content }) {
 
         <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-[0.7fr_0.7fr_1.6fr]">
           {list(content.academics).map((item, index) => (
-            <AcademicCard key={item.id} item={item} index={index} wide={item.id === "course-load"}>
-              {item.id === "course-load" && <AcademicDetailsDialog details={list(content.academicDetails)} meta={meta} />}
-            </AcademicCard>
+            <AcademicCard
+              key={item.id}
+              item={item}
+              index={index}
+              wide={item.id === "course-load"}
+              valueAction={item.id === "course-load" ? <AcademicDetailsDialog details={list(content.academicDetails)} meta={meta} triggerLabel={item.value} /> : null}
+            />
           ))}
         </div>
 

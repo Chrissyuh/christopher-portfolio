@@ -23,15 +23,13 @@ export function buildPortfolioStructuredData(content) {
   const personId = `${siteUrl("/")}#christopher-heskett`;
   const websiteId = `${siteUrl("/")}#website`;
   const projects = list(content.projects);
-  const smallProjects = list(content.smallProjects);
-  const microProjects = list(content.microProjects);
+  const moreWork = list(content.moreWork);
   const programCredentials = list(content.programCredentials);
   const issuedCredentials = programCredentials.filter((entry) => entry.entryType !== "program");
   const programEntries = programCredentials.filter((entry) => entry.entryType === "program");
   const academicDetails = list(content.academicDetails);
   const academics = list(content.academics);
   const activityItems = list(content.fullRecord).flatMap((section) => list(section.items));
-  const learningHighlights = list(content.learningHighlights);
   const awards = programCredentials.filter((entry) => entry.awardTitle).map((entry) =>
     `${entry.awardDate} ${entry.awardTitle}${entry.awardDistinction ? ` - ${entry.awardDistinction}` : ""}. ${entry.awardSummary}${entry.awardQuote ? ` ${entry.awardQuoteAttribution || "Program staff"}: "${entry.awardQuote}"` : ""}`,
   );
@@ -44,30 +42,22 @@ export function buildPortfolioStructuredData(content) {
       label: project.label,
       status: project.status,
       summary: project.summary,
-      role: project.role,
+      contribution: project.contribution,
       teamContext: project.teamContext,
       relatedProgramNote: project.relatedProgramNote,
       artifactLinks: project.artifactLinks,
       media: project.media,
     })),
-    ...smallProjects.map((project) => ({
+    ...moreWork.map((project) => ({
       id: `more-${project.id}`,
-      sectionUrl: siteUrl("/#smaller-projects"),
+      sectionUrl: siteUrl("/#more-work"),
       title: project.title,
       href: project.href,
       sourceHref: project.sourceHref,
       label: project.type,
+      status: project.status,
       summary: project.description,
-      media: project.media,
-    })),
-    ...microProjects.map((project) => ({
-      id: `small-${project.id}`,
-      sectionUrl: siteUrl("/#bench-notes"),
-      title: project.title,
-      href: project.href,
-      sourceHref: project.sourceHref,
-      label: project.type,
-      summary: project.description,
+      teamContext: project.context,
       media: project.media,
     })),
   ];
@@ -89,7 +79,6 @@ export function buildPortfolioStructuredData(content) {
           academicDetails.map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}.`).join(" "),
           awards.join(" "),
           activityItems.map((item) => `${item.title}: ${activityItemSummary(item)}`).join(" "),
-          learningHighlights.map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}.`).join(" "),
         ].filter(Boolean).join(" "),
         ...(awards.length > 0 ? { award: awards } : {}),
         ...(meta.heroImageSrc ? { image: siteUrl(meta.heroImageSrc) } : {}),
@@ -128,26 +117,14 @@ export function buildPortfolioStructuredData(content) {
       },
       {
         "@type": "ItemList",
-        "@id": `${siteUrl("/")}#more-projects`,
-        name: "More projects by Christopher Heskett",
-        url: siteUrl("/#smaller-projects"),
-        numberOfItems: smallProjects.length,
-        itemListElement: smallProjects.map((project, index) => ({
+        "@id": `${siteUrl("/")}#more-work`,
+        name: "More work by Christopher Heskett",
+        url: siteUrl("/#more-work"),
+        numberOfItems: moreWork.length,
+        itemListElement: moreWork.map((project, index) => ({
           "@type": "ListItem",
           position: index + 1,
           item: { "@id": `${siteUrl("/")}#project-more-${project.id}` },
-        })),
-      },
-      {
-        "@type": "ItemList",
-        "@id": `${siteUrl("/")}#small-projects`,
-        name: "Small builds by Christopher Heskett",
-        url: siteUrl("/#bench-notes"),
-        numberOfItems: microProjects.length,
-        itemListElement: microProjects.map((project, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          item: { "@id": `${siteUrl("/")}#project-small-${project.id}` },
         })),
       },
       ...creativeWorks.map((project) => ({
@@ -163,11 +140,11 @@ export function buildPortfolioStructuredData(content) {
         ...([project.teamContext, project.relatedProgramNote].filter(Boolean).length > 0
           ? { creditText: [project.teamContext, project.relatedProgramNote].filter(Boolean).join(" ") }
           : {}),
-        ...(project.role
+        ...(project.contribution
           ? {
               contributor: {
                 "@type": "Role",
-                roleName: project.role,
+                roleName: project.contribution,
                 contributor: { "@id": personId },
               },
             }

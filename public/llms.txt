@@ -13,10 +13,10 @@ This index points agents to concise, structured, and complete representations of
 
 ## Featured Projects
 
-- [Garden Party Pinball](https://chrisaheskett.vercel.app/#project-garden-party-pinball): Status: In progress. A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield. Role: I am building the cabinet, playfield systems, wiring, MPF configuration, and test setup. Published media: 2.
-- [VividGrasp AI-Vision Robotics Arm](https://chrisaheskett.vercel.app/#project-vividgrasp-ai-vision-robotics-arm): Status: Completed team project. A Stanford AI4ALL team project connecting SolidWorks CAD, STL export, URDF/PyBullet simulation, target input, and robotic-arm motion. Role: Head CAD designer; prepared URDF files and worked with a teammate on a physical prototype. ([source](https://github.com/LenekyRadish/VividGrasp)). Published media: 4.
-- [Smart Self-Watering Pot / Smart Planter PCB](https://chrisaheskett.vercel.app/#project-smart-self-watering-pot): Status: Prototype in progress. A plant-watering prototype involving moisture sensing, pump control, electronics packaging, enclosure planning, and PCB work. Role: I worked on the sensing and control concept, electronics packaging, PCB direction, and enclosure constraints. Published media: 4; interactive 3D models: 1.
-- [Subpix](https://chrisaheskett.vercel.app/#project-subpix): Status: Functional v1. An open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON data, exporting PNGs, and packaging for Windows. Role: Built the editor, file-format flow, export path, product site, and Windows packaging. ([Open app](https://subpix-editor.vercel.app/), [source](https://github.com/Chrissyuh/Subpix)). Published media: 2.
+- [Garden Party Pinball](https://chrisaheskett.vercel.app/#project-garden-party-pinball): Status: In progress. I'm building a full-size homebrew pinball machine around FAST control hardware and Mission Pinball Framework. I designed and assembled the cabinet, playfield mechanisms, control board, wiring, and game logic. The machine currently powers up with the playfield installed while I rework the cabinet fit and final geometry. Published media: 2.
+- [VividGrasp AI-Vision Robotics Arm](https://chrisaheskett.vercel.app/#project-vividgrasp-ai-vision-robotics-arm): Status: Completed team project. A ten-person Stanford AI4ALL project combining computer vision, inverse kinematics, and PyBullet simulation to move a robotic arm toward recognized objects. My contribution: I led CAD, modeled the arm in SolidWorks, prepared its URDF files, and worked with a teammate on a physical prototype. ([source](https://github.com/LenekyRadish/VividGrasp)). Published media: 4.
+- [Smart Self-Watering Pot / Smart Planter PCB](https://chrisaheskett.vercel.app/#project-smart-self-watering-pot): Status: Prototype in progress. I designed and assembled an ESP32-based controller for a self-watering planter. The fabricated PCB reads soil moisture, controls a water pump, and integrates display and physical input hardware. I also designed the planter, reservoir, and electronics layout in SolidWorks. Published media: 4; interactive 3D models: 1.
+- [Subpix](https://chrisaheskett.vercel.app/#project-subpix): Status: Functional v1. I built Subpix, an open-source desktop editor for drawing with individual RGB subpixels. It reads and validates .subpix JSON files, exports PNG images, and ships as a packaged Windows application built with Electron, React, TypeScript, and Vite. ([Open app](https://subpix-editor.vercel.app/), [source](https://github.com/Chrissyuh/Subpix)). Published media: 2.
 
 ## Visual Descriptions
 
@@ -39,10 +39,6 @@ This index points agents to concise, structured, and complete representations of
 - Subpix visual 2 poster - poster: Static poster for Subpix drawing demonstration with the grid hidden. Caption: Drawing with RGB subpixels. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/subpix/subpix-editor-grid-hidden.webp)
 - Check-ins visual 1 - image: Check-ins dashboard showing recurring work and study items with target and maximum gaps. Caption: Recurring check-ins with target and maximum gaps. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/check-ins/check-ins-overview.webp)
 - VEX Robotics Builds logo - logo: ExxonMobil Foundation Teen Engineering and Tech Center logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/programs/tetc-logo.png)
-- VEX Robotics Builds visual 1 - planned placeholder: VEX robotics builds photo needed. Caption: Add VEX robotics build photos.
-- MIDI Practice Tool visual 1 - planned placeholder: MIDI practice tool interface or keyboard setup photo needed. Caption: Add tool interface or keyboard setup photo.
-- Desmos 3D Solar System visual 1 - planned placeholder: Desmos 3D solar system scene screenshot needed. Caption: Add 3D scene screenshot.
-- TinyGPT Experiments visual 1 - planned placeholder: TinyGPT training or output screenshot needed. Caption: Add training or output screenshot.
 - Teen Engineering + Tech Center logo - logo: ExxonMobil Foundation Teen Engineering and Tech Center logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/programs/tetc-logo.png)
 - Stanford AI4ALL Certificate of Completion logo - logo: Stanford AI4ALL logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/vividgrasp/stanford-ai4all-logo.png)
 - Stanford AI4ALL Certificate of Completion document - certificate image: Stanford AI4ALL Certificate of Completion in Robotics awarded to Christopher Heskett. Caption: Stanford AI4ALL Certificate of Completion in Robotics, June 26, 2026. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/credentials/stanford-ai4all-certificate.jpg)
@@ -67,28 +63,25 @@ This index points agents to concise, structured, and complete representations of
 - Scouts BSA: First Class Scout.
 - Student Council: Member.
 - Debate: Reached JV finals. Achievements: CASE Debates tournament #4, 2025 - Third place; CASE Debates tournament #5, 2026 - Second place.
-- TETC 3D Printing Presentation: Presented slides, printed examples, and robotics applications.
-- Duolingo language practice: Maintains a public daily language-learning streak.
+- Duolingo streak: 1,744 days (~4.77 years). Public language-learning streak.
 - Spanish: AP Spanish Language coursework and continued practice.
-- French: Practice in pronunciation, listening, and sentence construction.
+- French: I practice pronunciation, listening, and sentence construction.
 - Latin: Foundational Latin study.
 
-## More Projects
+## More Work
 
-- [Check-ins](https://chrisaheskett.vercel.app/#smaller-projects): Stores recurring check-ins locally, tracks target and maximum gaps, marks work due or over max, and keeps progress history. Built with React, Vite, Framer Motion, and Tailwind CSS. ([project](https://check-ins-zeta.vercel.app/), [source](https://github.com/Chrissyuh/check-ins)). Published media: 1.
-- [VEX Robotics Builds](https://chrisaheskett.vercel.app/#smaller-projects): VEX robotics builds exploring gearing, drivetrain layout, shaft spacing, and mechanical packaging. Published media: 0.
+- [AgentDeck](https://chrisaheskett.vercel.app/#more-work): I built AgentDeck to turn an old phone or tablet into a dedicated touchscreen controller for AI coding agents. A lightweight desktop host serves the interface over the local network, allowing spare hardware to replace an expensive single-purpose control deck. Published media: 0.
+- [Check-ins](https://chrisaheskett.vercel.app/#more-work): I built Check-ins, a local-first web app for recurring work and study tasks. It tracks target and maximum gaps, flags items that are due or overdue, and keeps a completion history without requiring an account. ([project](https://check-ins-zeta.vercel.app/), [source](https://github.com/Chrissyuh/check-ins)). Published media: 1.
+- [VEX Robotics Builds](https://chrisaheskett.vercel.app/#more-work): I built VEX robots at TETC to practice gearing, drivetrain layout, shaft spacing, and mechanical packaging. Context: TETC program. Published media: 0.
+- [MIDI Practice Tool](https://chrisaheskett.vercel.app/#more-work): A small Python tool for keyboard practice, soundfonts, pedals, and control mapping. Published media: 0.
+- [Desmos 3D Solar System](https://chrisaheskett.vercel.app/#more-work): An interactive 3D orbit scene built in Desmos to experiment with surfaces, motion, and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Published media: 0.
+- [TinyGPT Experiments](https://chrisaheskett.vercel.app/#more-work): Small next-token-model experiments used to study training behavior and instruction behavior. Published media: 0.
 
 ## Programs And Credentials
 
-- [Teen Engineering + Tech Center](https://chrisaheskett.vercel.app/#credential-tetc): Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation. 2026 A1 Excellence Award - Sole recipient. Recognized for consistently going beyond program requirements across CAD, robotics, and engineering work. (Organization: ExxonMobil Foundation; [Program site](https://tetc.org/))
-- [Stanford AI4ALL Certificate of Completion](https://chrisaheskett.vercel.app/#credential-stanford-ai4all): Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project. (Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies; Date: June 26, 2026; Certificate scan: available; [Program site](https://ai4all.spcs.stanford.edu/))
-- [Certified SOLIDWORKS Design Associate (CSWA)](https://chrisaheskett.vercel.app/#credential-cswa): Passed the CSWA exam, demonstrating core proficiency in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials. (Issuer: Dassault Systèmes; Date: July 15, 2026; Certificate scan: available; [Verify badge](https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url))
-
-## Small Builds
-
-- [MIDI Practice Tool](https://chrisaheskett.vercel.app/#bench-notes): Small Python tool for soundfonts, pedals, controls, and keyboard practice. Published media: 0.
-- [Desmos 3D Solar System](https://chrisaheskett.vercel.app/#bench-notes): 3D orbit scene built in Desmos to practice surfaces and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Published media: 0.
-- [TinyGPT Experiments](https://chrisaheskett.vercel.app/#bench-notes): Small next-token model experiments for learning training vs. instruction behavior. Published media: 0.
+- [Teen Engineering + Tech Center](https://chrisaheskett.vercel.app/#credential-tetc): I attend a four-year after-school STEM program with engineering lessons, makerspace work, workplace tours, and college and career preparation. 2026 A1 Excellence Award - Sole recipient. The award recognized work beyond program requirements across CAD, robotics, and engineering projects. (Organization: ExxonMobil Foundation; [Program site](https://tetc.org/))
+- [Stanford AI4ALL Certificate of Completion](https://chrisaheskett.vercel.app/#credential-stanford-ai4all): Completed Stanford AI4ALL in Robotics through the ten-person VividGrasp project. (Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies; Date: June 26, 2026; Certificate scan: available; [Program site](https://ai4all.spcs.stanford.edu/))
+- [Certified SOLIDWORKS Design Associate (CSWA)](https://chrisaheskett.vercel.app/#credential-cswa): Passed the CSWA exam in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials. (Issuer: Dassault Systèmes; Date: July 15, 2026; Certificate scan: available; [Verify badge](https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url))
 
 ## Tools
 
@@ -96,10 +89,6 @@ This index points agents to concise, structured, and complete representations of
 - Electronics (personal / hobby work): FAST Pinball, Arduino / ESP32, KiCad, Sensor wiring, Soldering, Pump / motor control
 - Software (personal / hobby work): Mission Pinball Framework, Python, PyBullet, Electron, React, TypeScript, Vite
 - TETC lessons: SolidWorks, 3D printing, Bambu Studio, Soldering, Python, Laser cutting, VEX Robotics
-
-## Ongoing Learning
-
-- Duolingo streak: 1,744 (~4.77 years)
 
 ## Contact
 

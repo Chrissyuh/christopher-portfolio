@@ -120,8 +120,13 @@ function recordItemSummary(item) {
   return [item.detail, achievementText].filter(Boolean).join(" ");
 }
 
-function roleSummary(project) {
-  return project.role ? ` Role: ${project.role}` : "";
+function contributionSummary(project) {
+  return project.contribution ? ` My contribution: ${project.contribution}` : "";
+}
+
+function moreWorkContext(project) {
+  const details = [project.status, project.context].filter(Boolean);
+  return details.length > 0 ? ` Context: ${details.join("; ")}.` : "";
 }
 
 function appendSentence(text, suffix) {
@@ -162,10 +167,9 @@ function buildPortfolioJson(content) {
       academicDetails: absoluteUrl("/#academics"),
       programCredentials: absoluteUrl("/#academics"),
       fullRecord: absoluteUrl("/record"),
-      smallProjects: absoluteUrl("/#smaller-projects"),
-      microProjects: absoluteUrl("/#bench-notes"),
+      moreWork: absoluteUrl("/#more-work"),
       skills: absoluteUrl("/#bench"),
-      learningHighlights: absoluteUrl("/#learning"),
+      learningHighlights: absoluteUrl("/#academics"),
     },
     agentFiles: {
       llms: absoluteUrl("/llms.txt"),
@@ -210,7 +214,7 @@ function buildLlmsTxt(content) {
       list(content.projects).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        const description = appendSentence(`Status: ${project.status}. ${project.summary}${roleSummary(project)}${linkText}`, `${mediaSummary(project)}.`);
+        const description = appendSentence(`Status: ${project.status}. ${project.summary}${contributionSummary(project)}${linkText}`, `${mediaSummary(project)}.`);
         return `${markdownLink(project.title, absoluteUrl(`/#project-${project.id}`))}: ${description}`;
       }),
     ),
@@ -236,14 +240,14 @@ function buildLlmsTxt(content) {
         .map((item) => `${item.title}: ${recordItemSummary(item)}`),
     ),
     "",
-    "## More Projects",
+    "## More Work",
     "",
     markdownList(
-      list(content.smallProjects).map((project) => {
+      list(content.moreWork).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        const description = appendSentence(`${project.description}${linkText}`, `${mediaSummary(project)}.`);
-        return `${markdownLink(project.title, absoluteUrl("/#smaller-projects"))}: ${description}`;
+        const description = appendSentence(`${project.description}${moreWorkContext(project)}${linkText}`, `${mediaSummary(project)}.`);
+        return `${markdownLink(project.title, absoluteUrl("/#more-work"))}: ${description}`;
       }),
     ),
     "",
@@ -256,26 +260,9 @@ function buildLlmsTxt(content) {
       ),
     ),
     "",
-    "## Small Builds",
-    "",
-    markdownList(
-      list(content.microProjects).map((project) => {
-        const links = projectLinks(project);
-        const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        const description = appendSentence(`${project.description}${linkText}`, `${mediaSummary(project)}.`);
-        return `${markdownLink(project.title, absoluteUrl("/#bench-notes"))}: ${description}`;
-      }),
-    ),
-    "",
     "## Tools",
     "",
     markdownList(groupedSkills(content.skills).map((group) => `${group.category}${group.context ? ` (${group.context})` : ""}: ${group.skills.map((skill) => skill.name).join(", ")}`)),
-    "",
-    "## Ongoing Learning",
-    "",
-    markdownList(
-      list(content.learningHighlights).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
-    ),
     "",
     "## Contact",
     "",
@@ -315,7 +302,7 @@ function buildLlmsFullTxt(content) {
                 .map((link) => `${link.label} (${link.type}): ${link.href}`)
                 .join("; ")}`
             : "",
-          project.role ? `My role: ${project.role}` : "",
+          project.contribution ? `My contribution: ${project.contribution}` : "",
           project.logoHref ? `Related program/logo link: ${project.logoHref}` : "",
           project.relatedProgramNote ? `Related program context: ${project.relatedProgramNote}` : "",
           "",
@@ -375,29 +362,13 @@ function buildLlmsFullTxt(content) {
       )
       .join("\n\n"),
     "",
-    "## Learning Highlights",
+    "## More Work",
     "",
     markdownList(
-      list(content.learningHighlights).map((item) => `${item.label}: ${item.value}${item.note ? ` (${item.note})` : ""}`),
-    ),
-    "",
-    "## Smaller Projects",
-    "",
-    markdownList(
-      list(content.smallProjects).map((project) => {
+      list(content.moreWork).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        return appendSentence(`${project.title} - ${project.type}: ${project.description}${linkText}`, `${mediaSummary(project)}.`);
-      }),
-    ),
-    "",
-    "## Small Builds",
-    "",
-    markdownList(
-      list(content.microProjects).map((project) => {
-        const links = projectLinks(project);
-        const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        return appendSentence(`${project.title} - ${project.type}: ${project.description}${linkText}`, `${mediaSummary(project)}.`);
+        return appendSentence(`${project.title} - ${project.presentationSize} - ${project.type}: ${project.description}${moreWorkContext(project)}${linkText}`, `${mediaSummary(project)}.`);
       }),
     ),
     "",

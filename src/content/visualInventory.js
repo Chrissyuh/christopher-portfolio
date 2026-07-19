@@ -103,8 +103,7 @@ export function buildVisualInventory(content) {
   }
 
   addProjectVisuals("projects", content.projects);
-  addProjectVisuals("smallProjects", content.smallProjects);
-  addProjectVisuals("microProjects", content.microProjects);
+  addProjectVisuals("moreWork", content.moreWork);
 
   for (const collectionName of ["academics", "academicDetails", "learningHighlights"]) {
     list(content[collectionName]).forEach((item) => {

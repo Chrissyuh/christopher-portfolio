@@ -7,14 +7,13 @@ The deployed site currently uses `src/content/portfolioContent.generated.json`. 
 Import the CSV files from `docs/google-sheet-template/` into one public Google Sheet. Keep each file name as the tab name and preserve its headers.
 
 - `Meta`: site labels, titles, links, school context, and optional hero-image fields. Leave `heroImageSrc`, `heroImageMobileSrc`, and `heroImageAlt` blank for the photo-free masthead; when publishing a photo, provide accurate alt text and use `heroImagePosition` to control its crop.
-- `MainProjects`: featured-project status, summary, role, links, logo, and media.
+- `MainProjects`: featured-project status, summary, optional collaborative contribution, links, logo, and media.
 - `ProjectArtifactLinks`: additional public project evidence links.
 - `Academics`: GPA, rank, and coursework cards.
 - `AcademicDetails`: grouped AP exam scores, college-credit grades, Credit by Examination scores, and math progression shown in the inline coursework disclosure and full record. Allowed `format` values are `ap-score`, `grade`, and `text`.
 - `ProgramCredentials`: programs, credentials, logos, links, and certificate scans.
-- `LearningHighlights`: non-academic learning statistics such as Duolingo.
-- `SmallProjects`: additional project cards.
-- `MicroProjects`: image-first small-build tiles.
+- `LearningHighlights`: non-academic learning statistics such as Duolingo, rendered with related activities rather than as a standalone section.
+- `MoreWork`: supporting projects with an explicit `presentation_size` of `standard` or `compact`. Media is optional and absent media does not render a placeholder.
 - `Skills`: project-backed skills grouped by category.
 - `SkillProjects`: validated links between a skill and either a featured project or program credential.
 - `ToolMedia`: project-affiliated and independent tool-work screenshots.
@@ -22,7 +21,7 @@ Import the CSV files from `docs/google-sheet-template/` into one public Google S
 - `FullRecordItems`: structured Experience entries, with optional `achievement_1` through `achievement_4` labels for compact accomplishment badges.
 - `NavLinks`: homepage navigation links.
 
-Allowed project accents are `blue`, `teal`, `amber`, and `clay`. Allowed media types are `photo`, `video`, and `model`. A published `model` also requires its matching `media_N_poster_src`; mobile, reduced-data, reduced-motion, and unsupported browsers use that poster instead of loading 3D. Every project must contain at least one media slot; a blank source renders the subdued documentation-needed state.
+Allowed project accents are `blue`, `teal`, `amber`, and `clay`. Allowed media types are `photo`, `video`, and `model`. A published `model` also requires its matching `media_N_poster_src`; mobile, reduced-data, reduced-motion, and unsupported browsers use that poster instead of loading 3D. Featured projects must contain at least one media slot. `MoreWork` entries may omit media entirely; blank media fields are not rendered publicly.
 
 ## Publish And Configure
 

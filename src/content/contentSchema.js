@@ -6,8 +6,7 @@ export const sheetTabNames = [
   "AcademicDetails",
   "ProgramCredentials",
   "LearningHighlights",
-  "SmallProjects",
-  "MicroProjects",
+  "MoreWork",
   "Skills",
   "SkillProjects",
   "ToolMedia",
@@ -27,6 +26,8 @@ export const allowedProgramCredentialTypes = ["program", "credential"];
 export const allowedToolMediaContexts = ["project", "independent"];
 
 export const allowedAcademicDetailFormats = ["ap-score", "grade", "text"];
+
+export const allowedMoreWorkSizes = ["standard", "compact"];
 
 const mediaSlotCount = 8;
 
@@ -60,8 +61,7 @@ const requiredFields = {
   AcademicDetails: ["id", "group", "format", "label", "value"],
   ProgramCredentials: ["id", "entry_type", "program", "summary", "accent"],
   LearningHighlights: ["id", "label", "value"],
-  SmallProjects: ["id", "title", "type", "description"],
-  MicroProjects: ["id", "title", "type", "description"],
+  MoreWork: ["id", "presentation_size", "title", "type", "description"],
   Skills: ["id", "category", "name"],
   SkillProjects: ["id", "skill_id"],
   ToolMedia: ["id", "skill_id", "title", "type", "context"],
@@ -103,15 +103,13 @@ const defaultMeta = {
   academicSchoolRankSummary: "#9 Houston metro, #44 Texas, #326 national.",
   academicSchoolRankSourceHref: "https://seca.springisd.org/o/seca/article/2369574",
   academicSchoolRankSourceLabel: "Ranking details",
-  smallerProjectsTitle: "More projects",
-  microProjectsTitle: "Small builds",
-  microProjectsOpenLabel: "Open",
-  microProjectsSourceLabel: "Source",
+  moreWorkTitle: "More work",
+  moreWorkOpenLabel: "Open",
+  moreWorkSourceLabel: "Source",
   skillSystemTitle: "Tools",
   toolMediaTitle: "CAD work",
   toolMediaSubtitle: "Project work and independent practice.",
   toolMediaEnabled: "false",
-  learningTitle: "Ongoing learning",
   recordTitle: "Experience and activities",
   contactTitle: "Contact Christopher",
   contactText: "Call, text, email, or view my work on GitHub.",
@@ -124,11 +122,10 @@ const defaultMeta = {
   resumeHref: "",
   resumeLabel: "Resume",
   footerName: "Christopher Heskett",
-  projectRoleLabel: "role",
+  projectContributionLabel: "My contribution",
   projectArtifactLinksLabel: "links",
   projectOpenLabel: "Open project",
   projectSourceLabel: "Source",
-  mediaPlaceholderLabel: "needed",
   mediaSlotLabel: "media slot",
   viewRecordLabel: "Experience",
   backPortfolioLabel: "Back to portfolio",
@@ -255,7 +252,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       accent,
       summary: text(row.summary),
       teamContext: text(row.team_context),
-      role: text(row.role),
+      contribution: text(row.contribution),
       bestLinkLabel: text(row.best_link_label),
       logoSrc: hrefOrNull(row.logo_src),
       logoAlt: text(row.logo_alt),
@@ -290,16 +287,15 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     });
   }
 
-  const smallProjects = simpleRows("SmallProjects", (row) => {
+  const moreWork = simpleRows("MoreWork", (row) => {
     const id = text(row.id);
-    const media = compactMediaFields(row, errors, "SmallProjects", id);
-
-    if (media.length === 0) {
-      errors.push(`SmallProjects row "${id}" must include at least one media slot.`);
-    }
+    const presentationSize = text(row.presentation_size);
+    const media = compactMediaFields(row, errors, "MoreWork", id);
+    requireKnownValue(errors, "MoreWork", id, "presentation_size", presentationSize, allowedMoreWorkSizes);
 
     return {
       id,
+      presentationSize,
       title: text(row.title),
       href: hrefOrNull(row.href),
       sourceHref: hrefOrNull(row.source_href),
@@ -307,25 +303,8 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       logoAlt: text(row.logo_alt),
       logoHref: hrefOrNull(row.logo_href),
       type: text(row.type),
-      description: text(row.description),
-      media,
-    };
-  });
-
-  const microProjects = simpleRows("MicroProjects", (row) => {
-    const id = text(row.id);
-    const media = compactMediaFields(row, errors, "MicroProjects", id);
-
-    if (media.length === 0) {
-      errors.push(`MicroProjects row "${id}" must include at least one media slot.`);
-    }
-
-    return {
-      id,
-      title: text(row.title),
-      href: hrefOrNull(row.href),
-      sourceHref: hrefOrNull(row.source_href),
-      type: text(row.type),
+      status: text(row.status),
+      context: text(row.context),
       description: text(row.description),
       media,
     };
@@ -536,6 +515,21 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     });
   }
 
+  const learningRecordSection = fullRecordById.get("languages-learning");
+  if (learningRecordSection) {
+    learningRecordSection.items.unshift(
+      ...learningHighlights.map((item) => ({
+        id: item.id,
+        title: item.label,
+        date: "",
+        detail: `${item.value} days${item.note ? ` (${item.note})` : ""}. Public language-learning streak.`,
+        achievements: [],
+        href: item.href,
+        hrefLabel: item.hrefLabel,
+      })),
+    );
+  }
+
   if (errors.length > 0) {
     throw new Error(`Portfolio content validation failed:\n${errors.join("\n")}`);
   }
@@ -550,8 +544,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     academicDetails,
     programCredentials,
     learningHighlights,
-    smallProjects,
-    microProjects,
+    moreWork,
     skills,
     toolMedia,
     fullRecord: fullRecordSections,

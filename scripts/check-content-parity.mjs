@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { buildPortfolioStructuredData } from "../src/content/structuredData.js";
+import { buildStaticSummary } from "../src/content/staticSummary.js";
 import { buildVisualInventory } from "../src/content/visualInventory.js";
 
 const generatedUrl = new URL("../src/content/portfolioContent.generated.json", import.meta.url);
@@ -39,7 +40,7 @@ content.projects.forEach((project) => add(
   project.status,
   project.teamContext,
   project.summary,
-  project.role,
+  project.contribution,
   project.state,
   project.relatedProgramNote,
   project.proofAvailable,
@@ -63,8 +64,7 @@ content.programCredentials.forEach((credential) => add(
   credential.awardQuoteAttribution,
 ));
 addStats(content.learningHighlights);
-content.smallProjects.forEach((project) => add(project.title, project.type, project.description));
-content.microProjects.forEach((project) => add(project.title, project.type, project.description));
+content.moreWork.forEach((project) => add(project.title, project.type, project.status, project.context, project.description));
 content.skills.forEach((skill) => add(skill.name));
 content.fullRecord.forEach((section) => {
   section.items.forEach((item) => add(item.title, item.date, item.detail, item.achievements));
@@ -73,12 +73,21 @@ content.fullRecord.forEach((section) => {
 const publicSerialized = JSON.stringify(publicContent);
 const markdownCombined = `${llms}\n${llmsFull}`;
 const structuredSerialized = JSON.stringify(buildPortfolioStructuredData(content));
+const staticSummaryText = buildStaticSummary(content)
+  .replace(/<[^>]*>/g, " ")
+  .replaceAll("&amp;", "&")
+  .replaceAll("&lt;", "<")
+  .replaceAll("&gt;", ">")
+  .replaceAll("&quot;", '"')
+  .replaceAll("&#39;", "'")
+  .replace(/\s+/g, " ");
 const visualInventory = buildVisualInventory(content);
 
 for (const claim of claims) {
   assert.ok(publicSerialized.includes(claim), `portfolio.json is missing material claim: ${claim}`);
   assert.ok(markdownCombined.includes(claim), `LLM Markdown is missing material claim: ${claim}`);
   assert.ok(structuredSerialized.includes(claim), `structured data is missing material claim: ${claim}`);
+  assert.ok(staticSummaryText.includes(claim), `static HTML summary is missing material claim: ${claim}`);
 }
 
 assert.deepEqual(publicContent.visualInventory, visualInventory, "portfolio.json visual inventory drifted from the source content.");
@@ -135,7 +144,30 @@ assert.ok(indexHtml.includes('id="portfolio-boot-shell"'), "The document must pr
 assert.ok(indexHtml.includes(".js #portfolio-static-fallback { display: none; }"), "JavaScript loads must not paint the raw static fallback.");
 const smartPlanter = content.projects.find((project) => project.id === "smart-self-watering-pot");
 assert.equal(smartPlanter?.logoCredentialId, "tetc", "The Smart Planter TETC block must link to the TETC credential.");
-assert.ok(smartPlanter?.relatedProgramNote?.startsWith("Well... kinda."), "The Smart Planter must explain its TETC connection.");
+assert.equal(smartPlanter?.relatedProgramNote, "Coach Taylor challenged me to start this project during TETC.", "The Smart Planter must explain its TETC connection directly.");
+
+assert.ok(content.projects.every((project) => !("role" in project)), "Featured project records must not retain the old role field.");
+assert.deepEqual(
+  content.projects.filter((project) => project.contribution).map((project) => project.id),
+  ["vividgrasp-ai-vision-robotics-arm"],
+  "Only the collaborative VividGrasp project should publish a contribution field.",
+);
+assert.deepEqual(
+  content.moreWork.map((project) => [project.id, project.presentationSize]),
+  [
+    ["agentdeck", "standard"],
+    ["check-ins", "standard"],
+    ["vex-robotics-builds", "standard"],
+    ["midi-practice-tool", "compact"],
+    ["desmos-3d-solar-system", "compact"],
+    ["tinygpt-experiments", "compact"],
+  ],
+  "More work ordering or presentation sizes drifted.",
+);
+assert.ok(!content.moreWork.some((project) => (project.media ?? []).some((media) => !media.src)), "More work must not publish empty media records.");
+assert.ok(!publicSerialized.includes("TETC 3D Printing Presentation"), "The TETC presentation must not appear in curated public content.");
+assert.ok(!staticSummaryText.includes("Ongoing learning"), "The static HTML summary must not restore the removed standalone learning section.");
+assert.ok(!staticSummaryText.includes("More projects") && !staticSummaryText.includes("Small builds"), "The static HTML summary must use the unified More work section.");
 
 const requiredHumanCollections = [
   "meta",
@@ -144,8 +176,7 @@ const requiredHumanCollections = [
   "academicDetails",
   "programCredentials",
   "fullRecord",
-  "smallProjects",
-  "microProjects",
+  "moreWork",
   "skills",
   "learningHighlights",
 ];
@@ -167,7 +198,22 @@ assert.deepEqual(
   "The verified CSWA credential record drifted.",
 );
 
-for (const excludedClaim of ["BetterQuizzes", "Murder Drones Unreal Engine Prototype"]) {
+for (const excludedClaim of [
+  "BetterQuizzes",
+  "Murder Drones Unreal Engine Prototype",
+  "VEX LiDAR peripheral",
+  "Blind Orbit",
+  "TinyTime",
+  "Axis arm",
+  "Wire recorder",
+  "Study Arcade",
+  "Paired-game PCB",
+  "CarBoard",
+  "Resume Critic",
+  "Diagnostic breadboard redesign",
+  "SpringHack",
+  "TE+TH hackathon",
+]) {
   assert.ok(!publicSerialized.includes(excludedClaim), `Unsupported claim was published: ${excludedClaim}`);
 }
 

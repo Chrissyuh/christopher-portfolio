@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-15T10:07:39.448Z",
+  "updatedAt": "2026-07-19T14:05:19.818Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -35,15 +35,13 @@
     "academicSchoolRankSummary": "#9 Houston metro, #44 Texas, #326 national.",
     "academicSchoolRankSourceHref": "https://seca.springisd.org/o/seca/article/2369574",
     "academicSchoolRankSourceLabel": "Ranking details",
-    "smallerProjectsTitle": "More projects",
-    "microProjectsTitle": "Small builds",
-    "microProjectsOpenLabel": "Open",
-    "microProjectsSourceLabel": "Source",
+    "moreWorkTitle": "More work",
+    "moreWorkOpenLabel": "Open",
+    "moreWorkSourceLabel": "Source",
     "skillSystemTitle": "Tools",
     "toolMediaTitle": "CAD work",
     "toolMediaSubtitle": "Project work and independent practice.",
     "toolMediaEnabled": "false",
-    "learningTitle": "Ongoing learning",
     "recordTitle": "Experience and activities",
     "contactTitle": "Contact Christopher",
     "contactText": "Call, text, email, or view my work on GitHub.",
@@ -56,11 +54,10 @@
     "resumeHref": "",
     "resumeLabel": "Resume",
     "footerName": "Christopher Heskett",
-    "projectRoleLabel": "My role",
+    "projectContributionLabel": "My contribution",
     "projectArtifactLinksLabel": "Links",
     "projectOpenLabel": "Open project",
     "projectSourceLabel": "Source",
-    "mediaPlaceholderLabel": "needed",
     "mediaSlotLabel": "media slot",
     "viewRecordLabel": "Experience",
     "backPortfolioLabel": "Back to portfolio"
@@ -74,9 +71,9 @@
       "label": "pinball machine",
       "status": "In progress",
       "accent": "blue",
-      "summary": "A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield.",
-      "teamContext": "Solo",
-      "role": "I am building the cabinet, playfield systems, wiring, MPF configuration, and test setup.",
+      "summary": "I'm building a full-size homebrew pinball machine around FAST control hardware and Mission Pinball Framework. I designed and assembled the cabinet, playfield mechanisms, control board, wiring, and game logic. The machine currently powers up with the playfield installed while I rework the cabinet fit and final geometry.",
+      "teamContext": "Solo build",
+      "contribution": "",
       "bestLinkLabel": "",
       "logoSrc": null,
       "logoAlt": "",
@@ -111,9 +108,9 @@
       "label": "robotics simulation",
       "status": "Completed team project",
       "accent": "amber",
-      "summary": "A Stanford AI4ALL team project connecting SolidWorks CAD, STL export, URDF/PyBullet simulation, target input, and robotic-arm motion.",
+      "summary": "A ten-person Stanford AI4ALL project combining computer vision, inverse kinematics, and PyBullet simulation to move a robotic arm toward recognized objects.",
       "teamContext": "Team of 10, Stanford AI4ALL",
-      "role": "Head CAD designer; prepared URDF files and worked with a teammate on a physical prototype.",
+      "contribution": "I led CAD, modeled the arm in SolidWorks, prepared its URDF files, and worked with a teammate on a physical prototype.",
       "bestLinkLabel": "Open source",
       "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
       "logoAlt": "Stanford AI4ALL logo",
@@ -164,15 +161,15 @@
       "label": "plant-watering prototype",
       "status": "Prototype in progress",
       "accent": "teal",
-      "summary": "A plant-watering prototype involving moisture sensing, pump control, electronics packaging, enclosure planning, and PCB work.",
-      "teamContext": "Solo",
-      "role": "I worked on the sensing and control concept, electronics packaging, PCB direction, and enclosure constraints.",
+      "summary": "I designed and assembled an ESP32-based controller for a self-watering planter. The fabricated PCB reads soil moisture, controls a water pump, and integrates display and physical input hardware. I also designed the planter, reservoir, and electronics layout in SolidWorks.",
+      "teamContext": "Solo prototype",
+      "contribution": "",
       "bestLinkLabel": "",
       "logoSrc": "/portfolio-media/programs/tetc-logo.png",
       "logoAlt": "ExxonMobil Foundation Teen Engineering and Tech Center logo",
       "logoHref": "https://tetc.org/",
       "logoCredentialId": "tetc",
-      "relatedProgramNote": "Well... kinda. Coach Taylor, my ninth grade coach at the TETC challenged me to make this, so while it wasn't a lesson, it has a connection to TETC.",
+      "relatedProgramNote": "Coach Taylor challenged me to start this project during TETC.",
       "artifactLinks": [],
       "media": [
         {
@@ -217,9 +214,9 @@
       "label": "desktop app",
       "status": "Functional v1",
       "accent": "clay",
-      "summary": "An open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON data, exporting PNGs, and packaging for Windows.",
-      "teamContext": "Solo",
-      "role": "Built the editor, file-format flow, export path, product site, and Windows packaging.",
+      "summary": "I built Subpix, an open-source desktop editor for drawing with individual RGB subpixels. It reads and validates .subpix JSON files, exports PNG images, and ships as a packaged Windows application built with Electron, React, TypeScript, and Vite.",
+      "teamContext": "Solo software project",
+      "contribution": "",
       "bestLinkLabel": "Open app",
       "logoSrc": null,
       "logoAlt": "",
@@ -419,7 +416,7 @@
       "credential": "",
       "issuer": "ExxonMobil Foundation",
       "date": "",
-      "summary": "Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation.",
+      "summary": "I attend a four-year after-school STEM program with engineering lessons, makerspace work, workplace tours, and college and career preparation.",
       "logoSrc": "/portfolio-media/programs/tetc-logo.png",
       "logoAlt": "ExxonMobil Foundation Teen Engineering and Tech Center logo",
       "logoHref": "https://tetc.org/",
@@ -434,7 +431,7 @@
       "awardTitle": "A1 Excellence Award",
       "awardDate": "2026",
       "awardDistinction": "Sole recipient",
-      "awardSummary": "Recognized for consistently going beyond program requirements across CAD, robotics, and engineering work.",
+      "awardSummary": "The award recognized work beyond program requirements across CAD, robotics, and engineering projects.",
       "awardQuote": "",
       "awardQuoteAttribution": ""
     },
@@ -445,7 +442,7 @@
       "credential": "Stanford AI4ALL Certificate of Completion",
       "issuer": "Stanford AI4ALL and Stanford Pre-Collegiate Studies",
       "date": "June 26, 2026",
-      "summary": "Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project.",
+      "summary": "Completed Stanford AI4ALL in Robotics through the ten-person VividGrasp project.",
       "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
       "logoAlt": "Stanford AI4ALL logo",
       "logoHref": "https://ai4all.spcs.stanford.edu/",
@@ -471,7 +468,7 @@
       "credential": "Certified SOLIDWORKS Design Associate (CSWA)",
       "issuer": "Dassault Systèmes",
       "date": "July 15, 2026",
-      "summary": "Passed the CSWA exam, demonstrating core proficiency in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials.",
+      "summary": "Passed the CSWA exam in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials.",
       "logoSrc": "/portfolio-media/credentials/cswa-badge.png",
       "logoAlt": "Certified SOLIDWORKS Design Associate badge",
       "logoHref": "https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url",
@@ -503,15 +500,31 @@
       "assetSrc": null,
       "assetAlt": "",
       "href": "https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr",
-      "hrefLabel": "Add friend",
+      "hrefLabel": "Duolingo profile",
       "icon": "flame",
       "dynamicSource": "duolingo",
       "username": "ChristopherHmm"
     }
   ],
-  "smallProjects": [
+  "moreWork": [
+    {
+      "id": "agentdeck",
+      "presentationSize": "standard",
+      "title": "AgentDeck",
+      "href": null,
+      "sourceHref": null,
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
+      "type": "local-network controller",
+      "status": "",
+      "context": "",
+      "description": "I built AgentDeck to turn an old phone or tablet into a dedicated touchscreen controller for AI coding agents. A lightweight desktop host serves the interface over the local network, allowing spare hardware to replace an expensive single-purpose control deck.",
+      "media": []
+    },
     {
       "id": "check-ins",
+      "presentationSize": "standard",
       "title": "Check-ins",
       "href": "https://check-ins-zeta.vercel.app/",
       "sourceHref": "https://github.com/Chrissyuh/check-ins",
@@ -519,7 +532,9 @@
       "logoAlt": "",
       "logoHref": null,
       "type": "React / Vite web app",
-      "description": "Stores recurring check-ins locally, tracks target and maximum gaps, marks work due or over max, and keeps progress history. Built with React, Vite, Framer Motion, and Tailwind CSS.",
+      "status": "",
+      "context": "",
+      "description": "I built Check-ins, a local-first web app for recurring work and study tasks. It tracks target and maximum gaps, flags items that are due or overdue, and keeps a completion history without requiring an account.",
       "media": [
         {
           "id": "media-1",
@@ -532,81 +547,64 @@
       ]
     },
     {
-      "id": "vex-v5-drivetrain-prototype",
+      "id": "vex-robotics-builds",
+      "presentationSize": "standard",
       "title": "VEX Robotics Builds",
       "href": null,
       "sourceHref": null,
       "logoSrc": "/portfolio-media/programs/tetc-logo.png",
       "logoAlt": "ExxonMobil Foundation Teen Engineering and Tech Center logo",
       "logoHref": "https://tetc.org/",
-      "type": "robotics builds",
-      "description": "VEX robotics builds exploring gearing, drivetrain layout, shaft spacing, and mechanical packaging.",
-      "media": [
-        {
-          "id": "media-1",
-          "type": "photo",
-          "src": null,
-          "posterSrc": null,
-          "alt": "VEX robotics builds photo needed",
-          "caption": "Add VEX robotics build photos"
-        }
-      ]
-    }
-  ],
-  "microProjects": [
+      "type": "TETC robotics builds",
+      "status": "",
+      "context": "TETC program",
+      "description": "I built VEX robots at TETC to practice gearing, drivetrain layout, shaft spacing, and mechanical packaging.",
+      "media": []
+    },
     {
       "id": "midi-practice-tool",
+      "presentationSize": "compact",
       "title": "MIDI Practice Tool",
       "href": null,
       "sourceHref": null,
-      "type": "python / music",
-      "description": "Small Python tool for soundfonts, pedals, controls, and keyboard practice.",
-      "media": [
-        {
-          "id": "media-1",
-          "type": "photo",
-          "src": null,
-          "posterSrc": null,
-          "alt": "MIDI practice tool interface or keyboard setup photo needed",
-          "caption": "Add tool interface or keyboard setup photo"
-        }
-      ]
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
+      "type": "Python / music",
+      "status": "",
+      "context": "",
+      "description": "A small Python tool for keyboard practice, soundfonts, pedals, and control mapping.",
+      "media": []
     },
     {
       "id": "desmos-3d-solar-system",
+      "presentationSize": "compact",
       "title": "Desmos 3D Solar System",
       "href": "https://www.desmos.com/3d/qcjp33t4ij",
       "sourceHref": null,
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "type": "math visualization",
-      "description": "3D orbit scene built in Desmos to practice surfaces and performance limits.",
-      "media": [
-        {
-          "id": "media-1",
-          "type": "photo",
-          "src": null,
-          "posterSrc": null,
-          "alt": "Desmos 3D solar system scene screenshot needed",
-          "caption": "Add 3D scene screenshot"
-        }
-      ]
+      "status": "",
+      "context": "",
+      "description": "An interactive 3D orbit scene built in Desmos to experiment with surfaces, motion, and performance limits.",
+      "media": []
     },
     {
       "id": "tinygpt-experiments",
+      "presentationSize": "compact",
       "title": "TinyGPT Experiments",
       "href": null,
       "sourceHref": null,
+      "logoSrc": null,
+      "logoAlt": "",
+      "logoHref": null,
       "type": "machine learning",
-      "description": "Small next-token model experiments for learning training vs. instruction behavior.",
-      "media": [
-        {
-          "id": "media-1",
-          "type": "photo",
-          "src": null,
-          "posterSrc": null,
-          "alt": "TinyGPT training or output screenshot needed",
-          "caption": "Add training or output screenshot"
-        }
-      ]
+      "status": "",
+      "context": "",
+      "description": "Small next-token-model experiments used to study training behavior and instruction behavior.",
+      "media": []
     }
   ],
   "skills": [
@@ -826,32 +824,23 @@
           ],
           "href": null,
           "hrefLabel": ""
-        },
-        {
-          "id": "3d-printing-presentation",
-          "title": "TETC 3D Printing Presentation",
-          "date": "",
-          "detail": "Presented slides, printed examples, and robotics applications.",
-          "achievements": [],
-          "href": null,
-          "hrefLabel": ""
         }
       ]
     },
     {
       "id": "languages-learning",
-      "category": "Languages and ongoing learning",
+      "category": "Languages",
       "icon": "list",
       "showOnHomepage": false,
       "items": [
         {
           "id": "duolingo-streak",
-          "title": "Duolingo language practice",
+          "title": "Duolingo streak",
           "date": "",
-          "detail": "Maintains a public daily language-learning streak.",
+          "detail": "1,744 days (~4.77 years). Public language-learning streak.",
           "achievements": [],
           "href": "https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr",
-          "hrefLabel": "Profile"
+          "hrefLabel": "Duolingo profile"
         },
         {
           "id": "spanish",
@@ -866,7 +855,7 @@
           "id": "french",
           "title": "French",
           "date": "",
-          "detail": "Practice in pronunciation, listening, and sentence construction.",
+          "detail": "I practice pronunciation, listening, and sentence construction.",
           "achievements": [],
           "href": null,
           "hrefLabel": ""
@@ -900,9 +889,9 @@
       "href": "#academics"
     },
     {
-      "id": "more-projects",
-      "label": "More Projects",
-      "href": "#smaller-projects"
+      "id": "more-work",
+      "label": "More work",
+      "href": "#more-work"
     },
     {
       "id": "contact",
@@ -1099,8 +1088,8 @@
       "src": "/portfolio-media/subpix/subpix-editor-grid-hidden.webp"
     },
     {
-      "id": "smallProjects/check-ins/media-1",
-      "surface": "smallProjects",
+      "id": "moreWork/check-ins/media-1",
+      "surface": "moreWork",
       "owner": "Check-ins visual 1",
       "kind": "image",
       "status": "published",
@@ -1110,8 +1099,8 @@
       "src": "/portfolio-media/check-ins/check-ins-overview.webp"
     },
     {
-      "id": "smallProjects/vex-v5-drivetrain-prototype/logo",
-      "surface": "smallProjects",
+      "id": "moreWork/vex-robotics-builds/logo",
+      "surface": "moreWork",
       "owner": "VEX Robotics Builds logo",
       "kind": "logo",
       "status": "published",
@@ -1119,50 +1108,6 @@
       "caption": "",
       "context": "",
       "src": "/portfolio-media/programs/tetc-logo.png"
-    },
-    {
-      "id": "smallProjects/vex-v5-drivetrain-prototype/media-1",
-      "surface": "smallProjects",
-      "owner": "VEX Robotics Builds visual 1",
-      "kind": "image",
-      "status": "planned",
-      "description": "VEX robotics builds photo needed",
-      "caption": "Add VEX robotics build photos",
-      "context": "",
-      "src": null
-    },
-    {
-      "id": "microProjects/midi-practice-tool/media-1",
-      "surface": "microProjects",
-      "owner": "MIDI Practice Tool visual 1",
-      "kind": "image",
-      "status": "planned",
-      "description": "MIDI practice tool interface or keyboard setup photo needed",
-      "caption": "Add tool interface or keyboard setup photo",
-      "context": "",
-      "src": null
-    },
-    {
-      "id": "microProjects/desmos-3d-solar-system/media-1",
-      "surface": "microProjects",
-      "owner": "Desmos 3D Solar System visual 1",
-      "kind": "image",
-      "status": "planned",
-      "description": "Desmos 3D solar system scene screenshot needed",
-      "caption": "Add 3D scene screenshot",
-      "context": "",
-      "src": null
-    },
-    {
-      "id": "microProjects/tinygpt-experiments/media-1",
-      "surface": "microProjects",
-      "owner": "TinyGPT Experiments visual 1",
-      "kind": "image",
-      "status": "planned",
-      "description": "TinyGPT training or output screenshot needed",
-      "caption": "Add training or output screenshot",
-      "context": "",
-      "src": null
     },
     {
       "id": "programCredentials/tetc/logo",
@@ -1232,10 +1177,9 @@
     "academicDetails": "https://chrisaheskett.vercel.app/#academics",
     "programCredentials": "https://chrisaheskett.vercel.app/#academics",
     "fullRecord": "https://chrisaheskett.vercel.app/record",
-    "smallProjects": "https://chrisaheskett.vercel.app/#smaller-projects",
-    "microProjects": "https://chrisaheskett.vercel.app/#bench-notes",
+    "moreWork": "https://chrisaheskett.vercel.app/#more-work",
     "skills": "https://chrisaheskett.vercel.app/#bench",
-    "learningHighlights": "https://chrisaheskett.vercel.app/#learning"
+    "learningHighlights": "https://chrisaheskett.vercel.app/#academics"
   },
   "agentFiles": {
     "llms": "https://chrisaheskett.vercel.app/llms.txt",

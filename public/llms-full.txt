@@ -12,10 +12,9 @@ Current work includes a full-size pinball machine, an AI-vision robotics arm, a 
 
 ### Garden Party Pinball
 Status: In progress
-Context: Solo
+Context: Solo build
 Label: pinball machine
-My role: I am building the cabinet, playfield systems, wiring, MPF configuration, and test setup.
-A full-size homebrew pinball machine using FAST boards, Mission Pinball Framework, coils, switches, lamps, cabinet wiring, and a revised playfield.
+I'm building a full-size homebrew pinball machine around FAST control hardware and Mission Pinball Framework. I designed and assembled the cabinet, playfield mechanisms, control board, wiring, and game logic. The machine currently powers up with the playfield installed while I rework the cabinet fit and final geometry.
 Published media: 2
 
 ### VividGrasp AI-Vision Robotics Arm
@@ -24,30 +23,28 @@ Context: Team of 10, Stanford AI4ALL
 Label: robotics simulation
 Source: https://github.com/LenekyRadish/VividGrasp
 Best link label: Open source
-My role: Head CAD designer; prepared URDF files and worked with a teammate on a physical prototype.
+My contribution: I led CAD, modeled the arm in SolidWorks, prepared its URDF files, and worked with a teammate on a physical prototype.
 Related program/logo link: https://ai4all.spcs.stanford.edu/
-A Stanford AI4ALL team project connecting SolidWorks CAD, STL export, URDF/PyBullet simulation, target input, and robotic-arm motion.
+A ten-person Stanford AI4ALL project combining computer vision, inverse kinematics, and PyBullet simulation to move a robotic arm toward recognized objects.
 Published media: 4
 
 ### Smart Self-Watering Pot / Smart Planter PCB
 Status: Prototype in progress
-Context: Solo
+Context: Solo prototype
 Label: plant-watering prototype
-My role: I worked on the sensing and control concept, electronics packaging, PCB direction, and enclosure constraints.
 Related program/logo link: https://tetc.org/
-Related program context: Well... kinda. Coach Taylor, my ninth grade coach at the TETC challenged me to make this, so while it wasn't a lesson, it has a connection to TETC.
-A plant-watering prototype involving moisture sensing, pump control, electronics packaging, enclosure planning, and PCB work.
+Related program context: Coach Taylor challenged me to start this project during TETC.
+I designed and assembled an ESP32-based controller for a self-watering planter. The fabricated PCB reads soil moisture, controls a water pump, and integrates display and physical input hardware. I also designed the planter, reservoir, and electronics layout in SolidWorks.
 Published media: 4; interactive 3D models: 1
 
 ### Subpix
 Status: Functional v1
-Context: Solo
+Context: Solo software project
 Label: desktop app
 Project: https://subpix-editor.vercel.app/
 Source: https://github.com/Chrissyuh/Subpix
 Best link label: Open app
-My role: Built the editor, file-format flow, export path, product site, and Windows packaging.
-An open-source Electron, Vite, React, and TypeScript desktop app for editing .subpix files, validating JSON data, exporting PNGs, and packaging for Windows.
+I built Subpix, an open-source desktop editor for drawing with individual RGB subpixels. It reads and validates .subpix JSON files, exports PNG images, and ships as a packaged Windows application built with Electron, React, TypeScript, and Vite.
 Published media: 2
 
 ## Visual Descriptions
@@ -71,10 +68,6 @@ Published media: 2
 - Subpix visual 2 poster - poster: Static poster for Subpix drawing demonstration with the grid hidden. Caption: Drawing with RGB subpixels. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/subpix/subpix-editor-grid-hidden.webp)
 - Check-ins visual 1 - image: Check-ins dashboard showing recurring work and study items with target and maximum gaps. Caption: Recurring check-ins with target and maximum gaps. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/check-ins/check-ins-overview.webp)
 - VEX Robotics Builds logo - logo: ExxonMobil Foundation Teen Engineering and Tech Center logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/programs/tetc-logo.png)
-- VEX Robotics Builds visual 1 - planned placeholder: VEX robotics builds photo needed. Caption: Add VEX robotics build photos.
-- MIDI Practice Tool visual 1 - planned placeholder: MIDI practice tool interface or keyboard setup photo needed. Caption: Add tool interface or keyboard setup photo.
-- Desmos 3D Solar System visual 1 - planned placeholder: Desmos 3D solar system scene screenshot needed. Caption: Add 3D scene screenshot.
-- TinyGPT Experiments visual 1 - planned placeholder: TinyGPT training or output screenshot needed. Caption: Add training or output screenshot.
 - Teen Engineering + Tech Center logo - logo: ExxonMobil Foundation Teen Engineering and Tech Center logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/programs/tetc-logo.png)
 - Stanford AI4ALL Certificate of Completion logo - logo: Stanford AI4ALL logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/vividgrasp/stanford-ai4all-logo.png)
 - Stanford AI4ALL Certificate of Completion document - certificate image: Stanford AI4ALL Certificate of Completion in Robotics awarded to Christopher Heskett. Caption: Stanford AI4ALL Certificate of Completion in Robotics, June 26, 2026. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/credentials/stanford-ai4all-certificate.jpg)
@@ -106,9 +99,9 @@ Type: Program
 Program: Teen Engineering + Tech Center
 Organization: ExxonMobil Foundation
 Award: 2026 A1 Excellence Award - Sole recipient
-Award detail: Recognized for consistently going beyond program requirements across CAD, robotics, and engineering work.
+Award detail: The award recognized work beyond program requirements across CAD, robotics, and engineering projects.
 Program link: https://tetc.org/
-Four-year after-school STEM program with engineering projects, makerspace work, tours, and college and career preparation.
+I attend a four-year after-school STEM program with engineering lessons, makerspace work, workplace tours, and college and career preparation.
 
 ### Stanford AI4ALL Certificate of Completion
 Type: Credential
@@ -118,7 +111,7 @@ Date: June 26, 2026
 Related project ID: vividgrasp-ai-vision-robotics-arm
 Program link: https://ai4all.spcs.stanford.edu/
 Certificate scan: https://chrisaheskett.vercel.app/portfolio-media/credentials/stanford-ai4all-certificate.jpg
-Completed Stanford AI4ALL in Robotics while working on the 10-person VividGrasp robotics project.
+Completed Stanford AI4ALL in Robotics through the ten-person VividGrasp project.
 
 ### Certified SOLIDWORKS Design Associate (CSWA)
 Type: Credential
@@ -127,22 +120,16 @@ Issuer: Dassault Systèmes
 Date: July 15, 2026
 Program link: https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url
 Certificate scan: https://chrisaheskett.vercel.app/portfolio-media/credentials/cswa-certificate.png
-Passed the CSWA exam, demonstrating core proficiency in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials.
+Passed the CSWA exam in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials.
 
-## Learning Highlights
+## More Work
 
-- Duolingo streak: 1,744 (~4.77 years)
-
-## Smaller Projects
-
-- Check-ins - React / Vite web app: Stores recurring check-ins locally, tracks target and maximum gaps, marks work due or over max, and keeps progress history. Built with React, Vite, Framer Motion, and Tailwind CSS. ([project](https://check-ins-zeta.vercel.app/), [source](https://github.com/Chrissyuh/check-ins)). Published media: 1.
-- VEX Robotics Builds - robotics builds: VEX robotics builds exploring gearing, drivetrain layout, shaft spacing, and mechanical packaging. Published media: 0.
-
-## Small Builds
-
-- MIDI Practice Tool - python / music: Small Python tool for soundfonts, pedals, controls, and keyboard practice. Published media: 0.
-- Desmos 3D Solar System - math visualization: 3D orbit scene built in Desmos to practice surfaces and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Published media: 0.
-- TinyGPT Experiments - machine learning: Small next-token model experiments for learning training vs. instruction behavior. Published media: 0.
+- AgentDeck - standard - local-network controller: I built AgentDeck to turn an old phone or tablet into a dedicated touchscreen controller for AI coding agents. A lightweight desktop host serves the interface over the local network, allowing spare hardware to replace an expensive single-purpose control deck. Published media: 0.
+- Check-ins - standard - React / Vite web app: I built Check-ins, a local-first web app for recurring work and study tasks. It tracks target and maximum gaps, flags items that are due or overdue, and keeps a completion history without requiring an account. ([project](https://check-ins-zeta.vercel.app/), [source](https://github.com/Chrissyuh/check-ins)). Published media: 1.
+- VEX Robotics Builds - standard - TETC robotics builds: I built VEX robots at TETC to practice gearing, drivetrain layout, shaft spacing, and mechanical packaging. Context: TETC program. Published media: 0.
+- MIDI Practice Tool - compact - Python / music: A small Python tool for keyboard practice, soundfonts, pedals, and control mapping. Published media: 0.
+- Desmos 3D Solar System - compact - math visualization: An interactive 3D orbit scene built in Desmos to experiment with surfaces, motion, and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Published media: 0.
+- TinyGPT Experiments - compact - machine learning: Small next-token-model experiments used to study training behavior and instruction behavior. Published media: 0.
 
 ## Skills
 
@@ -158,13 +145,12 @@ Passed the CSWA exam, demonstrating core proficiency in SOLIDWORKS part modeling
 - Scouts BSA: First Class Scout.
 - Student Council: Member.
 - Debate: Reached JV finals. Achievements: CASE Debates tournament #4, 2025 - Third place; CASE Debates tournament #5, 2026 - Second place.
-- TETC 3D Printing Presentation: Presented slides, printed examples, and robotics applications.
 
-### Languages and ongoing learning
+### Languages
 
-- Duolingo language practice: Maintains a public daily language-learning streak. [Profile](https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr)
+- Duolingo streak: 1,744 days (~4.77 years). Public language-learning streak. [Duolingo profile](https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr)
 - Spanish: AP Spanish Language coursework and continued practice.
-- French: Practice in pronunciation, listening, and sentence construction.
+- French: I practice pronunciation, listening, and sentence construction.
 - Latin: Foundational Latin study.
 
 ## Contact

@@ -280,19 +280,6 @@ function MediaFrame({
           />
         )}
         {item.src && mediaType === "photo" && <FittedPhoto src={item.src} alt={item.alt || caption} />}
-        {!item.src && (
-          <div
-            aria-label={`${mediaType} placeholder: ${caption}`}
-            className="flex h-full items-center justify-center border border-dashed border-[#d6cec0] bg-[#fbfaf7] p-4"
-          >
-            <div className="max-w-[16rem] text-center">
-              <span className="inline-flex items-center border border-[#cfc4b4] bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">
-                {mediaType === "video" ? "video needed" : mediaType === "model" ? "model needed" : "photo needed"}
-              </span>
-              <p className="mt-3 text-xs font-medium leading-5 text-slate-600">{caption}</p>
-            </div>
-          </div>
-        )}
       </div>
       {item.src && (
         <figcaption className="border-t border-[#e1d7c8] px-2.5 py-1.5 text-[11px] leading-4 text-slate-700 sm:px-3 sm:py-2 sm:text-xs sm:leading-5">
@@ -538,7 +525,7 @@ function carouselCloneItem(item) {
 
 function MediaCarousel({ media, label, compact = false, mobileMediaType = null }) {
   const isMobile = useMediaQuery("(max-width: 639px)");
-  const allItems = list(media);
+  const allItems = list(media).filter((item) => item.src);
   const items = isMobile && mobileMediaType ? allItems.filter((item) => item.type === mobileMediaType) : allItems;
   const itemCount = items.length;
   const carouselRef = useRef(null);
@@ -1221,9 +1208,11 @@ function ProjectRow({ project, index, meta }) {
       <div className="min-w-0 p-3 md:p-6">
         <h3 className="text-lg font-semibold leading-tight tracking-[-0.02em] text-slate-950 sm:text-2xl sm:tracking-[-0.03em]">{project.title}</h3>
         <p className="mt-2 max-w-3xl text-[13px] leading-5 text-slate-700 sm:mt-3 sm:text-base sm:leading-7 md:text-lg">{project.summary}</p>
-        <div className="mt-3 sm:mt-5">
-          <ProjectFact label={meta.projectRoleLabel}>{project.role}</ProjectFact>
-        </div>
+        {project.contribution && (
+          <div className="mt-3 sm:mt-5">
+            <ProjectFact label={meta.projectContributionLabel}>{project.contribution}</ProjectFact>
+          </div>
+        )}
         <MediaCarousel
           media={project.media}
           label={project.title}
@@ -1234,7 +1223,8 @@ function ProjectRow({ project, index, meta }) {
   );
 }
 
-function SmallProjectCard({ project, index }) {
+function MoreWorkStandardCard({ project, index, meta }) {
+  const publishedMedia = list(project.media).filter((item) => item.src);
   const logoClassName = "block max-w-[150px] border border-[#d6cec0] bg-white px-2 py-1";
   const logoImage = project.logoSrc ? (
     <img
@@ -1252,7 +1242,7 @@ function SmallProjectCard({ project, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.25, delay: index * 0.035 }}
-      className="group flex h-full flex-col border border-[#d2c8b9] bg-white shadow-sm"
+      className="group min-w-0 border border-[#d2c8b9] bg-white shadow-sm"
     >
       <div className="flex items-start justify-between gap-3 border-b border-[#e1d7c8] bg-[#fbfaf7] p-3 sm:p-4">
         <p className="w-fit border border-[#d6cec0] bg-white px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#827466]">{project.type}</p>
@@ -1276,41 +1266,46 @@ function SmallProjectCard({ project, index }) {
           )
         )}
       </div>
-      <div className="flex flex-1 flex-col justify-between p-3 sm:p-5">
-        <div>
-          <h3 className="text-base font-semibold tracking-[-0.02em] text-slate-950 sm:text-lg">{project.title}</h3>
-          <p className="mt-2 text-xs leading-5 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{project.description}</p>
-          <MediaCarousel media={project.media} label={project.title} compact />
-        </div>
-        <div>
-          {(project.href || project.sourceHref) && (
-            <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
-              {project.href && (
-                <a
-                  href={project.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-950 transition hover:bg-[#f5f3ee] sm:px-3 sm:py-2 sm:text-xs"
-                >
-                  Open
-                  <Icon name="arrowRight" className="ml-2 h-3.5 w-3.5" />
-                </a>
-              )}
-              {project.sourceHref && (
-                <a
-                  href={project.sourceHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-950 transition hover:bg-[#f5f3ee] sm:px-3 sm:py-2 sm:text-xs"
-                >
-                  <Icon name="github" className="mr-2 h-3.5 w-3.5" />
-                  Source
-                </a>
-              )}
-            </div>
-          )}
-          <div className="mt-4 h-1 w-14 bg-[#244fd6] opacity-80 sm:mt-5 sm:h-1.5 sm:w-16" />
-        </div>
+      <div className="p-3 sm:p-5">
+        <h3 className="text-base font-semibold tracking-[-0.02em] text-slate-950 sm:text-lg">{project.title}</h3>
+        {(project.status || project.context) && (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {[project.status, project.context].filter(Boolean).map((detail) => (
+              <span key={detail} className="border border-[#d6cec0] bg-[#fbfaf7] px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-[#827466]">
+                {detail}
+              </span>
+            ))}
+          </div>
+        )}
+        <p className="mt-2 text-xs leading-5 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{project.description}</p>
+        {publishedMedia.length > 0 && <MediaCarousel media={publishedMedia} label={project.title} compact />}
+        {(project.href || project.sourceHref) && (
+          <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
+            {project.href && (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:px-3 sm:py-2 sm:text-xs"
+              >
+                {meta.moreWorkOpenLabel}
+                <Icon name="arrowRight" className="ml-2 h-3.5 w-3.5" />
+              </a>
+            )}
+            {project.sourceHref && (
+              <a
+                href={project.sourceHref}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center border border-[#cfc4b4] bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:px-3 sm:py-2 sm:text-xs"
+              >
+                <Icon name="github" className="mr-2 h-3.5 w-3.5" />
+                {meta.moreWorkSourceLabel}
+              </a>
+            )}
+          </div>
+        )}
+        <div className="mt-4 h-1 w-14 bg-[#244fd6] opacity-80 sm:mt-5 sm:h-1.5 sm:w-16" />
       </div>
     </motion.article>
   );
@@ -1435,56 +1430,41 @@ function useDuolingoStreak(item) {
   };
 }
 
-function DuolingoStreakCard({ item, index }) {
+function DuolingoActivityCard({ item }) {
   const { displayDays, displayYears } = useDuolingoStreak(item);
   const profileHref = item.href || DUOLINGO_PROFILE_URL;
   const profileLabel = item.hrefLabel || "Duolingo profile";
 
   return (
-    <motion.article
-      key={item.id}
-      data-scroll-reveal="true"
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.25, delay: index * 0.035 }}
-      className="relative overflow-hidden border border-[#d8b451] bg-[linear-gradient(180deg,#fffdf7_0%,#ffffff_42%)] p-3 shadow-sm sm:p-5"
+    <article
+      className="relative flex min-h-full flex-col overflow-hidden border border-[#d8b451] bg-white p-2.5 shadow-sm sm:p-4"
     >
-      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1.5 bg-[#d7a31f]" />
-      <Icon name="flame" className="absolute -bottom-3 -right-2 h-16 w-16 text-[#d7a31f]/10" />
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#d7a31f]" />
+      <div className="flex items-start gap-2">
+        <span className="grid h-7 w-7 shrink-0 place-items-center border border-[#d8b451] bg-[#fff4bf] text-[#b45309]">
+          <Icon name={item.icon || "flame"} className="h-4 w-4" />
+        </span>
+        <div className="min-w-0">
+          <h3 className="text-xs font-semibold leading-4 text-slate-950 sm:text-sm sm:leading-5">{item.label}</h3>
+          <p className="mt-1 flex items-baseline gap-1 text-lg font-semibold leading-none text-slate-950 sm:text-xl" aria-live="polite">
+            {displayDays || item.value}
+            <span className="text-[10px] font-semibold text-slate-600 sm:text-xs">days</span>
+          </p>
+          <p className="mt-1 text-[10px] leading-4 text-slate-700 sm:text-xs">{displayYears}</p>
+        </div>
+      </div>
       <a
         href={profileHref}
         target="_blank"
         rel="noreferrer"
         aria-label="Open Duolingo profile"
-        className="absolute right-3 top-3 z-20 inline-flex min-h-8 items-center gap-1.5 border border-[#d8b451] bg-white/95 px-2 py-1 text-[10px] font-semibold text-slate-900 transition hover:bg-[#fff8db] focus:outline-none focus:ring-2 focus:ring-[#d7a31f] focus:ring-offset-2 sm:px-2.5 sm:py-1.5 sm:text-[11px]"
+        className="mt-auto inline-flex w-fit items-center pt-2 text-[10px] font-semibold text-[#244fd6] hover:underline focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-xs"
       >
         {profileLabel}
-        <Icon name="arrowRight" className="h-3 w-3" />
+        <Icon name="arrowRight" className="ml-1.5 h-3 w-3" />
       </a>
-      <div className="relative pr-20">
-        <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466] sm:text-xs sm:tracking-[0.2em]">
-          <span className="grid h-6 w-6 place-items-center border border-[#d8b451] bg-[#fff4bf] text-[#b45309]">
-            <Icon name={item.icon || "flame"} className="h-4 w-4" />
-          </span>
-          {item.label}
-        </p>
-        <p className="mt-3 flex items-end gap-1.5 text-2xl font-semibold leading-none tracking-[-0.03em] text-slate-950 sm:text-3xl" aria-live="polite">
-          {displayDays || item.value}
-          <span className="pb-0.5 text-xs font-semibold tracking-normal text-slate-700 sm:text-sm">days</span>
-        </p>
-        <p className="mt-2 text-xs font-medium leading-5 text-slate-700 sm:text-sm">{displayYears}</p>
-      </div>
-    </motion.article>
+    </article>
   );
-}
-
-function LearningHighlightCard({ item, index }) {
-  if (item.dynamicSource === "duolingo" || item.id === "duolingo-streak") {
-    return <DuolingoStreakCard item={item} index={index} />;
-  }
-
-  return <AcademicCard item={item} index={index} />;
 }
 
 function AcademicDetailsDialog({ details, meta, triggerLabel }) {
@@ -1987,11 +1967,13 @@ function AchievementTrophies({ item, className = "" }) {
   );
 }
 
-function HomepageActivitySection({ section, title }) {
+function HomepageActivitySection({ section, learningHighlights, title }) {
   if (!section) return null;
 
+  const learningItems = list(learningHighlights);
+
   return (
-    <div className="mt-5 border-t border-[#d2c8b9] pt-4 sm:mt-8 sm:pt-6" data-content-collection="fullRecord">
+    <div className="mt-5 border-t border-[#d2c8b9] pt-4 sm:mt-8 sm:pt-6" data-content-collection="fullRecord" data-related-content="learningHighlights">
       <h2 className="text-xl font-semibold leading-6 text-slate-950 sm:text-2xl sm:leading-7">{title}</h2>
       <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:gap-3 lg:grid-cols-4">
         {list(section.items).map((item) => (
@@ -2001,6 +1983,11 @@ function HomepageActivitySection({ section, title }) {
             <AchievementTrophies item={item} className="mt-auto pt-2 sm:pt-3" />
           </article>
         ))}
+        {learningItems.length > 0 && (
+          <div className="contents" data-content-collection="learningHighlights">
+            {learningItems.map((item) => <DuolingoActivityCard key={item.id} item={item} />)}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -2046,69 +2033,108 @@ function RecordSectionCard({ section, collection = "fullRecord" }) {
   );
 }
 
-function MicroProjectTile({ project, index, meta }) {
-  const media = list(project.media)[0] ?? {};
-  const mediaType = media.type === "video" ? "video" : "photo";
-  const labelId = `micro-project-${project.id}`;
-  const caption = media.caption || media.alt || project.title;
+function MoreWorkCompactCard({ project, index, meta }) {
+  const [expanded, setExpanded] = useState(false);
+  const cardRef = useRef(null);
+  const triggerRef = useRef(null);
+  const suppressFocusOpenRef = useRef(false);
+  const media = list(project.media).find((item) => item.src) ?? null;
+  const panelId = `more-work-${project.id}-details`;
+
+  function closeDetails() {
+    suppressFocusOpenRef.current = true;
+    setExpanded(false);
+    window.requestAnimationFrame(() => {
+      triggerRef.current?.focus({ preventScroll: true });
+      window.requestAnimationFrame(() => {
+        suppressFocusOpenRef.current = false;
+      });
+    });
+  }
 
   return (
     <motion.article
-      tabIndex={0}
-      aria-labelledby={labelId}
+      ref={cardRef}
       data-scroll-reveal="true"
       initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.22, delay: index * 0.025 }}
-      className="group relative border border-[#d2c8b9] bg-white shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
+      onMouseEnter={() => setExpanded(true)}
+      onMouseLeave={() => {
+        if (!cardRef.current?.contains(document.activeElement)) setExpanded(false);
+      }}
+      onFocusCapture={() => {
+        if (!suppressFocusOpenRef.current) setExpanded(true);
+      }}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setExpanded(false);
+      }}
+      onKeyDownCapture={(event) => {
+        if (event.key === "Escape" && expanded) {
+          event.preventDefault();
+          closeDetails();
+        }
+      }}
+      className="group relative min-h-36 overflow-hidden border border-[#d2c8b9] bg-white shadow-sm sm:min-h-40"
     >
-      <div className="relative overflow-hidden border-b border-[#e1d7c8]">
-        <div className="relative aspect-video overflow-hidden bg-[#ded8cd]">
-          {media.src && mediaType === "video" && (
-            <video
-              src={media.src}
-              muted
-              playsInline
-              preload="metadata"
-              aria-label={media.alt || caption}
-              className="h-full w-full bg-[#ded8cd] object-contain"
-            />
-          )}
-          {media.src && mediaType === "photo" && <FittedPhoto src={media.src} alt={media.alt || caption} />}
-          {!media.src && (
-            <div
-              aria-label={`${mediaType} placeholder: ${caption}`}
-              className="flex h-full items-center justify-center border border-dashed border-[#d6cec0] bg-[#fbfaf7] p-3"
-            >
-              <div className="text-center">
-                <span className="inline-flex border border-[#cfc4b4] bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">
-                  {mediaType} needed
-                </span>
-                <p className="mt-3 text-xs font-medium leading-5 text-slate-600">{caption}</p>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="pointer-events-none absolute inset-2 flex flex-col border border-[#d2c8b9] bg-white/95 p-2 opacity-0 shadow-sm backdrop-blur-sm transition duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus:pointer-events-auto group-focus:opacity-100">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0f766e]">
-              {project.type}
-            </p>
-            <p className="mt-1.5 line-clamp-3 text-[11px] leading-4 text-slate-700">{project.description}</p>
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-expanded={expanded}
+        aria-controls={panelId}
+        aria-label={`${expanded ? "Hide" : "Show"} details for ${project.title}`}
+        onClick={() => setExpanded(true)}
+        className="flex min-h-36 w-full flex-col text-left outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#244fd6] sm:min-h-40"
+      >
+        {media && (
+          <div className="relative aspect-video w-full overflow-hidden border-b border-[#e1d7c8] bg-[#ded8cd]">
+            {media.type === "video" ? (
+              <video
+                src={media.src}
+                muted
+                playsInline
+                preload="metadata"
+                aria-label={media.alt || project.title}
+                className="h-full w-full bg-[#ded8cd] object-contain"
+              />
+            ) : (
+              <FittedPhoto src={media.src} alt={media.alt || project.title} />
+            )}
           </div>
+        )}
+        <div className="flex flex-1 flex-col justify-between p-3 sm:p-4">
+          <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[#0f766e] sm:text-[10px]">{project.type}</p>
+          <div className="mt-3 flex items-end justify-between gap-3">
+            <h3 className="text-sm font-semibold leading-5 text-slate-950 sm:text-base">{project.title}</h3>
+            <Icon name="arrowRight" className="h-4 w-4 shrink-0 text-[#244fd6]" />
+          </div>
+        </div>
+      </button>
 
+      {expanded && (
+        <div id={panelId} className="absolute inset-0 z-10 flex flex-col bg-white p-3 shadow-sm transition-opacity duration-150 motion-reduce:transition-none sm:p-4">
+          <button
+            type="button"
+            aria-label={`Close details for ${project.title}`}
+            onClick={closeDetails}
+            className="absolute right-2 top-2 grid h-7 w-7 place-items-center border border-[#cfc4b4] bg-white text-slate-700 hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-1"
+          >
+            &times;
+          </button>
+          <p className="pr-9 font-mono text-[9px] uppercase tracking-[0.14em] text-[#0f766e] sm:text-[10px]">{project.type}</p>
+          <h3 className="mt-2 pr-9 text-sm font-semibold leading-5 text-slate-950 sm:text-base">{project.title}</h3>
+          <p className="mt-2 text-[11px] leading-4 text-slate-700 sm:text-xs sm:leading-5">{project.description}</p>
           {(project.href || project.sourceHref) && (
-            <div className="mt-auto flex min-h-7 items-center gap-2 pt-2">
+            <div className="mt-auto flex min-h-7 flex-wrap items-center gap-2 pt-3">
               {project.href && (
                 <a
                   href={project.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex h-7 items-center justify-center gap-1.5 border border-[#cfc4b4] bg-white px-2 text-[11px] font-semibold leading-none text-slate-950 transition hover:bg-[#f5f3ee]"
+                  className="inline-flex h-7 items-center justify-center gap-1.5 border border-[#cfc4b4] bg-white px-2 text-[11px] font-semibold leading-none text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-1"
                 >
-                  {meta.microProjectsOpenLabel}
+                  {meta.moreWorkOpenLabel}
                   <Icon name="arrowRight" className="h-3.5 w-3.5" />
                 </a>
               )}
@@ -2117,20 +2143,16 @@ function MicroProjectTile({ project, index, meta }) {
                   href={project.sourceHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex h-7 items-center justify-center gap-1.5 border border-[#cfc4b4] bg-white px-2 text-[11px] font-semibold leading-none text-slate-950 transition hover:bg-[#f5f3ee]"
+                  className="inline-flex h-7 items-center justify-center gap-1.5 border border-[#cfc4b4] bg-white px-2 text-[11px] font-semibold leading-none text-slate-950 transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-1"
                 >
                   <Icon name="github" className="h-3.5 w-3.5" />
-                  {meta.microProjectsSourceLabel}
+                  {meta.moreWorkSourceLabel}
                 </a>
               )}
             </div>
           )}
         </div>
-      </div>
-
-      <h3 id={labelId} className="px-2.5 py-2 text-[13px] font-semibold leading-5 tracking-[-0.02em] text-slate-950 sm:px-3 sm:py-3 sm:text-sm">
-        {project.title}
-      </h3>
+      )}
     </motion.article>
   );
 }
@@ -2219,6 +2241,8 @@ function PortfolioPage({ content }) {
   const meta = content.meta ?? {};
   const heroHasImage = Boolean(meta.heroImageSrc);
   const homepageActivitySection = list(content.fullRecord).find((section) => section.showOnHomepage);
+  const standardMoreWork = list(content.moreWork).filter((project) => project.presentationSize === "standard");
+  const compactMoreWork = list(content.moreWork).filter((project) => project.presentationSize === "compact");
   const projectsById = new Map(list(content.projects).map((project) => [project.id, project]));
   const skills = list(content.skills);
   const personalSkillGroups = skills.filter((skill) => list(skill.projectIds).length > 0).reduce((groups, skill) => {
@@ -2392,35 +2416,30 @@ function PortfolioPage({ content }) {
           </div>
         )}
 
-        <HomepageActivitySection section={homepageActivitySection} title={meta.activitiesTitle || "Activities and involvement"} />
+        <HomepageActivitySection
+          section={homepageActivitySection}
+          learningHighlights={content.learningHighlights}
+          title={meta.activitiesTitle || "Activities and involvement"}
+        />
       </section>
 
-      <section id="smaller-projects" data-content-collection="smallProjects" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-12 md:px-8 md:py-16">
-        <SectionHeader title={meta.smallerProjectsTitle} />
-        <div className="grid gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {list(content.smallProjects).map((project, index) => (
-            <SmallProjectCard key={project.id} project={project} index={index} />
-          ))}
-        </div>
-      </section>
-
-      {list(content.microProjects).length > 0 && (
-        <section id="bench-notes" data-content-collection="microProjects" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-12 md:px-8 md:py-16">
-          <SectionHeader title={meta.microProjectsTitle} />
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            {list(content.microProjects).map((project, index) => (
-              <MicroProjectTile key={project.id} project={project} index={index} meta={meta} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {list(content.learningHighlights).length > 0 && (
-        <section id="learning" data-content-collection="learningHighlights" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
-          <SectionHeader title={meta.learningTitle} />
-          <div className="max-w-md">
-            {list(content.learningHighlights).map((item, index) => <LearningHighlightCard key={item.id} item={item} index={index} />)}
-          </div>
+      {list(content.moreWork).length > 0 && (
+        <section id="more-work" data-content-collection="moreWork" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-12 md:px-8 md:py-16">
+          <SectionHeader title={meta.moreWorkTitle || "More work"} />
+          {standardMoreWork.length > 0 && (
+            <div className="grid items-start gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {standardMoreWork.map((project, index) => (
+                <MoreWorkStandardCard key={project.id} project={project} index={index} meta={meta} />
+              ))}
+            </div>
+          )}
+          {compactMoreWork.length > 0 && (
+            <div className={cn("grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3", standardMoreWork.length > 0 && "mt-5 border-t border-[#d2c8b9] pt-5 sm:mt-8 sm:pt-8")}>
+              {compactMoreWork.map((project, index) => (
+                <MoreWorkCompactCard key={project.id} project={project} index={index} meta={meta} />
+              ))}
+            </div>
+          )}
         </section>
       )}
 

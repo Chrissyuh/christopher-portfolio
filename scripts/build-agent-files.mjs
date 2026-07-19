@@ -191,7 +191,7 @@ function buildLlmsTxt(content) {
   ];
 
   const contactLinks = [
-    meta.contactPhoneHref && `${markdownLink(meta.contactPhoneLabel ?? "Phone", meta.contactPhoneHref)}: Primary contact for Christopher.`,
+    meta.contactPhoneLabel && `Phone: ${meta.contactPhoneLabel} (text message on mobile).`,
     meta.contactEmailHref && `${markdownLink(meta.contactEmailLabel ?? "Email", meta.contactEmailHref)}: Email Christopher.`,
     meta.contactGithubHref && `${markdownLink(meta.contactGithubLabel ?? "GitHub", meta.contactGithubHref)}: Public source repositories.`,
     meta.resumeHref && `${markdownLink(meta.resumeLabel ?? "Resume", meta.resumeHref)}: Resume.`,
@@ -214,7 +214,10 @@ function buildLlmsTxt(content) {
       list(content.projects).map((project) => {
         const links = projectLinks(project);
         const linkText = links.length > 0 ? ` (${links.join(", ")})` : "";
-        const description = appendSentence(`Status: ${project.status}. ${project.summary}${contributionSummary(project)}${linkText}`, `${mediaSummary(project)}.`);
+        const description = appendSentence(
+          `${project.status ? `Status: ${project.status}. ` : ""}${project.summary}${contributionSummary(project)}${linkText}`,
+          `${mediaSummary(project)}.`,
+        );
         return `${markdownLink(project.title, absoluteUrl(`/#project-${project.id}`))}: ${description}`;
       }),
     ),
@@ -291,7 +294,7 @@ function buildLlmsFullTxt(content) {
         [
           `### ${project.title}`,
           "",
-          `Status: ${project.status}`,
+          project.status ? `Status: ${project.status}` : "",
           project.teamContext ? `Context: ${project.teamContext}` : "",
           `Label: ${project.label}`,
           project.href ? `Project: ${project.href}` : "",
@@ -396,7 +399,7 @@ function buildLlmsFullTxt(content) {
     "",
     markdownList(
       [
-        meta.contactPhoneHref && `Phone: ${meta.contactPhoneLabel ?? meta.contactPhoneHref.replace(/^tel:/, "")}`,
+        meta.contactPhoneHref && `Phone: ${meta.contactPhoneLabel ?? meta.contactPhoneHref.replace(/^(?:tel|sms):/, "")}`,
         meta.contactEmailHref && `Email: ${stripMailto(meta.contactEmailHref)}`,
         meta.contactGithubHref && `GitHub: ${meta.contactGithubHref}`,
         meta.resumeHref && `${meta.resumeLabel ?? "Resume"}: ${meta.resumeHref}`,

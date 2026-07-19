@@ -82,7 +82,7 @@ export function buildPortfolioStructuredData(content) {
         ].filter(Boolean).join(" "),
         ...(awards.length > 0 ? { award: awards } : {}),
         ...(meta.heroImageSrc ? { image: siteUrl(meta.heroImageSrc) } : {}),
-        telephone: meta.contactPhoneHref?.replace(/^tel:/, ""),
+        telephone: meta.contactPhoneHref?.replace(/^(?:tel|sms):/, ""),
         email: stripMailto(meta.contactEmailHref),
         affiliation: [{ "@type": "EducationalOrganization", name: meta.academicSchoolName }],
         knowsAbout: list(content.skills).map((skill) => skill.name),

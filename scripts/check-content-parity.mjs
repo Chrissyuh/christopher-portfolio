@@ -132,8 +132,8 @@ assert.deepEqual(
 );
 assert.ok(!content.academicDetails.some((item) => item.id === "weighted-gpa" || item.id === "class-rank"), "Academic details must not duplicate the GPA and rank cards.");
 assert.equal(content.meta.contactPhoneLabel, "901-356-1000", "The primary phone contact drifted.");
-assert.equal(content.meta.contactPhoneHref, "tel:+19013561000", "The primary phone link drifted.");
-assert.ok(llms.includes("[901-356-1000](tel:+19013561000): Primary contact for Christopher."), "llms.txt is missing the primary phone contact.");
+assert.equal(content.meta.contactPhoneHref, "sms:+19013561000", "The mobile text link drifted.");
+assert.ok(llms.includes("Phone: 901-356-1000 (text message on mobile)."), "llms.txt is missing the primary text contact.");
 assert.ok(!content.meta.contactProjectHref, "Subpix must remain a project rather than a contact action.");
 assert.ok(appSource.includes("prepareNavigationScrollPath"), "Top navigation must prepare lazy content before scrolling.");
 assert.ok(appSource.includes('image.loading = "eager"'), "Navigation preparation must eagerly start images along the scroll path.");
@@ -144,7 +144,22 @@ assert.ok(indexHtml.includes('id="portfolio-boot-shell"'), "The document must pr
 assert.ok(indexHtml.includes(".js #portfolio-static-fallback { display: none; }"), "JavaScript loads must not paint the raw static fallback.");
 const smartPlanter = content.projects.find((project) => project.id === "smart-self-watering-pot");
 assert.equal(smartPlanter?.logoCredentialId, "tetc", "The Smart Planter TETC block must link to the TETC credential.");
-assert.equal(smartPlanter?.relatedProgramNote, "Coach Taylor challenged me to start this project during TETC.", "The Smart Planter must explain its TETC connection directly.");
+assert.equal(
+  smartPlanter?.relatedProgramNote,
+  "Well... kinda. Coach Taylor, my ninth grade coach at the TETC challenged me to make this, so while it wasn't a lesson, it has a connection to TETC.",
+  "The Smart Planter must retain its original TETC context note.",
+);
+const subpix = content.projects.find((project) => project.id === "subpix");
+assert.equal(subpix?.status, "", "Subpix must not display the old Functional v1 status badge.");
+const vexRobotics = content.moreWork.find((project) => project.id === "vex-robotics-builds");
+assert.equal(vexRobotics?.context, "", "VEX Robotics Builds must not display a redundant TETC program chip.");
+const agentDeck = content.moreWork.find((project) => project.id === "agentdeck");
+assert.equal(agentDeck?.sourceHref, "https://github.com/Chrissyuh/agentdeck", "AgentDeck must retain its public source link.");
+assert.deepEqual(
+  agentDeck?.media.map((item) => [item.type, item.src, item.caption]),
+  [["photo", "/portfolio-media/agentdeck/agentdeck-controller.webp", "AgentDeck touchscreen controller"]],
+  "AgentDeck must retain its published controller screenshot.",
+);
 
 assert.ok(content.projects.every((project) => !("role" in project)), "Featured project records must not retain the old role field.");
 assert.deepEqual(

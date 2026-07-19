@@ -33,12 +33,11 @@ Status: Prototype in progress
 Context: Solo prototype
 Label: plant-watering prototype
 Related program/logo link: https://tetc.org/
-Related program context: Coach Taylor challenged me to start this project during TETC.
+Related program context: Well... kinda. Coach Taylor, my ninth grade coach at the TETC challenged me to make this, so while it wasn't a lesson, it has a connection to TETC.
 I designed and assembled an ESP32-based controller for a self-watering planter. The fabricated PCB reads soil moisture, controls a water pump, and integrates display and physical input hardware. I also designed the planter, reservoir, and electronics layout in SolidWorks.
 Published media: 4; interactive 3D models: 1
 
 ### Subpix
-Status: Functional v1
 Context: Solo software project
 Label: desktop app
 Project: https://subpix-editor.vercel.app/
@@ -66,6 +65,7 @@ Published media: 2
 - Subpix visual 1 - image: Subpix editor showing an RGB subpixel drawing with the grid hidden. Caption: RGB subpixel drawing in Subpix. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/subpix/subpix-editor-grid-hidden.webp)
 - Subpix visual 2 - video: Subpix drawing demonstration with the grid hidden. Caption: Drawing with RGB subpixels. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/subpix/subpix-drawing-demo.mp4)
 - Subpix visual 2 poster - poster: Static poster for Subpix drawing demonstration with the grid hidden. Caption: Drawing with RGB subpixels. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/subpix/subpix-editor-grid-hidden.webp)
+- AgentDeck visual 1 - image: AgentDeck touchscreen controller showing agent status cards and controls. Caption: AgentDeck touchscreen controller. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/agentdeck/agentdeck-controller.webp)
 - Check-ins visual 1 - image: Check-ins dashboard showing recurring work and study items with target and maximum gaps. Caption: Recurring check-ins with target and maximum gaps. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/check-ins/check-ins-overview.webp)
 - VEX Robotics Builds logo - logo: ExxonMobil Foundation Teen Engineering and Tech Center logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/programs/tetc-logo.png)
 - Teen Engineering + Tech Center logo - logo: ExxonMobil Foundation Teen Engineering and Tech Center logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/programs/tetc-logo.png)
@@ -124,9 +124,9 @@ Passed the CSWA exam in SOLIDWORKS part modeling, assemblies, dimensions, mass p
 
 ## More Work
 
-- AgentDeck - standard - local-network controller: I built AgentDeck to turn an old phone or tablet into a dedicated touchscreen controller for AI coding agents. A lightweight desktop host serves the interface over the local network, allowing spare hardware to replace an expensive single-purpose control deck. Published media: 0.
+- AgentDeck - standard - local-network controller: I built AgentDeck to turn an old phone or tablet into a dedicated touchscreen controller for AI coding agents. A lightweight desktop host serves the interface over the local network, allowing spare hardware to replace an expensive single-purpose control deck. ([source](https://github.com/Chrissyuh/agentdeck)). Published media: 1.
 - Check-ins - standard - React / Vite web app: I built Check-ins, a local-first web app for recurring work and study tasks. It tracks target and maximum gaps, flags items that are due or overdue, and keeps a completion history without requiring an account. ([project](https://check-ins-zeta.vercel.app/), [source](https://github.com/Chrissyuh/check-ins)). Published media: 1.
-- VEX Robotics Builds - standard - TETC robotics builds: I built VEX robots at TETC to practice gearing, drivetrain layout, shaft spacing, and mechanical packaging. Context: TETC program. Published media: 0.
+- VEX Robotics Builds - standard - TETC robotics builds: I built VEX robots at TETC to practice gearing, drivetrain layout, shaft spacing, and mechanical packaging. Published media: 0.
 - MIDI Practice Tool - compact - Python / music: A small Python tool for keyboard practice, soundfonts, pedals, and control mapping. Published media: 0.
 - Desmos 3D Solar System - compact - math visualization: An interactive 3D orbit scene built in Desmos to experiment with surfaces, motion, and performance limits. ([project](https://www.desmos.com/3d/qcjp33t4ij)). Published media: 0.
 - TinyGPT Experiments - compact - machine learning: Small next-token-model experiments used to study training behavior and instruction behavior. Published media: 0.

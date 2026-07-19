@@ -209,7 +209,16 @@ function ModelMedia({ item, label, onInteractionChange, onInteractiveStateChange
 
   useEffect(() => () => onInteractiveStateChange?.(false), [onInteractiveStateChange]);
 
-  const fallback = posterSrc ? <FittedPhoto src={posterSrc} alt={alt} /> : null;
+  const fallback = posterSrc ? (
+    <div
+      className={cn(
+        "absolute inset-0 transition-opacity duration-200",
+        isInteractive ? "pointer-events-none opacity-0" : "opacity-100",
+      )}
+    >
+      <FittedPhoto src={posterSrc} alt={alt} />
+    </div>
+  ) : null;
 
   return (
     <div ref={hostRef} className="absolute inset-0">
@@ -218,7 +227,7 @@ function ModelMedia({ item, label, onInteractionChange, onInteractiveStateChange
         <React.Suspense fallback={null}>
           <div
             className={cn(
-              "absolute inset-0 transition-opacity duration-300",
+              "absolute inset-0 z-10 transition-opacity duration-200",
               ready ? "opacity-100" : "pointer-events-none opacity-0",
             )}
           >
@@ -531,6 +540,7 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
   const carouselRef = useRef(null);
   const trackRef = useRef(null);
   const scrollEndTimerRef = useRef(null);
+  const positionedTrackKeyRef = useRef("");
   const [activeIndex, setActiveIndex] = useState(0);
   const [lastInteractionAt, setLastInteractionAt] = useState(0);
   const [modelInteractionActive, setModelInteractionActive] = useState(false);
@@ -546,6 +556,7 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
   const cloneCount = canScroll ? Math.min(Math.max(visibleCount, 1), itemCount) : 0;
   const leadingClones = canScroll ? items.slice(-cloneCount) : [];
   const trailingClones = canScroll ? items.slice(0, cloneCount) : [];
+  const trackPositionKey = `${itemCount}:${cloneCount}:${canScroll}:${items.map((item) => item.id).join("|")}`;
 
   const markInteraction = useCallback(() => {
     setLastInteractionAt(Date.now());
@@ -603,6 +614,17 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
     }, 140);
   }, [canScroll, cloneCount, itemCount]);
 
+  const syncActiveIndex = useCallback(() => {
+    const track = trackRef.current;
+    const slides = carouselSlideElements(track);
+
+    if (!track || slides.length === 0 || itemCount === 0) return;
+
+    const renderedIndex = closestCarouselSlideIndex(track, slides);
+    const logicalIndex = canScroll ? loopIndex(renderedIndex - cloneCount, itemCount) : renderedIndex;
+    setActiveIndex((current) => (current === logicalIndex ? current : logicalIndex));
+  }, [canScroll, cloneCount, itemCount]);
+
   const moveByStep = useCallback(
     (direction, userInitiated = true) => {
       const track = trackRef.current;
@@ -625,6 +647,7 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
       const targetSlide = slides[targetRenderedIndex];
       if (!targetSlide) return;
 
+      setActiveIndex((current) => (current === requestedLogicalIndex ? current : requestedLogicalIndex));
       const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
       track.scrollTo({
         left: carouselSlideScrollLeft(track, targetSlide),
@@ -656,8 +679,9 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
   );
 
   const handleTrackScroll = useCallback(() => {
+    syncActiveIndex();
     settleTrackPosition();
-  }, [settleTrackPosition]);
+  }, [settleTrackPosition, syncActiveIndex]);
 
   useEffect(() => {
     measureVisibleCount();
@@ -677,6 +701,8 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
   }, [measureVisibleCount]);
 
   useLayoutEffect(() => {
+    if (positionedTrackKeyRef.current === trackPositionKey) return;
+
     const track = trackRef.current;
     const slides = carouselSlideElements(track);
 
@@ -687,8 +713,9 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
 
     if (slide) {
       track.scrollTo({ left: carouselSlideScrollLeft(track, slide), behavior: "auto" });
+      positionedTrackKeyRef.current = trackPositionKey;
     }
-  }, [canScroll, cloneCount, itemCount, safeActiveIndex]);
+  }, [canScroll, cloneCount, itemCount, safeActiveIndex, trackPositionKey]);
 
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -797,7 +824,7 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
                 <span
                   key={`${item.id}-position-${index}`}
                   className={cn(
-                    "h-1 w-4 transition-colors duration-300",
+                    "h-1 w-4 transition-colors duration-150",
                     index === safeActiveIndex ? "bg-[#244fd6]" : "bg-[#d8d0c5]",
                   )}
                 />
@@ -868,7 +895,7 @@ function MediaCarousel({ media, label, compact = false, mobileMediaType = null }
             <span
               key={`${item.id}-mobile-position-${index}`}
               className={cn(
-                "h-1 transition-[width,background-color] duration-300",
+                "h-1 transition-[width,background-color] duration-150",
                 index === safeActiveIndex ? "w-5 bg-[#244fd6]" : "w-2 bg-[#d8d0c5]",
               )}
             />
@@ -1128,18 +1155,26 @@ function ProjectRow({ project, index, meta }) {
   const artifactButtons = projectArtifactButtons(project, meta);
   const hasProjectLinks = Boolean(project.logoSrc || artifactButtons.length > 0);
   const hasCompactLogo = project.id === "vividgrasp-ai-vision-robotics-arm";
+  const hasWideProgramLogo = project.logoSrc?.includes("/tetc-logo.");
   const linkedCredentialId = project.logoCredentialId || null;
   const logoHref = linkedCredentialId ? `#${credentialAnchorId(linkedCredentialId)}` : project.logoHref;
   const logoContainerClass = cn(
     "border border-[#d6cec0] bg-white transition",
-    hasCompactLogo ? "inline-flex px-2 py-1.5" : "block px-3 py-2",
+    hasCompactLogo
+      ? "inline-flex px-2 py-1.5"
+      : hasWideProgramLogo
+        ? "grid h-[71px] w-[160px] max-w-full place-items-center p-1.5"
+        : "block px-3 py-2",
   );
   const logoImage = project.logoSrc ? (
     <img
       src={project.logoSrc}
       alt={project.logoAlt || `${project.title} logo`}
       loading="lazy"
-      className={cn("object-contain", hasCompactLogo ? "h-6 w-[132px] max-w-full" : "h-8 w-full")}
+      className={cn(
+        "object-contain",
+        hasCompactLogo ? "h-6 w-[132px] max-w-full" : hasWideProgramLogo ? "h-full w-full" : "h-8 w-full",
+      )}
     />
   ) : null;
 
@@ -1159,7 +1194,9 @@ function ProjectRow({ project, index, meta }) {
           <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] sm:text-xs sm:tracking-[0.16em] ${style.text}`}>{project.label}</p>
           <span className={`h-2 w-2 rounded-full sm:h-2.5 sm:w-2.5 ${style.bg}`} />
         </div>
-        <p className="w-fit border border-[#d6cec0] bg-white px-2 py-0.5 text-[10px] font-medium leading-4 text-slate-700 sm:text-xs xl:mt-6 xl:py-1">{project.status}</p>
+        {project.status && (
+          <p className="w-fit border border-[#d6cec0] bg-white px-2 py-0.5 text-[10px] font-medium leading-4 text-slate-700 sm:text-xs xl:mt-6 xl:py-1">{project.status}</p>
+        )}
         {project.teamContext && (
           <div className="border-l border-[#d6cec0] pl-2 xl:mt-5 xl:border-l-0 xl:border-t xl:pl-0 xl:pt-4">
             <p className="text-[10px] font-semibold leading-4 text-slate-900 sm:text-sm sm:leading-5">{project.teamContext}</p>
@@ -1225,13 +1262,17 @@ function ProjectRow({ project, index, meta }) {
 
 function MoreWorkStandardCard({ project, index, meta }) {
   const publishedMedia = list(project.media).filter((item) => item.src);
-  const logoClassName = "block max-w-[150px] border border-[#d6cec0] bg-white px-2 py-1";
+  const hasWideProgramLogo = project.logoSrc?.includes("/tetc-logo.");
+  const logoClassName = cn(
+    "grid place-items-center border border-[#d6cec0] bg-white",
+    hasWideProgramLogo ? "h-14 w-32 p-1.5 sm:h-16 sm:w-36" : "max-w-[150px] px-2 py-1",
+  );
   const logoImage = project.logoSrc ? (
     <img
       src={project.logoSrc}
       alt={project.logoAlt || `${project.title} logo`}
       loading="lazy"
-      className="h-7 w-full object-contain"
+      className={cn("w-full object-contain", hasWideProgramLogo ? "h-full" : "h-7")}
     />
   ) : null;
 
@@ -1541,7 +1582,7 @@ function AcademicDetailsDialog({ details, meta, triggerLabel }) {
                           {detail.format === "ap-score" && <span className="text-[10px] font-semibold text-slate-500 sm:text-xs">/ 5</span>}
                         </div>
                         <p className="mt-1 text-[10px] font-semibold leading-4 text-slate-900 sm:text-xs sm:leading-5">{detail.label}</p>
-                        {detail.note && <p className="mt-0.5 text-[9px] leading-4 text-slate-600 sm:text-[11px]">{detail.note}</p>}
+                        {detail.note && <p className="mt-0.5 text-[9px] font-semibold leading-4 text-slate-600 sm:text-[11px]">{detail.note}</p>}
                       </div>
                     ))}
                   </div>
@@ -1779,6 +1820,8 @@ function ProgramCredentialCard({ credential, index, meta }) {
               "grid shrink-0 place-items-center overflow-hidden border border-[#d6cec0] bg-white transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
               credential.id === "stanford-ai4all"
                 ? "h-9 w-20 p-1 sm:w-24"
+                : credential.id === "tetc"
+                  ? "h-[50px] w-[113px] p-1.5 sm:h-[57px] sm:w-[128px]"
                 : isCredential
                   ? "h-12 w-16 p-1.5 sm:h-14 sm:w-20"
                   : "h-12 w-24 p-1.5 sm:h-14 sm:w-28",
@@ -2158,17 +2201,23 @@ function MoreWorkCompactCard({ project, index, meta }) {
 }
 
 function ContactButton({ href, icon, children, primary = false }) {
+  const isMobile = useMediaQuery("(max-width: 767px)");
   if (!href || !children) return null;
 
+  const className = primary
+    ? "rounded-none bg-slate-950 px-3 py-2.5 text-xs font-semibold text-white hover:bg-[#244fd6] sm:px-5 sm:py-5 sm:text-sm"
+    : "rounded-none border-[#cfc4b4] bg-white px-3 py-2.5 text-xs font-semibold text-slate-950 hover:bg-[#fbfaf7] sm:px-5 sm:py-5 sm:text-sm";
+
+  if (icon === "phone" && !isMobile) {
+    return (
+      <Button type="button" aria-disabled="true" className={cn(className, "cursor-default hover:bg-slate-950")}>
+        <Icon name={icon} className="mr-2 h-4 w-4" /> {children}
+      </Button>
+    );
+  }
+
   return (
-    <Button
-      asChild
-      className={
-        primary
-          ? "rounded-none bg-slate-950 px-3 py-2.5 text-xs font-semibold text-white hover:bg-[#244fd6] sm:px-5 sm:py-5 sm:text-sm"
-          : "rounded-none border-[#cfc4b4] bg-white px-3 py-2.5 text-xs font-semibold text-slate-950 hover:bg-[#fbfaf7] sm:px-5 sm:py-5 sm:text-sm"
-      }
-    >
+    <Button asChild className={className}>
       <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
         <Icon name={icon} className="mr-2 h-4 w-4" /> {children}
       </a>
@@ -2715,7 +2764,7 @@ function ChristopherPortfolioShell() {
     <main className="min-h-screen bg-[#f5f3ee] text-slate-950">
       <ScrollToRouteTarget />
       <div className="pointer-events-none fixed inset-0 opacity-[0.34]">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,46,32,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,46,32,0.055)_1px,transparent_1px)] bg-[size:44px_44px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,46,32,0.105)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,46,32,0.085)_1px,transparent_1px)] bg-[size:42px_42px]" />
       </div>
 
       <Navigation content={content} />

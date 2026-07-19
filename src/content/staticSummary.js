@@ -139,7 +139,7 @@ export function buildStaticSummary(content) {
     '  <section aria-labelledby="static-contact-heading">',
     '    <h2 id="static-contact-heading">Contact</h2>',
     "    <ul>",
-    meta.contactPhoneHref && meta.contactPhoneLabel ? `      <li><a href="${escapeHtml(meta.contactPhoneHref)}">${escapeHtml(meta.contactPhoneLabel)}</a></li>` : "",
+    meta.contactPhoneLabel ? `      <li>${escapeHtml(meta.contactPhoneLabel)} (text message on mobile)</li>` : "",
     meta.contactEmailHref ? `      <li><a href="${escapeHtml(meta.contactEmailHref)}">${escapeHtml(meta.contactEmailLabel || "Email")}</a></li>` : "",
     meta.githubHref ? `      <li><a href="${escapeHtml(meta.githubHref)}">${escapeHtml(meta.githubLabel || "GitHub")}</a></li>` : "",
     "    </ul>",

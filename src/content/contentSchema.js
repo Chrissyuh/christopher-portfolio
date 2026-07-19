@@ -55,7 +55,7 @@ export const allowedIcons = [
 ];
 
 const requiredFields = {
-  MainProjects: ["id", "title", "label", "status", "accent", "summary"],
+  MainProjects: ["id", "title", "label", "accent", "summary"],
   ProjectArtifactLinks: ["id", "project_id", "label", "href", "type"],
   Academics: ["id", "label", "value"],
   AcademicDetails: ["id", "group", "format", "label", "value"],
@@ -112,8 +112,8 @@ const defaultMeta = {
   toolMediaEnabled: "false",
   recordTitle: "Experience and activities",
   contactTitle: "Contact Christopher",
-  contactText: "Call, text, email, or view my work on GitHub.",
-  contactPhoneHref: "tel:+19013561000",
+  contactText: "Text, email, or view my work on GitHub.",
+  contactPhoneHref: "sms:+19013561000",
   contactPhoneLabel: "901-356-1000",
   contactEmailHref: "mailto:Chrisaheskett@gmail.com",
   contactEmailLabel: "Email",

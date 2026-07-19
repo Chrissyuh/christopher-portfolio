@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-19T14:05:19.818Z",
+  "updatedAt": "2026-07-19T15:03:43.074Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -44,8 +44,8 @@
     "toolMediaEnabled": "false",
     "recordTitle": "Experience and activities",
     "contactTitle": "Contact Christopher",
-    "contactText": "Call, text, email, or view my work on GitHub.",
-    "contactPhoneHref": "tel:+19013561000",
+    "contactText": "Text, email, or view my work on GitHub.",
+    "contactPhoneHref": "sms:+19013561000",
     "contactPhoneLabel": "901-356-1000",
     "contactEmailHref": "mailto:Chrisaheskett@gmail.com",
     "contactEmailLabel": "Email",
@@ -169,7 +169,7 @@
       "logoAlt": "ExxonMobil Foundation Teen Engineering and Tech Center logo",
       "logoHref": "https://tetc.org/",
       "logoCredentialId": "tetc",
-      "relatedProgramNote": "Coach Taylor challenged me to start this project during TETC.",
+      "relatedProgramNote": "Well... kinda. Coach Taylor, my ninth grade coach at the TETC challenged me to make this, so while it wasn't a lesson, it has a connection to TETC.",
       "artifactLinks": [],
       "media": [
         {
@@ -212,7 +212,7 @@
       "href": "https://subpix-editor.vercel.app/",
       "sourceHref": "https://github.com/Chrissyuh/Subpix",
       "label": "desktop app",
-      "status": "Functional v1",
+      "status": "",
       "accent": "clay",
       "summary": "I built Subpix, an open-source desktop editor for drawing with individual RGB subpixels. It reads and validates .subpix JSON files, exports PNG images, and ships as a packaged Windows application built with Electron, React, TypeScript, and Vite.",
       "teamContext": "Solo software project",
@@ -512,7 +512,7 @@
       "presentationSize": "standard",
       "title": "AgentDeck",
       "href": null,
-      "sourceHref": null,
+      "sourceHref": "https://github.com/Chrissyuh/agentdeck",
       "logoSrc": null,
       "logoAlt": "",
       "logoHref": null,
@@ -520,7 +520,16 @@
       "status": "",
       "context": "",
       "description": "I built AgentDeck to turn an old phone or tablet into a dedicated touchscreen controller for AI coding agents. A lightweight desktop host serves the interface over the local network, allowing spare hardware to replace an expensive single-purpose control deck.",
-      "media": []
+      "media": [
+        {
+          "id": "media-1",
+          "type": "photo",
+          "src": "/portfolio-media/agentdeck/agentdeck-controller.webp",
+          "posterSrc": null,
+          "alt": "AgentDeck touchscreen controller showing agent status cards and controls",
+          "caption": "AgentDeck touchscreen controller"
+        }
+      ]
     },
     {
       "id": "check-ins",
@@ -557,7 +566,7 @@
       "logoHref": "https://tetc.org/",
       "type": "TETC robotics builds",
       "status": "",
-      "context": "TETC program",
+      "context": "",
       "description": "I built VEX robots at TETC to practice gearing, drivetrain layout, shaft spacing, and mechanical packaging.",
       "media": []
     },
@@ -1086,6 +1095,17 @@
       "caption": "Drawing with RGB subpixels",
       "context": "",
       "src": "/portfolio-media/subpix/subpix-editor-grid-hidden.webp"
+    },
+    {
+      "id": "moreWork/agentdeck/media-1",
+      "surface": "moreWork",
+      "owner": "AgentDeck visual 1",
+      "kind": "image",
+      "status": "published",
+      "description": "AgentDeck touchscreen controller showing agent status cards and controls",
+      "caption": "AgentDeck touchscreen controller",
+      "context": "",
+      "src": "/portfolio-media/agentdeck/agentdeck-controller.webp"
     },
     {
       "id": "moreWork/check-ins/media-1",

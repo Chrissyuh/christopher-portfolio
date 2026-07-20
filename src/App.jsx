@@ -1956,20 +1956,23 @@ function AchievementRibbon({ id, label, title = "", subtitle = "", detail = "", 
           id={tooltipId}
           role="tooltip"
           className={cn(
-            "pointer-events-none absolute left-0 top-[calc(100%+0.55rem)] z-40 w-52 border border-[#d8b451] bg-[#fffdf7] px-2.5 py-2 text-[10px] font-semibold leading-4 text-slate-800 shadow-[0_12px_30px_rgba(93,67,13,0.18)] sm:bottom-[calc(100%+0.55rem)] sm:top-auto sm:text-xs sm:leading-5",
-            align === "right" && "sm:left-auto sm:right-0",
+            "pointer-events-none absolute left-0 top-[calc(100%+0.55rem)] z-40 w-56 max-w-[calc(100vw-2rem)] border border-[#d8b451] bg-[#fffdf7] px-3 py-2.5 text-[10px] font-semibold leading-4 text-slate-800 shadow-[0_12px_30px_rgba(93,67,13,0.18)] sm:bottom-[calc(100%+0.55rem)] sm:top-auto sm:w-72 sm:text-xs sm:leading-5",
+            align === "right" && "left-auto right-0",
           )}
         >
           {title ? (
             <>
               <span className="block text-[11px] font-semibold leading-4 text-slate-950 sm:text-xs sm:leading-5">{title}</span>
-              {subtitle && <span className="mt-1 block font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-[#8a6500] sm:text-[10px] sm:tracking-[0.12em]">{subtitle}</span>}
+              {subtitle && <span className="mt-1 block text-[10px] font-semibold leading-4 text-[#8a6500] sm:text-[11px] sm:leading-5">{subtitle}</span>}
               {detail && <span className="mt-1.5 block font-normal text-slate-700">{detail}</span>}
             </>
           ) : label}
           <span
             aria-hidden="true"
-            className="absolute -top-1 left-3 h-2 w-2 rotate-45 border-l border-t border-[#d8b451] bg-[#fffdf7] sm:hidden"
+            className={cn(
+              "absolute -top-1 left-3 h-2 w-2 rotate-45 border-l border-t border-[#d8b451] bg-[#fffdf7] sm:hidden",
+              align === "right" && "left-auto right-3",
+            )}
           />
           <span
             aria-hidden="true"

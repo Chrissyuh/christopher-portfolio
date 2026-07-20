@@ -1729,11 +1729,38 @@ function AcademicCard({ item, index, wide = false, valueAction = null }) {
   );
 }
 
-function CredentialPreviewPopover({ credential, label, missingLabel, align = "left" }) {
+function useAdaptivePopoverSide(isOpen, triggerRef, panelRef, viewportPadding = 16) {
+  const [openSide, setOpenSide] = useState("right");
+
+  useLayoutEffect(() => {
+    if (!isOpen) return undefined;
+
+    function updateOpenSide() {
+      const trigger = triggerRef.current;
+      const panel = panelRef.current;
+      if (!trigger || !panel) return;
+
+      const triggerBounds = trigger.getBoundingClientRect();
+      const panelWidth = panel.getBoundingClientRect().width;
+      const opensRightWithoutClipping = triggerBounds.left + panelWidth <= window.innerWidth - viewportPadding;
+      setOpenSide(opensRightWithoutClipping ? "right" : "left");
+    }
+
+    updateOpenSide();
+    window.addEventListener("resize", updateOpenSide);
+    return () => window.removeEventListener("resize", updateOpenSide);
+  }, [isOpen, panelRef, triggerRef, viewportPadding]);
+
+  return openSide;
+}
+
+function CredentialPreviewPopover({ credential, label, missingLabel }) {
   const containerRef = useRef(null);
   const triggerRef = useRef(null);
+  const panelRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
+  const openSide = useAdaptivePopoverSide(isOpen, triggerRef, panelRef);
   const panelId = `credential-preview-${credential.id}`;
 
   useEffect(() => {
@@ -1807,12 +1834,13 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
 
       {isOpen && (
         <div
+          ref={panelRef}
           id={panelId}
           role="dialog"
           aria-label={`${credential.credential} preview`}
           className={cn(
             "relative z-40 mt-3 w-full border border-[#cfc4b4] bg-white p-2.5 shadow-[0_18px_50px_rgba(34,28,18,0.18)] sm:p-3 md:absolute md:bottom-[calc(100%+0.75rem)] md:top-auto md:mt-0 md:w-[min(30vw,22rem)] md:translate-y-0",
-            align === "right" ? "md:right-0" : "md:left-0",
+            openSide === "left" ? "md:right-0" : "md:left-0",
           )}
         >
           {credential.scanSrc ? (
@@ -1844,7 +1872,7 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
             aria-hidden="true"
             className={cn(
               "absolute -bottom-2 hidden h-4 w-4 rotate-45 border-b border-r border-[#cfc4b4] bg-white md:block",
-              align === "right" ? "right-8" : "left-8",
+              openSide === "left" ? "right-8" : "left-8",
             )}
           />
         </div>
@@ -1971,7 +1999,6 @@ function ProgramCredentialCard({ credential, index, meta }) {
             credential={credential}
             label={meta.credentialPreviewLabel || "View certificate"}
             missingLabel={meta.credentialMissingScanLabel || "Certificate scan needed"}
-            align={index % 2 === 1 ? "right" : "left"}
           />
         )}
         {credential.href && (
@@ -1996,28 +2023,8 @@ function AchievementRibbon({ id, label, title = "", subtitle = "", detail = "", 
   const tooltipRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
-  const [openSide, setOpenSide] = useState("right");
+  const openSide = useAdaptivePopoverSide(isOpen, triggerRef, tooltipRef);
   const tooltipId = `achievement-${id}`;
-
-  useLayoutEffect(() => {
-    if (!isOpen) return undefined;
-
-    function updateOpenSide() {
-      const trigger = triggerRef.current;
-      const tooltip = tooltipRef.current;
-      if (!trigger || !tooltip) return;
-
-      const triggerBounds = trigger.getBoundingClientRect();
-      const tooltipWidth = tooltip.getBoundingClientRect().width;
-      const viewportPadding = 16;
-      const opensRightWithoutClipping = triggerBounds.left + tooltipWidth <= window.innerWidth - viewportPadding;
-      setOpenSide(opensRightWithoutClipping ? "right" : "left");
-    }
-
-    updateOpenSide();
-    window.addEventListener("resize", updateOpenSide);
-    return () => window.removeEventListener("resize", updateOpenSide);
-  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return undefined;
@@ -2193,25 +2200,25 @@ function RecordSectionCard({ section, collection = "fullRecord", index }) {
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="technical-panel border border-[#d2c8b9] bg-white shadow-sm"
+      className="technical-panel record-section border border-[#d2c8b9] bg-white shadow-sm"
     >
-      <div className="flex items-center gap-2.5 border-b border-[#d2c8b9] bg-[#fbfaf7] p-2.5 sm:gap-3 sm:p-5">
+      <div className="flex items-center gap-2.5 border-b border-[#d2c8b9] bg-[#fbfaf7] p-2.5 sm:gap-3 sm:px-4 sm:py-3.5">
         <div className="grid h-8 w-8 shrink-0 place-items-center border border-[#d2c8b9] bg-white text-[#244fd6] sm:h-10 sm:w-10"><Icon name={section.icon} className="h-4 w-4" /></div>
         {index && <span className="font-mono text-[9px] font-semibold tracking-[0.12em] text-[#244fd6] sm:text-[10px]">R{String(index).padStart(2, "0")}</span>}
-        <h2 className="text-lg font-semibold tracking-[-0.02em] text-slate-950 sm:text-2xl sm:tracking-[-0.03em]">{section.category}</h2>
+        <h2 className="text-lg font-semibold text-slate-950 sm:text-xl">{section.category}</h2>
       </div>
       <div className="divide-y divide-[#e1d7c8]">
         {list(section.items).map((item) => (
-          <div key={item.id} className="grid gap-1.5 p-2.5 sm:gap-2 sm:p-5 md:grid-cols-[minmax(180px,0.35fr)_1fr_auto] md:items-start md:gap-5">
+          <div key={item.id} className="record-row grid gap-1.5 p-2.5 sm:px-4 sm:py-3.5 md:grid-cols-[minmax(170px,230px)_minmax(0,1fr)_auto] md:items-start md:gap-5">
             <div>
               <h3 className="text-sm font-semibold text-slate-950 sm:text-base">{item.title}</h3>
               {item.date && <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] sm:text-xs">{item.date}</p>}
             </div>
             <div>
-              <p className="text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{item.detail}</p>
+              <p className="max-w-3xl text-xs leading-5 text-slate-700 sm:text-sm sm:leading-6">{item.detail}</p>
               <AchievementTrophies item={item} className="mt-2.5" />
             </div>
-            {item.href && <a href={item.href} target="_blank" rel="noreferrer" className="inline-flex items-center text-xs font-semibold text-[#244fd6] hover:underline">{item.hrefLabel || "Open"}<Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" /></a>}
+            {item.href && <a href={item.href} target="_blank" rel="noreferrer" className="signal-link inline-flex items-center justify-self-start whitespace-nowrap text-xs font-semibold text-[#244fd6] hover:underline md:justify-self-end">{item.hrefLabel || "Open"}<Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" /></a>}
           </div>
         ))}
       </div>
@@ -2743,22 +2750,22 @@ function RecordPage({ content }) {
 
   return (
     <>
-      <section id="top" className="relative z-10 mx-auto max-w-7xl px-3 pb-4 pt-4 sm:px-5 sm:pb-10 sm:pt-10 md:px-8 md:pb-14 md:pt-14">
-        <div className="technical-panel border border-[#d2c8b9] bg-white p-3 shadow-sm sm:p-6 md:p-8">
-          <div className="flex flex-col gap-4 sm:gap-6 md:flex-row md:items-start md:justify-between">
+      <section id="top" className="relative z-10 mx-auto max-w-7xl px-3 pb-2 pt-4 sm:px-5 sm:pb-3 sm:pt-7 md:px-8 md:pt-8">
+        <div className="technical-panel border border-[#d2c8b9] bg-white p-3 shadow-sm sm:p-5 md:p-6">
+          <div className="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-center md:justify-between">
             <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3 sm:gap-5">
               <span aria-hidden="true" className="section-index font-mono text-[10px] font-semibold tracking-[0.12em] text-[#244fd6]">R</span>
               <TitleBlock title={meta.recordTitle} as="h1" className="max-w-4xl" />
             </div>
-            <Button asChild className="self-start rounded-none bg-slate-950 px-4 py-3 text-sm font-semibold text-white hover:bg-[#244fd6] sm:px-5 sm:py-5">
+            <Button asChild className="self-start rounded-none bg-slate-950 px-4 py-2.5 text-xs font-semibold text-white hover:bg-[#244fd6] sm:px-5 sm:py-3 sm:text-sm">
               <Link to="/"><Icon name="chevronLeft" className="mr-2 h-4 w-4" />{meta.backPortfolioLabel}</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto max-w-7xl px-3 py-4 sm:px-5 sm:py-8 md:px-8 md:py-12">
-        <div className="grid gap-3 sm:gap-5">
+      <section className="relative z-10 mx-auto max-w-7xl px-3 pb-6 pt-2 sm:px-5 sm:pb-10 sm:pt-3 md:px-8 md:pb-12">
+        <div className="grid gap-3 sm:gap-4">
           <RecordSectionCard section={academicRecordSection} collection="academicDetails" index={1} />
           <RecordSectionCard section={programRecordSection} collection="programCredentials" index={2} />
           {list(content.fullRecord).map((section, index) => <RecordSectionCard key={section.id} section={section} index={index + 3} />)}

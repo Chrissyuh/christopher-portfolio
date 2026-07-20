@@ -8,6 +8,13 @@
 
   body {
     background: #f5f3ee;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  a {
+    touch-action: manipulation;
   }
 
   ::selection {
@@ -129,16 +136,34 @@
   transition: opacity 180ms ease, transform 220ms ease;
 }
 
-.technical-panel:hover,
 .technical-panel:focus-within {
   border-color: color-mix(in srgb, var(--panel-accent, #244fd6) 38%, #d2c8b9);
-  box-shadow: 0 12px 32px rgb(34 28 18 / 9%);
+  box-shadow: 0 8px 24px rgb(34 28 18 / 7%);
 }
 
-.technical-panel:hover::after,
 .technical-panel:focus-within::after {
   opacity: 0.9;
   transform: translate(0, 0);
+}
+
+.record-row {
+  transition: background-color 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .technical-panel:hover {
+    border-color: color-mix(in srgb, var(--panel-accent, #244fd6) 38%, #d2c8b9);
+    box-shadow: 0 8px 24px rgb(34 28 18 / 7%);
+  }
+
+  .technical-panel:hover::after {
+    opacity: 0.9;
+    transform: translate(0, 0);
+  }
+
+  .record-row:hover {
+    background: rgb(245 243 238 / 48%);
+  }
 }
 
 .hero-project-list::before {

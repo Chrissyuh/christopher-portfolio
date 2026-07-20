@@ -79,11 +79,10 @@ function visualKindLabel(kind) {
 }
 
 function visualInventoryLine(visual) {
-  const status = visual.status === "planned" ? "planned placeholder" : visualKindLabel(visual.kind);
   const caption = visual.caption && visual.caption !== visual.description ? ` Caption: ${visual.caption}.` : "";
   const context = visual.context ? ` Context: ${visual.context}.` : "";
-  const source = visual.src ? ` ${markdownLink("Open asset", absoluteUrl(visual.src))}` : "";
-  return `${visual.owner} - ${status}: ${visual.description}.${caption}${context}${source}`;
+  const source = ` ${markdownLink("Open asset", absoluteUrl(visual.src))}`;
+  return `${visual.owner} - ${visualKindLabel(visual.kind)}: ${visual.description}.${caption}${context}${source}`;
 }
 
 function visualInventoryMarkdown(content) {
@@ -306,7 +305,7 @@ function buildLlmsFullTxt(content) {
                 .join("; ")}`
             : "",
           project.contribution ? `My contribution: ${project.contribution}` : "",
-          project.logoHref ? `Related program/logo link: ${project.logoHref}` : "",
+          project.logoHref ? `Related program link: ${project.logoHref}` : "",
           project.relatedProgramNote ? `Related program context: ${project.relatedProgramNote}` : "",
           "",
           project.summary,

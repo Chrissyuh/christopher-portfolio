@@ -91,6 +91,14 @@ for (const claim of claims) {
 }
 
 assert.deepEqual(publicContent.visualInventory, visualInventory, "portfolio.json visual inventory drifted from the source content.");
+assert.ok(
+  visualInventory.every((visual) => visual.status === "published" && visual.src && visual.description),
+  "The AI visual inventory must contain only published, described evidence.",
+);
+assert.ok(
+  visualInventory.every((visual) => visual.kind !== "logo" && visual.kind !== "poster"),
+  "Brand logos and fallback posters must not be narrated as portfolio evidence.",
+);
 for (const visual of visualInventory) {
   assert.ok(visual.description, `Visual ${visual.id} is missing a text description.`);
   assert.ok(llms.includes(visual.description), `llms.txt is missing visual description for ${visual.id}: ${visual.description}`);

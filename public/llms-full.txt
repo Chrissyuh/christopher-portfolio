@@ -24,7 +24,7 @@ Label: robotics simulation
 Source: https://github.com/LenekyRadish/VividGrasp
 Best link label: Open source
 My contribution: I led CAD, modeled the arm in SolidWorks, prepared its URDF files, and worked with a teammate on a physical prototype.
-Related program/logo link: https://ai4all.spcs.stanford.edu/
+Related program link: https://ai4all.spcs.stanford.edu/
 A ten-person Stanford AI4ALL project combining computer vision, inverse kinematics, and PyBullet simulation to move a robotic arm toward recognized objects.
 Published media: 4
 
@@ -32,7 +32,7 @@ Published media: 4
 Status: Prototype in progress
 Context: Solo prototype
 Label: plant-watering prototype
-Related program/logo link: https://tetc.org/
+Related program link: https://tetc.org/
 Related program context: Well... kinda. Coach Taylor, my ninth grade coach at the TETC challenged me to make this, so while it wasn't a lesson, it has a connection to TETC.
 I designed and assembled an ESP32-based controller for a self-watering planter. The fabricated PCB reads soil moisture, controls a water pump, and integrates display and physical input hardware. I also designed the planter, reservoir, and electronics layout in SolidWorks.
 Published media: 4; interactive 3D models: 1
@@ -48,30 +48,21 @@ Published media: 2
 
 ## Visual Descriptions
 
-- Spring Early College Academy - logo: Spring Early College Academy crest. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/academics/seca-logo.webp)
 - Garden Party Pinball visual 1 - image: Garden Party playfield installed in the cabinet. Caption: Playfield in cabinet. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/garden-party/playfield-in-cabinet.jpg)
 - Garden Party Pinball visual 2 - image: Garden Party control board and power supplies mounted on plywood. Caption: Control board. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/garden-party/control-board.jpg)
-- VividGrasp AI-Vision Robotics Arm logo - logo: Stanford AI4ALL logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/vividgrasp/stanford-ai4all-logo.png)
 - VividGrasp AI-Vision Robotics Arm visual 1 - image: SolidWorks robotic arm assembly for VividGrasp. Caption: SolidWorks arm assembly. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/vividgrasp/solidworks-arm-assembly.webp)
 - VividGrasp AI-Vision Robotics Arm visual 2 - image: PyBullet joint control demo for the VividGrasp arm. Caption: PyBullet joint controls. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/vividgrasp/pybullet-joint-controls.webp)
 - VividGrasp AI-Vision Robotics Arm visual 3 - image: PyBullet target scene for the VividGrasp robotic arm. Caption: PyBullet target demo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/vividgrasp/pybullet-target-demo.webp)
 - VividGrasp AI-Vision Robotics Arm visual 4 - image: Printed gear prototype from the VividGrasp arm work. Caption: Printed gear prototype. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/vividgrasp/printed-gear-prototype.webp)
-- Smart Self-Watering Pot / Smart Planter PCB logo - logo: ExxonMobil Foundation Teen Engineering and Tech Center logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/programs/tetc-logo.png)
 - Smart Self-Watering Pot / Smart Planter PCB visual 1 - interactive 3D model: Board A cost-down PCB for the Smart Planter. Caption: Board A cost-down PCB. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/smart-planter/board-a-cost-down.glb)
-- Smart Self-Watering Pot / Smart Planter PCB visual 1 poster - poster: Static poster for Board A cost-down PCB for the Smart Planter. Caption: Board A cost-down PCB. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/smart-planter/board-a-cost-down-poster.webp)
 - Smart Self-Watering Pot / Smart Planter PCB visual 2 - image: Assembled Smart Planter Board A prototype connected for testing. Caption: Current Board A prototype. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/smart-planter/current-board-a.webp)
 - Smart Self-Watering Pot / Smart Planter PCB visual 3 - image: Fabricated Smart Planter Board A held beside its KiCad PCB layout. Caption: Fabricated Board A beside its KiCad layout. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/smart-planter/board-a-kicad-comparison.webp)
 - Smart Self-Watering Pot / Smart Planter PCB visual 4 - image: SolidWorks layout showing the Smart Planter PCB, planter support, and water reservoir. Caption: PCB, planter, and reservoir layout in SolidWorks. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/smart-planter/solidworks-system-layout.webp)
 - Subpix visual 1 - image: Subpix editor showing an RGB subpixel drawing with the grid hidden. Caption: RGB subpixel drawing in Subpix. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/subpix/subpix-editor-grid-hidden.webp)
 - Subpix visual 2 - video: Subpix drawing demonstration with the grid hidden. Caption: Drawing with RGB subpixels. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/subpix/subpix-drawing-demo.mp4)
-- Subpix visual 2 poster - poster: Static poster for Subpix drawing demonstration with the grid hidden. Caption: Drawing with RGB subpixels. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/subpix/subpix-editor-grid-hidden.webp)
 - AgentDeck visual 1 - image: AgentDeck touchscreen controller showing agent status cards and controls. Caption: AgentDeck touchscreen controller. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/agentdeck/agentdeck-controller.webp)
 - Check-ins visual 1 - image: Check-ins dashboard showing recurring work and study items with target and maximum gaps. Caption: Recurring check-ins with target and maximum gaps. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/check-ins/check-ins-overview.webp)
-- VEX Robotics Builds logo - logo: ExxonMobil Foundation Teen Engineering and Tech Center logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/programs/tetc-logo.png)
-- Teen Engineering + Tech Center logo - logo: ExxonMobil Foundation Teen Engineering and Tech Center logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/programs/tetc-logo.png)
-- Stanford AI4ALL Certificate of Completion logo - logo: Stanford AI4ALL logo. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/vividgrasp/stanford-ai4all-logo.png)
 - Stanford AI4ALL Certificate of Completion document - certificate image: Stanford AI4ALL Certificate of Completion in Robotics awarded to Christopher Heskett. Caption: Stanford AI4ALL Certificate of Completion in Robotics, June 26, 2026. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/credentials/stanford-ai4all-certificate.jpg)
-- Certified SOLIDWORKS Design Associate (CSWA) logo - logo: Certified SOLIDWORKS Design Associate badge. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/credentials/cswa-badge.png)
 - Certified SOLIDWORKS Design Associate (CSWA) document - certificate image: SOLIDWORKS Design Associate certificate awarded to Christopher Heskett. Caption: Certified SOLIDWORKS Design Associate, issued July 15, 2026. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/credentials/cswa-certificate.png)
 
 ## Academics

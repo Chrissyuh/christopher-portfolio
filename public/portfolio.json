@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-20T03:51:37.992Z",
+  "updatedAt": "2026-07-20T04:37:11.465Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -44,7 +44,7 @@
     "toolMediaEnabled": "false",
     "recordTitle": "Experience and activities",
     "contactTitle": "Contact Christopher",
-    "contactText": "Text, email, or view my work on GitHub.",
+    "contactText": "Email me, text me on mobile, or view my work on GitHub.",
     "contactPhoneHref": "sms:+19013561000",
     "contactPhoneLabel": "901-356-1000",
     "contactEmailHref": "mailto:Chrisaheskett@gmail.com",
@@ -417,6 +417,7 @@
       "issuer": "ExxonMobil Foundation",
       "date": "",
       "summary": "I attend a four-year after-school STEM program with engineering lessons, makerspace work, workplace tours, and college and career preparation.",
+      "summaryLinkText": "",
       "logoSrc": "/portfolio-media/programs/tetc-logo.png",
       "logoAlt": "ExxonMobil Foundation Teen Engineering and Tech Center logo",
       "logoHref": "https://tetc.org/",
@@ -443,6 +444,7 @@
       "issuer": "Stanford AI4ALL and Stanford Pre-Collegiate Studies",
       "date": "June 26, 2026",
       "summary": "Completed Stanford AI4ALL in Robotics through the ten-person VividGrasp project.",
+      "summaryLinkText": "VividGrasp project",
       "logoSrc": "/portfolio-media/vividgrasp/stanford-ai4all-logo.png",
       "logoAlt": "Stanford AI4ALL logo",
       "logoHref": "https://ai4all.spcs.stanford.edu/",
@@ -469,6 +471,7 @@
       "issuer": "Dassault Systèmes",
       "date": "July 15, 2026",
       "summary": "Passed the CSWA exam in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials.",
+      "summaryLinkText": "",
       "logoSrc": "/portfolio-media/credentials/cswa-badge.png",
       "logoAlt": "Certified SOLIDWORKS Design Associate badge",
       "logoHref": "https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url",
@@ -808,8 +811,11 @@
           "id": "scouts-bsa",
           "title": "Scouts BSA",
           "date": "",
-          "detail": "First Class Scout.",
-          "achievements": [],
+          "detail": "I participate in meetings once a week. Scouting Troop 401.",
+          "achievements": [
+            "Current rank - Second Class Scout",
+            "Merit badges - 14 earned"
+          ],
           "href": null,
           "hrefLabel": ""
         },

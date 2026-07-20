@@ -55,6 +55,7 @@ const iconPaths = {
     "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z",
   link: "M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1 M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1",
   list: "M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01",
+  badge: "M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z",
   awardRibbon: "M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12z M8.5 14.5 7 22l5-3 5 3-1.5-7.5",
 };
 
@@ -965,7 +966,7 @@ function ProjectLinkButton({ href, label, icon = "arrowRight", type }) {
 
 const jumpFocusTimers = new WeakMap();
 const jumpScrollFrames = new WeakMap();
-const jumpHighlightDurationMs = 1600;
+const jumpHighlightDurationMs = 2800;
 const navigationPreloadBudgetMs = 450;
 let navigationScrollSequence = 0;
 
@@ -1038,6 +1039,29 @@ async function scrollToPreparedTarget(target, options) {
   if (requestId !== navigationScrollSequence || !target.isConnected) return false;
   target.scrollIntoView(options);
   return true;
+}
+
+function waitForWindowScrollToSettle(timeoutMs = 2400) {
+  return new Promise((resolve) => {
+    let lastScrollY = window.scrollY;
+    let stableFrames = 0;
+    const startedAt = window.performance.now();
+
+    function checkPosition() {
+      const currentScrollY = window.scrollY;
+      stableFrames = Math.abs(currentScrollY - lastScrollY) < 0.5 ? stableFrames + 1 : 0;
+      lastScrollY = currentScrollY;
+
+      if (stableFrames >= 6 || window.performance.now() - startedAt >= timeoutMs) {
+        resolve();
+        return;
+      }
+
+      window.requestAnimationFrame(checkPosition);
+    }
+
+    window.requestAnimationFrame(checkPosition);
+  });
 }
 
 function credentialAnchorId(credentialId) {
@@ -1163,7 +1187,7 @@ function ProjectRow({ project, index, meta }) {
     hasCompactLogo
       ? "inline-flex px-2 py-1.5"
       : hasWideProgramLogo
-        ? "grid h-[71px] w-[160px] max-w-full place-items-center p-1.5"
+        ? "grid aspect-[83/38] w-[160px] max-w-full place-items-center overflow-hidden"
         : "block px-3 py-2",
   );
   const logoImage = project.logoSrc ? (
@@ -1173,7 +1197,7 @@ function ProjectRow({ project, index, meta }) {
       loading="lazy"
       className={cn(
         "object-contain",
-        hasCompactLogo ? "h-6 w-[132px] max-w-full" : hasWideProgramLogo ? "h-full w-full" : "h-8 w-full",
+        hasCompactLogo ? "h-6 w-[132px] max-w-full" : hasWideProgramLogo ? "h-full w-full object-cover" : "h-8 w-full",
       )}
     />
   ) : null;
@@ -1260,19 +1284,20 @@ function ProjectRow({ project, index, meta }) {
   );
 }
 
-function MoreWorkStandardCard({ project, index, meta }) {
+function MoreWorkStandardCard({ project, index, meta, linkedCredential = null }) {
   const publishedMedia = list(project.media).filter((item) => item.src);
   const hasWideProgramLogo = project.logoSrc?.includes("/tetc-logo.");
+  const logoHref = linkedCredential ? `#${credentialAnchorId(linkedCredential.id)}` : project.logoHref;
   const logoClassName = cn(
     "grid place-items-center border border-[#d6cec0] bg-white",
-    hasWideProgramLogo ? "h-14 w-32 p-1.5 sm:h-16 sm:w-36" : "max-w-[150px] px-2 py-1",
+    hasWideProgramLogo ? "aspect-[83/38] w-32 overflow-hidden sm:w-36" : "max-w-[150px] px-2 py-1",
   );
   const logoImage = project.logoSrc ? (
     <img
       src={project.logoSrc}
       alt={project.logoAlt || `${project.title} logo`}
       loading="lazy"
-      className={cn("w-full object-contain", hasWideProgramLogo ? "h-full" : "h-7")}
+      className={cn("w-full object-contain", hasWideProgramLogo ? "h-full object-cover" : "h-7")}
     />
   ) : null;
 
@@ -1288,12 +1313,13 @@ function MoreWorkStandardCard({ project, index, meta }) {
       <div className="flex items-start justify-between gap-3 border-b border-[#e1d7c8] bg-[#fbfaf7] p-3 sm:p-4">
         <p className="w-fit border border-[#d6cec0] bg-white px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#827466]">{project.type}</p>
         {project.logoSrc ? (
-          project.logoHref ? (
+          logoHref ? (
             <a
-              href={project.logoHref}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`Open ${project.logoAlt || `${project.title} logo`} link`}
+              href={logoHref}
+              target={linkedCredential ? undefined : "_blank"}
+              rel={linkedCredential ? undefined : "noreferrer"}
+              onClick={linkedCredential ? (event) => jumpToCredential(event, linkedCredential.id) : undefined}
+              aria-label={linkedCredential ? `View ${linkedCredential.program}` : `Open ${project.logoAlt || `${project.title} logo`} link`}
               className={cn(logoClassName, "transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2")}
             >
               {logoImage}
@@ -1301,11 +1327,7 @@ function MoreWorkStandardCard({ project, index, meta }) {
           ) : (
             <div className={logoClassName}>{logoImage}</div>
           )
-        ) : (
-          (project.href || project.sourceHref) && (
-            <Icon name="link" className="h-4 w-4 text-[#827466] transition group-hover:text-[#244fd6]" />
-          )
-        )}
+        ) : null}
       </div>
       <div className="p-3 sm:p-5">
         <h3 className="text-base font-semibold tracking-[-0.02em] text-slate-950 sm:text-lg">{project.title}</h3>
@@ -1776,6 +1798,31 @@ function CredentialPreviewPopover({ credential, label, missingLabel, align = "le
   );
 }
 
+function CredentialSummary({ credential }) {
+  const linkedText = credential.summaryLinkText;
+  const linkIndex = linkedText ? credential.summary.indexOf(linkedText) : -1;
+
+  if (!credential.relatedProjectId || linkIndex < 0) return credential.summary;
+
+  const before = credential.summary.slice(0, linkIndex);
+  const after = credential.summary.slice(linkIndex + linkedText.length);
+  const targetId = `project-${credential.relatedProjectId}`;
+
+  return (
+    <>
+      {before}
+      <a
+        href={`#${targetId}`}
+        onClick={(event) => jumpToTarget(event, targetId)}
+        className="font-semibold text-[#244fd6] underline decoration-[#9eb0ef] underline-offset-2 transition hover:decoration-[#244fd6] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2"
+      >
+        {linkedText}
+      </a>
+      {after}
+    </>
+  );
+}
+
 function ProgramCredentialCard({ credential, index, meta }) {
   const accent = accentStyles[credential.accent] ?? accentStyles.amber;
   const isCredential = credential.entryType !== "program";
@@ -1821,13 +1868,21 @@ function ProgramCredentialCard({ credential, index, meta }) {
               credential.id === "stanford-ai4all"
                 ? "h-9 w-20 p-1 sm:w-24"
                 : credential.id === "tetc"
-                  ? "h-[50px] w-[113px] p-1.5 sm:h-[57px] sm:w-[128px]"
+                  ? "aspect-[83/38] w-32 sm:w-36"
                 : isCredential
                   ? "h-12 w-16 p-1.5 sm:h-14 sm:w-20"
                   : "h-12 w-24 p-1.5 sm:h-14 sm:w-28",
             )}
           >
-            <img src={credential.logoSrc} alt={credential.logoAlt || `${credential.program} logo`} loading="lazy" className="block h-full w-full min-h-0 min-w-0 object-contain" />
+            <img
+              src={credential.logoSrc}
+              alt={credential.logoAlt || `${credential.program} logo`}
+              loading="lazy"
+              className={cn(
+                "block h-full w-full min-h-0 min-w-0 object-contain",
+                credential.id === "tetc" && "object-cover",
+              )}
+            />
           </a>
         ) : (
           <div className={cn("grid h-12 w-16 shrink-0 place-items-center border font-mono text-sm font-semibold", accent.border, accent.soft, accent.text)} aria-hidden="true">
@@ -1841,7 +1896,9 @@ function ProgramCredentialCard({ credential, index, meta }) {
         </div>
       </div>
 
-      <p className="mt-2 text-[11px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">{credential.summary}</p>
+      <p className="mt-2 text-[11px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">
+        <CredentialSummary credential={credential} />
+      </p>
 
       <div className="mt-2 flex flex-wrap items-center gap-2 sm:mt-4">
         {awardLabel && (
@@ -1878,7 +1935,7 @@ function ProgramCredentialCard({ credential, index, meta }) {
   );
 }
 
-function AchievementRibbon({ id, label, title = "", subtitle = "", detail = "", align = "left" }) {
+function AchievementRibbon({ id, label, title = "", subtitle = "", detail = "", align = "left", iconName = "awardRibbon" }) {
   const containerRef = useRef(null);
   const triggerRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -1948,7 +2005,7 @@ function AchievementRibbon({ id, label, title = "", subtitle = "", detail = "", 
         onClick={handleClick}
         className="grid h-8 w-8 place-items-center border border-[#d8b451] bg-[#fff4c7] text-[#946700] shadow-sm transition hover:border-[#bd8b13] hover:bg-[#ffedaa] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:h-9 sm:w-9"
       >
-        <Icon name="awardRibbon" className="h-4 w-4" />
+        <Icon name={iconName} className="h-4 w-4" />
       </button>
 
       {isOpen && (
@@ -2005,6 +2062,7 @@ function AchievementTrophies({ item, className = "" }) {
             label={achievement}
             title={title}
             subtitle={subtitle}
+            iconName={item.id === "scouts-bsa" ? "badge" : "awardRibbon"}
             align={index === achievements.length - 1 ? "right" : "left"}
           />
         );
@@ -2025,7 +2083,11 @@ function HomepageActivitySection({ section, learningHighlights, title }) {
         {list(section.items).map((item) => (
           <article key={item.id} className="flex min-h-full flex-col border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-4">
             <h3 className="text-xs font-semibold leading-4 text-slate-950 sm:text-sm sm:leading-5">{item.title}</h3>
-            <p className="mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-2 sm:text-xs sm:leading-5">{item.detail}</p>
+            <p className="mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-2 sm:text-xs sm:leading-5">
+              {item.id === "scouts-bsa"
+                ? item.detail.split(/(?<=\.)\s+(?=Scouting Troop)/).map((line) => <span key={line} className="block">{line}</span>)
+                : item.detail}
+            </p>
             <AchievementTrophies item={item} className="mt-auto pt-2 sm:pt-3" />
           </article>
         ))}
@@ -2086,6 +2148,17 @@ function MoreWorkCompactCard({ project, index, meta }) {
   const suppressFocusOpenRef = useRef(false);
   const media = list(project.media).find((item) => item.src) ?? null;
   const panelId = `more-work-${project.id}-details`;
+
+  useEffect(() => {
+    if (!expanded) return undefined;
+
+    function closeOnOutsidePointer(event) {
+      if (!cardRef.current?.contains(event.target)) setExpanded(false);
+    }
+
+    document.addEventListener("pointerdown", closeOnOutsidePointer);
+    return () => document.removeEventListener("pointerdown", closeOnOutsidePointer);
+  }, [expanded]);
 
   function closeDetails() {
     suppressFocusOpenRef.current = true;
@@ -2151,25 +2224,14 @@ function MoreWorkCompactCard({ project, index, meta }) {
         )}
         <div className="flex flex-1 flex-col justify-between p-3 sm:p-4">
           <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[#0f766e] sm:text-[10px]">{project.type}</p>
-          <div className="mt-3 flex items-end justify-between gap-3">
-            <h3 className="text-sm font-semibold leading-5 text-slate-950 sm:text-base">{project.title}</h3>
-            <Icon name="arrowRight" className="h-4 w-4 shrink-0 text-[#244fd6]" />
-          </div>
+          <h3 className="mt-3 text-sm font-semibold leading-5 text-slate-950 sm:text-base">{project.title}</h3>
         </div>
       </button>
 
       {expanded && (
         <div id={panelId} className="absolute inset-0 z-10 flex flex-col bg-white p-3 shadow-sm transition-opacity duration-150 motion-reduce:transition-none sm:p-4">
-          <button
-            type="button"
-            aria-label={`Close details for ${project.title}`}
-            onClick={closeDetails}
-            className="absolute right-2 top-2 grid h-7 w-7 place-items-center border border-[#cfc4b4] bg-white text-slate-700 hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-1"
-          >
-            &times;
-          </button>
-          <p className="pr-9 font-mono text-[9px] uppercase tracking-[0.14em] text-[#0f766e] sm:text-[10px]">{project.type}</p>
-          <h3 className="mt-2 pr-9 text-sm font-semibold leading-5 text-slate-950 sm:text-base">{project.title}</h3>
+          <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[#0f766e] sm:text-[10px]">{project.type}</p>
+          <h3 className="mt-2 text-sm font-semibold leading-5 text-slate-950 sm:text-base">{project.title}</h3>
           <p className="mt-2 text-[11px] leading-4 text-slate-700 sm:text-xs sm:leading-5">{project.description}</p>
           {(project.href || project.sourceHref) && (
             <div className="mt-auto flex min-h-7 flex-wrap items-center gap-2 pt-3">
@@ -2203,17 +2265,18 @@ function MoreWorkCompactCard({ project, index, meta }) {
   );
 }
 
-function ContactButton({ href, icon, children, primary = false }) {
+function ContactButton({ href, icon, children, primaryOnDesktop = false, primaryOnMobile = false }) {
   const isMobile = useMediaQuery("(max-width: 767px)");
   if (!href || !children) return null;
 
+  const primary = isMobile ? primaryOnMobile : primaryOnDesktop;
   const className = primary
-    ? "rounded-none bg-slate-950 px-3 py-2.5 text-xs font-semibold text-white hover:bg-[#244fd6] sm:px-5 sm:py-5 sm:text-sm"
-    : "rounded-none border-[#cfc4b4] bg-white px-3 py-2.5 text-xs font-semibold text-slate-950 hover:bg-[#fbfaf7] sm:px-5 sm:py-5 sm:text-sm";
+    ? "rounded-none bg-slate-950 px-3 py-2.5 text-xs font-semibold text-white hover:bg-[#244fd6] sm:px-4 sm:py-3 sm:text-sm"
+    : "rounded-none border border-[#cfc4b4] bg-white px-3 py-2.5 text-xs font-semibold text-slate-950 hover:bg-[#fbfaf7] sm:px-4 sm:py-3 sm:text-sm";
 
   if (icon === "phone" && !isMobile) {
     return (
-      <Button type="button" aria-disabled="true" className={cn(className, "cursor-default hover:bg-slate-950")}>
+      <Button type="button" aria-disabled="true" className={cn(className, "cursor-default hover:bg-white")}>
         <Icon name={icon} className="mr-2 h-4 w-4" /> {children}
       </Button>
     );
@@ -2241,6 +2304,16 @@ function ActiveNavigationFrame() {
 
 function useActiveNavigationSection(sectionLinks, enabled) {
   const [activeSection, setActiveSection] = useState("top");
+  const navigationTargetRef = useRef(null);
+
+  const lockActiveSection = useCallback((sectionId) => {
+    navigationTargetRef.current = sectionId;
+    setActiveSection(sectionId);
+  }, []);
+
+  const releaseActiveSection = useCallback((sectionId) => {
+    if (navigationTargetRef.current === sectionId) navigationTargetRef.current = null;
+  }, []);
 
   useEffect(() => {
     if (!enabled) return undefined;
@@ -2249,6 +2322,11 @@ function useActiveNavigationSection(sectionLinks, enabled) {
 
     function updateActiveSection() {
       frameId = null;
+      if (navigationTargetRef.current) {
+        setActiveSection(navigationTargetRef.current);
+        return;
+      }
+
       const entries = [
         { id: "top", element: document.getElementById("top") },
         ...sectionLinks.map((link) => ({
@@ -2286,7 +2364,7 @@ function useActiveNavigationSection(sectionLinks, enabled) {
     };
   }, [enabled, sectionLinks]);
 
-  return [activeSection, setActiveSection];
+  return [activeSection, lockActiveSection, releaseActiveSection];
 }
 
 function PortfolioPage({ content }) {
@@ -2296,6 +2374,11 @@ function PortfolioPage({ content }) {
   const standardMoreWork = list(content.moreWork).filter((project) => project.presentationSize === "standard");
   const compactMoreWork = list(content.moreWork).filter((project) => project.presentationSize === "compact");
   const projectsById = new Map(list(content.projects).map((project) => [project.id, project]));
+  const credentialsByLogoSrc = new Map(
+    list(content.programCredentials)
+      .filter((credential) => credential.logoSrc)
+      .map((credential) => [credential.logoSrc, credential]),
+  );
   const skills = list(content.skills);
   const personalSkillGroups = skills.filter((skill) => list(skill.projectIds).length > 0).reduce((groups, skill) => {
     const category = skill.category || "Other";
@@ -2481,7 +2564,13 @@ function PortfolioPage({ content }) {
           {standardMoreWork.length > 0 && (
             <div className="grid items-start gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-3">
               {standardMoreWork.map((project, index) => (
-                <MoreWorkStandardCard key={project.id} project={project} index={index} meta={meta} />
+                <MoreWorkStandardCard
+                  key={project.id}
+                  project={project}
+                  index={index}
+                  meta={meta}
+                  linkedCredential={credentialsByLogoSrc.get(project.logoSrc) ?? null}
+                />
               ))}
             </div>
           )}
@@ -2560,8 +2649,8 @@ function ContactSection({ content }) {
   const meta = content.meta ?? {};
   const [copyStatus, setCopyStatus] = useState("idle");
   const contactButtons = [
-    { href: meta.contactPhoneHref, icon: "phone", label: meta.contactPhoneLabel, primary: true },
-    { href: meta.contactEmailHref, icon: "mail", label: meta.contactEmailLabel },
+    { href: meta.contactEmailHref, icon: "mail", label: meta.contactEmailLabel, primaryOnDesktop: true },
+    { href: meta.contactPhoneHref, icon: "phone", label: meta.contactPhoneLabel, primaryOnMobile: true },
     { href: meta.contactGithubHref, icon: "github", label: meta.contactGithubLabel },
     { href: meta.resumeHref, icon: "list", label: meta.resumeLabel },
   ].filter((button) => button.href && button.label);
@@ -2604,61 +2693,75 @@ function ContactSection({ content }) {
   }
 
   return (
-    <section id="contact" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-12 md:px-8 md:py-20">
+    <section id="contact" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-8 md:px-8 md:py-10">
       <div className="border border-[#d2c8b9] bg-white shadow-[0_16px_45px_rgba(34,28,18,0.08)]">
-        <div className="grid gap-3 p-3 sm:gap-6 sm:p-6 md:grid-cols-[1fr_300px] md:p-8">
+        <div className="grid gap-3 p-3 sm:gap-5 sm:p-5 md:grid-cols-[minmax(260px,0.8fr)_minmax(0,1.2fr)] md:items-center md:p-6">
           <TitleBlock title={meta.contactTitle}>
             {meta.contactText}
           </TitleBlock>
-          <div className="flex flex-row flex-wrap justify-start gap-2 md:flex-col md:justify-end md:gap-3">
+          <div className="flex flex-row flex-wrap justify-start gap-2 md:justify-end">
             {contactButtons.map((button) => (
-              <ContactButton key={button.icon} href={button.href} icon={button.icon} primary={button.primary}>
+              <ContactButton
+                key={button.icon}
+                href={button.href}
+                icon={button.icon}
+                primaryOnDesktop={button.primaryOnDesktop}
+                primaryOnMobile={button.primaryOnMobile}
+              >
                 {button.label}
               </ContactButton>
             ))}
-            <Button
-              type="button"
-              onClick={copyPortfolioText}
-              disabled={copyStatus === "copying"}
-              className="rounded-none border border-[#cfc4b4] bg-white px-3 py-2.5 text-xs font-semibold text-slate-950 hover:bg-[#fbfaf7] sm:px-5 sm:py-5 sm:text-sm"
-            >
-              <Icon name={copyStatus === "copied" ? "check" : "copy"} className="mr-2 h-4 w-4" />
-              {copyStatus === "copying" ? "Copying..." : copyStatus === "copied" ? "Copied" : "Copy as text"}
-            </Button>
-            <span className="sr-only" role="status" aria-live="polite">
-              {copyStatus === "copied" ? "Portfolio text copied to clipboard." : copyStatus === "error" ? "Portfolio text could not be copied." : ""}
-            </span>
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#d2c8b9] bg-[#fbfaf7] p-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[#827466] md:p-4 md:text-[11px] md:tracking-[0.16em]">
           <p>&copy; {new Date().getFullYear()} {meta.footerName}</p>
-          <a className="normal-case tracking-normal text-slate-600 underline decoration-[#cfc4b4] underline-offset-4 hover:text-[#244fd6]" href="/llms-full.txt">
-            Machine-readable portfolio
-          </a>
+          <div className="flex flex-wrap items-center justify-end gap-3 normal-case tracking-normal">
+            <Button
+              type="button"
+              onClick={copyPortfolioText}
+              disabled={copyStatus === "copying"}
+              className="rounded-none px-1 py-1 text-[10px] font-semibold text-slate-600 hover:text-[#244fd6] md:text-[11px]"
+            >
+              <Icon name={copyStatus === "copied" ? "check" : "copy"} className="mr-1.5 h-3.5 w-3.5" />
+              {copyStatus === "copying" ? "Copying..." : copyStatus === "copied" ? "Copied" : "Copy as text"}
+            </Button>
+            <a className="text-slate-600 underline decoration-[#cfc4b4] underline-offset-4 hover:text-[#244fd6]" href="/llms-full.txt">
+              Machine-readable portfolio
+            </a>
+          </div>
+          <span className="sr-only" role="status" aria-live="polite">
+            {copyStatus === "copied" ? "Portfolio text copied to clipboard." : copyStatus === "error" ? "Portfolio text could not be copied." : ""}
+          </span>
         </div>
       </div>
     </section>
   );
 }
 
-async function scrollToPageSection(event, href, setActiveSection) {
+async function scrollToPageSection(event, href, lockActiveSection, releaseActiveSection) {
   if (!href?.startsWith("#")) return;
 
   const target = document.querySelector(href);
   if (!target) return;
 
   event.preventDefault();
-  setActiveSection(href.slice(1));
+  const sectionId = href.slice(1);
+  lockActiveSection(sectionId);
 
   if (window.location.hash !== href) {
     window.history.pushState(null, "", href);
   }
 
-  const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  await scrollToPreparedTarget(target, {
-    behavior: prefersReducedMotion ? "auto" : "smooth",
-    block: "start",
-  });
+  try {
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const didScroll = await scrollToPreparedTarget(target, {
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+    if (didScroll && !prefersReducedMotion) await waitForWindowScrollToSettle();
+  } finally {
+    releaseActiveSection(sectionId);
+  }
 }
 
 function Navigation({ content }) {
@@ -2666,7 +2769,7 @@ function Navigation({ content }) {
   const meta = content.meta ?? {};
   const isPortfolioRoute = location.pathname === "/";
   const sectionLinks = list(content.navLinks);
-  const [activeSection, setActiveSection] = useActiveNavigationSection(sectionLinks, isPortfolioRoute);
+  const [activeSection, lockActiveSection, releaseActiveSection] = useActiveNavigationSection(sectionLinks, isPortfolioRoute);
 
   return (
     <nav className="sticky top-0 z-30 border-b border-[#d2c8b9] bg-[#f5f3ee]/95 backdrop-blur-md">
@@ -2677,9 +2780,10 @@ function Navigation({ content }) {
             aria-current={isPortfolioRoute && activeSection === "top" ? "location" : undefined}
             onClick={(event) => {
               if (isPortfolioRoute) {
-                scrollToPageSection(event, "#top", setActiveSection);
+                scrollToPageSection(event, "#top", lockActiveSection, releaseActiveSection);
               } else {
-                setActiveSection("top");
+                lockActiveSection("top");
+                releaseActiveSection("top");
               }
             }}
             className="relative flex min-w-0 items-center gap-2.5"
@@ -2707,7 +2811,7 @@ function Navigation({ content }) {
                   <a
                     key={link.id}
                     aria-current={isActive ? "location" : undefined}
-                    onClick={(event) => scrollToPageSection(event, link.href, setActiveSection)}
+                    onClick={(event) => scrollToPageSection(event, link.href, lockActiveSection, releaseActiveSection)}
                     className={cn(
                       "relative whitespace-nowrap py-1 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
                       isActive ? "text-slate-950" : "border-b border-transparent hover:border-[#827466] hover:text-slate-950",

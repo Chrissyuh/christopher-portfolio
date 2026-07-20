@@ -133,6 +133,7 @@ assert.deepEqual(
 assert.ok(!content.academicDetails.some((item) => item.id === "weighted-gpa" || item.id === "class-rank"), "Academic details must not duplicate the GPA and rank cards.");
 assert.equal(content.meta.contactPhoneLabel, "901-356-1000", "The primary phone contact drifted.");
 assert.equal(content.meta.contactPhoneHref, "sms:+19013561000", "The mobile text link drifted.");
+assert.equal(content.meta.contactText, "Email me, text me on mobile, or view my work on GitHub.", "The contact hierarchy drifted.");
 assert.ok(llms.includes("Phone: 901-356-1000 (text message on mobile)."), "llms.txt is missing the primary text contact.");
 assert.ok(!content.meta.contactProjectHref, "Subpix must remain a project rather than a contact action.");
 assert.ok(appSource.includes("prepareNavigationScrollPath"), "Top navigation must prepare lazy content before scrolling.");
@@ -181,6 +182,15 @@ assert.deepEqual(
 );
 assert.ok(!content.moreWork.some((project) => (project.media ?? []).some((media) => !media.src)), "More work must not publish empty media records.");
 const activitiesSection = content.fullRecord.find((section) => section.id === "activities-leadership-service");
+const scoutsBsa = activitiesSection?.items.find((item) => item.id === "scouts-bsa");
+assert.deepEqual(
+  [scoutsBsa?.detail, scoutsBsa?.achievements],
+  [
+    "I participate in meetings once a week. Scouting Troop 401.",
+    ["Current rank - Second Class Scout", "Merit badges - 14 earned"],
+  ],
+  "The current Scouts participation, rank, or merit-badge count drifted.",
+);
 const academicUil = activitiesSection?.items.find((item) => item.id === "academic-uil");
 assert.deepEqual(
   [academicUil?.title, academicUil?.detail, academicUil?.achievements],
@@ -214,6 +224,12 @@ for (const collection of requiredHumanCollections) {
 }
 
 const cswaCredential = content.programCredentials.find((credential) => credential.id === "cswa");
+const ai4allCredential = content.programCredentials.find((credential) => credential.id === "stanford-ai4all");
+assert.deepEqual(
+  [ai4allCredential?.summaryLinkText, ai4allCredential?.relatedProjectId],
+  ["VividGrasp project", "vividgrasp-ai-vision-robotics-arm"],
+  "The AI4ALL summary must retain its visible link to VividGrasp.",
+);
 assert.deepEqual(
   [cswaCredential?.program, cswaCredential?.issuer, cswaCredential?.date, cswaCredential?.href],
   [

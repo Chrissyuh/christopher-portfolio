@@ -14,10 +14,15 @@
 }
 
 @keyframes jump-target-focus {
-  0%,
+  0% {
+    border-color: #244fd6;
+    box-shadow: 0 0 0 0 rgb(36 79 214 / 0%), 0 0 0 0 rgb(36 79 214 / 0%);
+  }
+
+  16%,
   72% {
     border-color: #244fd6;
-    box-shadow: 0 0 0 2px rgb(36 79 214 / 24%);
+    box-shadow: 0 0 0 3px rgb(36 79 214 / 20%), 0 14px 34px rgb(36 79 214 / 14%);
   }
 
   100% {
@@ -26,8 +31,76 @@
   }
 }
 
+@keyframes jump-target-rails {
+  0% {
+    clip-path: inset(48% 0);
+    opacity: 0;
+  }
+
+  14%,
+  76% {
+    clip-path: inset(0);
+    opacity: 1;
+  }
+
+  100% {
+    clip-path: inset(0);
+    opacity: 0;
+  }
+}
+
+@keyframes jump-target-scan {
+  0%,
+  14% {
+    top: -3px;
+    opacity: 0;
+  }
+
+  20% {
+    top: -3px;
+    opacity: 0.9;
+  }
+
+  68% {
+    top: calc(100% + 1px);
+    opacity: 0.55;
+  }
+
+  78%,
+  100% {
+    top: calc(100% + 1px);
+    opacity: 0;
+  }
+}
+
 .jump-target-highlight {
-  animation: jump-target-focus 1.6s ease-out;
+  position: relative;
+  isolation: isolate;
+  animation: jump-target-focus 2.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.jump-target-highlight::before,
+.jump-target-highlight::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.jump-target-highlight::before {
+  inset: -3px;
+  border-inline: 3px solid #244fd6;
+  animation: jump-target-rails 2.8s ease-out;
+}
+
+.jump-target-highlight::after {
+  left: -3px;
+  right: -3px;
+  top: -3px;
+  height: 2px;
+  background: #244fd6;
+  box-shadow: 0 0 12px rgb(36 79 214 / 55%);
+  animation: jump-target-scan 2.8s ease-in-out;
 }
 
 .navigation-scroll-ready {
@@ -40,5 +113,10 @@
     animation: none;
     border-color: #244fd6;
     box-shadow: 0 0 0 2px rgb(36 79 214 / 24%);
+  }
+
+  .jump-target-highlight::before,
+  .jump-target-highlight::after {
+    display: none;
   }
 }

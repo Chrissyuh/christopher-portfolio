@@ -950,7 +950,7 @@ function HeroProjectIndex({ projects }) {
         <span>Selected systems</span>
         <span className="text-[#244fd6]">A01-A{String(entries.length).padStart(2, "0")}</span>
       </div>
-      <div className="flex flex-1 flex-col justify-center py-2">
+      <div className="hero-project-list relative flex flex-1 flex-col justify-center py-2">
         {entries.map((project, index) => {
           const accent = accentStyles[project.accent] ?? accentStyles.blue;
           return (
@@ -958,9 +958,10 @@ function HeroProjectIndex({ projects }) {
               key={project.id}
               href={`#${projectAnchorId(project)}`}
               onClick={(event) => jumpToProject(event, project)}
-              className="group/index relative grid grid-cols-[42px_minmax(0,1fr)] gap-3 border-b border-[#ddd3c5] px-5 py-4 outline-none transition-colors last:border-b-0 hover:bg-white/70 focus-visible:bg-white/80 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#244fd6]"
+              className="hero-project-entry group/index relative grid grid-cols-[42px_minmax(0,1fr)] gap-3 border-b border-[#ddd3c5] px-5 py-4 outline-none transition-colors last:border-b-0 hover:bg-white/70 focus-visible:bg-white/80 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#244fd6]"
+              style={{ "--project-accent": accent.hex }}
             >
-              <span className="font-mono text-[10px] tracking-[0.12em] text-[#244fd6]">A{String(index + 1).padStart(2, "0")}</span>
+              <span className="hero-project-code relative font-mono text-[10px] tracking-[0.12em] text-[#244fd6]">A{String(index + 1).padStart(2, "0")}</span>
               <span className="min-w-0">
                 <span className="block text-sm font-semibold leading-5 text-slate-950">{project.title}</span>
                 <span className="mt-1 block truncate text-[10px] leading-4 text-slate-600">{project.status || project.teamContext}</span>
@@ -1358,10 +1359,14 @@ function MoreWorkStandardCard({ project, index, meta, linkedCredential = null })
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.25, delay: index * 0.035 }}
-      className="technical-panel group min-w-0 border border-[#d2c8b9] bg-white shadow-sm"
+      className="technical-panel work-panel group min-w-0 border border-[#d2c8b9] bg-white shadow-sm"
+      style={{ "--panel-accent": "#244fd6" }}
     >
       <div className="flex items-start justify-between gap-3 border-b border-[#e1d7c8] bg-[#fbfaf7] p-3 sm:p-4">
-        <p className="w-fit border border-[#d6cec0] bg-white px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#827466]">{project.type}</p>
+        <div className="flex min-w-0 items-center gap-2">
+          <span className="font-mono text-[10px] font-semibold tracking-[0.14em] text-[#244fd6]">W{String(index + 1).padStart(2, "0")}</span>
+          <p className="min-w-0 truncate border border-[#d6cec0] bg-white px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#827466]">{project.type}</p>
+        </div>
         {project.logoSrc ? (
           logoHref ? (
             <a
@@ -2193,7 +2198,7 @@ function RecordSectionCard({ section, collection = "fullRecord", index }) {
   );
 }
 
-function MoreWorkCompactCard({ project, index, meta }) {
+function MoreWorkCompactCard({ project, index, displayIndex, meta }) {
   const [expanded, setExpanded] = useState(false);
   const cardRef = useRef(null);
   const triggerRef = useRef(null);
@@ -2247,7 +2252,8 @@ function MoreWorkCompactCard({ project, index, meta }) {
           closeDetails();
         }
       }}
-      className="technical-panel group relative min-h-36 overflow-hidden border border-[#d2c8b9] bg-white shadow-sm sm:min-h-40"
+      className="technical-panel compact-work-panel group relative min-h-36 overflow-hidden border border-[#d2c8b9] bg-white shadow-sm sm:min-h-40"
+      style={{ "--panel-accent": "#0f766e" }}
     >
       <button
         ref={triggerRef}
@@ -2275,14 +2281,14 @@ function MoreWorkCompactCard({ project, index, meta }) {
           </div>
         )}
         <div className="flex flex-1 flex-col justify-between p-3 sm:p-4">
-          <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[#0f766e] sm:text-[10px]">{project.type}</p>
+          <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[#0f766e] sm:text-[10px]">W{String(displayIndex + 1).padStart(2, "0")} / {project.type}</p>
           <h3 className="mt-3 text-sm font-semibold leading-5 text-slate-950 sm:text-base">{project.title}</h3>
         </div>
       </button>
 
       {expanded && (
         <div id={panelId} className="absolute inset-0 z-10 flex flex-col bg-white p-3 shadow-sm transition-opacity duration-150 motion-reduce:transition-none sm:p-4">
-          <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[#0f766e] sm:text-[10px]">{project.type}</p>
+          <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[#0f766e] sm:text-[10px]">W{String(displayIndex + 1).padStart(2, "0")} / {project.type}</p>
           <h3 className="mt-2 text-sm font-semibold leading-5 text-slate-950 sm:text-base">{project.title}</h3>
           <p className="mt-2 text-[11px] leading-4 text-slate-700 sm:text-xs sm:leading-5">{project.description}</p>
           {(project.href || project.sourceHref) && (
@@ -2537,21 +2543,31 @@ function PortfolioPage({ content }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.28, delay: index * 0.04 }}
-              className="technical-panel min-w-0 border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-5"
+              className="technical-panel tool-panel min-w-0 border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-5"
+              style={{ "--panel-accent": ["#244fd6", "#b45309", "#0f766e", "#8b5e3c"][index % 4] }}
             >
-              <h3 className="border-b border-[#e1d7c8] pb-1.5 text-[13px] font-semibold leading-5 text-slate-950 sm:pb-3 sm:text-lg">
-                {group.credentialId ? (
-                  <a
-                    href={`#${credentialAnchorId(group.credentialId)}`}
-                    onClick={(event) => jumpToCredential(event, group.credentialId)}
-                    className="inline-flex min-w-0 items-center text-[#244fd6] hover:underline focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
-                  >
-                    {group.category}
-                    <Icon name="arrowRight" className="ml-1 h-3 w-3 shrink-0 sm:ml-1.5 sm:h-3.5 sm:w-3.5" />
-                  </a>
-                ) : group.category}
-              </h3>
-              <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-[10px] sm:tracking-[0.14em]">{group.context}</p>
+              <div className="flex items-start justify-between gap-2 border-b border-[#e1d7c8] pb-2 sm:gap-3 sm:pb-3">
+                <div className="min-w-0">
+                  <p className="font-mono text-[8px] uppercase tracking-[0.1em] text-[#827466] sm:text-[9px] sm:tracking-[0.14em]">
+                    T{String(index + 1).padStart(2, "0")} / {group.context}
+                  </p>
+                  <h3 className="mt-1 text-[13px] font-semibold leading-5 text-slate-950 sm:mt-2 sm:text-lg">
+                    {group.credentialId ? (
+                      <a
+                        href={`#${credentialAnchorId(group.credentialId)}`}
+                        onClick={(event) => jumpToCredential(event, group.credentialId)}
+                        className="inline-flex min-w-0 items-center text-[#244fd6] hover:underline focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                      >
+                        {group.category}
+                        <Icon name="arrowRight" className="ml-1 h-3 w-3 shrink-0 sm:ml-1.5 sm:h-3.5 sm:w-3.5" />
+                      </a>
+                    ) : group.category}
+                  </h3>
+                </div>
+                <span aria-hidden="true" className="tool-panel-icon grid h-7 w-7 shrink-0 place-items-center border sm:h-9 sm:w-9">
+                  <Icon name={["wrench", "zap", "cpu", "layers"][index % 4]} className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                </span>
+              </div>
               <div className="mt-2 grid grid-cols-1 gap-1.5 sm:mt-3 sm:gap-3">
                 {group.skills.map((skill) => (
                   <div key={skill.id} className="min-w-0">
@@ -2589,7 +2605,7 @@ function PortfolioPage({ content }) {
       </section>
 
       <section id="academics" data-content-collection="academics" className="relative z-20 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
-        <div className="mb-4 grid gap-3 border-t border-[#d2c8b9] pt-5 sm:mb-6 sm:gap-4 sm:pt-6 lg:grid-cols-[minmax(380px,0.62fr)_minmax(0,1.38fr)] lg:items-center">
+        <div className="section-heading mb-4 grid gap-3 border-t border-[#d2c8b9] pt-5 sm:mb-6 sm:gap-4 sm:pt-6 lg:grid-cols-[minmax(380px,0.62fr)_minmax(0,1.38fr)] lg:items-center">
           <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3 sm:gap-5">
             <span aria-hidden="true" className="section-index font-mono text-[11px] font-semibold tracking-[0.14em] text-[#244fd6] sm:text-xs">03</span>
             <TitleBlock title={meta.academicTitle} />
@@ -2650,7 +2666,7 @@ function PortfolioPage({ content }) {
           {compactMoreWork.length > 0 && (
             <div className={cn("grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3", standardMoreWork.length > 0 && "mt-5 border-t border-[#d2c8b9] pt-5 sm:mt-8 sm:pt-8")}>
               {compactMoreWork.map((project, index) => (
-                <MoreWorkCompactCard key={project.id} project={project} index={index} meta={meta} />
+                <MoreWorkCompactCard key={project.id} project={project} index={index} displayIndex={standardMoreWork.length + index} meta={meta} />
               ))}
             </div>
           )}

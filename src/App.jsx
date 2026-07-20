@@ -1964,7 +1964,6 @@ function ProgramCredentialCard({ credential, index, meta }) {
             title={`${credential.awardDate} ${credential.awardTitle}`}
             subtitle={credential.awardDistinction}
             detail={credential.awardSummary}
-            align={index % 2 === 1 ? "right" : "left"}
           />
         )}
         {isCredential && (
@@ -1991,12 +1990,34 @@ function ProgramCredentialCard({ credential, index, meta }) {
   );
 }
 
-function AchievementRibbon({ id, label, title = "", subtitle = "", detail = "", align = "left", iconName = "awardRibbon" }) {
+function AchievementRibbon({ id, label, title = "", subtitle = "", detail = "", iconName = "awardRibbon" }) {
   const containerRef = useRef(null);
   const triggerRef = useRef(null);
+  const tooltipRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
+  const [openSide, setOpenSide] = useState("right");
   const tooltipId = `achievement-${id}`;
+
+  useLayoutEffect(() => {
+    if (!isOpen) return undefined;
+
+    function updateOpenSide() {
+      const trigger = triggerRef.current;
+      const tooltip = tooltipRef.current;
+      if (!trigger || !tooltip) return;
+
+      const triggerBounds = trigger.getBoundingClientRect();
+      const tooltipWidth = tooltip.getBoundingClientRect().width;
+      const viewportPadding = 16;
+      const opensRightWithoutClipping = triggerBounds.left + tooltipWidth <= window.innerWidth - viewportPadding;
+      setOpenSide(opensRightWithoutClipping ? "right" : "left");
+    }
+
+    updateOpenSide();
+    window.addEventListener("resize", updateOpenSide);
+    return () => window.removeEventListener("resize", updateOpenSide);
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return undefined;
@@ -2066,11 +2087,12 @@ function AchievementRibbon({ id, label, title = "", subtitle = "", detail = "", 
 
       {isOpen && (
         <span
+          ref={tooltipRef}
           id={tooltipId}
           role="tooltip"
           className={cn(
             "pointer-events-none absolute left-0 top-[calc(100%+0.55rem)] z-40 w-56 max-w-[calc(100vw-2rem)] border border-[#d8b451] bg-[#fffdf7] px-3 py-2.5 text-[10px] font-semibold leading-4 text-slate-800 shadow-[0_12px_30px_rgba(93,67,13,0.18)] sm:bottom-[calc(100%+0.55rem)] sm:top-auto sm:w-72 sm:text-xs sm:leading-5",
-            align === "right" && "left-auto right-0",
+            openSide === "left" && "left-auto right-0",
           )}
         >
           {title ? (
@@ -2084,14 +2106,14 @@ function AchievementRibbon({ id, label, title = "", subtitle = "", detail = "", 
             aria-hidden="true"
             className={cn(
               "absolute -top-1 left-3 h-2 w-2 rotate-45 border-l border-t border-[#d8b451] bg-[#fffdf7] sm:hidden",
-              align === "right" && "left-auto right-3",
+              openSide === "left" && "left-auto right-3",
             )}
           />
           <span
             aria-hidden="true"
             className={cn(
               "absolute -bottom-1 left-3 hidden h-2 w-2 rotate-45 border-b border-r border-[#d8b451] bg-[#fffdf7] sm:block",
-              align === "right" && "sm:left-auto sm:right-3",
+              openSide === "left" && "sm:left-auto sm:right-3",
             )}
           />
         </span>
@@ -2118,8 +2140,7 @@ function AchievementTrophies({ item, className = "" }) {
             label={achievement}
             title={title}
             subtitle={subtitle}
-            iconName={item.id === "scouts-bsa" ? "badge" : "awardRibbon"}
-            align={index === achievements.length - 1 ? "right" : "left"}
+            iconName="awardRibbon"
           />
         );
       })}
@@ -2203,6 +2224,7 @@ function MoreWorkCompactCard({ project, index, displayIndex, meta }) {
   const cardRef = useRef(null);
   const triggerRef = useRef(null);
   const suppressFocusOpenRef = useRef(false);
+  const suppressHoverOpenRef = useRef(false);
   const media = list(project.media).find((item) => item.src) ?? null;
   const panelId = `more-work-${project.id}-details`;
 
@@ -2236,8 +2258,11 @@ function MoreWorkCompactCard({ project, index, displayIndex, meta }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.22, delay: index * 0.025 }}
-      onMouseEnter={() => setExpanded(true)}
+      onMouseEnter={() => {
+        if (!suppressHoverOpenRef.current) setExpanded(true);
+      }}
       onMouseLeave={() => {
+        suppressHoverOpenRef.current = false;
         if (!cardRef.current?.contains(document.activeElement)) setExpanded(false);
       }}
       onFocusCapture={() => {
@@ -2261,7 +2286,7 @@ function MoreWorkCompactCard({ project, index, displayIndex, meta }) {
         aria-expanded={expanded}
         aria-controls={panelId}
         aria-label={`${expanded ? "Hide" : "Show"} details for ${project.title}`}
-        onClick={() => setExpanded(true)}
+        onClick={() => setExpanded((current) => !current)}
         className="flex min-h-36 w-full flex-col text-left outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#244fd6] sm:min-h-40"
       >
         {media && (
@@ -2287,7 +2312,15 @@ function MoreWorkCompactCard({ project, index, displayIndex, meta }) {
       </button>
 
       {expanded && (
-        <div id={panelId} className="absolute inset-0 z-10 flex flex-col bg-white p-3 shadow-sm transition-opacity duration-150 motion-reduce:transition-none sm:p-4">
+        <div
+          id={panelId}
+          onClick={(event) => {
+            if (event.target.closest("a, button")) return;
+            suppressHoverOpenRef.current = true;
+            setExpanded(false);
+          }}
+          className="absolute inset-0 z-10 flex cursor-pointer flex-col bg-white p-3 shadow-sm transition-opacity duration-150 motion-reduce:transition-none sm:p-4"
+        >
           <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[#0f766e] sm:text-[10px]">W{String(displayIndex + 1).padStart(2, "0")} / {project.type}</p>
           <h3 className="mt-2 text-sm font-semibold leading-5 text-slate-950 sm:text-base">{project.title}</h3>
           <p className="mt-2 text-[11px] leading-4 text-slate-700 sm:text-xs sm:leading-5">{project.description}</p>

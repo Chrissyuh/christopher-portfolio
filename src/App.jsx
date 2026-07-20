@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { LayoutGroup, motion, MotionConfig } from "framer-motion";
+import { LayoutGroup, motion, MotionConfig, useScroll, useSpring } from "framer-motion";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { usePortfolioContent } from "./content/loadPortfolioContent";
 
@@ -77,10 +77,10 @@ function Icon({ name, className = "h-5 w-5" }) {
 }
 
 const accentStyles = {
-  blue: { text: "text-[#244fd6]", bg: "bg-[#244fd6]", soft: "bg-[#eef2ff]", border: "border-[#bdc8ff]" },
-  teal: { text: "text-[#0f766e]", bg: "bg-[#0f766e]", soft: "bg-[#eef8f6]", border: "border-[#a9d9d3]" },
-  amber: { text: "text-[#b45309]", bg: "bg-[#b45309]", soft: "bg-[#fff7ed]", border: "border-[#f0c28c]" },
-  clay: { text: "text-[#8b5e3c]", bg: "bg-[#8b5e3c]", soft: "bg-[#f7f0ea]", border: "border-[#d7b99f]" },
+  blue: { text: "text-[#244fd6]", bg: "bg-[#244fd6]", soft: "bg-[#eef2ff]", border: "border-[#bdc8ff]", hex: "#244fd6" },
+  teal: { text: "text-[#0f766e]", bg: "bg-[#0f766e]", soft: "bg-[#eef8f6]", border: "border-[#a9d9d3]", hex: "#0f766e" },
+  amber: { text: "text-[#b45309]", bg: "bg-[#b45309]", soft: "bg-[#fff7ed]", border: "border-[#f0c28c]", hex: "#b45309" },
+  clay: { text: "text-[#8b5e3c]", bg: "bg-[#8b5e3c]", soft: "bg-[#f7f0ea]", border: "border-[#d7b99f]", hex: "#8b5e3c" },
 };
 
 const carouselAutoAdvanceMs = 6000;
@@ -135,7 +135,7 @@ function FittedPhoto({ src, alt }) {
         alt={alt}
         loading="lazy"
         decoding="async"
-        className="relative z-10 h-full w-full object-contain drop-shadow-[0_2px_10px_rgba(15,23,42,0.16)]"
+        className="relative z-10 h-full w-full object-contain drop-shadow-[0_2px_10px_rgba(15,23,42,0.16)] transition-transform duration-500 group-hover/media:scale-[1.012] motion-reduce:transition-none"
       />
     </>
   );
@@ -268,7 +268,7 @@ function MediaFrame({
       aria-hidden={clone || undefined}
       data-carousel-slide="true"
       data-carousel-source-type={item.sourceType || mediaType}
-      className={`${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7]`}
+      className={`group/media ${frameClass} snap-start overflow-hidden border border-[#d2c8b9] bg-[#fbfaf7] transition-colors duration-300 hover:border-[#a9b7e8]`}
       onMouseEnter={mediaType === "model" && !clone ? () => onInteractiveHoverChange?.(true) : undefined}
       onMouseLeave={mediaType === "model" && !clone ? () => onInteractiveHoverChange?.(false) : undefined}
     >
@@ -923,13 +923,74 @@ function TitleBlock({ code, title, children, as: Heading = "h2", className = "" 
   );
 }
 
-function SectionHeader({ code, title, children }) {
+function SectionHeader({ code, index, title, children }) {
   return (
-    <div className="mb-3 border-t border-[#d2c8b9] pt-4 sm:mb-8 sm:pt-7">
-      <TitleBlock code={code} title={title}>
-        {children}
-      </TitleBlock>
+    <div className="section-heading mb-4 border-t border-[#d2c8b9] pt-4 sm:mb-8 sm:pt-6">
+      <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3 sm:gap-5">
+        {index && (
+          <span aria-hidden="true" className="section-index font-mono text-[11px] font-semibold tracking-[0.14em] text-[#244fd6] sm:text-xs">
+            {index}
+          </span>
+        )}
+        <TitleBlock code={code} title={title}>
+          {children}
+        </TitleBlock>
+      </div>
     </div>
+  );
+}
+
+function PageProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 170, damping: 28, mass: 0.35 });
+
+  return (
+    <motion.div
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-x-0 top-0 z-50 h-[3px] origin-left bg-[#244fd6] shadow-[0_0_12px_rgba(36,79,214,0.35)]"
+      style={{ scaleX }}
+    />
+  );
+}
+
+function HeroProjectIndex({ projects }) {
+  const entries = list(projects);
+  if (entries.length === 0) return null;
+
+  return (
+    <aside className="hero-project-index hidden min-h-full border-l border-white/15 bg-slate-950 text-white lg:flex lg:flex-col">
+      <div className="flex items-center justify-between border-b border-white/15 px-5 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-white/60">
+        <span>Selected systems</span>
+        <span>{String(entries.length).padStart(2, "0")}</span>
+      </div>
+      <div className="flex flex-1 flex-col justify-center py-2">
+        {entries.map((project, index) => {
+          const accent = accentStyles[project.accent] ?? accentStyles.blue;
+          return (
+            <a
+              key={project.id}
+              href={`#${projectAnchorId(project)}`}
+              onClick={(event) => jumpToProject(event, project)}
+              className="group/index relative grid grid-cols-[42px_minmax(0,1fr)] gap-3 border-b border-white/10 px-5 py-4 outline-none transition-colors last:border-b-0 hover:bg-white/[0.06] focus-visible:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8fa8ff]"
+            >
+              <span className="font-mono text-[10px] tracking-[0.12em] text-white/45">A{String(index + 1).padStart(2, "0")}</span>
+              <span className="min-w-0">
+                <span className="block text-sm font-semibold leading-5 text-white">{project.title}</span>
+                <span className="mt-1 block truncate text-[10px] leading-4 text-white/50">{project.status || project.teamContext}</span>
+              </span>
+              <span
+                aria-hidden="true"
+                className="absolute bottom-0 left-0 h-px w-0 transition-[width] duration-300 group-hover/index:w-full group-focus-visible/index:w-full"
+                style={{ backgroundColor: accent.hex }}
+              />
+            </a>
+          );
+        })}
+      </div>
+      <div className="border-t border-white/15 px-5 py-3 font-mono text-[9px] uppercase tracking-[0.14em] text-white/35">
+        Hardware / robotics / software
+      </div>
+    </aside>
   );
 }
 
@@ -1211,11 +1272,13 @@ function ProjectRow({ project, index, meta }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3, delay: index * 0.045 }}
-      className="group grid min-w-0 scroll-mt-20 border border-[#d2c8b9] bg-white shadow-sm outline-none sm:scroll-mt-24 xl:grid-cols-[190px_minmax(0,1fr)]"
+      className="technical-panel project-panel group grid min-w-0 scroll-mt-20 border border-[#d2c8b9] bg-white shadow-sm outline-none sm:scroll-mt-24 xl:grid-cols-[190px_minmax(0,1fr)]"
+      style={{ "--panel-accent": style.hex }}
     >
       <div className={`flex flex-wrap items-center gap-2 border-b border-[#e1d7c8] p-2.5 sm:p-4 xl:block xl:border-b-0 xl:border-r xl:p-5 ${style.soft}`}>
-        <div className="flex items-center gap-2 xl:justify-between">
-          <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] sm:text-xs sm:tracking-[0.16em] ${style.text}`}>{project.label}</p>
+        <div className="flex items-center gap-2 xl:block">
+          <p className={`font-mono text-[10px] font-semibold tracking-[0.12em] sm:text-xs ${style.text}`}>A{String(index + 1).padStart(2, "0")}</p>
+          <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] sm:text-xs sm:tracking-[0.16em] xl:mt-2 ${style.text}`}>{project.label}</p>
           <span className={`h-2 w-2 rounded-full sm:h-2.5 sm:w-2.5 ${style.bg}`} />
         </div>
         {project.status && (
@@ -1308,7 +1371,7 @@ function MoreWorkStandardCard({ project, index, meta, linkedCredential = null })
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.25, delay: index * 0.035 }}
-      className="group min-w-0 border border-[#d2c8b9] bg-white shadow-sm"
+      className="technical-panel group min-w-0 border border-[#d2c8b9] bg-white shadow-sm"
     >
       <div className="flex items-start justify-between gap-3 border-b border-[#e1d7c8] bg-[#fbfaf7] p-3 sm:p-4">
         <p className="w-fit border border-[#d6cec0] bg-white px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#827466]">{project.type}</p>
@@ -1368,7 +1431,7 @@ function MoreWorkStandardCard({ project, index, meta, linkedCredential = null })
             )}
           </div>
         )}
-        <div className="mt-4 h-1 w-14 bg-[#244fd6] opacity-80 sm:mt-5 sm:h-1.5 sm:w-16" />
+        <div className="signal-rule mt-4 h-1 w-14 bg-[#244fd6] opacity-80 sm:mt-5 sm:h-1.5 sm:w-16" />
       </div>
     </motion.article>
   );
@@ -1391,7 +1454,7 @@ function AcademicSchoolCard({ meta }) {
   ].filter((link) => link.href && link.label);
 
   return (
-    <aside className="border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-4">
+    <aside className="technical-panel border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-4">
       <div className="grid gap-3 md:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)] md:items-center md:gap-4">
         <div className="flex items-center gap-3 sm:gap-4">
           {meta.academicSchoolLogoSrc && (
@@ -1500,7 +1563,7 @@ function DuolingoActivityCard({ item }) {
 
   return (
     <article
-      className="relative flex min-h-full flex-col overflow-hidden border border-[#d8b451] bg-white p-2.5 shadow-sm sm:p-4"
+      className="technical-panel relative flex min-h-full flex-col overflow-hidden border border-[#d8b451] bg-white p-2.5 shadow-sm sm:p-4"
     >
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#d7a31f]" />
       <div className="flex items-start gap-2">
@@ -1641,7 +1704,7 @@ function AcademicCard({ item, index, wide = false, valueAction = null }) {
       viewport={{ once: true }}
       transition={{ duration: 0.25, delay: index * 0.035 }}
       className={cn(
-        "relative overflow-hidden border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-5",
+        "technical-panel relative overflow-hidden border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-5",
         wide && "col-span-2 lg:col-span-1",
         isGoldHighlight && "border-[#d8b451] bg-[linear-gradient(180deg,#fffdf7_0%,#ffffff_42%)]",
       )}
@@ -1849,7 +1912,8 @@ function ProgramCredentialCard({ credential, index, meta }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.25, delay: index * 0.04 }}
-      className={cn("relative scroll-mt-24 border bg-white p-3 shadow-sm outline-none sm:p-5", accent.border)}
+      className={cn("technical-panel relative scroll-mt-24 border bg-white p-3 shadow-sm outline-none sm:p-5", accent.border)}
+      style={{ "--panel-accent": credential.id === "tetc" ? "#00afab" : credential.id === "stanford-ai4all" ? "#8c1515" : accent.hex }}
     >
       {credential.id === "tetc" ? (
         <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#00afab]" />
@@ -2081,7 +2145,7 @@ function HomepageActivitySection({ section, learningHighlights, title }) {
       <h2 className="text-xl font-semibold leading-6 text-slate-950 sm:text-2xl sm:leading-7">{title}</h2>
       <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:gap-3 lg:grid-cols-4">
         {list(section.items).map((item) => (
-          <article key={item.id} className="flex min-h-full flex-col border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-4">
+          <article key={item.id} className="technical-panel flex min-h-full flex-col border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-4">
             <h3 className="text-xs font-semibold leading-4 text-slate-950 sm:text-sm sm:leading-5">{item.title}</h3>
             <p className="mt-1.5 text-[10px] leading-4 text-slate-700 sm:mt-2 sm:text-xs sm:leading-5">
               {item.id === "scouts-bsa"
@@ -2109,17 +2173,18 @@ function programRecordDetail(credential) {
   return [credential.summary, awardLine].filter(Boolean).join(" ");
 }
 
-function RecordSectionCard({ section, collection = "fullRecord" }) {
+function RecordSectionCard({ section, collection = "fullRecord", index }) {
   return (
     <motion.article
       data-content-collection={collection}
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="border border-[#d2c8b9] bg-white shadow-sm"
+      className="technical-panel border border-[#d2c8b9] bg-white shadow-sm"
     >
       <div className="flex items-center gap-2.5 border-b border-[#d2c8b9] bg-[#fbfaf7] p-2.5 sm:gap-3 sm:p-5">
         <div className="grid h-8 w-8 shrink-0 place-items-center border border-[#d2c8b9] bg-white text-[#244fd6] sm:h-10 sm:w-10"><Icon name={section.icon} className="h-4 w-4" /></div>
+        {index && <span className="font-mono text-[9px] font-semibold tracking-[0.12em] text-[#244fd6] sm:text-[10px]">R{String(index).padStart(2, "0")}</span>}
         <h2 className="text-lg font-semibold tracking-[-0.02em] text-slate-950 sm:text-2xl sm:tracking-[-0.03em]">{section.category}</h2>
       </div>
       <div className="divide-y divide-[#e1d7c8]">
@@ -2195,7 +2260,7 @@ function MoreWorkCompactCard({ project, index, meta }) {
           closeDetails();
         }
       }}
-      className="group relative min-h-36 overflow-hidden border border-[#d2c8b9] bg-white shadow-sm sm:min-h-40"
+      className="technical-panel group relative min-h-36 overflow-hidden border border-[#d2c8b9] bg-white shadow-sm sm:min-h-40"
     >
       <button
         ref={triggerRef}
@@ -2401,7 +2466,7 @@ function PortfolioPage({ content }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.32, ease: "easeOut" }}
           className={cn(
-            "relative overflow-hidden border-y border-[#cfc4b4]",
+            "masthead relative overflow-hidden border-y border-[#cfc4b4]",
             heroHasImage ? "min-h-[24rem] bg-slate-950 sm:min-h-[30rem]" : "bg-[#f5f3ee]/45",
           )}
         >
@@ -2421,34 +2486,52 @@ function PortfolioPage({ content }) {
             </>
           )}
 
-          <div className="relative z-10 flex min-h-[16.5rem] items-center py-5 sm:min-h-[21rem] sm:py-8 md:min-h-[23rem] md:py-10">
-            <div className={cn("w-full border-l-4 border-[#244fd6] pl-4 sm:pl-7 md:ml-[8%] md:max-w-4xl md:pl-9", heroHasImage && "pr-4 sm:pr-7")}>
-              <p className={cn("font-mono text-[9px] uppercase tracking-[0.13em] sm:text-[11px] sm:tracking-[0.17em]", heroHasImage ? "text-white/75" : "text-[#244fd6]")}>{meta.heroEyebrow}</p>
-              <h1 className={cn("mt-2 text-3xl font-semibold leading-[1.03] tracking-normal sm:mt-3 sm:text-5xl md:text-6xl", heroHasImage ? "text-white" : "text-slate-950")}>{meta.heroTitle}</h1>
-              <p className={cn("mt-3 max-w-4xl text-xl font-semibold leading-[1.18] tracking-normal sm:mt-5 sm:text-3xl sm:leading-tight md:text-4xl", heroHasImage ? "text-white" : "text-slate-900")}>{meta.heroLead}</p>
-              <p className={cn("mt-3 max-w-3xl text-[12px] leading-5 sm:mt-5 sm:text-base sm:leading-7", heroHasImage ? "text-white/82" : "text-slate-700")}>{meta.heroIntro}</p>
+          <div className="relative z-10 grid min-h-[16.5rem] sm:min-h-[21rem] md:min-h-[23rem] lg:grid-cols-[minmax(0,1fr)_310px]">
+            <div className="flex items-center py-5 sm:py-8 md:py-10">
+              <div className={cn("w-full border-l-4 border-[#244fd6] pl-4 sm:pl-7 md:ml-[8%] md:pl-9 lg:mr-10", heroHasImage && "pr-4 sm:pr-7")}>
+                <p className={cn("font-mono text-[9px] uppercase tracking-[0.13em] sm:text-[11px] sm:tracking-[0.17em]", heroHasImage ? "text-white/75" : "text-[#244fd6]")}>{meta.heroEyebrow}</p>
+                <h1 className={cn("mt-2 text-3xl font-semibold leading-[1.03] tracking-normal sm:mt-3 sm:text-5xl md:text-6xl", heroHasImage ? "text-white" : "text-slate-950")}>{meta.heroTitle}</h1>
+                <p className={cn("mt-3 max-w-4xl text-xl font-semibold leading-[1.18] tracking-normal sm:mt-5 sm:text-3xl sm:leading-tight md:text-4xl", heroHasImage ? "text-white" : "text-slate-900")}>{meta.heroLead}</p>
+                <p className={cn("mt-3 max-w-3xl text-[12px] leading-5 sm:mt-5 sm:text-base sm:leading-7", heroHasImage ? "text-white/82" : "text-slate-700")}>{meta.heroIntro}</p>
 
-              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 sm:mt-6 sm:gap-x-7">
-                <a
-                  href={meta.contactGithubHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={cn(
-                    "inline-flex items-center border-b-2 py-1 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-sm",
-                    heroHasImage ? "border-white text-white hover:border-[#8fa8ff] hover:text-[#c9d4ff] focus:ring-offset-slate-950" : "border-[#244fd6] text-slate-950 hover:text-[#244fd6] focus:ring-offset-[#f5f3ee]",
-                  )}
-                >
-                  <Icon name="github" className="mr-2 h-4 w-4" />
-                  {meta.contactGithubLabel}
-                </a>
+                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 sm:mt-6 sm:gap-x-7">
+                  <a
+                    href="#projects"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      window.history.pushState(null, "", "#projects");
+                      scrollToPreparedTarget(document.querySelector("#projects"), { behavior: "smooth", block: "start" });
+                    }}
+                    className={cn(
+                      "signal-link inline-flex items-center border-b-2 py-1 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-sm",
+                      heroHasImage ? "border-white text-white hover:border-[#8fa8ff] hover:text-[#c9d4ff] focus:ring-offset-slate-950" : "border-[#244fd6] text-slate-950 hover:text-[#244fd6] focus:ring-offset-[#f5f3ee]",
+                    )}
+                  >
+                    Selected work
+                    <Icon name="arrowRight" className="ml-2 h-4 w-4" />
+                  </a>
+                  <a
+                    href={meta.contactGithubHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={cn(
+                      "signal-link inline-flex items-center border-b border-[#827466]/45 py-1 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#244fd6] focus:ring-offset-2 sm:text-sm",
+                      heroHasImage ? "text-white/85 hover:border-white hover:text-white focus:ring-offset-slate-950" : "text-slate-700 hover:border-[#244fd6] hover:text-[#244fd6] focus:ring-offset-[#f5f3ee]",
+                    )}
+                  >
+                    <Icon name="github" className="mr-2 h-4 w-4" />
+                    {meta.contactGithubLabel}
+                  </a>
+                </div>
               </div>
             </div>
+            {!heroHasImage && <HeroProjectIndex projects={content.projects} />}
           </div>
         </motion.div>
       </section>
 
       <section id="projects" data-content-collection="projects" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-10">
-        <SectionHeader title={meta.projectIndexTitle} />
+        <SectionHeader index="01" title={meta.projectIndexTitle} />
         <div className="grid gap-3 sm:gap-4">
           {list(content.projects).map((project, index) => (
             <ProjectRow key={project.id} project={project} index={index} meta={meta} />
@@ -2457,7 +2540,7 @@ function PortfolioPage({ content }) {
       </section>
 
       <section id="bench" data-content-collection="skills" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
-        <SectionHeader title={meta.skillSystemTitle} />
+        <SectionHeader index="02" title={meta.skillSystemTitle} />
         <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 xl:grid-cols-4">
           {skillGroups.map((group, index) => (
             <motion.article
@@ -2467,7 +2550,7 @@ function PortfolioPage({ content }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.28, delay: index * 0.04 }}
-              className="min-w-0 border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-5"
+              className="technical-panel min-w-0 border border-[#d2c8b9] bg-white p-2.5 shadow-sm sm:p-5"
             >
               <h3 className="border-b border-[#e1d7c8] pb-1.5 text-[13px] font-semibold leading-5 text-slate-950 sm:pb-3 sm:text-lg">
                 {group.credentialId ? (
@@ -2519,8 +2602,11 @@ function PortfolioPage({ content }) {
       </section>
 
       <section id="academics" data-content-collection="academics" className="relative z-20 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-10 md:px-8 md:py-14">
-        <div className="mb-4 grid gap-3 border-t border-[#d2c8b9] pt-5 sm:mb-6 sm:gap-4 sm:pt-7 lg:grid-cols-[minmax(300px,0.55fr)_minmax(0,1.45fr)] lg:items-center">
-          <TitleBlock title={meta.academicTitle} />
+        <div className="mb-4 grid gap-3 border-t border-[#d2c8b9] pt-5 sm:mb-6 sm:gap-4 sm:pt-6 lg:grid-cols-[minmax(380px,0.62fr)_minmax(0,1.38fr)] lg:items-center">
+          <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3 sm:gap-5">
+            <span aria-hidden="true" className="section-index font-mono text-[11px] font-semibold tracking-[0.14em] text-[#244fd6] sm:text-xs">03</span>
+            <TitleBlock title={meta.academicTitle} />
+          </div>
           <AcademicSchoolCard meta={meta} />
         </div>
 
@@ -2560,7 +2646,7 @@ function PortfolioPage({ content }) {
 
       {list(content.moreWork).length > 0 && (
         <section id="more-work" data-content-collection="moreWork" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-12 md:px-8 md:py-16">
-          <SectionHeader title={meta.moreWorkTitle || "More work"} />
+          <SectionHeader index="04" title={meta.moreWorkTitle || "More work"} />
           {standardMoreWork.length > 0 && (
             <div className="grid items-start gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-3">
               {standardMoreWork.map((project, index) => (
@@ -2622,11 +2708,14 @@ function RecordPage({ content }) {
   return (
     <>
       <section id="top" className="relative z-10 mx-auto max-w-7xl px-3 pb-4 pt-4 sm:px-5 sm:pb-10 sm:pt-10 md:px-8 md:pb-14 md:pt-14">
-        <div className="border border-[#d2c8b9] bg-white p-3 shadow-sm sm:p-6 md:p-8">
+        <div className="technical-panel border border-[#d2c8b9] bg-white p-3 shadow-sm sm:p-6 md:p-8">
           <div className="flex flex-col gap-4 sm:gap-6 md:flex-row md:items-start md:justify-between">
-            <TitleBlock title={meta.recordTitle} as="h1" className="max-w-4xl" />
+            <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3 sm:gap-5">
+              <span aria-hidden="true" className="section-index font-mono text-[10px] font-semibold tracking-[0.12em] text-[#244fd6]">R</span>
+              <TitleBlock title={meta.recordTitle} as="h1" className="max-w-4xl" />
+            </div>
             <Button asChild className="self-start rounded-none bg-slate-950 px-4 py-3 text-sm font-semibold text-white hover:bg-[#244fd6] sm:px-5 sm:py-5">
-              <Link to="/">{meta.backPortfolioLabel}</Link>
+              <Link to="/"><Icon name="chevronLeft" className="mr-2 h-4 w-4" />{meta.backPortfolioLabel}</Link>
             </Button>
           </div>
         </div>
@@ -2634,9 +2723,9 @@ function RecordPage({ content }) {
 
       <section className="relative z-10 mx-auto max-w-7xl px-3 py-4 sm:px-5 sm:py-8 md:px-8 md:py-12">
         <div className="grid gap-3 sm:gap-5">
-          <RecordSectionCard section={academicRecordSection} collection="academicDetails" />
-          <RecordSectionCard section={programRecordSection} collection="programCredentials" />
-          {list(content.fullRecord).map((section) => <RecordSectionCard key={section.id} section={section} />)}
+          <RecordSectionCard section={academicRecordSection} collection="academicDetails" index={1} />
+          <RecordSectionCard section={programRecordSection} collection="programCredentials" index={2} />
+          {list(content.fullRecord).map((section, index) => <RecordSectionCard key={section.id} section={section} index={index + 3} />)}
         </div>
       </section>
 
@@ -2694,11 +2783,14 @@ function ContactSection({ content }) {
 
   return (
     <section id="contact" className="relative z-10 mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-8 md:px-8 md:py-10">
-      <div className="border border-[#d2c8b9] bg-white shadow-[0_16px_45px_rgba(34,28,18,0.08)]">
+      <div className="technical-panel border border-[#d2c8b9] bg-white shadow-[0_16px_45px_rgba(34,28,18,0.08)]">
         <div className="grid gap-3 p-3 sm:gap-5 sm:p-5 md:grid-cols-[minmax(260px,0.8fr)_minmax(0,1.2fr)] md:items-center md:p-6">
-          <TitleBlock title={meta.contactTitle}>
-            {meta.contactText}
-          </TitleBlock>
+          <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3 sm:gap-4">
+            <span aria-hidden="true" className="section-index font-mono text-[11px] font-semibold tracking-[0.14em] text-[#244fd6]">05</span>
+            <TitleBlock title={meta.contactTitle}>
+              {meta.contactText}
+            </TitleBlock>
+          </div>
           <div className="flex flex-row flex-wrap justify-start gap-2 md:justify-end">
             {contactButtons.map((button) => (
               <ContactButton
@@ -2786,10 +2878,10 @@ function Navigation({ content }) {
                 releaseActiveSection("top");
               }
             }}
-            className="relative flex min-w-0 items-center gap-2.5"
+            className="group relative flex min-w-0 items-center gap-2.5"
           >
             {isPortfolioRoute && activeSection === "top" && <ActiveNavigationFrame />}
-            <span className="grid h-8 w-8 shrink-0 place-items-center border border-[#cfc4b4] bg-white font-mono text-[11px] font-semibold text-[#244fd6] shadow-sm">
+            <span className="grid h-8 w-8 shrink-0 place-items-center border border-slate-950 bg-slate-950 font-mono text-[11px] font-semibold text-white shadow-sm transition-colors group-hover:bg-[#244fd6]">
               CH
             </span>
             <span className="min-w-0">
@@ -2870,8 +2962,10 @@ function ChristopherPortfolioShell() {
   return (
     <main className="min-h-screen bg-[#f5f3ee] text-slate-950">
       <ScrollToRouteTarget />
-      <div className="pointer-events-none fixed inset-0 opacity-[0.34]">
+      <PageProgress />
+      <div className="pointer-events-none fixed inset-0 opacity-[0.42]">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,46,32,0.105)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,46,32,0.085)_1px,transparent_1px)] bg-[size:42px_42px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(36,79,214,0.095)_1px,transparent_1px),linear-gradient(to_bottom,rgba(36,79,214,0.075)_1px,transparent_1px)] bg-[size:168px_168px]" />
       </div>
 
       <Navigation content={content} />

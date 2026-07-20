@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-19T15:03:43.074Z",
+  "updatedAt": "2026-07-20T03:51:37.992Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -814,11 +814,13 @@
           "hrefLabel": ""
         },
         {
-          "id": "student-council",
-          "title": "Student Council",
+          "id": "academic-uil",
+          "title": "Academic UIL",
           "date": "",
-          "detail": "Member.",
-          "achievements": [],
+          "detail": "I compete in UIL academic events.",
+          "achievements": [
+            "District UIL tournament - Number Sense team, second place (three-person SECA team)"
+          ],
           "href": null,
           "hrefLabel": ""
         },

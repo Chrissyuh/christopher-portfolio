@@ -180,6 +180,18 @@ assert.deepEqual(
   "More work ordering or presentation sizes drifted.",
 );
 assert.ok(!content.moreWork.some((project) => (project.media ?? []).some((media) => !media.src)), "More work must not publish empty media records.");
+const activitiesSection = content.fullRecord.find((section) => section.id === "activities-leadership-service");
+const academicUil = activitiesSection?.items.find((item) => item.id === "academic-uil");
+assert.deepEqual(
+  [academicUil?.title, academicUil?.detail, academicUil?.achievements],
+  [
+    "Academic UIL",
+    "I compete in UIL academic events.",
+    ["District UIL tournament - Number Sense team, second place (three-person SECA team)"],
+  ],
+  "The Academic UIL activity or Number Sense team result drifted.",
+);
+assert.ok(!publicSerialized.includes("Student Council"), "Student Council must not remain in the curated public record.");
 assert.ok(!publicSerialized.includes("TETC 3D Printing Presentation"), "The TETC presentation must not appear in curated public content.");
 assert.ok(!staticSummaryText.includes("Ongoing learning"), "The static HTML summary must not restore the removed standalone learning section.");
 assert.ok(!staticSummaryText.includes("More projects") && !staticSummaryText.includes("Small builds"), "The static HTML summary must use the unified More work section.");

@@ -70,6 +70,32 @@
   box-shadow: 3px 3px 0 rgb(36 79 214 / 10%);
 }
 
+.brand-monogram {
+  position: relative;
+  display: inline-flex;
+  min-width: 2.2rem;
+  height: 2rem;
+  align-items: center;
+  padding-left: 0.45rem;
+  border-left: 2px solid #244fd6;
+}
+
+.brand-monogram::after {
+  position: absolute;
+  right: 0;
+  bottom: 0.28rem;
+  left: 0.45rem;
+  height: 1px;
+  content: "";
+  background: rgb(36 79 214 / 34%);
+  transition: background-color 180ms ease, right 180ms ease;
+}
+
+.group:hover .brand-monogram::after {
+  right: 0.35rem;
+  background: #244fd6;
+}
+
 .technical-panel {
   position: relative;
   transition: border-color 220ms ease, box-shadow 220ms ease;

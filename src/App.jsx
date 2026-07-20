@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { LayoutGroup, motion, MotionConfig, useScroll, useSpring } from "framer-motion";
+import { LayoutGroup, motion, MotionConfig } from "framer-motion";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { usePortfolioContent } from "./content/loadPortfolioContent";
 
@@ -940,28 +940,15 @@ function SectionHeader({ code, index, title, children }) {
   );
 }
 
-function PageProgress() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 170, damping: 28, mass: 0.35 });
-
-  return (
-    <motion.div
-      aria-hidden="true"
-      className="pointer-events-none fixed inset-x-0 top-0 z-50 h-[3px] origin-left bg-[#244fd6] shadow-[0_0_12px_rgba(36,79,214,0.35)]"
-      style={{ scaleX }}
-    />
-  );
-}
-
 function HeroProjectIndex({ projects }) {
   const entries = list(projects);
   if (entries.length === 0) return null;
 
   return (
-    <aside className="hero-project-index hidden min-h-full border-l border-white/15 bg-slate-950 text-white lg:flex lg:flex-col">
-      <div className="flex items-center justify-between border-b border-white/15 px-5 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-white/60">
+    <aside className="hero-project-index hidden min-h-full border-l border-[#cfc4b4] bg-white/35 lg:flex lg:flex-col">
+      <div className="flex items-center justify-between border-b border-[#d8cebf] px-5 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#716456]">
         <span>Selected systems</span>
-        <span>{String(entries.length).padStart(2, "0")}</span>
+        <span className="text-[#244fd6]">A01-A{String(entries.length).padStart(2, "0")}</span>
       </div>
       <div className="flex flex-1 flex-col justify-center py-2">
         {entries.map((project, index) => {
@@ -971,12 +958,12 @@ function HeroProjectIndex({ projects }) {
               key={project.id}
               href={`#${projectAnchorId(project)}`}
               onClick={(event) => jumpToProject(event, project)}
-              className="group/index relative grid grid-cols-[42px_minmax(0,1fr)] gap-3 border-b border-white/10 px-5 py-4 outline-none transition-colors last:border-b-0 hover:bg-white/[0.06] focus-visible:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8fa8ff]"
+              className="group/index relative grid grid-cols-[42px_minmax(0,1fr)] gap-3 border-b border-[#ddd3c5] px-5 py-4 outline-none transition-colors last:border-b-0 hover:bg-white/70 focus-visible:bg-white/80 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#244fd6]"
             >
-              <span className="font-mono text-[10px] tracking-[0.12em] text-white/45">A{String(index + 1).padStart(2, "0")}</span>
+              <span className="font-mono text-[10px] tracking-[0.12em] text-[#244fd6]">A{String(index + 1).padStart(2, "0")}</span>
               <span className="min-w-0">
-                <span className="block text-sm font-semibold leading-5 text-white">{project.title}</span>
-                <span className="mt-1 block truncate text-[10px] leading-4 text-white/50">{project.status || project.teamContext}</span>
+                <span className="block text-sm font-semibold leading-5 text-slate-950">{project.title}</span>
+                <span className="mt-1 block truncate text-[10px] leading-4 text-slate-600">{project.status || project.teamContext}</span>
               </span>
               <span
                 aria-hidden="true"
@@ -987,7 +974,7 @@ function HeroProjectIndex({ projects }) {
           );
         })}
       </div>
-      <div className="border-t border-white/15 px-5 py-3 font-mono text-[9px] uppercase tracking-[0.14em] text-white/35">
+      <div className="border-t border-[#d8cebf] px-5 py-3 font-mono text-[9px] uppercase tracking-[0.14em] text-[#827466]">
         Hardware / robotics / software
       </div>
     </aside>
@@ -2881,8 +2868,8 @@ function Navigation({ content }) {
             className="group relative flex min-w-0 items-center gap-2.5"
           >
             {isPortfolioRoute && activeSection === "top" && <ActiveNavigationFrame />}
-            <span className="grid h-8 w-8 shrink-0 place-items-center border border-slate-950 bg-slate-950 font-mono text-[11px] font-semibold text-white shadow-sm transition-colors group-hover:bg-[#244fd6]">
-              CH
+            <span className="brand-monogram shrink-0 font-mono text-[13px] font-semibold tracking-[0.08em] text-[#244fd6] transition-colors group-hover:text-slate-950">
+              CH<span aria-hidden="true" className="text-[#827466]">/</span>
             </span>
             <span className="min-w-0">
               <span className="block whitespace-nowrap text-xs font-semibold text-slate-950 sm:text-sm">
@@ -2962,7 +2949,6 @@ function ChristopherPortfolioShell() {
   return (
     <main className="min-h-screen bg-[#f5f3ee] text-slate-950">
       <ScrollToRouteTarget />
-      <PageProgress />
       <div className="pointer-events-none fixed inset-0 opacity-[0.42]">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,46,32,0.105)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,46,32,0.085)_1px,transparent_1px)] bg-[size:42px_42px]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(36,79,214,0.095)_1px,transparent_1px),linear-gradient(to_bottom,rgba(36,79,214,0.075)_1px,transparent_1px)] bg-[size:168px_168px]" />

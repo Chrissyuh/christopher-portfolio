@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/machine-readable.js": {
+      "includeFiles": "public/machine-readable-base/**"
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",
@@ -11,6 +16,18 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/portfolio.json",
+      "destination": "/api/machine-readable?format=json"
+    },
+    {
+      "source": "/llms.txt",
+      "destination": "/api/machine-readable?format=llms"
+    },
+    {
+      "source": "/llms-full.txt",
+      "destination": "/api/machine-readable?format=llms-full"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { LayoutGroup, motion, MotionConfig } from "framer-motion";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {
+  DUOLINGO_PROFILE_URL,
+  formatDayCount,
+  formatStreakYears,
+  parseDayCount,
+} from "./content/duolingoStreak";
 import { usePortfolioContent } from "./content/loadPortfolioContent";
 
 function cn(...classes) {
@@ -90,28 +96,10 @@ const LazyPcbModelViewer = React.lazy(() => import("./components/PcbModelViewer.
 const pcbFallbackStorageKey = "portfolio-pcb-model-fallback";
 
 const SITE_URL = "https://chrisaheskett.vercel.app";
-const DUOLINGO_PROFILE_URL = "https://invite.duolingo.com/profile-share/ChristopherHmm?via=share_profile_qr";
 const DUOLINGO_STREAK_ENDPOINT = "/api/duolingo-streak";
-const STREAK_YEAR_DAYS = 365.25;
-const numberFormatter = new Intl.NumberFormat("en-US");
 
 function list(value) {
   return Array.isArray(value) ? value : [];
-}
-
-function parseDayCount(value) {
-  const match = String(value ?? "").match(/\d[\d,]*/);
-  if (!match) return null;
-  const days = Number(match[0].replaceAll(",", ""));
-  return Number.isFinite(days) && days > 0 ? days : null;
-}
-
-function formatDayCount(days) {
-  return Number.isFinite(days) ? numberFormatter.format(days) : "";
-}
-
-function formatStreakYears(days) {
-  return Number.isFinite(days) ? `~${(days / STREAK_YEAR_DAYS).toFixed(2)} years` : "";
 }
 
 function siteUrl(path = "/") {

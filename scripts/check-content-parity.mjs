@@ -3,11 +3,16 @@ import fs from "node:fs/promises";
 import { buildPortfolioStructuredData } from "../src/content/structuredData.js";
 import { buildStaticSummary } from "../src/content/staticSummary.js";
 import { buildVisualInventory } from "../src/content/visualInventory.js";
+import {
+  applyLiveStreakToMarkdown,
+  applyLiveStreakToPortfolio,
+  formatDuolingoStreakSentence,
+} from "../src/server/machineReadable.js";
 
 const generatedUrl = new URL("../src/content/portfolioContent.generated.json", import.meta.url);
-const publicJsonUrl = new URL("../public/portfolio.json", import.meta.url);
-const llmsUrl = new URL("../public/llms.txt", import.meta.url);
-const llmsFullUrl = new URL("../public/llms-full.txt", import.meta.url);
+const publicJsonUrl = new URL("../public/machine-readable-base/portfolio.json", import.meta.url);
+const llmsUrl = new URL("../public/machine-readable-base/llms.txt", import.meta.url);
+const llmsFullUrl = new URL("../public/machine-readable-base/llms-full.txt", import.meta.url);
 const appUrl = new URL("../src/App.jsx", import.meta.url);
 const appStylesUrl = new URL("../src/index.css", import.meta.url);
 const indexHtmlUrl = new URL("../index.html", import.meta.url);
@@ -108,6 +113,19 @@ for (const visual of visualInventory) {
     assert.ok(llmsFull.includes(visual.caption), `llms-full.txt is missing visual caption for ${visual.id}: ${visual.caption}`);
   }
 }
+
+const testLiveStreak = 1758;
+const testLiveStreakSentence = formatDuolingoStreakSentence(testLiveStreak);
+const livePortfolio = applyLiveStreakToPortfolio(publicContent, testLiveStreak);
+const liveHighlight = livePortfolio.learningHighlights.find((item) => item.id === "duolingo-streak");
+const liveRecordItem = livePortfolio.fullRecord.flatMap((section) => section.items).find((item) => item.id === "duolingo-streak");
+assert.deepEqual(
+  [liveHighlight?.value, liveHighlight?.note, liveRecordItem?.detail],
+  ["1,758", "~4.81 years", "1,758 days (~4.81 years). Public language-learning streak."],
+  "The live JSON formatter must update every published Duolingo streak value.",
+);
+assert.ok(applyLiveStreakToMarkdown(llms, testLiveStreak).includes(testLiveStreakSentence), "llms.txt must accept the live Duolingo streak.");
+assert.ok(applyLiveStreakToMarkdown(llmsFull, testLiveStreak).includes(testLiveStreakSentence), "llms-full.txt must accept the live Duolingo streak.");
 
 const expectedFeaturedProjects = [
   "Garden Party Pinball",

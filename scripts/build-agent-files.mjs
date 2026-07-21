@@ -4,6 +4,7 @@ import { buildVisualInventory } from "../src/content/visualInventory.js";
 const SITE_URL = "https://chrisaheskett.vercel.app";
 const contentUrl = new URL("../src/content/portfolioContent.generated.json", import.meta.url);
 const publicUrl = new URL("../public/", import.meta.url);
+const machineReadableBaseUrl = new URL("machine-readable-base/", publicUrl);
 
 function absoluteUrl(path = "/") {
   return new URL(path, SITE_URL).toString();
@@ -455,11 +456,18 @@ async function writePublicFile(name, body) {
   console.log(`Wrote ${outputUrl.pathname}`);
 }
 
+async function writeMachineReadableBaseFile(name, body) {
+  const outputUrl = new URL(name, machineReadableBaseUrl);
+  await fs.writeFile(outputUrl, body);
+  console.log(`Wrote ${outputUrl.pathname}`);
+}
+
 const content = JSON.parse(await fs.readFile(contentUrl, "utf8"));
 
 await fs.mkdir(publicUrl, { recursive: true });
-await writePublicFile("portfolio.json", `${JSON.stringify(buildPortfolioJson(content), null, 2)}\n`);
-await writePublicFile("llms.txt", buildLlmsTxt(content));
-await writePublicFile("llms-full.txt", buildLlmsFullTxt(content));
+await fs.mkdir(machineReadableBaseUrl, { recursive: true });
+await writeMachineReadableBaseFile("portfolio.json", `${JSON.stringify(buildPortfolioJson(content), null, 2)}\n`);
+await writeMachineReadableBaseFile("llms.txt", buildLlmsTxt(content));
+await writeMachineReadableBaseFile("llms-full.txt", buildLlmsFullTxt(content));
 await writePublicFile("sitemap.xml", buildSitemapXml());
 await writePublicFile("robots.txt", buildRobotsTxt());

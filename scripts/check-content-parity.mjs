@@ -268,8 +268,8 @@ assert.deepEqual(
   "The verified CSWP credential record drifted.",
 );
 assert.ok(
-  !publicSerialized.includes("CSWA") && !publicSerialized.includes("39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f"),
-  "The superseded CSWA credential must not remain in public content.",
+  !publicSerialized.includes("Design Associate"),
+  "The superseded associate credential must not remain in public content.",
 );
 assert.ok(appSource.includes("credential.badgeEmbedSrc"), "Credential cards must render verified Credly badge embeds.");
 

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "generated-template-snapshot",
-  "updatedAt": "2026-07-29T21:52:18.524Z",
+  "updatedAt": "2026-07-29T22:02:19.325Z",
   "meta": {
     "documentTitle": "Christopher Heskett | Engineering Portfolio",
     "recordDocumentTitle": "Experience | Christopher Heskett",
@@ -468,35 +468,6 @@
       "awardQuoteAttribution": ""
     },
     {
-      "id": "cswa",
-      "entryType": "credential",
-      "program": "Certified SOLIDWORKS Design Associate (CSWA)",
-      "credential": "Certified SOLIDWORKS Design Associate (CSWA)",
-      "issuer": "Dassault Systèmes",
-      "date": "July 15, 2026",
-      "summary": "Passed the CSWA exam in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials.",
-      "summaryLinkText": "",
-      "logoSrc": "/portfolio-media/credentials/cswa-badge.png",
-      "logoAlt": "Certified SOLIDWORKS Design Associate badge",
-      "logoHref": "https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url",
-      "scanSrc": "/portfolio-media/credentials/cswa-certificate.png",
-      "scanAlt": "SOLIDWORKS Design Associate certificate awarded to Christopher Heskett",
-      "scanCaption": "Certified SOLIDWORKS Design Associate, issued July 15, 2026",
-      "href": "https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url",
-      "hrefLabel": "Verify badge",
-      "badgeEmbedSrc": "https://www.credly.com/embedded_badge/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f",
-      "badgeEmbedTitle": "Verified Certified SOLIDWORKS Design Associate badge on Credly",
-      "accent": "blue",
-      "relatedProjectId": null,
-      "scanAvailable": true,
-      "awardTitle": "",
-      "awardDate": "",
-      "awardDistinction": "",
-      "awardSummary": "",
-      "awardQuote": "",
-      "awardQuoteAttribution": ""
-    },
-    {
       "id": "cswp",
       "entryType": "credential",
       "program": "Certified SOLIDWORKS Design Professional (CSWP)",
@@ -665,7 +636,6 @@
       ],
       "credentialIds": [
         "tetc",
-        "cswa",
         "cswp"
       ]
     },
@@ -1117,17 +1087,6 @@
       "caption": "Stanford AI4ALL Certificate of Completion in Robotics, June 26, 2026",
       "context": "",
       "src": "/portfolio-media/credentials/stanford-ai4all-certificate.jpg"
-    },
-    {
-      "id": "programCredentials/cswa/scan",
-      "surface": "programCredentials",
-      "owner": "Certified SOLIDWORKS Design Associate (CSWA) document",
-      "kind": "certificate",
-      "status": "published",
-      "description": "SOLIDWORKS Design Associate certificate awarded to Christopher Heskett",
-      "caption": "Certified SOLIDWORKS Design Associate, issued July 15, 2026",
-      "context": "",
-      "src": "/portfolio-media/credentials/cswa-certificate.png"
     }
   ],
   "canonicalUrl": "https://chrisaheskett.vercel.app/",

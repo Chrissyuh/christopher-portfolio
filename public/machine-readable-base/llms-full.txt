@@ -63,7 +63,6 @@ Published media: 2
 - AgentDeck visual 1 - image: AgentDeck touchscreen controller showing agent status cards and controls. Caption: AgentDeck touchscreen controller. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/agentdeck/agentdeck-controller.webp)
 - Check-ins visual 1 - image: Check-ins dashboard showing recurring work and study items with target and maximum gaps. Caption: Recurring check-ins with target and maximum gaps. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/check-ins/check-ins-overview.webp)
 - Stanford AI4ALL Certificate of Completion document - certificate image: Stanford AI4ALL Certificate of Completion in Robotics awarded to Christopher Heskett. Caption: Stanford AI4ALL Certificate of Completion in Robotics, June 26, 2026. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/credentials/stanford-ai4all-certificate.jpg)
-- Certified SOLIDWORKS Design Associate (CSWA) document - certificate image: SOLIDWORKS Design Associate certificate awarded to Christopher Heskett. Caption: Certified SOLIDWORKS Design Associate, issued July 15, 2026. [Open asset](https://chrisaheskett.vercel.app/portfolio-media/credentials/cswa-certificate.png)
 
 ## Academics
 
@@ -103,16 +102,6 @@ Related project ID: vividgrasp-ai-vision-robotics-arm
 Verification link: https://ai4all.spcs.stanford.edu/
 Certificate scan: https://chrisaheskett.vercel.app/portfolio-media/credentials/stanford-ai4all-certificate.jpg
 Completed Stanford AI4ALL in Robotics through the ten-person VividGrasp project.
-
-### Certified SOLIDWORKS Design Associate (CSWA)
-Type: Credential
-Credential: Certified SOLIDWORKS Design Associate (CSWA)
-Issuer: Dassault Systèmes
-Date: July 15, 2026
-Verification link: https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url
-Credly badge embed: https://www.credly.com/embedded_badge/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f
-Certificate scan: https://chrisaheskett.vercel.app/portfolio-media/credentials/cswa-certificate.png
-Passed the CSWA exam in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials.
 
 ### Certified SOLIDWORKS Design Professional (CSWP)
 Type: Credential

@@ -11,7 +11,7 @@ Import the CSV files from `docs/google-sheet-template/` into one public Google S
 - `ProjectArtifactLinks`: additional public project evidence links.
 - `Academics`: GPA, rank, and coursework cards.
 - `AcademicDetails`: grouped AP exam scores, college-credit grades, Credit by Examination scores, and math progression shown in the inline coursework disclosure and full record. Allowed `format` values are `ap-score`, `grade`, and `text`.
-- `ProgramCredentials`: programs, credentials, logos, links, certificate scans, and an optional `summary_link_text` phrase tied to `related_project_id`.
+- `ProgramCredentials`: programs, credentials, logos, links, certificate scans, optional Credly `badge_embed_src` and `badge_embed_title` fields, and an optional `summary_link_text` phrase tied to `related_project_id`. Credly embeds must use the public `https://www.credly.com/embedded_badge/{badge-id}` form.
 - `LearningHighlights`: non-academic learning statistics such as Duolingo, rendered with related activities rather than as a standalone section.
 - `MoreWork`: supporting projects with an explicit `presentation_size` of `standard` or `compact`. Media is optional and absent media does not render a placeholder.
 - `Skills`: project-backed skills grouped by category.

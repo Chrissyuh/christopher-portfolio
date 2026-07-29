@@ -96,22 +96,32 @@ I attend a four-year after-school STEM program with engineering lessons, makersp
 
 ### Stanford AI4ALL Certificate of Completion
 Type: Credential
-Program: Stanford AI4ALL
+Credential: Stanford AI4ALL
 Issuer: Stanford AI4ALL and Stanford Pre-Collegiate Studies
 Date: June 26, 2026
 Related project ID: vividgrasp-ai-vision-robotics-arm
-Program link: https://ai4all.spcs.stanford.edu/
+Verification link: https://ai4all.spcs.stanford.edu/
 Certificate scan: https://chrisaheskett.vercel.app/portfolio-media/credentials/stanford-ai4all-certificate.jpg
 Completed Stanford AI4ALL in Robotics through the ten-person VividGrasp project.
 
 ### Certified SOLIDWORKS Design Associate (CSWA)
 Type: Credential
-Program: Certified SOLIDWORKS Design Associate (CSWA)
+Credential: Certified SOLIDWORKS Design Associate (CSWA)
 Issuer: Dassault Systèmes
 Date: July 15, 2026
-Program link: https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url
+Verification link: https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url
+Credly badge embed: https://www.credly.com/embedded_badge/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f
 Certificate scan: https://chrisaheskett.vercel.app/portfolio-media/credentials/cswa-certificate.png
 Passed the CSWA exam in SOLIDWORKS part modeling, assemblies, dimensions, mass properties, and materials.
+
+### Certified SOLIDWORKS Design Professional (CSWP)
+Type: Credential
+Credential: Certified SOLIDWORKS Design Professional (CSWP)
+Issuer: Dassault Systèmes
+Date: July 29, 2026
+Verification link: https://www.credly.com/badges/6508c18d-db38-40ad-93a4-b5ed4e7714fe/public_url
+Credly badge embed: https://www.credly.com/embedded_badge/6508c18d-db38-40ad-93a4-b5ed4e7714fe
+Passed the CSWP exam for advanced mechanical design modeling in SOLIDWORKS.
 
 ## More Work
 

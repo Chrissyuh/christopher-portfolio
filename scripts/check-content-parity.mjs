@@ -250,6 +250,7 @@ for (const collection of requiredHumanCollections) {
 }
 
 const cswaCredential = content.programCredentials.find((credential) => credential.id === "cswa");
+const cswpCredential = content.programCredentials.find((credential) => credential.id === "cswp");
 const ai4allCredential = content.programCredentials.find((credential) => credential.id === "stanford-ai4all");
 assert.deepEqual(
   [ai4allCredential?.summaryLinkText, ai4allCredential?.relatedProjectId],
@@ -257,15 +258,28 @@ assert.deepEqual(
   "The AI4ALL summary must retain its visible link to VividGrasp.",
 );
 assert.deepEqual(
-  [cswaCredential?.program, cswaCredential?.issuer, cswaCredential?.date, cswaCredential?.href],
+  [cswaCredential?.program, cswaCredential?.issuer, cswaCredential?.date, cswaCredential?.href, cswaCredential?.badgeEmbedSrc],
   [
     "Certified SOLIDWORKS Design Associate (CSWA)",
     "Dassault Systèmes",
     "July 15, 2026",
     "https://www.credly.com/badges/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f/public_url",
+    "https://www.credly.com/embedded_badge/39c1cd0e-5fd3-4e91-91b7-b53ae7b7c83f",
   ],
   "The verified CSWA credential record drifted.",
 );
+assert.deepEqual(
+  [cswpCredential?.program, cswpCredential?.issuer, cswpCredential?.date, cswpCredential?.href, cswpCredential?.badgeEmbedSrc],
+  [
+    "Certified SOLIDWORKS Design Professional (CSWP)",
+    "Dassault Systèmes",
+    "July 29, 2026",
+    "https://www.credly.com/badges/6508c18d-db38-40ad-93a4-b5ed4e7714fe/public_url",
+    "https://www.credly.com/embedded_badge/6508c18d-db38-40ad-93a4-b5ed4e7714fe",
+  ],
+  "The verified CSWP credential record drifted.",
+);
+assert.ok(appSource.includes("credential.badgeEmbedSrc"), "Credential cards must render verified Credly badge embeds.");
 
 for (const excludedClaim of [
   "BetterQuizzes",

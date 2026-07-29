@@ -176,8 +176,8 @@ export function buildPortfolioStructuredData(content) {
         recognizedBy: {
           "@type": "Organization",
           name: credential.issuer,
-          ...(credential.href ? { url: credential.href } : {}),
         },
+        ...(credential.href ? { url: credential.href } : {}),
         ...(credential.date ? { dateCreated: credential.date } : {}),
         ...(credential.scanSrc ? { image: siteUrl(credential.scanSrc) } : {}),
       })),

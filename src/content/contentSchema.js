@@ -30,6 +30,7 @@ export const allowedAcademicDetailFormats = ["ap-score", "grade", "text"];
 export const allowedMoreWorkSizes = ["standard", "compact"];
 
 const mediaSlotCount = 8;
+const credlyBadgeEmbedPattern = /^https:\/\/www\.credly\.com\/embedded_badge\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export const allowedIcons = [
   "arrowRight",
@@ -344,6 +345,7 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
     const entryType = text(row.entry_type) || "credential";
     const accent = text(row.accent);
     const relatedProjectId = text(row.related_project_id);
+    const badgeEmbedSrc = hrefOrNull(row.badge_embed_src);
 
     requireKnownValue(errors, "ProgramCredentials", id, "entry_type", entryType, allowedProgramCredentialTypes);
     requireKnownValue(errors, "ProgramCredentials", id, "accent", accent, allowedAccents);
@@ -358,6 +360,10 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
 
     if (relatedProjectId && !projectsById.has(relatedProjectId)) {
       errors.push(`ProgramCredentials row "${id}" references missing related_project_id "${relatedProjectId}".`);
+    }
+
+    if (badgeEmbedSrc && !credlyBadgeEmbedPattern.test(badgeEmbedSrc)) {
+      errors.push(`ProgramCredentials row "${id}" has an unsupported badge_embed_src. Use a public Credly embedded_badge URL.`);
     }
 
     return {
@@ -377,6 +383,8 @@ export function normalizePortfolioRows(tabRows, { source = "google-sheet" } = {}
       scanCaption: text(row.scan_caption),
       href: hrefOrNull(row.href),
       hrefLabel: text(row.href_label),
+      badgeEmbedSrc,
+      badgeEmbedTitle: text(row.badge_embed_title),
       accent,
       relatedProjectId: relatedProjectId || null,
       scanAvailable: Boolean(text(row.scan_src)),

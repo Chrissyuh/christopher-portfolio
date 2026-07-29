@@ -107,7 +107,8 @@ function credentialDetails(credential) {
   const details = [
     credential.issuer ? `Issuer: ${credential.issuer}` : "",
     credential.date ? `Date: ${credential.date}` : "",
-    credential.scanAvailable ? "Certificate scan: available" : "Certificate scan: not yet published",
+    credential.scanAvailable ? "Certificate scan: available" : "",
+    credential.badgeEmbedSrc ? "Credly badge: embedded on site" : "",
     credential.href ? markdownLink(credential.hrefLabel || "program", credential.href) : "",
   ].filter(Boolean);
 
@@ -344,18 +345,21 @@ function buildLlmsFullTxt(content) {
           `### ${credential.credential || credential.program}`,
           "",
           `Type: ${credential.entryType === "program" ? "Program" : "Credential"}`,
-          `Program: ${credential.program}`,
+          `${credential.entryType === "program" ? "Program" : "Credential"}: ${credential.program}`,
           credential.issuer ? `${credential.entryType === "program" ? "Organization" : "Issuer"}: ${credential.issuer}` : "",
           credential.date ? `Date: ${credential.date}` : "",
           credential.relatedProjectId ? `Related project ID: ${credential.relatedProjectId}` : "",
           credential.awardTitle ? `Award: ${credential.awardDate} ${credential.awardTitle}${credential.awardDistinction ? ` - ${credential.awardDistinction}` : ""}` : "",
           credential.awardSummary ? `Award detail: ${credential.awardSummary}` : "",
           credential.awardQuote ? `Award quote: "${credential.awardQuote}" - ${credential.awardQuoteAttribution}` : "",
-          credential.href ? `Program link: ${credential.href}` : "",
+          credential.href ? `${credential.entryType === "program" ? "Program" : "Verification"} link: ${credential.href}` : "",
+          credential.badgeEmbedSrc ? `Credly badge embed: ${credential.badgeEmbedSrc}` : "",
           credential.entryType !== "program"
             ? credential.scanAvailable && credential.scanSrc
               ? `Certificate scan: ${absoluteUrl(credential.scanSrc)}`
-              : "Certificate scan: not yet published"
+              : credential.badgeEmbedSrc
+                ? ""
+                : "Certificate scan: not yet published"
             : "",
           "",
           credential.summary,

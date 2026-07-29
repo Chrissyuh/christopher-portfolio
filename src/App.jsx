@@ -1897,6 +1897,7 @@ function CredentialSummary({ credential }) {
 function ProgramCredentialCard({ credential, index, meta }) {
   const accent = accentStyles[credential.accent] ?? accentStyles.amber;
   const isCredential = credential.entryType !== "program";
+  const hasBadgeEmbed = Boolean(credential.badgeEmbedSrc);
   const eyebrow = credential.id === "stanford-ai4all"
     ? "Stanford Pre-Collegiate Studies"
     : credential.issuer;
@@ -1928,77 +1929,91 @@ function ProgramCredentialCard({ credential, index, meta }) {
       ) : (
         <div aria-hidden="true" className={cn("absolute inset-x-0 top-0 h-1", credential.id === "stanford-ai4all" ? "bg-[#8c1515]" : accent.bg)} />
       )}
-      <div className="flex items-start gap-3 sm:gap-4">
-        {credential.logoSrc ? (
-          <a
-            href={credential.logoHref || credential.href}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Open ${credential.program} website`}
-            className={cn(
-              "grid shrink-0 place-items-center overflow-hidden border border-[#d6cec0] bg-white transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
-              credential.id === "stanford-ai4all"
-                ? "h-9 w-20 p-1 sm:w-24"
-                : credential.id === "tetc"
-                  ? "aspect-[83/38] w-32 sm:w-36"
-                : isCredential
-                  ? "h-12 w-16 p-1.5 sm:h-14 sm:w-20"
-                  : "h-12 w-24 p-1.5 sm:h-14 sm:w-28",
-            )}
-          >
-            <img
-              src={credential.logoSrc}
-              alt={credential.logoAlt || `${credential.program} logo`}
-              loading="lazy"
-              className={cn(
-                "block h-full w-full min-h-0 min-w-0 object-contain",
-                credential.id === "tetc" && "object-cover",
-              )}
-            />
-          </a>
-        ) : (
-          <div className={cn("grid h-12 w-16 shrink-0 place-items-center border font-mono text-sm font-semibold", accent.border, accent.soft, accent.text)} aria-hidden="true">
-            {initials}
+      <div className={cn(hasBadgeEmbed && "lg:grid lg:grid-cols-[minmax(0,1fr)_150px] lg:items-start lg:gap-5")}>
+        <div className="min-w-0">
+          <div className="flex items-start gap-3 sm:gap-4">
+            {!hasBadgeEmbed && credential.logoSrc ? (
+              <a
+                href={credential.logoHref || credential.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Open ${credential.program} website`}
+                className={cn(
+                  "grid shrink-0 place-items-center overflow-hidden border border-[#d6cec0] bg-white transition hover:bg-[#f5f3ee] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
+                  credential.id === "stanford-ai4all"
+                    ? "h-9 w-20 p-1 sm:w-24"
+                    : credential.id === "tetc"
+                      ? "aspect-[83/38] w-32 sm:w-36"
+                      : isCredential
+                        ? "h-12 w-16 p-1.5 sm:h-14 sm:w-20"
+                        : "h-12 w-24 p-1.5 sm:h-14 sm:w-28",
+                )}
+              >
+                <img
+                  src={credential.logoSrc}
+                  alt={credential.logoAlt || `${credential.program} logo`}
+                  loading="lazy"
+                  className={cn(
+                    "block h-full w-full min-h-0 min-w-0 object-contain",
+                    credential.id === "tetc" && "object-cover",
+                  )}
+                />
+              </a>
+            ) : !hasBadgeEmbed ? (
+              <div className={cn("grid h-12 w-16 shrink-0 place-items-center border font-mono text-sm font-semibold", accent.border, accent.soft, accent.text)} aria-hidden="true">
+                {initials}
+              </div>
+            ) : null}
+            <div className="min-w-0 flex-1">
+              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">{eyebrow}</p>
+              <h3 className="mt-1 text-base font-semibold leading-5 text-slate-950 sm:text-lg sm:leading-6">{credential.program}</h3>
+              {detail && <p className="mt-1 text-[11px] leading-4 text-slate-600 sm:text-xs">{detail}</p>}
+            </div>
           </div>
-        )}
-        <div className="min-w-0 flex-1">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#827466]">{eyebrow}</p>
-          <h3 className="mt-1 text-base font-semibold leading-5 text-slate-950 sm:text-lg sm:leading-6">{credential.program}</h3>
-          {detail && <p className="mt-1 text-[11px] leading-4 text-slate-600 sm:text-xs">{detail}</p>}
+
+          <p className="mt-2 text-[11px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">
+            <CredentialSummary credential={credential} />
+          </p>
+
+          <div className="mt-2 flex flex-wrap items-center gap-2 sm:mt-4">
+            {awardLabel && (
+              <AchievementRibbon
+                id={`${credential.id}-award`}
+                label={awardLabel}
+                title={`${credential.awardDate} ${credential.awardTitle}`}
+                subtitle={credential.awardDistinction}
+                detail={credential.awardSummary}
+              />
+            )}
+            {isCredential && credential.scanAvailable && (
+              <CredentialPreviewPopover
+                credential={credential}
+                label={meta.credentialPreviewLabel || "View certificate"}
+                missingLabel={meta.credentialMissingScanLabel || "Certificate scan needed"}
+              />
+            )}
+            {credential.href && (
+              <a
+                href={credential.href}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center px-1 py-1.5 text-[11px] font-semibold text-slate-700 transition hover:text-[#244fd6] focus:outline-none focus:ring-2 focus:ring-slate-400 sm:text-xs"
+              >
+                {credential.hrefLabel || "Program site"}
+                <Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" />
+              </a>
+            )}
+          </div>
         </div>
-      </div>
 
-      <p className="mt-2 text-[11px] leading-4 text-slate-700 sm:mt-3 sm:text-sm sm:leading-6">
-        <CredentialSummary credential={credential} />
-      </p>
-
-      <div className="mt-2 flex flex-wrap items-center gap-2 sm:mt-4">
-        {awardLabel && (
-          <AchievementRibbon
-            id={`${credential.id}-award`}
-            label={awardLabel}
-            title={`${credential.awardDate} ${credential.awardTitle}`}
-            subtitle={credential.awardDistinction}
-            detail={credential.awardSummary}
+        {hasBadgeEmbed && (
+          <iframe
+            src={credential.badgeEmbedSrc}
+            title={credential.badgeEmbedTitle || `Verified ${credential.credential} badge on Credly`}
+            loading="lazy"
+            scrolling="no"
+            className="mx-auto mt-4 hidden h-[270px] w-[150px] border-0 bg-white sm:block lg:mt-0"
           />
-        )}
-        {isCredential && (
-          <CredentialPreviewPopover
-            credential={credential}
-            label={meta.credentialPreviewLabel || "View certificate"}
-            missingLabel={meta.credentialMissingScanLabel || "Certificate scan needed"}
-          />
-        )}
-        {credential.href && (
-          <a
-            href={credential.href}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center px-1 py-1.5 text-[11px] font-semibold text-slate-700 transition hover:text-[#244fd6] focus:outline-none focus:ring-2 focus:ring-slate-400 sm:text-xs"
-          >
-            {credential.hrefLabel || "Program site"}
-            <Icon name="arrowRight" className="ml-1.5 h-3.5 w-3.5" />
-          </a>
         )}
       </div>
     </motion.article>
@@ -2660,7 +2675,7 @@ function PortfolioPage({ content }) {
                 {meta.credentialsTitle || "Programs and credentials"}
               </h2>
             </div>
-            <div className="grid gap-2 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid items-start gap-2 sm:gap-4 md:grid-cols-2">
               {list(content.programCredentials).map((credential, index) => (
                 <ProgramCredentialCard key={credential.id} credential={credential} index={index} meta={meta} />
               ))}
